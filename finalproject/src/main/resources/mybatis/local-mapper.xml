@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 지역 mapping -->
+<mapper namespace="local">
+	
+	<!-- 지역 등록 구문 -->
+	<insert id="regist" parameterType="String">
+		insert into local values(local_seq.nextval,#{local_name})
+	</insert>
+	
+</mapper>
+
+
+
