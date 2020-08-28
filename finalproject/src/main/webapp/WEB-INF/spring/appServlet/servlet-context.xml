@@ -41,7 +41,7 @@
 	 	- mapping은 접근할 주소를 작성
 	 	- **은 하위 모든 내용을 의미
 	  -->
-	  <resources location="/resources/" mapping="/res/**"></resources>
+	  <resources location="/resources/" mapping="/resources/**"></resources>
 	
 	<!-- 
 		파일 업로드를 처리하는 도구
