@@ -3,28 +3,27 @@ package com.kh.finalproject.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.kh.finalproject.entity.BranchDto;
-import com.kh.finalproject.repository.BranchDao;
+import com.kh.finalproject.repository.LocalDao;
 
 @Controller
 @RequestMapping("/admin")
-public class BranchController {
-		
+public class LocalController {
+
 	@Autowired
-	private BranchDao branchDao;
+	private LocalDao localDao;
 	
-	@GetMapping
+	@GetMapping("branch/local_regist")
 	public String regist() {
 		return "admin/branch/local_regist";
 	}
 	
-	//지역 등록 메소드
-	@PostMapping
-	public String regist(@ModelAttribute BranchDto branchDto) {
-		return "redirect:branch_regist";
+	@PostMapping("branch/local_regist")
+	public String regist(@RequestParam String local_name) {
+		localDao.regist(local_name);
+		return "redirect:local_regist";
 	}
 }

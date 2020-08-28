@@ -1,5 +1,8 @@
 package com.kh.finalproject.repository;
 
-public class BranchDaoImpl {
+import org.springframework.stereotype.Repository;
 
+@Repository
+public class BranchDaoImpl implements BranchDao{
+	
 }
