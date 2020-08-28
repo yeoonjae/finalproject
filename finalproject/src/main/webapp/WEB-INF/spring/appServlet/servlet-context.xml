@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 스프링 핵심 부품인 DispatcherServlet이 알아야 할 설정을 등록 -->
+	
+	<!-- Enables the Spring MVC @Controller programming model (@Controller 같은 annotation을 활성화) -->
+	<annotation-driven />
+	
+	<!-- 
+		base-package에 설정된 패키지와 그 이하 패키지를 감시하여
+		등록 가능한 도구(Component)를 모두 찾아서 자동 등록하는 설정
+		- @Service, @Repository 는 배제
+	 -->
+	<context:component-scan base-package="com.kh.finalproject">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+	</context:component-scan>
+	
+		<!-- 
+		주소 자동 완성 도구 등록
+		 - 매번 /WEB-INF/views/ooo.jsp 적기 귀찮으니 자동완성
+		 - view resolver라는 도구를 등록(스프링에서 제공)
+	 -->
+	 <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	 	<beans:property name="prefix" value="/WEB-INF/views/"></beans:property>
+	 	<beans:property name="suffix" value=".jsp"></beans:property>
+	 </beans:bean>
+	 
+	 <!-- 
+	 	정적 자원은 DispatcherServlet이 처리하면 안된다
+	 	- 있는 그대로 사전 처리 없이 접근하도록 해야함
+	 	- lovation은 실제 위치를 작성
+	 	- mapping은 접근할 주소를 작성
+	 	- **은 하위 모든 내용을 의미
+	  -->
+	  <resources location="/resources/" mapping="/res/**"></resources>
+	
+	<!-- 
+		파일 업로드를 처리하는 도구
+		(multipart/form-data 요청을 처리하는 도구)
+		
+		(주의) 아이디는 무조건 multipartResolver라고 지어야 한다
+	 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="UTF-8"></beans:property>
+		<beans:property name="maxUploadSize" value="10000000"></beans:property>
+		<beans:property name="maxUploadSizePerFile" value="5000000"></beans:property>
+	</beans:bean>
+	
+	<!-- 
+		인터셉터 등록 
+		- mvc 설정 사용
+		- 범위 설정 시 * 와 **는 차이가 있음
+		- exclue-mapping을 사용하면 주소의 뺄샘이 가능
+		
+		예시
+		<interceptors>
+			<interceptor>
+				<mapping path="/**"/>
+				<exclude-mapping path="/test"/>
+				<beans:bean class="com.kh.spring15.interceptor.TestInterceptor"></beans:bean>
+			</interceptor>
+		</interceptors>
+	-->
+	
+	<!-- 
+		웹소켓 작업을 처리하는 서버를 등록
+		- websocket 관련 설정 태그가 필요(namespace를 추가)
+	 
+	<beans:bean id="basicServer" class="com.kh.spring24.websocket.WebSocketBasicServer"></beans:bean>
+	<beans:bean id="groupServer" class="com.kh.spring24.websocket.WebSocketGroupServer"></beans:bean>
+	<beans:bean id="memberServer" class="com.kh.spring24.websocket.WebSocketMemberServer"></beans:bean>
+	<websocket:handlers>
+		접속주소는 ws://localhost:8080/spring24/basic
+		<websocket:mapping handler="basicServer" path="/basic"/>
+		<websocket:mapping handler="groupServer" path="/group"/>
+		<websocket:mapping handler="memberServer" path="/member"/>
+		
+		설정추가 : HttpSession의 정보를 가져오기 위한 도구 등록
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></beans:bean>
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
+	-->
+	
+	
+</beans:beans>
