@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.finalproject.repository.LocalDao;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/branch")
 public class LocalController {
 
 	@Autowired
 	private LocalDao localDao;
 	
-	@GetMapping("branch/local_regist")
+	@GetMapping("local_regist")
 	public String regist() {
 		return "admin/branch/local_regist";
 	}
 	
-	@PostMapping("branch/local_regist")
+	@PostMapping("local_regist")
 	public String regist(@RequestParam String local_name) {
 		localDao.regist(local_name);
 		return "redirect:local_regist";
