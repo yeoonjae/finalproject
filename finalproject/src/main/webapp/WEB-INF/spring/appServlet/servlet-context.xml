@@ -37,12 +37,11 @@
 	 <!-- 
 	 	정적 자원은 DispatcherServlet이 처리하면 안된다
 	 	- 있는 그대로 사전 처리 없이 접근하도록 해야함
-	 	- lovation은 실제 위치를 작성
+	 	- location은 실제 위치를 작성
 	 	- mapping은 접근할 주소를 작성
 	 	- **은 하위 모든 내용을 의미
 	  -->
-	  <resources location="/resources/" mapping="/res/**"></resources>
-	
+	<resources location="/resources/" mapping="/resources/**"></resources>
 	<!-- 
 		파일 업로드를 처리하는 도구
 		(multipart/form-data 요청을 처리하는 도구)
