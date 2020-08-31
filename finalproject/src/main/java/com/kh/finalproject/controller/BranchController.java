@@ -17,13 +17,13 @@ public class BranchController {
 	@Autowired
 	private BranchDao branchDao;
 	
-	@GetMapping
+	@GetMapping("/local_regist")
 	public String regist() {
 		return "admin/branch/local_regist";
 	}
 	
 	//지역 등록 메소드
-	@PostMapping
+	@PostMapping("/local_regist")
 	public String regist(@ModelAttribute BranchDto branchDto) {
 		return "redirect:branch_regist";
 	}
