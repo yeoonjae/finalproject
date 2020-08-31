@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +16,9 @@
 		}
 		.table {
 			text-align: center;
+		}
+		.jumbotron {
+			padding: 1rem 1rem;
 		}
 	</style>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script>
@@ -63,11 +67,11 @@
 <body>
     <div class="container-fluid">
         <div class="jumbotron">
-            <h1 class="text-center">마일리지 유형 등록</h1>
+            <h3 class="text-center">마일리지 유형 등록</h3>
         </div>
         <!-- 마일리지 유형 등록 -->
         <div class="row">
-            <div class="offset-sm-4 col-sm-4">
+            <div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
                 <form action="regist" method="post" class="form">
                 	<!-- 마일리지 유형 선택 -->
                     <div class="form-group">
@@ -95,7 +99,7 @@
         <br><br>
         <!-- 마일리지 유형 목록 -->
         <div class="row">
-		    <div class="offset-sm-4 col-sm-4">
+		    <div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
 			    <table class="table table-sm table-hover">
 			    	<thead class="thead-light">
 			    		<tr>
@@ -137,3 +141,4 @@
     </div>
 </body>
 </html>
+<jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>
