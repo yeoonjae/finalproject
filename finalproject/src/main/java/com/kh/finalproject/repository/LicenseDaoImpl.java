@@ -25,4 +25,11 @@ public class LicenseDaoImpl implements LicenseDao{
 	public List<LicenseDto> getList() {
 		return sqlSession.selectList("license.license_getList");
 	}
+
+	@Override
+	public void delete(int license_no) {
+		sqlSession.delete("license.license_delete",license_no);
+	}
+	
+
 }

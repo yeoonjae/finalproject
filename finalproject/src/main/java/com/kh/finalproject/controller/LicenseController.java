@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -29,15 +30,21 @@ public class LicenseController {
 	@PostMapping("/license_regist")
 	public String regist(@ModelAttribute LicenseDto licenseDto) {
 		licenseDao.regist(licenseDto);
-		return "redirect:license_regist";
+		return "redirect:license_list";
 	}
 	
 	// 이용권 목록 
-	@GetMapping("/license_getList")
+	@GetMapping("/license_list")
 	public String getList(Model model) {
-		
 		List<LicenseDto> list = licenseDao.getList();
 		model.addAttribute("list", list);
 		return "admin/license/license_list";
+	}
+	
+	// 이용권 삭제 
+	@GetMapping("/license_delete/{license_no}")
+	public String delete(@PathVariable int license_no) {
+		licenseDao.delete(license_no);
+		return "redirect:/admin/license/license_list";
 	}
 }

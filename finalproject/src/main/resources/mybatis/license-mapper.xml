@@ -20,12 +20,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!--  이용권 목록 조회 -->
 	<select id="license_getList" resultType="licenseDto">
-		SELECT * FROM license ORDER BY license_no DESC
+		SELECT * FROM license ORDER BY license_time ASC
 	</select>
 	
 	<!--  이용권 삭제  -->
-	<delete id="license_delete" parameterType="String">
-		DELETE license WHERE license_no=#{license_no};
+	<delete id="license_delete" parameterType="int">
+		DELETE license WHERE license_no=#{license_no}
 	</delete>
 	
 </mapper>

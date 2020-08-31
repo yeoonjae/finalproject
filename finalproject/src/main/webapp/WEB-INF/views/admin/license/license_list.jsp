@@ -13,9 +13,11 @@
 <body>
 	<h1> 이용권 목록 </h1>
 	<c:forEach var="licenseDto" items="${list}">
-		<h3>${licenseDto.license_no}</h3>
-		<h3>${licenseDto.license_time}</h3>
-		<h3>${licenseDto.license_price}</h3>
+		<div>
+			${licenseDto.license_no}) ${licenseDto.license_time}시간 ${licenseDto.license_price}원 
+			<a href="">수정</a>
+			<a href="license_delete/${licenseDto.license_no}">삭제</a>
+		</div>
 	</c:forEach>
 </body>
 </html>
