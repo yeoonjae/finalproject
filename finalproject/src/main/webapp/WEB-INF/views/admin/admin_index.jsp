@@ -102,7 +102,7 @@
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">관리자 로그인 메뉴</h6>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/login">로그인</a>
-            <a class="dropdown-item" href="#">계정등록</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/regist">계정등록</a>
             <a class="dropdown-item" href="#">비밀번호 찾기</a>
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Other Pages:</h6>

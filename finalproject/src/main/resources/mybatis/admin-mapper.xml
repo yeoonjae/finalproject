@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper는 구문을 만들 수 있는 영역 일반적으로 테이블당 1개씩의 mapper를 둔다 namespace : 영역을 외부에서 
+	부르기 위한 별칭 -->
+<mapper namespace="admin">
+	<insert id="regist" parameterType="adminDto">
+		insert into admin(
+			admin_no,
+			admin_auth,
+			admin_name,
+			admin_id,
+			admin_pw,
+			admin_join,
+			admin_login
+		)
+		values(
+		admin_seq.nextval,
+		'지점',
+		#{admin_name},
+		#{admin_id},
+		#{admin_pw},
+		sysdate,
+		null
+		)
+	</insert>
+</mapper>
