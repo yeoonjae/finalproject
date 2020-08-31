@@ -26,9 +26,17 @@ public class LicenseDaoImpl implements LicenseDao{
 		return sqlSession.selectList("license.license_getList");
 	}
 
+	//이용권 삭제 
 	@Override
 	public void delete(int license_no) {
 		sqlSession.delete("license.license_delete",license_no);
+	}
+
+	//이용권 수정
+	@Override
+	public void edit(int license_no) {
+		sqlSession.update("license.license_edit",license_no);
+		
 	}
 	
 

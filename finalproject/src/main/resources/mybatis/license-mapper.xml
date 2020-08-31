@@ -23,6 +23,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM license ORDER BY license_time ASC
 	</select>
 	
+	<!--  이용권 수정 -->
+	<update id="license_edit" parameterType="int">
+		UPDATE license 
+			SET license_time=#{license_time}, license_price=#{license_price} 
+			WHERE license_no=#{license_no}
+	
+	</update>
+	
 	<!--  이용권 삭제  -->
 	<delete id="license_delete" parameterType="int">
 		DELETE license WHERE license_no=#{license_no}

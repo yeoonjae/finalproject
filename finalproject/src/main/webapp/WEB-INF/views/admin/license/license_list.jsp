@@ -3,7 +3,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%-- <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,9 +15,10 @@
 	<c:forEach var="licenseDto" items="${list}">
 		<div>
 			${licenseDto.license_no}) ${licenseDto.license_time}시간 ${licenseDto.license_price}원 
-			<a href="">수정</a>
+			<a href="license_edit/${licenseDto.license_no}">수정</a>
 			<a href="license_delete/${licenseDto.license_no}">삭제</a>
 		</div>
 	</c:forEach>
 </body>
 </html>
+<%-- <jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include> --%>

@@ -41,6 +41,13 @@ public class LicenseController {
 		return "admin/license/license_list";
 	}
 	
+	// 이용권 수정 
+	@GetMapping("/license_edit/{license_no}")
+	public String edit(@PathVariable int license_no) {
+		licenseDao.edit(license_no);
+		return "redirect:/admin/license/license_list";
+	}
+	
 	// 이용권 삭제 
 	@GetMapping("/license_delete/{license_no}")
 	public String delete(@PathVariable int license_no) {
