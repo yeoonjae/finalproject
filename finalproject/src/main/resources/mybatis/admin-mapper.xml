@@ -25,4 +25,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		null
 		)
 	</insert>
+	<select id="get" parameterType="int" resultType="adminDto">
+		select * from admin where #{admin_no}
+	</select>
+	<select id="getNo" parameterType="String" resultType="int">
+		select admin_no from admin where #{admin_id} 
+	</select>
+	<update id="edit" parameterType="adminDto">
+		update admin set admin_name=#{admin_name}, admin_id=#{admin_id}, admin_pw=#{admin_pw} where admin_no=#{admin_no}
+	</update>
+	<select id="list1" resultType="adminDto">
+		select * from admin order by admin_no asc
+	</select>
+	<select id="list2" parameterType="map" resultType="adminDto">
+		select * from admin order by ${col} ${order}
+	</select>
 </mapper>

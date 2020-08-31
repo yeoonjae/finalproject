@@ -1,5 +1,9 @@
 package com.kh.finalproject.repository;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,11 +17,51 @@ public class AdminDaoImpl implements AdminDao {
 	private SqlSession sqlSession;
 	@Autowired
 	private PasswordEncoder encoder;
+
 	@Override
 	public void regist(AdminDto adminDto) {
-			//String enc = encoder.encode(adminDto.getAdmin_pw());
-			//adminDto.setAdmin_pw(enc);
-			sqlSession.insert("admin.regist", adminDto);
+		// String enc = encoder.encode(adminDto.getAdmin_pw());
+		// adminDto.setAdmin_pw(enc);
+		sqlSession.insert("admin.regist", adminDto);
+	}
+	@Override
+	public boolean login(String id, String password) {
+		AdminDto find = sqlSession.selectOne("admin.get", id);
+		if (find != null) {
+			boolean pass = encoder.matches(password, find.getAdmin_pw());
+			if (pass) {
+				return true;
+			}
 		}
-	
-	} 
+		return false;
+	}
+	@Override
+	public AdminDto get(int no) {
+		return sqlSession.selectOne("admin.get",no);
+	}
+	@Override
+	public int getNo(String id) {
+		return sqlSession.selectOne("admin.getNo", id);
+	}
+	@Override
+	public void edit(AdminDto adminDto) {
+		// TODO Auto-generated method stub
+		sqlSession.update("admin.edit", adminDto);	
+	}
+	@Override
+	public void delete(int admin_no) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("admin.delete", admin_no);
+	}
+	@Override
+	public List<AdminDto> getList() {
+		return sqlSession.selectList("admin.list1");
+	}
+	@Override
+	public List<AdminDto> getList(String col, String order) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("col", col);
+		map.put("order", order);
+		return sqlSession.selectList("admin.list2", map);
+	}
+}
