@@ -149,7 +149,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">유형 관리</h6>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/regist">마일리지 등록</a>
+            <a class="dropdown-item" href="point/regist">마일리지 등록</a>
             <h6 class="dropdown-header">회원 관리</h6>
             <a class="dropdown-item" href="#">마일리지 적립/소멸</a>
             <a class="dropdown-item" href="#">마일리지 조회</a>
