@@ -3,6 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
+<script>
+
+function deleteConfirm(){
+	var isDelete=comfirm("삭제하시겠습니까?");
+	if(isDelete){
+		location.href="license_delete/${licenseDto.license_no}"
+	}
+}
+</script>
 <div id="content-wrapper">
 
 	<div class="container-fluid">
@@ -34,7 +43,7 @@
 									<td>${licenseDto.license_time}</td>
 									<td>${licenseDto.license_price}</td>
 									<td  align="center"><a href="license_edit/${licenseDto.license_no}">수정</a></td>
-									<td  align="center"><a href="license_delete/${licenseDto.license_no}">삭제</a></td>
+									<td  align="center"><a href="license_delete/${licenseDto.license_no}" onclick="if(!confirm('삭제하시겠습니까?')){return false;}">삭제</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>

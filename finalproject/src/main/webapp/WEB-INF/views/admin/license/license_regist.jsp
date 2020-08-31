@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
               <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="가격" required="required" name="license_price">
+                <input type="text" id="inputPassword" class="form-control" placeholder="가격" required="required" name="license_price">
                 <label for="inputPassword">가격</label>
               </div>
             </div>
