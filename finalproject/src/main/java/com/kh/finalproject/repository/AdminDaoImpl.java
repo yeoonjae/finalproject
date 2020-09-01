@@ -24,6 +24,8 @@ public class AdminDaoImpl implements AdminDao {
 	}
 	@Override
 	public void regist(AdminDto adminDto) {
+		String enc = encoder.encode(adminDto.getAdmin_pw());
+		adminDto.setAdmin_pw(enc);
 		sqlSession.insert("admin.regist", adminDto);
 	}
 	@Override
@@ -38,8 +40,8 @@ public class AdminDaoImpl implements AdminDao {
 		return false;
 	}
 	@Override
-	public AdminDto get(int no) {
-		return sqlSession.selectOne("admin.get",no);
+	public AdminDto get(int admin_no) {
+		return sqlSession.selectOne("admin.get",admin_no);
 	}
 	@Override
 	public int getNo(String id) {

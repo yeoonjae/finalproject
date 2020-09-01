@@ -10,7 +10,7 @@ public interface AdminDao {
 
 	boolean login(String id, String password);
 
-	AdminDto get(int no);
+	AdminDto get(int admin_no);
 
 	int getNo(String id);
 

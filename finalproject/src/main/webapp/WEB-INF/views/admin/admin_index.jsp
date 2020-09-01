@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -101,10 +102,23 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">관리자 로그인 메뉴</h6>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/login">로그인</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/regist">계정등록</a>
-            <a class="dropdown-item" href="#">비밀번호 찾기</a>
-            <div class="dropdown-divider"></div>
+         <c:set var="rootPath" value="${pageContext.request.contextPath}"></c:set>
+<%--          <c:choose>   --%>
+<%--          <c:when test="${admininfo.admin_auth eq '본점'}"> --%>
+            		<a class="dropdown-item" href="logout.do">로그아웃</a>
+					<a class="dropdown-item" href="regist">계정등록</a>
+					<a class="dropdown-item" href="list">계정 리스트</a>         	 	
+<%--         </c:when> --%>
+<%-- 		<c:when test="${admininfo.admin_auth eq '지점'}"> --%>
+            		<a class="dropdown-item" href="logout.do">로그아웃</a>
+            		<a class="dropdown-item" href="info/{no}">계정정보/수정</a>
+<%--         </c:when> --%>
+<%-- 		<c:otherwise> --%>
+					<a class="dropdown-item" href="login">로그인</a>
+					<a class="dropdown-item" href="#">비밀번호 찾기</a>		
+<%-- 		</c:otherwise> --%>
+<%--         </c:choose>                   --%>
+        <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Other Pages:</h6>
             <a class="dropdown-item" href="404.jsp">404 Page</a>
             <a class="dropdown-item" href="blank.jsp">Blank Page</a>

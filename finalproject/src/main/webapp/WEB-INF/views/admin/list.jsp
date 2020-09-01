@@ -23,9 +23,10 @@
 				<td>${adminDto.admin_pw}</td>
 				<td>${adminDto.admin_join}</td>
 				<td>${adminDto.admin_login}</td>
-				<td><a href="info/${adminDto.admin_no}">관리자 정보</a> | <a
-					href="edit/${adminDto.admin_no}">수정</a> | <a
-					href="delete/${adminDto.admin_no}">삭제</a></td>
+				<td><a href="info?admin_no=${adminDto.admin_no}">관리자 정보</a> | <a
+					href="edit?admin_no=${adminDto.admin_no}">수정</a> | <a
+					href="delete?admin_no=${adminDto.admin_no}">삭제</a>
+				</td>
 			</tr>
 		</c:forEach>
 	</tbody>

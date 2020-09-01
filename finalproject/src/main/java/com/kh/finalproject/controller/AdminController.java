@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend.Attr;
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.repository.AdminDao;
 import com.kh.finalproject.service.EmailService;
@@ -40,31 +41,31 @@ public class AdminController {
 	}
 	@PostMapping("/regist")
 	public String regist(@ModelAttribute AdminDto adminDto, @RequestParam String email) {
-		adminDao.regist(adminDto);
 		String text = emailService.documentation(adminDto);
 		emailService.sendSimpleMessage(email, "공돌이 관리자 계정", text);
-		return "redirect:regist_result";
+		adminDao.regist(adminDto);
+		return "admin/regist_result";
 	}
 	//관리자 정보 조회
-	@GetMapping("/info/{no}")
-	public String info(@PathVariable int no, Model model) {
-		AdminDto adminDto = adminDao.get(no);
+	@GetMapping("/info")
+	public String info(@RequestParam int admin_no, Model model) {
+		AdminDto adminDto = adminDao.get(admin_no);
 		model.addAttribute("adminDto", adminDto);
 		return "admin/info";
 	}
 	//관리자 정보 수정
-	@GetMapping("/edit/{no}")
-	public String edit(Model model, @PathVariable int no) {
-		AdminDto adminDto = adminDao.get(no);
+	@GetMapping("/edit")
+	public String edit(Model model, @RequestParam int admin_no) {
+		AdminDto adminDto = adminDao.get(admin_no);
 		model.addAttribute("adminDto", adminDto);
 		return "admin/edit";
 	}
-	@PostMapping("/edit/{no}")
-	public String edit(@ModelAttribute AdminDto adminDto, Model model, @PathVariable int no) {
+	@PostMapping("/edit")
+	public String edit(@RequestParam int admin_no, @ModelAttribute AdminDto adminDto, Model model) {
 		adminDao.edit(adminDto);
-		AdminDto get = adminDao.get(no);
+		AdminDto get = adminDao.get(adminDto.getAdmin_no());
 		model.addAttribute("adminDto", get);
-		return "redirect:info";
+		return "admin/info";
 	}
 	//관리자 정보 리스트
 	@GetMapping("/list")
@@ -77,10 +78,10 @@ public class AdminController {
 		return "admin/list";
 	}
 	//관리자 정보 삭제(본점)
-	@GetMapping("/delete/{no}")
-	public String listdelete(@PathVariable int no) {
-		adminDao.delete(no);
-		return "admin/list";
+	@GetMapping("/delete")
+	public String listdelete(@RequestParam int admin_no) {
+		adminDao.delete(admin_no);
+		return "redirect:list";
 	}
 	//로그인
 	@GetMapping("/login")
