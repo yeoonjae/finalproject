@@ -6,16 +6,18 @@
 
 <h2>계정 등록</h2>
 <div>
+<label>번호</label>
+${admin_no}
 <label>아이디</label>
-<input type="text" name="admin_id" required value="study">
+<input type="text" name="admin_id" required value="study${admin_no}">
 </div>
 <div>
 <label>비밀번호</label>
-<input type="text" name="admin_pw" required value="study">
+<input type="text" name="admin_pw" required value="study${admin_no}">
 </div>
 <div>
 <label>이름</label>
-<input type="text" name="admin_name"required value="study">
+<input type="text" name="admin_name"required value="study${admin_no}">
 </div>
 <div>
 <label>이메일</label>

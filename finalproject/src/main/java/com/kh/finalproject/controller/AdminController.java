@@ -4,11 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,8 +33,9 @@ public class AdminController {
 	}
 	//관리자 등록
 	@GetMapping("/regist")
-	public String join() {
-		
+	public String regist(Model model) {
+		int admin_no = adminDao.getSeq();
+		model.addAttribute("admin_no", admin_no);
 		return "admin/regist";
 	}
 	@PostMapping("/regist")
@@ -42,23 +45,28 @@ public class AdminController {
 		emailService.sendSimpleMessage(email, "공돌이 관리자 계정", text);
 		return "redirect:regist_result";
 	}
+	//관리자 정보 조회
+	@GetMapping("/info/{no}")
+	public String info(@PathVariable int no, Model model) {
+		AdminDto adminDto = adminDao.get(no);
+		model.addAttribute("adminDto", adminDto);
+		return "admin/info";
+	}
 	//관리자 정보 수정
-	@GetMapping("/edit")
-	public String edit(Model model, HttpSession session) {
-		AdminDto adminDto = (AdminDto) session.getAttribute("admininfo");
-		AdminDto find = adminDao.get(adminDto.getAdmin_no());
-		model.addAttribute("adminDto", find);
+	@GetMapping("/edit/{no}")
+	public String edit(Model model, @PathVariable int no) {
+		AdminDto adminDto = adminDao.get(no);
+		model.addAttribute("adminDto", adminDto);
 		return "admin/edit";
 	}
-	@PostMapping("/edit")
-	public String edit(@ModelAttribute AdminDto adminDto, Model model) {
+	@PostMapping("/edit/{no}")
+	public String edit(@ModelAttribute AdminDto adminDto, Model model, @PathVariable int no) {
 		adminDao.edit(adminDto);
-		int no = adminDto.getAdmin_no();
 		AdminDto get = adminDao.get(no);
 		model.addAttribute("adminDto", get);
 		return "redirect:info";
 	}
-	////////
+	//관리자 정보 리스트
 	@GetMapping("/list")
 	public String list(
 			Model model, 
@@ -68,11 +76,10 @@ public class AdminController {
 		model.addAttribute("list", list);
 		return "admin/list";
 	}
-	//관리자 정보 수정(본점)
 	//관리자 정보 삭제(본점)
-	@GetMapping("/list/delete")
-	public String delete(@ModelAttribute AdminDto adminDto) {
-		adminDao.delete(adminDto.getAdmin_no());
+	@GetMapping("/delete/{no}")
+	public String listdelete(@PathVariable int no) {
+		adminDao.delete(no);
 		return "admin/list";
 	}
 	//로그인

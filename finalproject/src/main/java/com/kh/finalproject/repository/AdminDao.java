@@ -20,4 +20,6 @@ public interface AdminDao {
 	List<AdminDto> getList();
 	List<AdminDto> getList(String col, String order);
 
+	int getSeq();
+
 }

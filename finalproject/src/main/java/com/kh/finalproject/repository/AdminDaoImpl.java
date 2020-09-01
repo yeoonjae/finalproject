@@ -19,9 +19,11 @@ public class AdminDaoImpl implements AdminDao {
 	private PasswordEncoder encoder;
 
 	@Override
+	public int getSeq() {
+		return sqlSession.selectOne("admin.getSeq");
+	}
+	@Override
 	public void regist(AdminDto adminDto) {
-		// String enc = encoder.encode(adminDto.getAdmin_pw());
-		// adminDto.setAdmin_pw(enc);
 		sqlSession.insert("admin.regist", adminDto);
 	}
 	@Override
@@ -45,7 +47,8 @@ public class AdminDaoImpl implements AdminDao {
 	}
 	@Override
 	public void edit(AdminDto adminDto) {
-		// TODO Auto-generated method stub
+		 String enc = encoder.encode(adminDto.getAdmin_pw());
+		 adminDto.setAdmin_pw(enc);
 		sqlSession.update("admin.edit", adminDto);	
 	}
 	@Override
@@ -64,4 +67,5 @@ public class AdminDaoImpl implements AdminDao {
 		map.put("order", order);
 		return sqlSession.selectList("admin.list2", map);
 	}
+	
 }

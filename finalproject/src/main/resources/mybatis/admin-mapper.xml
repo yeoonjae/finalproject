@@ -5,6 +5,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- mapper는 구문을 만들 수 있는 영역 일반적으로 테이블당 1개씩의 mapper를 둔다 namespace : 영역을 외부에서 
 	부르기 위한 별칭 -->
 <mapper namespace="admin">
+	<select id="getSeq" resultType="int">
+		select admin_seq.nextval from admin_seq
+	</select>
 	<insert id="regist" parameterType="adminDto">
 		insert into admin(
 			admin_no,
@@ -16,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			admin_login
 		)
 		values(
-		admin_seq.nextval,
+		#{admin_no},
 		'지점',
 		#{admin_name},
 		#{admin_id},
