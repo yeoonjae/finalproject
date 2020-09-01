@@ -132,14 +132,9 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">지점관리 메뉴</h6>
-            <a class="dropdown-item" href="local_regist">지역등록</a>
-            <a class="dropdown-item" href="login">지점등록</a>
-            <a class="dropdown-item" href="#">지점별 회원 현황</a>
-            <a class="dropdown-item" href="#">지점 수정 및 삭제</a>
-            <div class="dropdown-divider"></div>
-            <h6 class="dropdown-header">Other Pages:</h6>
-            <a class="dropdown-item" href="404.jsp">404 Page</a>
-            <a class="dropdown-item" href="blank.jsp">Blank Page</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/local_regist">지역등록</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/branch_regist">지점등록</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/list">지점별 관리</a>
           </div>
         </li>        
         <li class="nav-item dropdown">
