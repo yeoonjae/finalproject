@@ -8,5 +8,5 @@ public interface LicenseDao {
 	public void regist(LicenseDto licenseDto);
 	public List<LicenseDto> getList();
 	public void delete(int license_no);
-	public void edit(int license_no);
+	public void edit(LicenseDto licenseDto);
 }

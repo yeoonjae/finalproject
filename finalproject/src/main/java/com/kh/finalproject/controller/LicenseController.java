@@ -43,11 +43,11 @@ public class LicenseController {
 	}
 	
 	// 이용권 수정 
-	@GetMapping("/license_edit/{license_no}")
+	@PostMapping("/license_edit")
 	@ResponseBody
-	public String edit(@PathVariable int license_no) {
-		licenseDao.edit(license_no);
-		return "redirect:/admin/license/license_list";
+	public String edit(@ModelAttribute LicenseDto licenseDto) {
+		licenseDao.edit(licenseDto);
+		return "admin/license/license_list";
 	}
 	
 	// 이용권 삭제 

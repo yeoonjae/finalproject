@@ -34,8 +34,8 @@ public class LicenseDaoImpl implements LicenseDao{
 
 	//이용권 수정
 	@Override
-	public void edit(int license_no) {
-		sqlSession.update("license.license_edit",license_no);
+	public void edit(LicenseDto licenseDto) {
+		sqlSession.update("license.license_edit",licenseDto);
 		
 	}
 	
