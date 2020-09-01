@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.finalproject.entity.LicenseDto;
 import com.kh.finalproject.repository.LicenseDao;
@@ -43,6 +44,7 @@ public class LicenseController {
 	
 	// 이용권 수정 
 	@GetMapping("/license_edit/{license_no}")
+	@ResponseBody
 	public String edit(@PathVariable int license_no) {
 		licenseDao.edit(license_no);
 		return "redirect:/admin/license/license_list";
