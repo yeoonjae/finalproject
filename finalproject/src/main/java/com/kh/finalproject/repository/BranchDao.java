@@ -3,6 +3,7 @@ package com.kh.finalproject.repository;
 import java.util.List;
 
 import com.kh.finalproject.entity.BranchDto;
+import com.kh.finalproject.entity.BranchImgDto;
 
 public interface BranchDao {
 	//지점 등록 메소드(지점 번호 반환)
@@ -15,4 +16,8 @@ public interface BranchDao {
 	BranchDto get(int branch_no);
 	//지점 수정
 	void edit(BranchDto branchDto);
+	//지점 이미지 시퀀스
+	int imgGetSeq();
+	//지점 이미지 등록
+	void imgRegist(BranchImgDto branchImgDto);
 }

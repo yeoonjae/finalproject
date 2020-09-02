@@ -1,5 +1,7 @@
 package com.kh.finalproject.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
+import com.kh.finalproject.entity.BranchImgDto;
 import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.repository.AdminDao;
 import com.kh.finalproject.repository.BranchDao;
@@ -45,8 +48,26 @@ public class BranchController {
 	
 	//지점 등록 메소드
 	@PostMapping("/branch_regist")
-	public String regist(Model model,@ModelAttribute BranchDto branchDto) {
+	public String regist(Model model,@ModelAttribute BranchDto branchDto,@RequestParam List<MultipartFile> file) throws IllegalStateException, IOException {
 		int branch_no = branchDao.regist(branchDto);
+		if(file.size() > 0 && !file.get(0).isEmpty()) {
+			for(MultipartFile f : file) {
+				//DB에 저장
+				int img_no = branchDao.imgGetSeq();
+				BranchImgDto branchImgDto = new BranchImgDto();
+				branchImgDto.setBranch_img_no(img_no);
+				branchImgDto.setBranch_img_name(Integer.toString(img_no));
+				branchImgDto.setBranch_img_size(f.getSize());
+				branchImgDto.setBranch_img_type(f.getContentType());
+				branchImgDto.setBranch_no(branch_no);
+				branchDao.imgRegist(branchImgDto);
+				
+				//하드디스크에 저장
+				File target = new File("D:/upload",f.getOriginalFilename());
+				f.transferTo(target);
+				
+			}
+		}
 		return "redirect:list";
 	}
 	

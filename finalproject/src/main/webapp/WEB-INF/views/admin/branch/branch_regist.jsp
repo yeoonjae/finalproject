@@ -45,7 +45,7 @@
 		<div class="container-form offset-sm-3 col-sm-6 offset-md-3 col-md-6">
 			<br>
 			<br>
-			<form action="branch_regist" method="post">
+			<form action="branch_regist" method="post" enctype="multipart/form-data">
 				
 					<fieldset>
 						<legend>지점등록</legend><br>
@@ -66,7 +66,7 @@
 						</div>
 						<div class="form-group">
 							<label for="exampleSelect2">지점 관리자 선택</label> 
-							<select class="form-control" id="exampleSelect2" required>
+							<select class="form-control" id="exampleSelect2" required name="admin_no">
 								<c:forEach var="admin" items="${admin}" >
 									<option value="${admin.admin_no}">
 										${admin.admin_name}
@@ -94,12 +94,8 @@
 								placeholder="숫자만 적어주세요" required>
 						</div>
 						<div class="form-group">
-							<label for="exampleInputFile">File input</label> <input
-								type="file" class="form-control-file" id="exampleInputFile"
-								aria-describedby="fileHelp"> <small id="fileHelp"
-								class="form-text text-muted">This is some placeholder
-								block-level help text for the above input. It's a bit lighter
-								and easily wraps to a new line.</small>
+							<label for="exampleInputFile">File input</label> 
+							<input type="file" class="form-control-file" name="file" id="exampleInputFile" multiple accept=".jpg,.png,.gif">
 						</div>
 					</fieldset>
 				<input class="btn col-sm-12 btn-outline-secondary btn-block" type="submit"
