@@ -29,10 +29,10 @@ public class AdminDaoImpl implements AdminDao {
 		sqlSession.insert("admin.regist", adminDto);
 	}
 	@Override
-	public boolean login(String id, String password) {
-		AdminDto find = sqlSession.selectOne("admin.get", id);
+	public boolean login(String admin_id, String admin_pw) {
+		AdminDto find = sqlSession.selectOne("admin.getLogin", admin_id);
 		if (find != null) {
-			boolean pass = encoder.matches(password, find.getAdmin_pw());
+			boolean pass = encoder.matches(admin_pw, find.getAdmin_pw());
 			if (pass) {
 				return true;
 			}

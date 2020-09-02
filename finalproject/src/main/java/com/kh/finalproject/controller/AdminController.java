@@ -20,6 +20,8 @@ import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.repository.AdminDao;
 import com.kh.finalproject.service.EmailService;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -97,8 +99,9 @@ public class AdminController {
 			int no = adminDao.getNo(admin_id);
 			AdminDto find = adminDao.get(no);
 			session.setAttribute("admininfo", find);
+		return "admin/admin_index";
 		}
-		return "admin/";
+		return "admin/login?error";
 	}
 	//로그아웃
 	@GetMapping("/logout")

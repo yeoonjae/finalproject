@@ -28,6 +28,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		null
 		)
 	</insert>
+	<select id ="getLogin" parameterType="String" resultType="adminDto">
+		select * from admin where admin_id=#{admin_id}
+	</select>
 	<select id="get" parameterType="int" resultType="adminDto">
 		select * from admin where admin_no=#{admin_no}
 	</select>
