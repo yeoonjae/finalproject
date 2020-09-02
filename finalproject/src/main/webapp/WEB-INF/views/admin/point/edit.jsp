@@ -77,23 +77,23 @@
 	                <form action="edit" method="post" class="form">
 	                	<div class="form-group">
 	                        <label>유형번호</label> <span class="select-result on">수정할 유형을 아래 목록에서 선택해주세요</span>
-	                		<input type="text" class="form-control point_no" name="point_no" value="${pointDto.point_no}" disabled required>
+	                		<input type="text" class="form-control point_no" name="point_no" readonly required>
 	                	</div>
 	                    <div class="form-group">
 	                        <label>유형선택</label>
 	                        <select name="point_type" class="form-control point_type" required>
-	                            <option ${pointDto.point_type=="적립"?'selected':''}>적립</option>
-	                            <option ${pointDto.point_type=="차감"?'selected':''}>차감</option>
+	                            <option>적립</option>
+	                            <option>차감</option>
 	                        </select>
 	                    </div>
 	                    <div class="form-group">
 	                        <label>상세내용</label>
-	                        <input type="text" name="point_detail" placeholder="상세내용을 입력하세요" class="form-control point_detail" value="${pointDto.point_detail}" required>
+	                        <input type="text" name="point_detail" placeholder="상세내용을 입력하세요" class="form-control point_detail" required>
 	                        <span class="detail_result"></span>
 	                    </div>
 	                    <div class="form-group">
 	                        <label>마일리지</label>
-	                        <input type="text" name="point_score" placeholder="마일리지를 입력하세요" class="form-control point_score" value="${pointDto.point_score}" required>
+	                        <input type="text" name="point_score" placeholder="마일리지를 입력하세요" class="form-control point_score" required>
 	                    </div>
 	                    <button class="btn btn-primary btn-block btn-edit" disabled>수정</button>
 	                </form>
