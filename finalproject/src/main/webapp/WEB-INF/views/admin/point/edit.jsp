@@ -17,9 +17,13 @@
 		.table {
 			text-align: center;
 		}
-		.select-result {
+		.select-result.on {
+			display: inline-block;
 			color: red;
 			font-size: small;
+		}
+		.select-result {
+			display: none;
 		}
 	</style>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script>
@@ -28,51 +32,35 @@
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
 <script>
         $(function(){
-        	var span = document.querySelector(".select-result");
-        	
+        	      	
             $("#order").change(function(){
             	document.querySelector(".list-form").submit();
             });
             
             $(".btn-select").click(function(){
-            	var point_no = $(this).next().val();
-            	axios({
-            		url: "${pageContext.request.contextPath}/test/point/get?point_no="+point_no,
-                    method:"get"
-            	}).then(function(response){
-            		if(response.data) {
-            			var input = document.querySelector(".point_no");
-            			var detail = document.querySelector("input[name=point_detail]");
-            			var score = document.querySelector("input[name=point_score]");
-            			var type = document.querySelector(".point_type");
-            			
-            			input.value = response.data.point_no;
-            			detail.value = response.data.point_detail;
-            			score.value = response.data.point_score;
-            			type.value = response.data.point_type;
-            		}
-            	});
-            	
-            	span.textContent = "";
+       			$(".point_no").val($(this).data("no"));
+       			$(".point_type").val($(this).data("type"));
+       			$(".point_detail").val($(this).data("detail"));
+       			$(".point_score").val($(this).data("score"));   
+       			
+       			$(".btn-edit").attr("disabled", false);
+       			$(".select-result").removeClass("on");
             });
             
             $(".btn-edit").click(function(e){
-            	var point_no = document.querySelector(".point_no").value;
-            	
-            	if(!point_no) {
-            		span.textContent = "수정할 유형을 아래 목록에서 선택해주세요";
-            	}
-            	
             	if(confirm("정말 수정하시겠습니까?")){
-            		if(point_no){
-            			document.querySelector(".form").submit();            			
-            		} else {
-            			e.preventDefault();
-            		}
+            		document.querySelector(".form").submit();
             	} else {
             		e.preventDefault();
             	}
             });
+        });
+        
+        $(window).on("load", function(){
+        	if($(".point_no").val()) {
+        		$(".select-result").removeClass("on");
+        		$(".btn-edit").attr("disabled", false);
+        	}
         });
     </script>
 <div id="content-wrapper">
@@ -88,7 +76,7 @@
 				<div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
 	                <form action="edit" method="post" class="form">
 	                	<div class="form-group">
-	                        <label>유형번호</label> <span class="select-result"></span>
+	                        <label>유형번호</label> <span class="select-result on">수정할 유형을 아래 목록에서 선택해주세요</span>
 	                		<input type="text" class="form-control point_no" name="point_no" value="${pointDto.point_no}" disabled required>
 	                	</div>
 	                    <div class="form-group">
@@ -100,14 +88,14 @@
 	                    </div>
 	                    <div class="form-group">
 	                        <label>상세내용</label>
-	                        <input type="text" name="point_detail" placeholder="상세내용을 입력하세요" class="form-control" value="${pointDto.point_detail}" required>
+	                        <input type="text" name="point_detail" placeholder="상세내용을 입력하세요" class="form-control point_detail" value="${pointDto.point_detail}" required>
 	                        <span class="detail_result"></span>
 	                    </div>
 	                    <div class="form-group">
 	                        <label>마일리지</label>
-	                        <input type="text" name="point_score" placeholder="마일리지를 입력하세요" class="form-control" value="${pointDto.point_score}" required>
+	                        <input type="text" name="point_score" placeholder="마일리지를 입력하세요" class="form-control point_score" value="${pointDto.point_score}" required>
 	                    </div>
-	                    <button class="btn btn-primary btn-block btn-edit">수정</button>
+	                    <button class="btn btn-primary btn-block btn-edit" disabled>수정</button>
 	                </form>
             	</div>
 			</div>
@@ -144,8 +132,9 @@
 										<td>${pointDto.point_detail}</td>
 										<td>${pointDto.point_score}</td>
 										<td>
-											<button class="btn btn-primary btn-select">선택</button>
-											<input name="point_no" type="hidden" value="${pointDto.point_no}">
+											<button class="btn btn-primary btn-select"
+											data-no="${pointDto.point_no}" data-type="${pointDto.point_type}" 
+											data-detail="${pointDto.point_detail}" data-score="${pointDto.point_score}">선택</button>
 										</td>
 									</tr>
 								</c:forEach>
