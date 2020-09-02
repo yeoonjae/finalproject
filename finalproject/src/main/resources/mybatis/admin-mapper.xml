@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from admin where admin_no=#{admin_no}
 	</select>
 	<select id="getNo" parameterType="String" resultType="int">
-		select admin_no from admin where admin_no=#{admin_id} 
+		select admin_no from admin where admin_id=#{admin_id} 
 	</select>
 	<update id="edit" parameterType="adminDto">
 		update admin set admin_name=#{admin_name}, admin_pw=#{admin_pw} where admin_no=#{admin_no}

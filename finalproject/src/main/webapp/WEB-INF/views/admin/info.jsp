@@ -11,5 +11,5 @@
 관리자 이름 : ${adminDto.admin_name}
 <br>
 <!-- <button type="button" onclick="location.href='joinUs.jsp' ">회원가입</button> -->
-<button href="edit/${adminDto.admin_no}">관리자 정보 수정</button>
+<button href="edit?admin_no=${adminDto.admin_no}">관리자 정보 수정</button>
 <jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>

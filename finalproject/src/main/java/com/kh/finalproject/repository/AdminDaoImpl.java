@@ -44,8 +44,8 @@ public class AdminDaoImpl implements AdminDao {
 		return sqlSession.selectOne("admin.get",admin_no);
 	}
 	@Override
-	public int getNo(String id) {
-		return sqlSession.selectOne("admin.getNo", id);
+	public int getNo(String admin_id) {
+		return sqlSession.selectOne("admin.getNo", admin_id);
 	}
 	@Override
 	public void edit(AdminDto adminDto) {

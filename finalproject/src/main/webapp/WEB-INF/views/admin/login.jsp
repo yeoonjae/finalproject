@@ -35,13 +35,13 @@
           <form action="${pageContext.request.contextPath}/admin/login" method="post">
             <div class="form-group">
               <div class="form-label-group">
-                <input type="text" id="inputEmail" class="form-control" placeholder="아이디" required="required" autofocus="autofocus" name="id">
+                <input type="text" id="inputEmail" class="form-control" placeholder="아이디" required="required" autofocus="autofocus" name="admin_id">
                 <label for="inputEmail">아이디</label>
               </div>
             </div>
             <div class="form-group">
               <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required" name="password">
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required" name="admin_pw">
                 <label for="inputPassword">비밀번호</label>
               </div>
             </div>
