@@ -104,21 +104,20 @@
             <h6 class="dropdown-header">관리자 로그인 메뉴</h6>
             
          <c:set var="rootPath" value="${pageContext.request.contextPath}"></c:set>
-	         관리자 정보${admininfo.admin_auth}
+	         	관리자 권한 : ${admininfo.admin_auth}
          <c:choose>  
-         <c:when test="${admininfo.admin_auth eq '본점'}">
+         <c:when test="${admininfo.admin_auth eq '본사'}">
             		<a class="dropdown-item" href="logout">로그아웃</a>
 					<a class="dropdown-item" href="regist">계정등록</a>
 					<a class="dropdown-item" href="list">계정 리스트</a>         	 	
         </c:when>
 		<c:when test="${admininfo.admin_auth eq '지점'}">
             		<a class="dropdown-item" href="logout">로그아웃</a>
-            		<a class="dropdown-item" href="info">계정정보/수정</a>
+            		<a class="dropdown-item" href="info?admin_no=${admininfo.admin_no}">계정정보/수정</a>
         </c:when>
 		<c:otherwise>
 					<a class="dropdown-item" href="login">로그인</a>
-					<a class="dropdown-item" href="#">비밀번호 찾기</a>	
-					<a class="dropdown-item" href="list">계정 리스트</a>         	 		
+					<a class="dropdown-item" href="#">비밀번호 찾기</a>	         	 		
 		</c:otherwise>
         </c:choose>            
             <div class="dropdown-divider"></div>

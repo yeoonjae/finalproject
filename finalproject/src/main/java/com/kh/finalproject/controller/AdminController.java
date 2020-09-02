@@ -100,8 +100,9 @@ public class AdminController {
 			AdminDto find = adminDao.get(no);
 			session.setAttribute("admininfo", find);
 		return "admin/admin_index";
+		}else {			
+			return "admin/login?error";
 		}
-		return "admin/login?error";
 	}
 	//로그아웃
 	@GetMapping("/logout")

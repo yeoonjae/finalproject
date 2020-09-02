@@ -3,9 +3,9 @@
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
 
 <form action="${pageContext.request.contextPath}/admin/edit" method="post">
+<input type="hidden" name="admin_no" value="${adminDto.admin_no}">
 <h1>편집</h1>
 관리자번호 : ${adminDto.admin_no}
-<input type="hidden" name="admin_no" value="${adminDto.admin_no}">
 <br>
 관리자아이디 :${adminDto.admin_id}
 <br>
