@@ -48,6 +48,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="layout_regist" parameterType="map">
 		UPDATE branch SET branch_layout = #{branch_layout} WHERE branch_no = #{branch_no}
 	</update>
+	
+	<!-- 지점 수정 -->
+	<update id="layout_regist" parameterType="map">
+		UPDATE branch SET 
+			admin_no = #{admin_no},
+			local_no = #{local_no},
+			branch_name = #{branch_name},
+			branch_size = #{branch_size},
+			branch_room_cnt = #{branch_room_cnt},
+			branch_seat_cnt = #{branch_seat_cnt},
+			branch_locker_cnt = #{branch_locker_cnt},
+			branch_layout = #{branch_layout}
+		WHERE branch_no = #{branch_no}
+	</update>
+	
 </mapper>
 
 

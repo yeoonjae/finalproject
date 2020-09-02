@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
 <div id="content-wrapper">
 <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -69,10 +70,16 @@
 					</tr>
 					<tr>
 						<th scope="row" colspan="2">
-							<button class="btn col-sm-2 btn-outline-secondary">수정</button>
-							<a href="${pageContext.request.contextPath}/admin/branch/layout_regist?branch_no=${branchDto.branch_no}">
-								<button class="btn col-sm-2 btn-outline-secondary">배치도 등록</button>	
+							<a href="edit?branch_no=${branchDto.branch_no}">
+								<button class="btn col-sm-2 btn-outline-secondary">수정</button>
 							</a>
+							<c:choose>
+								<c:when test="${'null' eq branchDto.branch_layout}">
+								<a href="layout_regist?branch_no=${branchDto.branch_no}">
+									<button class="btn col-sm-2 btn-outline-secondary">배치도 등록</button>	
+								</a>
+								</c:when>
+							</c:choose>
 							<button class="btn col-sm-2 btn-outline-secondary">지점삭제</button>
 						</th>
 					</tr>
@@ -83,12 +90,10 @@
 </div>
 <script>
         var canvas = new fabric.Canvas('c');
-//         canvas.loadFromJSON('${branchDto.branch_layout}');
-
         canvas.loadFromJSON('${branchDto.branch_layout}');
         for(var i=0;i<${branchDto.branch_layout}.objects.length;i++){
         	canvas.item(i).selectable = false;	
         }
         console.log(${branchDto.branch_layout}.objects);
-     </script>
+</script>
 <jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>

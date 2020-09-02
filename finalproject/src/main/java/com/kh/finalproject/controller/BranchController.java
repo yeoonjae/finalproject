@@ -73,4 +73,12 @@ public class BranchController {
 		return "admin/branch/detail";
 	}
 	
+	//지점 수정
+	@GetMapping("/edit")
+	public String edit(@RequestParam int branch_no,Model model,RedirectAttributes attr) {
+		branchDao.edit(branch_no);
+		attr.addAttribute("branch_no", branch_no);
+		return "admin/branch/edit";
+	}
+	
 }
