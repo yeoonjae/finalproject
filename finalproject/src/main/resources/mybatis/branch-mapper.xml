@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 지점 수정 -->
-	<update id="layout_regist" parameterType="map">
+	<update id="edit" parameterType="branchDto">
 		UPDATE branch SET 
 			admin_no = #{admin_no},
 			local_no = #{local_no},

@@ -95,5 +95,6 @@
         	canvas.item(i).selectable = false;	
         }
         console.log(${branchDto.branch_layout}.objects);
+        
 </script>
 <jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>
