@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
@@ -152,7 +153,6 @@
             <h6 class="dropdown-header">이용권관리 메뉴</h6>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/license/license_regist">이용권 등록</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/license/license_list">이용권 현황</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/license/license_list">이용권 수정 및 삭제</a>
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Other Pages:</h6>
             <a class="dropdown-item" href="404.jsp">404 Page</a>
