@@ -49,7 +49,7 @@
                   		<td>${branch.admin_name}</td>
                   		<td>
                   		<c:choose>
-                  			<c:when test="${'null'eq branch.branch_layout}">
+                  			<c:when test="${empty branch.branch_layout}">
                   				등록전
                   			</c:when>
                   			<c:otherwise>
@@ -58,7 +58,7 @@
                   		</c:choose>
                   		<td>
                   		<c:choose>
-                  			<c:when test="${'null'eq branch.branch_layout}">
+                  			<c:when test="${empty branch.branch_layout}">
 			                  	<a href="${pageContext.request.contextPath}/admin/branch/layout_regist?branch_no=${branch.branch_no}">
 			                  		<button class="btn btn-outline-secondary btn-sm">배치도등록</button>
 			                  	</a>

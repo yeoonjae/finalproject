@@ -103,9 +103,11 @@
         $("#text").on("click", function(e) {
             var text = new fabric.Text($("#text-input").val(), {left: 100, top: 100 });
             text.set({
-            	  fill: 'white'
+            	  fill: 'white',
+            	  
             	});
             canvas.add(text);
+            canvas.moveTo(text, 20);
         });
         
         $("#remove").on("click", function(e) {

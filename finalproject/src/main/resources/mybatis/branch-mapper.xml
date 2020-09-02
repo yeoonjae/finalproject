@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 지역별 지점 조회 -->
 	<select id="localBranchList" parameterType="int" resultType="branchDto">
-		SELECT * FROM branch WHERE local_no=#{local_no} ORDER BY ASC
+		SELECT * FROM branch WHERE local_no=#{local_no} ORDER BY branch_no ASC
 	</select>
 	
 	<!-- 지점 목록 -->

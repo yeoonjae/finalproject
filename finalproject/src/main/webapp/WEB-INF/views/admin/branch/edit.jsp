@@ -27,7 +27,7 @@
 				<li class="breadcrumb-item active">상세보기</li>
 			</ol>
 			<div class="table-wrapper container-form offset-sm-3">
-			<form action="edit" method="post">
+			<form action="edit" method="post" id="form">
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -83,7 +83,7 @@
 							<input type="button" class="btn btn-outline-secondary btn-sm" id="remove" value="지우기">
 							<input type="button" class="btn btn-outline-secondary btn-sm" id="text" value="텍스트">
 							<input type="text" id="text-input"><br>
-							<input type="hidden" name="branch_layout">
+							<input type="hidden" id="layout" name="branch_layout">
 						</th>
 					</tr>
 					<tr>
@@ -145,10 +145,12 @@
             canvas.add(rect);
         });
 
-        $("#edit").on("click", function(e) {
-			var layout = document.querySelector("input[name=layout]");
-			layout.value = JSON.stringify(canvas);	
-        });
+         $("#form").on("submit", function(e) {
+          	e.preventDefault();//기본이벤트 방지 전송막고 추가작업수행
+ 			var layout = document.querySelector("#layout");
+ 			layout.value = JSON.stringify(canvas);	
+ 			this.submit();//this는 #form
+         });
 
         $("#text").on("click", function(e) {
             var text = new fabric.Text($("#text-input").val(), {left: 100, top: 100 });
@@ -156,6 +158,7 @@
             	  fill: 'white'
             	});
             canvas.add(text);
+            canvas.moveTo(text, 1);
         });
         
         $("#remove").on("click", function(e) {
