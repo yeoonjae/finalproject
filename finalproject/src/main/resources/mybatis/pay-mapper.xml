@@ -5,11 +5,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="pay">
 
-<select id="getBranch" resultType="String">
+<select id="getBranch" resultType="memberBranchDto" parameterType="int">
 	SELECT m.*,b.BRANCH_NAME 
-		FROM MEMBER m 
-			LEFT OUTER JOIN branch b 
-				ON m.BRANCH_NO = b.BRANCH_NO ;
+	FROM member m 
+	LEFT OUTER JOIN branch b 
+	ON m.BRANCH_NO = b.BRANCH_NO 
+	WHERE member_no=#{member_no}
 </select>
 
 </mapper>
