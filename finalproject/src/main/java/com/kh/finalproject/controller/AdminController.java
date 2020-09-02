@@ -67,7 +67,7 @@ public class AdminController {
 		model.addAttribute("adminDto", get);
 		return "admin/info";
 	}
-	//관리자 정보 리스트
+	//관리자 정보 리스트(본점)
 	@GetMapping("/list")
 	public String list(
 			Model model, 
