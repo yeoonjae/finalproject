@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.LocalDto;
@@ -37,7 +40,7 @@ public class BranchController {
 	@PostMapping("/branch_regist")
 	public String regist(Model model,@ModelAttribute BranchDto branchDto) {
 		int branch_no = branchDao.regist(branchDto);
-		return "redirect:branch_regist";
+		return "redirect:list";
 	}
 	
 	//지점 목록 메소드
@@ -54,5 +57,20 @@ public class BranchController {
 		return "admin/branch/layout_regist";
 	}
 	
+	//배치도 등록
+	@PostMapping("/layout_regist")
+	public String layout(@RequestParam int branch_no,@RequestParam String branch_layout) {
+		branchDao.layout_regist(branch_layout, branch_no);
+		return "redirect:list";
+	}
+	
+	//지점 단일조회
+	@GetMapping("/detail")
+	public String detail(@RequestParam int branch_no, Model model,RedirectAttributes attr) {
+		BranchDto branchDto = branchDao.get(branch_no);
+		model.addAttribute("branchDto", branchDto);
+		attr.addAttribute("branch_no", branch_no);
+		return "admin/branch/detail";
+	}
 	
 }

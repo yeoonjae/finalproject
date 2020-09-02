@@ -10,6 +10,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into local values(local_seq.nextval,#{local_name})
 	</insert>
 	
+	<!-- 지역 목록 출력 구문 -->
+	<select id="getList" resultType="localDto">
+		SELECT * FROM local ORDER BY local_name ASC
+	</select>
+	
+	<!-- 지역 단일조회 -->
+	<select id="get" parameterType="String" resultType="localDto">
+		SELECT * FROM local WHERE local_name=#{local_name}
+	</select>
 </mapper>
 
 
