@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
+<%-- <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include> --%>
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -184,4 +184,4 @@
 </body>
 </html>
 
-<jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>
+<%-- <jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include> --%>
