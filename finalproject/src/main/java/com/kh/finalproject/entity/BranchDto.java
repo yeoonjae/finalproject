@@ -11,10 +11,11 @@ public class BranchDto {
 	private int local_no;
 	private int admin_no;
 	private String branch_name;
-	private long size;
-	private int room_cnt;
-	private int seat_cnt;
+	private long branch_size;
+	private int branch_room_cnt;
+	private int branch_seat_cnt;
 	private int branch_locker_cnt;
 	private String branch_layout;
-
+	private String local_name;
+	private String admin_name;
 }

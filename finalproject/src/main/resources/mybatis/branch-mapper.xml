@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{branch_room_cnt},
 			#{branch_seat_cnt},
 			#{branch_locker_cnt},
-			'null')
+			#{branch_layout})
 	</insert>
 	
 	<!-- 시퀀스 생성 -->
@@ -27,13 +27,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 지점 단일 조회 -->
 	<select id="get" resultType="branchDto" parameterType="int">
-		SELECT * FROM branch WHERE branch_no=#{branch_no}
+		SELECT * FROM branch b
+		LEFT OUTER JOIN admin a ON b.admin_no = a.admin_no
+		LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO WHERE branch_no=#{branch_no}
 	</select>
 	
 	<!-- 지역별 지점 조회 -->
 	<select id="localBranchList" parameterType="int" resultType="branchDto">
-		SELECT * FROM branch WHERE local_no=#{local_no} ORDER BY ASC
+		SELECT * FROM branch WHERE local_no=#{local_no} ORDER BY branch_no ASC
 	</select>
+	
+	<!-- 지점 목록 -->
+	<select id="getList" resultType="branchDto">
+		SELECT * FROM branch b
+		LEFT OUTER JOIN admin a ON b.admin_no = a.admin_no
+		LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+	</select>
+	
+	<!-- 배치도 등록 -->
+	<update id="layout_regist" parameterType="map">
+		UPDATE branch SET branch_layout = #{branch_layout} WHERE branch_no = #{branch_no}
+	</update>
+	
+	<!-- 지점 수정 -->
+	<update id="edit" parameterType="branchDto">
+		UPDATE branch SET 
+			admin_no = #{admin_no},
+			local_no = #{local_no},
+			branch_name = #{branch_name},
+			branch_size = #{branch_size},
+			branch_room_cnt = #{branch_room_cnt},
+			branch_seat_cnt = #{branch_seat_cnt},
+			branch_locker_cnt = #{branch_locker_cnt},
+			branch_layout = #{branch_layout}
+		WHERE branch_no = #{branch_no}
+	</update>
+	
 </mapper>
 
 

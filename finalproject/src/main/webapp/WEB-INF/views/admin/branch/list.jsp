@@ -22,16 +22,12 @@
               Data Table Example</div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="" width="100%" cellspacing="0" style="text-align: center;">
                   <thead>
                     <tr>
-	                      <th>지점명</th>
+	                  <th>지점명</th>
                       <th>지역</th>
                       <th>지점 관리자</th>
-                      <th>평수</th>
-                      <th>스터디룸 수</th>
-                      <th>개인석 수</th>
-                      <th>사물함 개수</th>
                       <th>배치도 등록 유무</th>
                       <th>관리메뉴</th>
                     </tr>
@@ -41,10 +37,6 @@
                       <th>지점명</th>
                       <th>지역</th>
                       <th>지점 관리자</th>
-                      <th>평수</th>
-                      <th>스터디룸 수</th>
-                      <th>개인석 수</th>
-                      <th>사물함 개수</th>
                       <th>배치도 등록 유무</th>
                       <th>관리메뉴</th>
                     </tr>
@@ -53,200 +45,41 @@
                   <c:forEach var="branch" items="${branch}">
                   	<tr>
                   		<td>${branch.branch_name}</td>
-                  		<td>${branch.local_no}</td>
-                  		<td>${branch.admin_no}</td>
-                  		<td>${branch.branch_size}</td>
-                  		<td>${branch.branch_room_cnt}</td>
-                  		<td>${branch.branch_seat_cnt}</td>
-                  		<td>${branch.branch_locker_cnt}</td>
-                  		<td>${branch.branch_layout}</td>
+                  		<td>${branch.local_name}</td>
+                  		<td>${branch.admin_name}</td>
                   		<td>
-                  			<button>회원보기</button>
-                  			<a href="${pageContext.request.contextPath}/admin/branch/layout_regist"><button>배치도등록</button></a>
-                  			<button>수정</button>
+                  		<c:choose>
+                  			<c:when test="${empty branch.branch_layout}">
+                  				등록전
+                  			</c:when>
+                  			<c:otherwise>
+                  				등록완료
+                  			</c:otherwise>
+                  		</c:choose>
+                  		<td>
+                  		<c:choose>
+                  			<c:when test="${empty branch.branch_layout}">
+			                  	<a href="${pageContext.request.contextPath}/admin/branch/layout_regist?branch_no=${branch.branch_no}">
+			                  		<button class="btn btn-outline-secondary btn-sm">배치도등록</button>
+			                  	</a>
+	                  			<button class="btn btn-outline-secondary btn-sm">회원보기</button>
+			                  	<a href="detail?branch_no=${branch.branch_no}">
+				                	<button class="btn btn-outline-secondary btn-sm">상세보기</button>
+			                  	</a>
+                  			</c:when>
+                  			<c:otherwise>
+                  				<button class="btn btn-outline-secondary btn-sm">회원보기</button>
+			                  	<input type="hidden" value="500" name="hi">
+			                  	<a href="detail?branch_no=${branch.branch_no}">
+				                	<button class="btn btn-outline-secondary btn-sm">상세보기</button>
+			                  	</a>
+                  			</c:otherwise>
+                  		</c:choose>
+	                  		
                   		</td>  
                   	</tr>
                   </c:forEach>
-                  	<tr>
-                		<td>부천 중동점</td>
-                  		<td>경기</td>
-                  		<td>정연재</td>
-                  		<td>68평</td>
-                  		<td>2 룸</td>
-                  		<td>90석</td>
-                  		<td>유</td>
-                  		<td>등록전</td>
-                  		<td>
-                  			<button>회원보기</button>
-                  			<button>배치도등록</button>
-                  			<button>수정</button>
-                  		</td>                  		
-                  	</tr>
-                  	<tr>
-                		<td>부천 중동점</td>
-                  		<td>경기</td>
-                  		<td>정연재</td>
-                  		<td>68평</td>
-                  		<td>2 룸</td>
-                  		<td>90석</td>
-                  		<td>유</td>
-                  		<td>등록전</td>
-                  		<td>
-                  			<button>회원보기</button>
-                  			<button>배치도등록</button>
-                  			<button>수정</button>
-                  		</td>                  		
-                  	</tr>
-                  	                  	<tr>
-                		<td>부천 중동점</td>
-                  		<td>경기</td>
-                  		<td>정연재</td>
-                  		<td>68평</td>
-                  		<td>2 룸</td>
-                  		<td>90석</td>
-                  		<td>유</td>
-                  		<td>등록전</td>
-                  		<td>
-                  			<button>회원보기</button>
-                  			<button>배치도등록</button>
-                  			<button>수정</button>
-                  		</td>                  		
-                  	</tr>
-                  	                  	<tr>
-                		<td>부천 중동점</td>
-                  		<td>경기</td>
-                  		<td>정연재</td>
-                  		<td>68평</td>
-                  		<td>2 룸</td>
-                  		<td>90석</td>
-                  		<td>유</td>
-                  		<td>등록전</td>
-                  		<td>
-                  			<button>회원보기</button>
-                  			<button>배치도등록</button>
-                  			<button>수정</button>
-                  		</td>                  		
-                  	</tr>
-                  	                  	<tr>
-                		<td>부천 중동점</td>
-                  		<td>경기</td>
-                  		<td>정연재</td>
-                  		<td>68평</td>
-                  		<td>2 룸</td>
-                  		<td>90석</td>
-                  		<td>유</td>
-                  		<td>등록전</td>
-                  		<td>
-                  			<button>회원보기</button>
-                  			<button>배치도등록</button>
-                  			<button>수정</button>
-                  		</td>                  		
-                  	</tr>
-                  	                  	<tr>
-                		<td>부천 중동점</td>
-                  		<td>경기</td>
-                  		<td>정연재</td>
-                  		<td>68평</td>
-                  		<td>2 룸</td>
-                  		<td>90석</td>
-                  		<td>유</td>
-                  		<td>등록전</td>
-                  		<td>
-                  			<button>회원보기</button>
-                  			<button>배치도등록</button>
-                  			<button>수정</button>
-                  		</td>                  		
-                  	</tr>
-                  	                  	<tr>
-                		<td>부천 중동점</td>
-                  		<td>경기</td>
-                  		<td>정연재</td>
-                  		<td>68평</td>
-                  		<td>2 룸</td>
-                  		<td>90석</td>
-                  		<td>유</td>
-                  		<td>등록전</td>
-                  		<td>
-                  			<button>회원보기</button>
-                  			<button>배치도등록</button>
-                  			<button>수정</button>
-                  		</td>                  		
-                  	</tr>
-                  	                  	<tr>
-                		<td>부천 중동점</td>
-                  		<td>경기</td>
-                  		<td>정연재</td>
-                  		<td>68평</td>
-                  		<td>2 룸</td>
-                  		<td>90석</td>
-                  		<td>유</td>
-                  		<td>등록전</td>
-                  		<td>
-                  			<button>회원보기</button>
-                  			<button>배치도등록</button>
-                  			<button>수정</button>
-                  		</td>                  		
-                  	</tr>
-                  	                  	<tr>
-                		<td>부천 중동점</td>
-                  		<td>경기</td>
-                  		<td>정연재</td>
-                  		<td>68평</td>
-                  		<td>2 룸</td>
-                  		<td>90석</td>
-                  		<td>유</td>
-                  		<td>등록전</td>
-                  		<td>
-                  			<button>회원보기</button>
-                  			<button>배치도등록</button>
-                  			<button>수정</button>
-                  		</td>                  		
-                  	</tr>
-                  	                  	<tr>
-                		<td>부천 중동점</td>
-                  		<td>경기</td>
-                  		<td>정연재</td>
-                  		<td>68평</td>
-                  		<td>2 룸</td>
-                  		<td>90석</td>
-                  		<td>유</td>
-                  		<td>등록전</td>
-                  		<td>
-                  			<button>회원보기</button>
-                  			<button>배치도등록</button>
-                  			<button>수정</button>
-                  		</td>                  		
-                  	</tr>
-                  	                  	<tr>
-                		<td>부천 중동점</td>
-                  		<td>경기</td>
-                  		<td>정연재</td>
-                  		<td>68평</td>
-                  		<td>2 룸</td>
-                  		<td>90석</td>
-                  		<td>유</td>
-                  		<td>등록전</td>
-                  		<td>
-                  			<button>회원보기</button>
-                  			<button>배치도등록</button>
-                  			<button>수정</button>
-                  		</td>                  		
-                  	</tr>
-                  	                  	<tr>
-                		<td>부천 중동점</td>
-                  		<td>경기</td>
-                  		<td>정연재</td>
-                  		<td>68평</td>
-                  		<td>2 룸</td>
-                  		<td>90석</td>
-                  		<td>유</td>
-                  		<td>등록전</td>
-                  		<td>
-                  			<button>회원보기</button>
-                  			<button>배치도등록</button>
-                  			<button>수정</button>
-                  		</td>                  		
-                  	</tr>
+                  	
                   </tbody>
                 </table>
               </div>
