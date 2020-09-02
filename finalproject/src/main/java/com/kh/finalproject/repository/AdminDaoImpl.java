@@ -69,5 +69,9 @@ public class AdminDaoImpl implements AdminDao {
 		map.put("order", order);
 		return sqlSession.selectList("admin.list2", map);
 	}
+	//'지점'관리자 목록
+	public List<AdminDto> getBranchAdminList() {
+		return sqlSession.selectList("admin.getBranchAdminList");
+	}
 	
 }

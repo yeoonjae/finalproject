@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.LocalDto;
+import com.kh.finalproject.repository.AdminDao;
 import com.kh.finalproject.repository.BranchDao;
 import com.kh.finalproject.repository.LocalDao;
 
@@ -26,12 +28,17 @@ public class BranchController {
 	private BranchDao branchDao;
 	
 	@Autowired
+	private AdminDao adminDao;
+	
+	@Autowired
 	private LocalDao localDao;
+	
 	
 	@GetMapping("/branch_regist")
 	public String regist(Model model) {
 		List<LocalDto> local = localDao.getList();
-		//지점관리자 선택하게끔 adminDto만들어야함
+		List<AdminDto> admin = adminDao.getBranchAdminList();
+		model.addAttribute("admin", admin);
 		model.addAttribute("local", local);
 		return "admin/branch/branch_regist";
 	}

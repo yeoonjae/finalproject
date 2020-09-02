@@ -21,7 +21,6 @@ public class BranchDaoImpl implements BranchDao{
 	public int regist(BranchDto branchDto) {
 		int no = sqlSession.selectOne("branch.getSeq");
 		branchDto.setBranch_no(no);
-		branchDto.setAdmin_no(1);
 		branchDto.setBranch_layout("");
 		sqlSession.insert("branch.regist", branchDto);
 		return no;

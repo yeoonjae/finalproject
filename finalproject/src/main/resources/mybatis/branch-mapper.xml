@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 지점등록  -->
 	<insert id="regist">
 		insert into branch values(
-			branch_seq.nextval,
+			#{branch_no},
 			#{local_no},
 			#{admin_no},
 			#{branch_name},

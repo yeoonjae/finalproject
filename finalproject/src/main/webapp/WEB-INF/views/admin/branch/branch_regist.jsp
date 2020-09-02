@@ -67,9 +67,9 @@
 						<div class="form-group">
 							<label for="exampleSelect2">지점 관리자 선택</label> 
 							<select class="form-control" id="exampleSelect2" required>
-								<c:forEach var="local" items="${local}" >
-									<option value="${local.local_no}">
-										${local.local_name}
+								<c:forEach var="admin" items="${admin}" >
+									<option value="${admin.admin_no}">
+										${admin.admin_name}
 									</option>
 								</c:forEach>
 							</select>
