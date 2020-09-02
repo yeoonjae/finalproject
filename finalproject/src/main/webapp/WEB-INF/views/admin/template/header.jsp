@@ -102,7 +102,7 @@
             <span>관리자</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <h6 class="dropdown-header">관리자 로그인 메뉴</h6>
+            <h6 class="dropdown-header">관리자 로그인</h6>
             <a class="dropdown-item" href="login">로그인</a>
             <a class="dropdown-item" href="#">계정등록</a>
             <a class="dropdown-item" href="#">비밀번호 찾기</a>
@@ -131,12 +131,27 @@
             <span>지점관리</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <h6 class="dropdown-header">지점관리 메뉴</h6>
+            <h6 class="dropdown-header">지점 관리</h6>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/local_regist">지역등록</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/branch_regist">지점등록</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/list">지점별 관리</a>
           </div>
         </li>        
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>마일리지 관리</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <h6 class="dropdown-header">유형 관리</h6>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/regist">마일리지 등록</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/edit">마일리지 수정</a>
+            <h6 class="dropdown-header">회원 관리</h6>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/addRemove">마일리지 적립/소멸</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/list">마일리지 내역조회</a>
+          </div>
+        </li> 
         
         <li class="nav-item">
           <a class="nav-link" href="charts.jsp">
