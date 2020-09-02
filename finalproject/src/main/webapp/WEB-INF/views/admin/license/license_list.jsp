@@ -118,12 +118,13 @@
 <div id="content-wrapper">
 
 	<div class="container-fluid">
-
+	
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="license_regist">이용권
 					등록하기</a></li>
 			<li class="breadcrumb-item active">이용권 목록</li>
 		</ol>
+		
 		<div class="card mb-3">
 			<div class="card-header">
 				<i class="fas fa-table"></i> 이용권 목록
