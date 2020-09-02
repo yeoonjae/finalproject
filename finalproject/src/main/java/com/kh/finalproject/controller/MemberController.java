@@ -6,13 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/member")
 public class MemberController {
-	@RequestMapping("/")
+	@RequestMapping("/")//첫 주소
 	public String root() {
-		return "/member/home";
+		return "member/member_index";
 	}
-	@RequestMapping("/login")
-	public String loing() {
-		return "member/login";
-	}
-	
+
 }

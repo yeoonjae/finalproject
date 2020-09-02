@@ -106,21 +106,21 @@
             <h6 class="dropdown-header">관리자 로그인 메뉴</h6>
             
          <c:set var="rootPath" value="${pageContext.request.contextPath}"></c:set>
-         <c:choose>  
-         <c:when test="${admininfo.admin_auth eq '본점'}">
+<%--          <c:choose>   --%>
+<%--          <c:when test="${admininfo.admin_auth eq '본점'}"> --%>
             		<a class="dropdown-item" href="logout.do">로그아웃</a>
 					<a class="dropdown-item" href="regist">계정등록</a>
 					<a class="dropdown-item" href="list">계정 리스트</a>         	 	
-        </c:when>
-		<c:when test="${admininfo.admin_auth eq '지점'}">
+<%--         </c:when> --%>
+<%-- 		<c:when test="${admininfo.admin_auth eq '지점'}"> --%>
             		<a class="dropdown-item" href="logout.do">로그아웃</a>
-            		<a class="dropdown-item" href="info/{no}">계정정보/수정</a>
-        </c:when>
-		<c:otherwise>
+            		<a class="dropdown-item" href="info">계정정보/수정</a>
+<%--         </c:when> --%>
+<%-- 		<c:otherwise> --%>
 					<a class="dropdown-item" href="login">로그인</a>
 					<a class="dropdown-item" href="#">비밀번호 찾기</a>		
-		</c:otherwise>
-        </c:choose>            
+<%-- 		</c:otherwise> --%>
+<%--         </c:choose>             --%>
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Other Pages:</h6>
             <a class="dropdown-item" href="404.jsp">404 Page</a>
@@ -147,14 +147,9 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">지점관리 메뉴</h6>
-            <a class="dropdown-item" href="local_regist">지역등록</a>
-            <a class="dropdown-item" href="login">지점등록</a>
-            <a class="dropdown-item" href="#">지점별 회원 현황</a>
-            <a class="dropdown-item" href="#">지점 수정 및 삭제</a>
-            <div class="dropdown-divider"></div>
-            <h6 class="dropdown-header">Other Pages:</h6>
-            <a class="dropdown-item" href="404.jsp">404 Page</a>
-            <a class="dropdown-item" href="blank.jsp">Blank Page</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/local_regist">지역등록</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/branch_regist">지점등록</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/list">지점별 관리</a>
           </div>
         </li>        
         
