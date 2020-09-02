@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper는 구문을 만들 수 있는 영역 일반적으로 테이블당 1개씩의 mapper를 둔다 namespace : 영역을 외부에서 
+	부르기 위한 별칭 -->
+<mapper namespace="admin">
+	<select id="getSeq" resultType="int">
+		SELECT admin_no FROM admin WHERE admin_no =(SELECT max(admin_no) FROM admin)
+	</select>
+	<insert id="regist" parameterType="adminDto">
+		insert into admin(
+			admin_no,
+			admin_auth,
+			admin_name,
+			admin_id,
+			admin_pw,
+			admin_join,
+			admin_login
+		)
+		values(
+		admin_seq.nextval,
+		'지점',
+		#{admin_name},
+		#{admin_id},
+		#{admin_pw},
+		sysdate,
+		null
+		)
+	</insert>
+	<select id ="getLogin" parameterType="String" resultType="adminDto">
+		select * from admin where admin_id=#{admin_id}
+	</select>
+	<select id="get" parameterType="int" resultType="adminDto">
+		select * from admin where admin_no=#{admin_no}
+	</select>
+	<select id="getNo" parameterType="String" resultType="int">
+		select admin_no from admin where admin_id=#{admin_id} 
+	</select>
+	<update id="edit" parameterType="adminDto">
+		update admin set admin_name=#{admin_name}, admin_pw=#{admin_pw} where admin_no=#{admin_no}
+	</update>
+	<select id="list1" resultType="adminDto">
+		select * from admin order by admin_no asc
+	</select>
+	<select id="list2" parameterType="map" resultType="adminDto">
+		select * from admin order by ${col} ${order}
+	</select>
+	<delete id="delete" parameterType="int">
+		delete admin where admin_no=#{admin_no}
+	</delete>
+</mapper>
