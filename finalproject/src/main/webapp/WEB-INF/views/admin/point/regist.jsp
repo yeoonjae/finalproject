@@ -43,8 +43,10 @@
                 	result = response.data;
                     if(!result){
                          span.textContent = "사용 가능한 유형입니다";
+                         $(".btn-regist").prop("disabled", false);
                      } else {
                          span.textContent = "동일한 유형이 존재합니다";
+                         $(".btn-regist").prop("disabled", true);
                      }
                 });
             });
@@ -52,8 +54,7 @@
             $(".link").click(function(e){
             	if(confirm("정말 삭제하시겠습니까?")){
             	} else {
-            		e.preventDefault();
-            		location.href = "${pageContext.request.contextPath}/admin/point/regist";       		
+            		e.preventDefault();	
             	}
             });
             
@@ -62,7 +63,7 @@
             });
             
             $(".btn-regist").click(function(){
-            	if(!result) {
+            	if(!result && $(".point_score").val() && $(".point_detail").val()) {
             		document.querySelector(".form").submit();
             	} else {
             		return;
@@ -93,13 +94,13 @@
 						<!-- 마일리지 상세내용 작성 -->
 						<div class="form-group">
 							<label>상세내용</label> <input type="text" name="point_detail"
-								placeholder="상세내용을 입력하세요" class="form-control point_detail">
+								placeholder="상세내용을 입력하세요" class="form-control point_detail" required>
 							<span class="detail_result"></span>
 						</div>
 						<!-- 마일리지 점수 입력 -->
 						<div class="form-group">
 							<label>마일리지</label> <input type="text" name="point_score"
-								placeholder="마일리지를 입력하세요" class="form-control">
+								placeholder="마일리지를 입력하세요" class="form-control point_score" required>
 						</div>
 						<button class="btn btn-primary btn-block btn-regist">등록</button>
 					</form>
@@ -120,7 +121,7 @@
 									<th>
 										<form action="list1" method="post" class="list-form">
 											<select name="point_type" id="order" class="form-control col-10">
-												<option value="all">전체</option>
+												<option value="all">유형 전체</option>
 												<option ${param.point_type=="적립"?'selected':''}>적립</option>
 												<option ${param.point_type=="차감"?'selected':''}>차감</option>
 											</select>
