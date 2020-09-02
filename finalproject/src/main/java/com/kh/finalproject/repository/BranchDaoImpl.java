@@ -47,9 +47,8 @@ public class BranchDaoImpl implements BranchDao{
 		return branchDto;
 	}
 
-	@Override
-	public void edit(int branch_no) {
-		BranchDto branchDto = sqlSession.selectOne("branch.get", branch_no);
+	//지점 수정
+	public void edit(BranchDto branchDto) {
 		sqlSession.update("branch.edit", branchDto);
 	}
 }

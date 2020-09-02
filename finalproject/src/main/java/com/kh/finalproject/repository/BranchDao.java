@@ -14,5 +14,5 @@ public interface BranchDao {
 	//지점 단일조회
 	BranchDto get(int branch_no);
 	//지점 수정
-	void edit(int branch_no);
+	void edit(BranchDto branchDto);
 }

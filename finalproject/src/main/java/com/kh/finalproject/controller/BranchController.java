@@ -76,9 +76,19 @@ public class BranchController {
 	//지점 수정
 	@GetMapping("/edit")
 	public String edit(@RequestParam int branch_no,Model model,RedirectAttributes attr) {
-		branchDao.edit(branch_no);
-		attr.addAttribute("branch_no", branch_no);
+		List<LocalDto> local = localDao.getList();
+		BranchDto branchDto = branchDao.get(branch_no);
+		model.addAttribute("local", local);
+		model.addAttribute("branchDto", branchDto);
 		return "admin/branch/edit";
+	}
+	
+	//지점 수정
+	@PostMapping("/edit")
+	public String edit(RedirectAttributes attr,@ModelAttribute BranchDto branchDto) {
+		branchDao.edit(branchDto);
+		attr.addAttribute("branch_no", branchDto.getBranch_no());
+		return "redirect:detail";
 	}
 	
 }
