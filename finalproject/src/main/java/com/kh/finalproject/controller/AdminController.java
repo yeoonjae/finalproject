@@ -25,90 +25,10 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	@Autowired
-	private AdminDao adminDao;
-	@Autowired
-	private EmailService emailService;
+	
 	
 	@RequestMapping("/")//첫 주소
 	public String root() {
 		return "admin/admin_index";
 	}
-	//관리자 등록
-	@GetMapping("/regist")
-	public String regist(Model model) {
-		int admin_no = adminDao.getSeq();
-		model.addAttribute("admin_no", admin_no);
-		return "admin/regist";
-	}
-	@PostMapping("/regist")
-	public String regist(@ModelAttribute AdminDto adminDto, @RequestParam String email) {
-		String text = emailService.documentation(adminDto);
-		emailService.sendSimpleMessage(email, "공돌이 관리자 계정", text);
-		adminDao.regist(adminDto);
-		return "admin/regist_result";
-	}
-	//관리자 정보 조회
-	@GetMapping("/info")
-	public String info(@RequestParam int admin_no, Model model) {
-		AdminDto adminDto = adminDao.get(admin_no);
-		model.addAttribute("adminDto", adminDto);
-		return "admin/info";
-	}
-	//관리자 정보 수정
-	@GetMapping("/edit")
-	public String edit(Model model, @RequestParam int admin_no) {
-		AdminDto adminDto = adminDao.get(admin_no);
-		model.addAttribute("adminDto", adminDto);
-		return "admin/edit";
-	}
-	@PostMapping("/edit")
-	public String edit(@RequestParam int admin_no, @ModelAttribute AdminDto adminDto, Model model) {
-		adminDao.edit(adminDto);
-		AdminDto get = adminDao.get(adminDto.getAdmin_no());
-		model.addAttribute("adminDto", get);
-		return "admin/info";
-	}
-	//관리자 정보 리스트(본점)
-	@GetMapping("/list")
-	public String list(
-			Model model, 
-			@RequestParam(required = false, defaultValue = "admin_no") String col,
-			@RequestParam(required = false, defaultValue = "asc") String order) {
-		List<AdminDto> list = adminDao.getList(col, order);
-		model.addAttribute("list", list);
-		return "admin/list";
-	}
-	//관리자 정보 삭제(본점)
-	@GetMapping("/delete")
-	public String listdelete(@RequestParam int admin_no) {
-		adminDao.delete(admin_no);
-		return "redirect:list";
-	}
-	//로그인
-	@GetMapping("/login")
-	public String login() {
-		return "admin/login";
-	}
-	
-	@PostMapping("/login")
-	public String login(@RequestParam String admin_id,@RequestParam String admin_pw, HttpSession session) {
-		//id랑 password라는 이름으로 requestParam받았습니당
-		//중간 처리과정만 Dao만들어서 적어서 완성해주세욤!-연재
-		if(adminDao.login(admin_id,admin_pw)) {
-			int no = adminDao.getNo(admin_id);
-			AdminDto find = adminDao.get(no);
-			session.setAttribute("admininfo", find);
-		return "admin/admin_index";
-		}else {			
-			return "admin/login?error";
-		}
-	}
-	//로그아웃
-	@GetMapping("/logout")
-	public String logout(@ModelAttribute AdminDto adminDto, HttpSession httpSession) {
-		httpSession.removeAttribute("admininfo");
-		return "admin/admin_index";
-	}
-	
 }

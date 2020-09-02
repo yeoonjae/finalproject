@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<form action="${pageContext.request.contextPath}/admin/regist" method="post">
+<form action="${pageContext.request.contextPath}/admin/account/regist" method="post">
 
 <h2>계정 등록</h2>
 <div>
