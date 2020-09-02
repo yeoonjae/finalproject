@@ -21,6 +21,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.finalproject.entity.BranchDto" alias="branchDto"/>
 		<typeAlias type="com.kh.finalproject.entity.LocalDto" alias="localDto"/>
 		<typeAlias type="com.kh.finalproject.entity.PointDto" alias="pointDto"/>
+		<typeAlias type="com.kh.finalproject.entity.PointHisDto" alias="pointHisDto"/>
+		<typeAlias type="com.kh.finalproject.entity.MemberDto" alias="memberDto"/>
 	</typeAliases>
 	
 </configuration>
