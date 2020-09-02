@@ -62,11 +62,17 @@
             	document.querySelector(".list-form").submit();
             });
             
-            $(".btn-regist").click(function(){
-            	if(!result && $(".point_score").val() && $(".point_detail").val()) {
-            		document.querySelector(".form").submit();
-            	} else {
+            $(".btn-regist").click(function(e){
+            	if(!$(".point_score").val() || !$(".point_detail").val()){
             		return;
+            	}
+            	
+            	if(!result) {
+            		if(confirm("등록하시겠습니까?")){
+	            		document.querySelector(".form").submit();
+                	} else {
+                		e.preventDefault();	
+                	}
             	}
             });
         });
