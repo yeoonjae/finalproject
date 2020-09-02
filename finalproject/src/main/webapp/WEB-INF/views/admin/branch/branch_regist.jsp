@@ -1,16 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<style>
-
-</style>
+<script>
+	$(function() {
+			$(".branch-name").on("blur",function(){
+				var input = document.querySelector(".branch-name");
+				var span = document.querySelector(".name-span");
+				
+				var name = input.value;
+				if(!name){
+					return;
+				}
+				
+				axios({
+					url: "${pageContext.request.contextPath}/test/branch/branch_name?branch_name="+name,
+					method: "get"
+				}).then(function(response){
+					var data = response.data;
+					if(!data){
+						span.textContent = "사용 가능한 지점명입니다";
+						$(".name-span").css("color","blue").css("font-size","small");
+						$("input[type=submit]").prop("disabled",false);
+					}else{
+						span.textContent = "동일한 지점명이 있습니다";
+						$(".name-span").css("color","red").css("font-size","small");
+						$("input[type=submit]").prop("disabled",true);
+					}
+				})
+			});
+		});
+</script>
 <div id="content-wrapper">
 
 	<div class="container-fluid">
 
 		<!-- Breadcrumbs-->
 		<ol class="breadcrumb">
+			<li class="breadcrumb-item"><a href="/">지점관리</a></li>
 			<li class="breadcrumb-item">지점등록</li>
 		</ol>
 		<div class="container-form offset-sm-3 col-sm-6 offset-md-3 col-md-6">
@@ -22,11 +51,12 @@
 						<legend>지점등록</legend><br>
 						<div class="form-group">
 							<label for="exampleInputEmail1">지점명</label> 
-							<input type="text" class="form-control" placeholder="ex)당산 이레빌딩점" name="branch_name" required>
+							<input type="text" class="form-control branch-name" placeholder="ex)당산 이레빌딩점" name="branch_name" required>
+							<span class="name-span"></span>
 						</div>
 						<div class="form-group">
 							<label for="exampleSelect1">지역선택</label> 
-							<select class="form-control" id="exampleSelect1" name="local_no">
+							<select class="form-control" id="exampleSelect1" name="local_no" required>
 								<c:forEach var="local" items="${local}">
 									<option value="${local.local_no}">
 										${local.local_name}
@@ -72,7 +102,7 @@
 								and easily wraps to a new line.</small>
 						</div>
 					</fieldset>
-				<input class="btn col-sm-12 btn-outline-secondary" type="submit"
+				<input class="btn col-sm-12 btn-outline-secondary btn-block" type="submit"
 					value="지점 등록">
 			</form>
 		</div>

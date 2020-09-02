@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.finalproject.entity.BranchDto;
+import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PointDto;
 import com.kh.finalproject.entity.PointHisDto;
@@ -19,6 +21,7 @@ import com.kh.finalproject.entity.PointHisDto;
 public class TestController {
 	@Autowired
 	private SqlSession sqlSession;
+
 	
 	@GetMapping("/point/regist")
 	public PointDto regist(@RequestParam String point_detail) {
@@ -40,4 +43,13 @@ public class TestController {
 		return sqlSession.selectOne("member.get", member_no);
 	}
 	
+	@GetMapping("/branch/branch_name")
+	public BranchDto branchName(@RequestParam String branch_name) {
+		return sqlSession.selectOne("branch.getName", branch_name);
+	}
+	
+	@GetMapping("/branch/local_name")
+	public LocalDto localName(@RequestParam String local_name) {
+		return sqlSession.selectOne("local.get", local_name);
+	}
 }

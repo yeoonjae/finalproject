@@ -63,6 +63,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE branch_no = #{branch_no}
 	</update>
 	
+	<select id="getName" parameterType="String" resultType="branchDto">
+		SELECT * FROM branch WHERE branch_name=#{branch_name}
+	</select>
 </mapper>
 
 

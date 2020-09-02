@@ -22,7 +22,7 @@ public class BranchDaoImpl implements BranchDao{
 		int no = sqlSession.selectOne("branch.getSeq");
 		branchDto.setBranch_no(no);
 		branchDto.setAdmin_no(1);
-		branchDto.setBranch_layout("null");
+		branchDto.setBranch_layout("");
 		sqlSession.insert("branch.regist", branchDto);
 		return no;
 	}
