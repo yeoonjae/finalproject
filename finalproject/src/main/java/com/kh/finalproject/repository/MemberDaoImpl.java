@@ -1,6 +1,7 @@
 package com.kh.finalproject.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,8 @@ public class MemberDaoImpl implements MemberDao{
 	
 	@Autowired
 	private SqlSession sqlSession;
-
+	
+	// 전체 회원 목록 
 	@Override
 	public List<MemberDto> getList() {
 		return sqlSession.selectList("member.getList");
@@ -31,5 +33,17 @@ public class MemberDaoImpl implements MemberDao{
 	public void minusPoint(PointHisDto pointHisDto) {
 		sqlSession.update("member.minusPoint", pointHisDto);		
 	}
-	
+
+	// 지점별 회원 목록
+	@Override
+	public List<MemberDto> getList(int branch_no) {
+		return sqlSession.selectList("member.getList2", branch_no);
+	}
+
+	// 회원 검색
+	@Override
+	public List<MemberDto> search(Map<String, Object> param) {
+		return sqlSession.selectList("member.search", param);
+	}
+		
 }

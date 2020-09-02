@@ -11,12 +11,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  -->
 <mapper namespace="member">
 
+	<!-- 회원목록(지점명+지역명) -->
 	<select id="getList" resultType="memberDto">
-		SELECT * FROM member ORDER BY member_no DESC
+		SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME FROM MEMBER m
+			INNER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO
+			INNER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+		ORDER BY b.branch_no DESC
 	</select>
-	
-	<select id="get" parameterType="int" resultType="memberDto">
-		SELECT * FROM member WHERE member_no = #{member_no}
+
+	<!-- 지점별 회원목록(지점명+지역명) -->
+	<select id="getList2" resultType="memberDto" parameterType="int">
+		SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME FROM MEMBER m
+			INNER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO
+			INNER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+			<if test="branch_no != 0">
+				WHERE m.branch_no = #{branch_no}
+			</if>
+		ORDER BY b.branch_no DESC
+	</select>
+
+	<!-- 지점별 회원 검색(이름검색) -->
+	<select id="search" parameterType="map" resultType="memberDto">
+		SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME FROM MEMBER m
+			INNER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO
+			INNER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+			WHERE instr(m.member_name, #{member_name}) > 0
+		<if test="branch_no != 0">
+			AND m.branch_no = #{branch_no}
+		</if>
+		ORDER BY b.branch_no DESC
 	</select>
 	
 	<!-- 회원 마일리지 수정 코드 -->
@@ -27,6 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="minusPoint" parameterType="pointHisDto">
 		UPDATE member SET member_point = member_point - #{point_his_score} WHERE member_no = #{member_no}
 	</update>
+	
 </mapper>
 
 
