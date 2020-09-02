@@ -5,7 +5,13 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-	<div id="content-wrapper">
+	<style>
+		.container-form{
+			width: 40%;
+			margin: auto;
+		}
+	</style>
+		<div id="content-wrapper">
 	
 		<div class="container-fluid">
 	
@@ -16,10 +22,15 @@
 			</ol>
 	
 			<br><br>
-			<form action="local_regist" method="post">
-				<input class="input-name" type="text" name="local_name"> <input type="submit" value="지역등록">
-				<span></span>
-			</form>
+			
+			<div class="container-form offset-sm-3 col-sm-6 offset-md-3 col-md-12" style="width:30%">
+				<form action="local_regist" method="post">
+					<label>지역명</label>
+					<input class="form-control" type="text" name="local_name"> <br>
+					<input class="btn col-sm-12 btn-outline-secondary" type="submit" value="지역등록">
+					<span></span>
+				</form>
+			</div>
 		</div>
 		<br><br>
 		
