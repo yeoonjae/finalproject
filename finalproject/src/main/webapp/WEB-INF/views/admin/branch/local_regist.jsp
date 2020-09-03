@@ -31,7 +31,7 @@
 											$(".name-span")
 													.css("color", "blue").css(
 															"font-size",
-															"small");
+															"small");$
 											$("input[type=submit]").prop(
 													"disabled", false);
 										} else {

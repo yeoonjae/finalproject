@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.entity.MemberDto;
@@ -64,4 +65,35 @@ public class TestController {
 		}
 		return true;
 	}
+	
+	//지역 검색
+	@GetMapping("/message/localList")
+	public List<LocalDto> localList(){
+		return sqlSession.selectList("local.getList");
+	}
+	
+	//지점 검색
+	@GetMapping("/message/branchList")
+	public List<BranchDto> branchList(@RequestParam int local_no){
+		return sqlSession.selectList("branch.localBranchList",local_no);
+	}
+	
+	//지점 관리자 정보
+	@GetMapping("/message/adminInfo")
+	public AdminDto adminInfo(@RequestParam int admin_no) {
+		return sqlSession.selectOne("admin.getAdminInfo", admin_no);
+	}
+	
+	//전체회원
+	@GetMapping("/message/memberList")
+	public List<MemberDto> memberList(){
+		return sqlSession.selectList("member.getList");
+	}
+	
+	//모든 지점관리자
+	@GetMapping("/message/branchAdmin")
+	public List<AdminDto> branchAdmin(){
+		return sqlSession.selectList("admin.getBranchAdmin");
+	}
+	
 }

@@ -68,4 +68,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getBranchAdminList" resultType="adminDto">
 		SELECT * FROM ADMIN a LEFT OUTER JOIN BRANCH b ON a.ADMIN_NO=b.ADMIN_NO WHERE b.BRANCH_NO IS NULL AND a.ADMIN_AUTH ='지점' ORDER BY admin_name ASC
 	</select>
+	
+	<!-- 관리자 지점과 JOIN한 조회 -->
+	<select id="getAdminInfo" parameterType="int" resultType="adminDto">
+		SELECT a.*,b.BRANCH_NAME FROM admin a LEFT OUTER JOIN branch b ON a.ADMIN_NO = b.ADMIN_NO WHERE b.admin_no=#{admin_no}
+	</select>
+	
+	<!-- 모든 '지점' 관리자 조회 -->
+	<select id="getBranchAdmin" resultType="adminDto">
+		SELECT * FROM admin WHERE admin_auth='지점'
+	</select>
 </mapper>

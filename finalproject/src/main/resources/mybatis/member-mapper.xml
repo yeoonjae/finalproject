@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="member">
 
 	<select id="getList" resultType="memberDto">
-		SELECT * FROM member ORDER BY member_no DESC
+		SELECT * FROM member ORDER BY member_no ASC
 	</select>
 	
 	<select id="get" parameterType="int" resultType="memberDto">
