@@ -4,7 +4,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
+<style>
+	.page-top{
+		padding-right: 0;
+	}
+</style>
   <head>
 	
     <meta charset="utf-8">
@@ -69,9 +73,10 @@
             <i class="fas fa-envelope fa-fw"></i>
             <span class="badge badge-danger">7</span>
           </a>
+          <!-- 메세지 부분 -->
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">메일함</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/regist">메일보내기</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>
           </div>

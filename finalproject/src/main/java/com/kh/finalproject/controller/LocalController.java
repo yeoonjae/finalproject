@@ -44,7 +44,6 @@ public class LocalController {
 	//지역 삭제
 	@GetMapping("/local_delete")
 	public String delete(@RequestParam int local_no) {
-		boolean isHaveBranch = localDao.isHaveBranch(local_no);
 		localDao.delete(local_no);
 		return "redirect:local_regist";
 	}
