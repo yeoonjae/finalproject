@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.finalproject.entity.BranchDto;
@@ -51,5 +52,16 @@ public class TestController {
 	@GetMapping("/branch/local_name")
 	public LocalDto localName(@RequestParam String local_name) {
 		return sqlSession.selectOne("local.get", local_name);
+	}
+	
+	//지역 내 지점 확인
+	@GetMapping("/branch/local_check")
+	public boolean check(@RequestParam int local_no) {
+		List<LocalDto> list = sqlSession.selectList("local.isHaveBranch", local_no);
+		if(!list.isEmpty()) {//검색했는데 비어있지 않으면 지역에 해당된 지점이 존재
+			System.out.println(list.isEmpty());
+			return false;
+		}
+		return true;
 	}
 }

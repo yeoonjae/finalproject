@@ -66,6 +66,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getName" parameterType="String" resultType="branchDto">
 		SELECT * FROM branch WHERE branch_name=#{branch_name}
 	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE branch WHERE branch_no=#{branch_no}
+	</delete>
 </mapper>
 
 

@@ -23,12 +23,29 @@ public class BranchDaoImpl implements BranchDao{
 	
 	
 	//지점 등록 메소드
-	public int regist(BranchDto branchDto) {
+	public int regist(BranchDto branchDto,List<MultipartFile> file) throws IllegalStateException, IOException {
 		int no = sqlSession.selectOne("branch.getSeq");//시퀀스 번호 미리생성
 		branchDto.setBranch_no(no);
 		branchDto.setBranch_layout("");
 		sqlSession.insert("branch.regist", branchDto);
-
+		//사진등록
+		if(file.size() > 0 && !file.get(0).isEmpty()) {
+			for(MultipartFile f : file) {
+				//DB에 저장
+				int img_no = sqlSession.selectOne("branchImg.getSeq");
+				BranchImgDto branchImgDto = new BranchImgDto();
+				branchImgDto.setBranch_img_no(img_no);
+				branchImgDto.setBranch_img_name(Integer.toString(img_no));
+				branchImgDto.setBranch_img_size(f.getSize());
+				branchImgDto.setBranch_img_type(f.getContentType());
+				branchImgDto.setBranch_no(no);
+				sqlSession.insert("branchImg.regist", branchImgDto);
+				
+				//하드디스크에 저장
+				File target = new File("D:/upload",f.getOriginalFilename());
+				f.transferTo(target);
+			}
+		}
 		return no;
 	}
 
@@ -57,14 +74,9 @@ public class BranchDaoImpl implements BranchDao{
 		sqlSession.update("branch.edit", branchDto);
 	}
 
-	//지점 이미지 시퀀스 생성
-	public int imgGetSeq() {
-		return sqlSession.selectOne("branchImg.getSeq");
+	//지점 삭제 메소드
+	public void delete(int branch_no) {
+		sqlSession.delete("branch.delete", branch_no);
 	}
 
-	//지점 이미지 등록
-	public void imgRegist(BranchImgDto branchImgDto) {
-		sqlSession.insert("branchImg.regist", branchImgDto);
-		
-	}
 }

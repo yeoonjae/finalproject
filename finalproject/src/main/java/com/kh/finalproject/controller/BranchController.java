@@ -49,25 +49,7 @@ public class BranchController {
 	//지점 등록 메소드
 	@PostMapping("/branch_regist")
 	public String regist(Model model,@ModelAttribute BranchDto branchDto,@RequestParam List<MultipartFile> file) throws IllegalStateException, IOException {
-		int branch_no = branchDao.regist(branchDto);
-		if(file.size() > 0 && !file.get(0).isEmpty()) {
-			for(MultipartFile f : file) {
-				//DB에 저장
-				int img_no = branchDao.imgGetSeq();
-				BranchImgDto branchImgDto = new BranchImgDto();
-				branchImgDto.setBranch_img_no(img_no);
-				branchImgDto.setBranch_img_name(Integer.toString(img_no));
-				branchImgDto.setBranch_img_size(f.getSize());
-				branchImgDto.setBranch_img_type(f.getContentType());
-				branchImgDto.setBranch_no(branch_no);
-				branchDao.imgRegist(branchImgDto);
-				
-				//하드디스크에 저장
-				File target = new File("D:/upload",f.getOriginalFilename());
-				f.transferTo(target);
-				
-			}
-		}
+		int branch_no = branchDao.regist(branchDto,file);
 		return "redirect:list";
 	}
 	
@@ -106,6 +88,8 @@ public class BranchController {
 	public String edit(@RequestParam int branch_no,Model model,RedirectAttributes attr) {
 		List<LocalDto> local = localDao.getList();
 		BranchDto branchDto = branchDao.get(branch_no);
+		List<AdminDto> list = adminDao.getList();
+		model.addAttribute("admin", list);
 		model.addAttribute("local", local);
 		model.addAttribute("branchDto", branchDto);
 		return "admin/branch/edit";
@@ -117,6 +101,13 @@ public class BranchController {
 		branchDao.edit(branchDto);
 		attr.addAttribute("branch_no", branchDto.getBranch_no());
 		return "redirect:detail";
+	}
+	
+	//지점 삭제(일단 삭제는 되지만 고려해봐야 할 사항이 많음)
+	@GetMapping("/delete")
+	public String edit(@RequestParam int branch_no) {
+		branchDao.delete(branch_no);
+		return "redirect:list";
 	}
 	
 }

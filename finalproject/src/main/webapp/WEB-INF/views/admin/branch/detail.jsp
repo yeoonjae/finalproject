@@ -74,13 +74,15 @@
 								<button class="btn col-sm-2 btn-outline-secondary">수정</button>
 							</a>
 							<c:choose>
-								<c:when test="${'null' eq branchDto.branch_layout}">
+								<c:when test="${empty branchDto.branch_layout}">
 								<a href="layout_regist?branch_no=${branchDto.branch_no}">
 									<button class="btn col-sm-2 btn-outline-secondary">배치도 등록</button>	
 								</a>
 								</c:when>
 							</c:choose>
-							<button class="btn col-sm-2 btn-outline-secondary">지점삭제</button>
+							<a href="delete?branch_no=${branchDto.branch_no}">
+								<button class="btn col-sm-2 btn-outline-secondary">지점삭제</button>
+							</a>
 						</th>
 					</tr>
 				</tbody>

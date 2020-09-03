@@ -25,19 +25,27 @@ public class LocalController {
 	@Autowired
 	private LocalDao localDao;
 	
-	@GetMapping("local_regist")
+	@GetMapping("/local_regist")
 	public String regist(Model model) {
 		List<LocalDto> list = localDao.getList();
 		model.addAttribute("list", list);
 		return "admin/branch/local_regist";
 	}
 	
-	@PostMapping("local_regist")
+	//지역 등록
+	@PostMapping("/local_regist")
 	public String regist(Model model, @RequestParam String local_name) {
 		localDao.regist(local_name);
 		List<LocalDto> list = localDao.getList();
-		//등록하기 전에 검사하는 코드 먼저 넣기
 		model.addAttribute("list", list);
+		return "redirect:local_regist";
+	}
+	
+	//지역 삭제
+	@GetMapping("/local_delete")
+	public String delete(@RequestParam int local_no) {
+		boolean isHaveBranch = localDao.isHaveBranch(local_no);
+		localDao.delete(local_no);
 		return "redirect:local_regist";
 	}
 	
