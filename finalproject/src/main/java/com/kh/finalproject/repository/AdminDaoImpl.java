@@ -69,5 +69,9 @@ public class AdminDaoImpl implements AdminDao {
 		map.put("order", order);
 		return sqlSession.selectList("admin.list2", map);
 	}
+	@Override
+	public void updateLoginTime(int no) {
+		sqlSession.selectList("admin.updateLoginTime", no);
+	}
 	
 }

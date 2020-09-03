@@ -22,5 +22,8 @@ public interface AdminDao {
 
 	int getSeq();
 
+	void updateLoginTime(int no);
+
+
 
 }

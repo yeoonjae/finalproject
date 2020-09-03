@@ -26,6 +26,7 @@
 	integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" 
 	crossorigin="anonymous">
 	</script>
+	
 	<script>
 		
 	</script>
