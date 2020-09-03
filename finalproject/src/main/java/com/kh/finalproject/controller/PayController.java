@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.LicenseDto;
@@ -22,29 +23,23 @@ public class PayController {
 	
 	@Autowired
 	private LicenseDao licenseDao;
+	
+	@Autowired
 	private PayDao payDao;
 	
-//	@GetMapping("/pay_page")
-//	public String pay() {
-//		return "member/pay/pay_page";
-//	}
 	
 	@GetMapping("/pay_page")
-	public String getList(Model model) {
-		// 이용권 리스트 가져오기
+	public String getBranch(@RequestParam int member_no, Model model,RedirectAttributes attr) {
+
+		// 이용권 리스트 가져오기 
 		List<LicenseDto> list = licenseDao.getList();
 		model.addAttribute("list", list);
 		
-		return "member/pay/pay_page";
-	}
-	
-	@GetMapping("/pay_page/{member_no}")
-	public String getBranch(@PathVariable int member_no, Model model) {
-
+		// 회원 지점명 가져오기 
 		MemberBranchDto memberBranchDto = payDao.getBranch(member_no);
 		model.addAttribute("memberBranchDto",memberBranchDto);
+		attr.addAttribute("member_no", member_no);
 		
-		//attr.addAttribute("branch_no", branch_no);
 		return "member/pay/pay_page";
 	}
 }
