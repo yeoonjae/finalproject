@@ -149,7 +149,7 @@
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/edit">마일리지 수정</a>
             <h6 class="dropdown-header">회원 관리</h6>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/addRemove">마일리지 적립/소멸</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/list">마일리지 내역조회</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/his_list">마일리지 내역조회</a>
           </div>
         </li> 
         
