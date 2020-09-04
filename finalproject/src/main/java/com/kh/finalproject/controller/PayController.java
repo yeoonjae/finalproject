@@ -27,8 +27,12 @@ public class PayController {
 	@Autowired
 	private PayDao payDao;
 	
+//	@RequestMapping("/test")//첫 주소
+//	public String root() {
+//		return "member/pay/test";
+//	}
 	
-	@GetMapping("/pay_page")
+	@GetMapping("/pay_main")
 	public String getBranch(@RequestParam int member_no, Model model,RedirectAttributes attr) {
 
 		// 이용권 리스트 가져오기 
@@ -40,6 +44,6 @@ public class PayController {
 		model.addAttribute("memberBranchDto",memberBranchDto);
 		attr.addAttribute("member_no", member_no);
 		
-		return "member/pay/pay_page";
+		return "member/pay/pay_main";
 	}
 }
