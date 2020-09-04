@@ -9,6 +9,6 @@ public class MemberController {
 
 	@RequestMapping("/")//첫 주소
 	public String root() {
-		return "member/member_index";
+		return "member/home_index";
 	}
 }
