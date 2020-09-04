@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class MessageMemberDto {
-	private int message_user_no;
+	private int message_member_no;
 	private int message_no;
 	private int admin_no;
 	private int member_no;

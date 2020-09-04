@@ -10,9 +10,9 @@ public class MessageManagerDto {
 	private int message_manager_no;
 	private int message_no;
 	private int admin_no;
-	private int damin2_no;
-	private String message_member_date;
-	private int message_member_read;
-	private String message_member_type;
+	private int admin2_no;
+	private String message_manager_date;
+	private int message_manager_read;
+	private String message_manager_type;
 
 }

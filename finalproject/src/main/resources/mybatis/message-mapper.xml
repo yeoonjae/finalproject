@@ -3,7 +3,39 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="message">
-	<insert id="regist">
+	<!-- 메세지 등록(내용과 제목) -->
+	<insert id="regist" parameterType="MessageDto">
 		insert into message values(#{message_no},#{message_title},#{message_content})
+	</insert>
+	
+	<!-- 시퀀스 생성 구문 -->
+	<select id="getSeq" resultType="int">
+		SELECT message_seq.nextval FROM dual
+	</select>
+	
+	<!-- 매니저 연결테이블에 저장 -->
+	<insert id="sendManager" parameterType="MessageManagerDto">
+		insert into MESSAGE_MANAGER values(
+			message_manager_seq.nextval,
+			#{message_no},
+			#{admin_no},
+			#{admin2_no},
+			sysdate,
+			0,
+			#{message_manager_type}
+		)
+	</insert>
+	
+	<!-- 회원 연결 테이블에 저장 -->
+	<insert id="sendMember" parameterType="MessageManagerDto">
+		insert into MESSAGE_Member values(
+			message_member_seq.nextval,
+			#{message_no},
+			#{admin_no},
+			#{member_no},
+			sysdate,
+			0,
+			#{message_member_type}
+		)
 	</insert>
 </mapper>
