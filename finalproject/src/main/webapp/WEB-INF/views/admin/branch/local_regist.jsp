@@ -54,8 +54,7 @@
 							}
 							axios(
 									{
-										url : "${pageContext.request.contextPath}/test/branch/local_check?local_no="
-												+ local_no,
+										url : "${pageContext.request.contextPath}/test/branch/local_check?local_no="+ local_no,
 										method : "get"
 									})
 									.then(
@@ -63,8 +62,7 @@
 												console.log(response.data);
 												if (response.data) {//response.data가 true면
 													if (confirm('삭제하시겠습니까?')) {
-														location.href = "${pageContext.request.contextPath}/admin/branch/local_delete?local_no="
-																+ local_no;
+														location.href = "${pageContext.request.contextPath}/admin/branch/local_delete?local_no="+ local_no;
 													} else {
 														this.preventDefault();
 													}

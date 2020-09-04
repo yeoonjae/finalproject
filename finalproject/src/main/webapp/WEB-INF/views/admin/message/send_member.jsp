@@ -30,7 +30,7 @@
 	    $(".receive").click(function(){
 	        modal.modal();
 	    })
-	     $(".who").click(function(){
+	     $(".who").change(function(){
 	    	 var local = $(".local-list");
 	    	 var branch = $(".branch-list");
 	    	 var select = $(this).val();
@@ -40,9 +40,15 @@
 	    			 method:"get"
 	    		 }).then(function(response){
 	    			 console.log(response.data);
-	    			 var tag = "<tr><td colspan='3'>전체 회원</td><td><button class='btn btn-outline-secondary'>삭제</button></td></tr>";
+	    			 var tag = "<tr><td colspan='3'>전체 회원</td><td><button type='button' class='btn btn-outline-secondary remove-bnt'>삭제</button></td></tr>";
 					 $(".receive-list-table").append(tag);
 					 table.show();
+					 $(".who").prop("disabled",true);
+					 $(".remove-bnt").on("click",(function(){
+				    		console.log("버튼눌림");
+				    		$(this).parents("tr").remove();
+				    		 $(".who").prop("disabled",false);
+				    	}))
 	    		 })
 	    	 }
 	    	 if(select==2){//전체 지점장
@@ -51,9 +57,14 @@
 	    			 method:"get"
 	    		 }).then(function(response){
 	    			 console.log(response.data);
-	    			 var tag = "<tr><td colspan='3'>전체 지점장</td><td><button class='btn btn-outline-secondary'>삭제</button></td></tr>";
+	    			 var tag = "<tr><td colspan='3'>전체 지점장</td><td><button type='button' class='btn btn-outline-secondary remove-bnt'>삭제</button></td></tr>";
 					 $(".receive-list-table").append(tag);
 					 table.show();
+					 $(".who").prop("disabled",true);
+					 $(".remove-bnt").on("click",(function(){
+				    		$(this).parents("tr").remove();
+				    		$(".who").prop("disabled",false);
+				    	}))
 	    		 })
 	    	 }
 	    	if(select==3){//지점장 선택을 했을 경우
@@ -67,6 +78,7 @@
 	            			$("<option>").attr("value",response.data[i].local_no).text(response.data[i].local_name).appendTo(local);
 	            		})
 	            		local.show();
+	            		$(".who").prop("disabled",true);	
 	            	})
 	            	
             		//지점 비동기로 불러와서 목록 출력
@@ -95,10 +107,14 @@
 	            			var tag = "<tr><td>"+response.data.branch_name+
 				            			"</td><td>"+response.data.admin_auth+
 				            			"</td><td>"+response.data.admin_name+
-				            			"</td><td><button class='btn btn-outline-secondary'>삭제</button></td></tr>";
+				            			"</td><td><button class='btn btn-outline-secondary remove-bnt' type='button'>삭제</button></td></tr>";
 				            			
 	            			table.append(tag);
 	            			table.show();
+	            			
+					    	$(".remove-bnt").on("click",(function(){
+					    		$(this).parents("tr").remove();
+					    	}))
 	            		})
 	            	});
 	            	
