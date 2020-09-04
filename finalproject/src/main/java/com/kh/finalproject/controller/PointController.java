@@ -1,6 +1,8 @@
 package com.kh.finalproject.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -164,12 +166,20 @@ public class PointController {
 		// 지점명 select를 위한 지점 목록 전달
 		List<BranchDto> branchList = branchDao.getList();
 		model.addAttribute("branchList", branchList);
+		
 		return "admin/point/his_list";
 	}
 	
-	@PostMapping("/his_list")
-	public String his_list() {
-		return "redirect:his_list";
-	}
+//	@PostMapping("/his_list")
+//	public String his_list(@RequestParam int member_no, @RequestParam String start, @RequestParam String finish,
+//			Model model) {
+//		System.out.println(member_no);
+//
+//		List<PointHisDto> list = pointHisService.getList(member_no, start, finish);
+//		model.addAttribute("list", list);
+//		
+//		System.out.println(list.size());
+//		return "admin/point/his_list";
+//	}
 	
 }
