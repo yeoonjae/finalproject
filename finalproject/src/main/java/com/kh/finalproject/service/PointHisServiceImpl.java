@@ -1,5 +1,9 @@
 package com.kh.finalproject.service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +36,16 @@ public class PointHisServiceImpl implements PointHisService{
 		
 		// 마일리지 내역 등록
 		pointHisDao.regist(pointHisDto);
+	}
+
+	@Override
+	public List<PointHisDto> getList(int member_no, String start, String finish) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("member_no", member_no);
+		param.put("start", start);
+		param.put("finish", finish);
+		
+		return pointHisDao.getList(param);
 	}
 	
 	

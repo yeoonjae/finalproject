@@ -16,4 +16,7 @@ public class PointHisDto {
 	private int point_his_score;
 	private String point_his_detail; 
 	private String point_his_date;
+	// 추가항목
+	private String point_type;
+	private String point_detail;
 }
