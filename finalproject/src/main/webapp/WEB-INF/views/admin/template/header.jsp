@@ -116,8 +116,7 @@
             		<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/info?admin_no=${admininfo.admin_no}">계정정보/수정</a>
         </c:when>
 		<c:otherwise>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/login">로그인</a>
-					<a class="dropdown-item" href="#">비밀번호 찾기</a>	         	 		
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/login">로그인</a>    	 		
 		</c:otherwise>
         </c:choose>            
             <div class="dropdown-divider"></div>

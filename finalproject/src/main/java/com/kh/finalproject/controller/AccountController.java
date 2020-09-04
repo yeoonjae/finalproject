@@ -92,7 +92,7 @@ public class AccountController {
 				session.setAttribute("admininfo", find);
 				return "admin/admin_index";
 			}else {
-				return "admin/account/login?error";
+				return "redirect:login?error=error";
 			}
 		}
 		//로그아웃

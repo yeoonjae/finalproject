@@ -19,4 +19,5 @@ public class MemberDto {
 	private String member_join;
 	private String member_login;
 	private int member_charge;
+
 }

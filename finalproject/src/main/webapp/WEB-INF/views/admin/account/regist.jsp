@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
 
 <div id="content-wrapper">
 	<div class="container-fluid">
@@ -27,11 +27,11 @@
 					</div>
 				<div class="form-group">
 					<label>이메일</label>
-					<input type="text" class="form-control" name="email" placeholder="이메일" required>
+					<input type="email" class="form-control" name="email" placeholder="이메일" required>
 				</div>
 				<div class="form-group">
 					<input type="submit" value="계정 등록 /이메일 발송">
-				</div>			
+				</div>	
 			</form>
 		</div>
 	</div>
