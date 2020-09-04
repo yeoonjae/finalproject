@@ -62,36 +62,7 @@
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-<!--                             <li class="dropdown"> -->
-<!--                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" > -->
-<!--                                     <i class="fa fa-shopping-bag"></i> -->
-<!--                                     <span class="badge">3</span> -->
-<!--                                 </a> -->
-<!--                                 <ul class="dropdown-menu cart-list"> -->
-<!--                                     <li> -->
-<!--                                         <a href="#" class="photo"><img src="assets/images/thumb01.jpg" class="cart-thumb" alt="" /></a> -->
-<!--                                         <h6><a href="#">Delica omtantur </a></h6> -->
-<!--                                         <p class="m-top-10">2x - <span class="price">$99.99</span></p> -->
-<!--                                     </li> -->
-<!--                                     <li> -->
-<!--                                         <a href="#" class="photo"><img src="assets/images/thumb01.jpg" class="cart-thumb" alt="" /></a> -->
-<!--                                         <h6><a href="#">Delica omtantur </a></h6> -->
-<!--                                         <p class="m-top-10">2x - <span class="price">$99.99</span></p> -->
-<!--                                     </li> -->
-<!--                                     <li> -->
-<!--                                         <a href="#" class="photo"><img src="assets/images/thumb01.jpg" class="cart-thumb" alt="" /></a> -->
-<!--                                         <h6><a href="#">Delica omtantur </a></h6> -->
-<!--                                         <p class="m-top-10">2x - <span class="price">$99.99</span></p> -->
-<!--                                     </li> -->
-<!--                                     -- More List -- -->
-<!--                                     <li class="total"> -->
-<!--                                         <span class="pull-right"><strong>Total</strong>: $0.00</span> -->
-<!--                                         <a href="#" class="btn btn-cart">Cart</a> -->
-<!--                                     </li> -->
-<!--                                 </ul> -->
-<!--                             </li> -->
                             <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
-                            <li class="side-menu"><a href="#"><i class="fa fa-bars"></i></a></li>
                         </ul>
                     </div>        
                     <!-- End Atribute Navigation -->
@@ -117,40 +88,14 @@
                             <li><a href="#about">소개글</a></li>                    
                             <li><a href="#service">공지사항</a></li>                    
                             <li><a href="#portfolio">지점 스토리</a></li>                    
-                            <li><a href="#pricing">문의게시판</a></li>
+                            <li><a href="#pricing">가맹 문의</a></li>
                             <li><a href="#pricing">회원가입</a></li>                      
 <!--                             <li><a href="#blog">Blog</a></li>                     -->
 <!--                             <li><a href="#contact">Contact</a></li>   -->
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div>  
- 
 
-                <!-- Start Side Menu -->
-                <div class="side">
-                    <a href="#" class="close-side"><i class="fa fa-times"></i></a>
-                    <div class="widget">
-                        <h6 class="title">Custom Pages</h6>
-                        <ul class="link">
-                         	<li><a href="#">소개글</a></li>
-                            <li><a href="#">공지사항</a></li>
-                            <li><a href="#">지점 스토리</a></li>
-                            <li><a href="#">문의 게시판</a></li>
-                            <li><a href="#">회원가입</a></li>
-                        </ul>
-                    </div>
-                    <div class="widget">
-                        <h6 class="title">Member Pages</h6>
-                        <ul class="link">
-                            <li><a href="#">마이페이지</a></li>
-                            <li><a href="#">상품 충전</a></li>
-                            <li><a href="#">좌석 예약</a></li>
-                            <li><a href="#">스터디룸 예약</a></li>
-                            <li><a href="#">1:1문의</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- End Side Menu -->
 
             </nav>
 
@@ -168,7 +113,7 @@
  
                             <div class="home_btns m-top-40">
 <!--                         <a href="" class="btn btn-primary m-top-20">GET STARTED</a> -->
-                                <a href="" class="btn btn-default m-top-20">시작하기</a>
+                                <a href="" class="btn btn-primary m-top-20">공도리 시작하기</a>
                             </div>
  
                         </div>
