@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<jsp:include page="/WEB-INF/views/member/template/header.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/member/template/user_header.jsp"></jsp:include>
 <script
 	src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -199,9 +199,14 @@
 	padding-left: 5%;
 }
 
+.use_design{
+	width: 40%;
+	height: 50px;
+	border: 1px solid #ebebeb;
+	font-size:17px;
+}
 .use_point {
-	width: 30%;
-	height: 30px;
+
 }
 
 .subContainer {
@@ -211,7 +216,7 @@
 	padding-top: 1%;
 	padding-bottom: 2%;
 }
-
+ 
 .result {
 	box-sizing: border-box;
 	background-color: #f7f7f7;
@@ -223,13 +228,13 @@
 }
 
 .licenseContainer {
-	width: 50%;
+	width: 80%;
 	height: 10px;
 }
 
 .licenseTime {
 	text-align: left;
-	width: 70%;
+	width: 60%;
 	padding-top: 2%;
 	font-size: 17px;
 }
@@ -291,8 +296,9 @@
 				<div class="main_service roomy-100">
 
 					<div>
-<!-- 						<h1>이용권 결제</h1> -->
+<!-- 			<h1>이용권 결제</h1> -->
 						<hr>
+						
 						<!--  총 결제금액  -->
 						<div class="result float_right">
 
@@ -328,9 +334,9 @@
 								<h4 class="bold">구매혜택</h4>
 								<div>
 									<div class="detail">
-										<span class="padding5">적립예정 포인트 : 
+										<p>총 결제금액의 2%가 적립됩니다.</p>
+										<span>적립예정 포인트 :</span> 
 										<span class="reward bold">0</span><span class="bold">P</span>
-										<p>(총 결제금액의 2%가 적립됩니다.)</p>
 										</span>
 									</div>
 									<hr>
@@ -350,7 +356,7 @@
 							<hr>
 
 							<div align="right">
-								<input type="button" value="구매하기" class="btn btn-warning">
+								<input type="button" value="구매하기" class="btn btn-primary">
 							</div>
 
 						</div>
@@ -389,8 +395,9 @@
 									</div>
 								</div>
 							</div>
-
+							
 							</div>
+							
 							<hr align="left" class="width50">
 
 
@@ -425,9 +432,10 @@
 								<h4 class="bold">마일리지 사용</h4>
 								<div>
 									<div class="padding5 ">
-										<input type="text" class="use_point" name="" placeholder="0원">
-										<span> <input type="button"
-											class="use_all_point btn btn-warning btn-xs"
+										<input type="text" class="use_point use_design" name="" placeholder="0원">
+										<span> 
+										<input type="button"
+											class="use_all_point btn btn-primary"
 											data-point=" ${memberBranchDto.member_point}" value="전액 사용">
 										</span>
 									</div>
@@ -439,13 +447,13 @@
 							</div>
 							<hr align="left" class="width50">
 
+
+
 							<!--  쿠폰 사용  -->
-							<div class="subContainer">
-								<h4 class="bold">쿠폰 사용</h4>
-								<div></div>
-							</div>
-							
-							
+							<div >
+								<h4 class="bold">쿠폰 선택</h4>
+
+	
 							
 						</div>
 					</div>

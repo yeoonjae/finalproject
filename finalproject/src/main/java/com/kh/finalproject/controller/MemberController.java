@@ -11,4 +11,9 @@ public class MemberController {
 	public String root() {
 		return "member/home_index";
 	}
+	
+	@RequestMapping("/user")//첫 주소
+	public String memberRoot() {
+		return "member/user_index";
+	}
 }
