@@ -22,14 +22,6 @@
 <script>
 	$(function() {
 
-		// 상품이 선택되어 있지 않은 경우 경고창 띄우기 
-		$(".use_point").on("input", function() {
-			if (isChecked() == false) {
-				alert("상품을 선택하세요.");
-				$(".use_point").val("");
-			}
-		});
-
 		// 이용권 선택
 		$(".license_type").change(function() {
 
@@ -37,73 +29,123 @@
 			//$(this).children().css("font-weight","bold");
 			var price = $(this).data().price; // 가격 불러오기 
 			var time = $(this).data().time;// 시간 불러오기 
-			var price2 = $(this).data().price.toLocaleString();// 세자리 단위로 , 붙이기
-			var totalPrice = calcResult();
+			var price2 = price.toLocaleString();// 세자리 단위로 , 붙이기
+			var no = $(this).data().no;
+			
+			var point = 0;
+			
+			// 카카오페이에 상품명 전송 
+			$(".item_name").val(time + "시간 이용권");
+			$(".license_no").val(no);
 
 			$(".time").text(time + "시간").css("font-weight", "bold"); // 시간 설정 
 			$(".price").text(price2 + "원").css("font-weight", "bold"); //가격 설정
 
-			$(".total_price").text(totalPrice); // 최종 결제 금액으로 이용권 가격 설정 
-			$(".use_point").val(""); // 마일리지 초기화 
-			$(".use_point").text(""); // 사용 마일리지 초기화 
+ 			$(".use_point").val(""); // 마일리지 초기화 
+ 			$(".use_point").text(""); // 사용 마일리지 초기화 
 
+			
+			// 최종 결제금액 설정 
+			var total_price = calcResult();
+			$(".total_price").text(total_price);
+
+			// 최종 할인금액 설정
+			var sale_price = salePrice();
+				
+			//적립금 계산 
 			var reward = pointReward();
 			$(".reward").text(reward);
+			
 
-			console.log(totalPrice);
-			console.log(reward);
-			console.log("---");
+			// 카카오페이에 최종 결제금액 전송
+			$(".total_amount").val(total_price);
+			// 카카오페이에 최종 할인금액 전송
+			$(".sale_price").val(sale_price);
 
-			// 마일리지 값 입력
-			$(".use_point").on("input", function() {
+		});
 
+		// 마일리지 값 입력
+		$(".use_point").on("input", function() {
+			// 상품이 선택되어 있지 않은 경우 경고창 띄우기 
+			if (isChecked() == false) {
+				alert("상품을 선택하세요.");
+				$(".use_point").val("");
+			} 
+			else {
 				var use_point = $(this).val(); // 입력 마일리지 값 읽어오기 
 				var member_point = $(".use_all_point").data().point; //회원 보유 마일리지 값 
+				var member_point2 = parseInt(member_point).toLocaleString(); //소수점 찍기 
 
 				//console.log("회원 마일리지 :"+member_point);
-				console.log("입력 금액 : " + use_point);
+				//console.log("입력 금액 : " + use_point);
 
 				$(".use_point").text(use_point); // 마일리지 할인 금액에 해당 값 설정 
 
 				///// 입력 마일리지 > 회원 마일리지 일 경우 
 				if (parseInt(use_point) > parseInt(member_point)) { // 숫자로 변환 
-					alert("사용 가능 마일리지는" + member_point + "P 입니다.");
+					alert("사용 가능 마일리지는" + member_point2 + "P 입니다.");
 
 					$(".use_point").val("");
 					$(".use_point").text("");
 					$(".total_price").text(price);
 				}
 
-				var total_price = calcResult();
 				// 최종 결제금액 설정 
+				var total_price = calcResult();
 				$(".total_price").text(total_price);
 
+				// 최종 할인금액 계산
+				var sale_price = salePrice();
+				
+				//적립금 계산
 				var reward = pointReward();
-				//적립예정 금액 설정
 				$(".reward").text(parseInt(reward));
-				//console.log("이용권 가격 : "+$(".total_price").text());
-				//console.log("입력 마일리지 : "+ parseInt($(".use_point").val()));
-				//console.log("총 결제 금액" +  totalPrice);
-				//console.log("---")
 
-			});
+				// 카카오페이에 최종 결제금액+최종 할인금액 전송
+				$(".total_amount").val(total_price);
+				$(".sale_price").val(sale_price);
+			}
+		});
 
-			// 마일리지 전액 사용 버튼 선택  
-			$(".use_all_point").click(function() {
-
-				var point = $(this).data().point;
-				$(".use_point").val(point);
-				$(".use_point").text(point);
-
+		// 마일리지 전액 사용 버튼 선택  
+		$(".use_all_point").click(function() {
+			if (isChecked() == false) {
+				alert("상품을 선택하세요.");
+				$(".use_point").val("");
+			} 
+			else {
+				// 총 결제금액 계산  
 				var total_price = calcResult();
-				// 최종 결제금액 설정 
+				var point = $(this).data().point;
+
+				// 적립금이 총 결제금액보다 많을 경우 
+				if (total_price < point) {
+					$(".use_point").val(total_price);
+					$(".use_point").text(total_price);
+
+					point = total_price;
+
+					total_price = total_price - point;
+				} else {
+					$(".use_point").val(point);
+					$(".use_point").text(point);
+
+					total_price = calcResult();
+				}
+
 				$(".total_price").text(total_price);
-
+				
+				// 최종 할인금액 계산
+				var sale_price = salePrice();
+				
+				//적립금 계산 
 				var reward = pointReward();
-
 				$(".reward").text(reward);
-			});
 
+				// 카카오페이에 최종 결제금액 전송
+				$(".total_amount").val(total_price);
+				$(".sale_price").val(sale_price);
+			}
 		});
 
 	});
@@ -114,9 +156,7 @@
 	// - 최종 금액 계산
 	function calcResult() {
 		var license = $("input[name=license]:checked").data("price");
-		//console.log("license", license);		
 		var point = $("input.use_point").val() || 0;
-		//console.log("point",point);	
 		var total_price = parseInt(license) - parseInt(point);
 
 		return total_price;
@@ -136,6 +176,18 @@
 		//console.log(reward);
 
 		return reward;
+	}
+	
+	// 할인 금액 계산 
+	function salePrice(){
+		var point = $("input.use_point").val() || 0;
+		var coupon = 0;
+		
+		var sum = parseInt(point) + parseInt(coupon);
+		console.log(sum);
+		
+		return sum;
+		
 	}
 </script>
 <style>
@@ -199,14 +251,15 @@
 	padding-left: 5%;
 }
 
-.use_design{
+.use_design {
 	width: 40%;
 	height: 50px;
 	border: 1px solid #ebebeb;
-	font-size:17px;
+	font-size: 17px;
 }
-.use_point {
 
+.use_point {
+	
 }
 
 .subContainer {
@@ -216,7 +269,7 @@
 	padding-top: 1%;
 	padding-bottom: 2%;
 }
- 
+
 .result {
 	box-sizing: border-box;
 	background-color: #f7f7f7;
@@ -294,11 +347,10 @@
 		<div class="container">
 			<div class="row">
 				<div class="main_service roomy-100">
-
 					<div>
-<!-- 			<h1>이용권 결제</h1> -->
+						<!-- 			<h1>이용권 결제</h1> -->
 						<hr>
-						
+
 						<!--  총 결제금액  -->
 						<div class="result float_right">
 
@@ -323,8 +375,8 @@
 								<tr>
 									<td class="resultType">최종 결제 금액</td>
 									<td class="resultPrice"><span
-										class="resultFont total_price">0</span> 
-										<span style="color: red">원</span></td>
+										class="resultFont total_price">0</span> <span
+										style="color: red">원</span></td>
 								</tr>
 							</table>
 							<hr>
@@ -335,9 +387,8 @@
 								<div>
 									<div class="detail">
 										<p>총 결제금액의 2%가 적립됩니다.</p>
-										<span>적립예정 포인트 :</span> 
-										<span class="reward bold">0</span><span class="bold">P</span>
-										</span>
+										<span>적립예정 마일리지 :</span> <span class="reward bold">0</span><span
+											class="bold">P</span>
 									</div>
 									<hr>
 								</div>
@@ -356,7 +407,15 @@
 							<hr>
 
 							<div align="right">
-								<input type="button" value="구매하기" class="btn btn-primary">
+								<!--  카카오페이에 상품명, 총 금액 전송  -->
+								<form action="prepare" method="post">
+									<input type="hidden" name="sale_price" class="sale_price"><!-- 할인 금액 -->
+									<input type="hidden" name="license_no" class="license_no"> <!-- 이용권 번호 -->
+									<input type="hidden" name="member_no" value="${memberBranchDto.member_no}"><!-- 회원 번호 -->
+									<input type="hidden" name="item_name" class="item_name"><!-- 상품명 -->
+									<input type="hidden" name="total_amount" class="total_amount"><!-- 총 결제금액 -->
+									<input type="submit" value="구매하기" class="btn btn-primary">
+								</form>
 							</div>
 
 						</div>
@@ -364,40 +423,41 @@
 
 						<div>
 							<!-- 이용권 선택  -->
-							<div >
+							<div>
 								<h4 class="bold">상품 선택</h4>
 
 								<div class="col-md-6">
-								<div class="about_accordion wow fadeIn">
-									<div id="faq_main_content" class="faq_main_content">
-										<h6>
-											<i class="fa fa-angle-right"></i>상품을 선택하세요.
-										</h6>
-										<div>
-											<div class="content">
-												<c:forEach var="licenseDto" items="${list}">
-													<table class="licenseContainer">
-														<tr>
-															<td class="licenseTime"><input type="radio"
-																class="license_type" name="license"
-																data-time="${licenseDto.license_time}"
-																data-price="${licenseDto.license_price}"> <span
-																class="padding7 fontBold">${licenseDto.license_time}시간</span>
-															</td>
-															<td class="licensePrice"><span class="fontBold">${licenseDto.license_price}원</span>
-															</td>
-														</tr>
-													</table>
-												</c:forEach>
+									<div class="about_accordion wow fadeIn">
+										<div id="faq_main_content" class="faq_main_content">
+											<h6>
+												<i class="fa fa-angle-right"></i>상품을 선택하세요.
+											</h6>
+											<div>
+												<div class="content">
+													<c:forEach var="licenseDto" items="${list}">
+														<table class="licenseContainer">
+															<tr>
+																<td class="licenseTime"><input type="radio"
+																	class="license_type" name="license"
+																	data-time="${licenseDto.license_time}"
+																	data-price="${licenseDto.license_price}"
+																	data-no="${licenseDto.license_no}"> <span
+																	class="padding7 fontBold">${licenseDto.license_time}시간</span>
+																</td>
+																<td class="licensePrice"><span class="fontBold">${licenseDto.license_price}원</span>
+																</td>
+															</tr>
+														</table>
+													</c:forEach>
+												</div>
+												<!-- End off accordion item-1 -->
 											</div>
-											<!-- End off accordion item-1 -->
 										</div>
 									</div>
 								</div>
+
 							</div>
-							
-							</div>
-							
+
 							<hr align="left" class="width50">
 
 
@@ -432,9 +492,8 @@
 								<h4 class="bold">마일리지 사용</h4>
 								<div>
 									<div class="padding5 ">
-										<input type="text" class="use_point use_design" name="" placeholder="0원">
-										<span> 
-										<input type="button"
+										<input type="text" class="use_point use_design" name=""
+											placeholder="0원"> <span> <input type="button"
 											class="use_all_point btn btn-primary"
 											data-point=" ${memberBranchDto.member_point}" value="전액 사용">
 										</span>
@@ -447,19 +506,17 @@
 							</div>
 							<hr align="left" class="width50">
 
-
-
 							<!--  쿠폰 사용  -->
-							<div >
+							<div>
 								<h4 class="bold">쿠폰 선택</h4>
+							</div>
 
-	
-							
+
 						</div>
+						<!--End off row -->
 					</div>
-					<!--End off row -->
+					<!--End off container -->
 				</div>
-				<!--End off container -->
 			</div>
 		</div>
 	</section>
