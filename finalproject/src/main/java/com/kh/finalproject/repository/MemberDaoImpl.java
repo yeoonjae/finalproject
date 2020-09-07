@@ -45,5 +45,10 @@ public class MemberDaoImpl implements MemberDao{
 	public List<MemberDto> search(Map<String, Object> param) {
 		return sqlSession.selectList("member.search", param);
 	}
+
+	// 회원 단일조회
+	public MemberDto get(int member_no) {
+		return sqlSession.selectOne("member.get", member_no);
+	}
 		
 }

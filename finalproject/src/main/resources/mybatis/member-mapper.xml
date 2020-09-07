@@ -42,6 +42,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY b.branch_no DESC
 	</select>
 	
+	<!-- 회원 단일 조회 -->
+	<select id="get" parameterType="int" resultType="memberDto">
+		SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME FROM MEMBER m
+			LEFT OUTER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO
+			LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+			WHERE member_no = #{member_no}
+	</select>
 	<!-- 회원 마일리지 수정 코드 -->
 	<update id="plusPoint" parameterType="pointHisDto">
 		UPDATE member SET member_point = member_point + #{point_his_score} WHERE member_no = #{member_no}

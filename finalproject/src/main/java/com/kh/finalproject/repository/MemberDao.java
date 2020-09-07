@@ -14,6 +14,9 @@ public interface MemberDao {
 	// 지점별 회원 목록 조회
 	List<MemberDto> getList(int branch_no);
 	
+	// 회원 단일조회
+	MemberDto get(int member_no);
+	
 	// 회원 마일리지 적립
 	void plusPoint(PointHisDto pointHisDto);
 	
