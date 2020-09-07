@@ -10,7 +10,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	- namespace : 영역을 외부에서 부르기 위한 별칭(일반적으로 테이블 이름으로 사용)
  -->
 <mapper namespace="member">
-
+	<select id="getSeq" resultType="int">
+		SELECT member_no FROM member WHERE member_no =(SELECT max(member_no) FROM member)
+	</select>
+	<insert id="join" parameterType="memberDto">
+		insert into member (
+			member_no,
+			member_name,
+			member_email,
+			member_pw,
+			member_point,
+			member_join,
+			member_login,
+			member_charge
+		)
+		values(
+			#{member_no},
+			#{member_name},
+			#{member_email},
+			#{member_pw},
+			0,
+			sysdate,
+			null,
+			0
+		)
+	</insert>
 	<select id="getList" resultType="memberDto">
 		SELECT * FROM member ORDER BY member_no DESC
 	</select>
@@ -23,12 +47,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="plusPoint" parameterType="pointHisDto">
 		UPDATE member SET member_point = member_point + #{point_his_score} WHERE member_no = #{member_no}
 	</update>
-	
+	<select id="getNo" parameterType="string" resultType="int">
+		select member_no from member where member_email=#{member_email}
+	</select>
 	<update id="minusPoint" parameterType="pointHisDto">
 		UPDATE member SET member_point = member_point - #{point_his_score} WHERE member_no = #{member_no}
 	</update>
+	<delete id="delete" parameterType="int">
+		delete member where member_no=#{member_no}
+	</delete>
+	<update id="edit" parameterType="memberDto">
+		update member set member_name=#{member_name}, member_pw=#{member_pw} where member_no=#{member_no}
+	</update>
+	<select id="login" parameterType="string" resultType="memberDto">
+		select * from member where member_email=#{member_email}
+	</select>
+	<update id="updateLoginTime" parameterType="int">
+		update member set member_login = sysdate where member_no = #{member_no}
+	</update>
+	<select id="getId" parameterType="string" resultType="string">
+		select member_email from member where member_name=#{member_name}
+	</select>
 </mapper>
-
-
-
-

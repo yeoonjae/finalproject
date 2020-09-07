@@ -87,11 +87,12 @@ public class AccountController {
 			//중간 처리과정만 Dao만들어서 적어서 완성해주세욤!-연재
 			if(adminDao.login(admin_id,admin_pw)) {
 				int no = adminDao.getNo(admin_id);
+				adminDao.updateLoginTime(no);
 				AdminDto find = adminDao.get(no);
 				session.setAttribute("admininfo", find);
 				return "admin/admin_index";
-			}else {			
-				return "admin/account/login?error";
+			}else {
+				return "redirect:login?error=error";
 			}
 		}
 		//로그아웃

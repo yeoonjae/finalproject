@@ -90,7 +90,7 @@
                             <li><a href="#service">개인석</a></li>                    
                             <li><a href="#portfolio">스터디룸</a></li>                    
                             <li><a href="#pricing">리뷰</a></li>  
-                            <li><a href="#pricing">로그아웃</a></li>   
+                            <li><a href="${pageContext.request.contextPath}/member/account/logout">로그아웃</a></li>   
                                                
 <!--                             <li><a href="#blog">Blog</a></li>                     -->
 <!--                             <li><a href="#contact">Contact</a></li>   -->
@@ -115,7 +115,7 @@
                     <div class="widget">
                         <h6 class="title">Member Pages</h6>
                         <ul class="link">
-                            <li><a href="#">마이페이지</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/account/info?member_no=${memberinfo.member_no}">마이페이지</a></li>
                             <li><a href="#">상품 충전</a></li>
                             <li><a href="#">좌석 예약</a></li>
                             <li><a href="#">스터디룸 예약</a></li>

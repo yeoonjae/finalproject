@@ -9,7 +9,7 @@
 <div id="content-wrapper">
 	<div class="container-fluid">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item active">관리자 목록</li>
+			<li class="breadcrumb-item active">회원 목록</li>
 		</ol>
 		<div class="card mb-3">
 			<div class="card-body">
@@ -17,30 +17,33 @@
 					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 						<thead>
 							<tr>
-								<th>관리자 번호</th>
-								<th>관리자 이름</th>
-								<th>관리자 아이디</th>
-								<th>관리자 비밀번호</th>
-								<th>관리자 가입일자</th>
-								<th>관리자 로그인일자</th>
-								<th>관리 메뉴</th>
+								<th>회원 번호</th>
+								<th>회원 이름</th>
+								<th>회원 이메일</th>
+								<th>회원 비밀번호</th>
+								<th>회원 마일리지</th>
+								<th>회원 가입일</th>
+								<th>회원 로그인일자</th>
+								<th>회원 충전금액</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="adminDto" items="${list}">
+							<c:forEach var="memberDto" items="${list}">
 								<tr>
-									<td>${adminDto.admin_no}</td>
-									<td>${adminDto.admin_name}</td>
-									<td>${adminDto.admin_id}</td>
-									<td>${adminDto.admin_pw}</td>
-									<td>${adminDto.admin_join}</td>
-									<td>${adminDto.admin_login}</td>
+									<td>${memberDto.member_no}</td>
+									<td>${memberDto.member_name}</td>
+									<td>${memberDto.member_email}</td>
+									<td>${memberDto.member_pw}</td>
+									<td>${memberDto.member_point}</td>
+									<td>${memberDto.member_join}</td>
+									<td>${memberDto.member_login}</td>
+									<td>${memberDto.member_charge}</td>
 									<td>
-										<a href="info?admin_no=${adminDto.admin_no}">관리자 정보</a>
+										<a href="info?member_no=${memberDto.member_no}">회원 정보</a>
 										|
-										<a href="edit?admin_no=${adminDto.admin_no}">수정</a>
+										<a href="edit?member_no=${memberDto.member_no}">수정</a>
 										|
-										<a href="delete?admin_no=${adminDto.admin_no}">삭제</a>
+										<a href="delete?member_no=${memberDto.member_no}">삭제</a>
 									</td>
 								</tr>
 							</c:forEach>
