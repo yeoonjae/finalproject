@@ -50,13 +50,12 @@
 	 			
 	 			// 지역 발급일 경우
 	 			if(val=="local"){
+	 				// 데이터 없다는 문구 삭제
 	 				if($(".list-wrap").find("td").text().indexOf("선택")!=-1){
 	 					$(".list-wrap").children().remove(); // 전체 삭제
 	 				}
-		 			
 	 				// 지역명 추출
 	 				var local = $("#local").find("option:selected").data("name");
-	 				
 	 				// 지역명이 같은 td가 없을 경우 추가(중복방지)
 	 				if($(".list-wrap").find("td").text().indexOf(local) < 0){
 		 				// tr 생성
@@ -79,6 +78,10 @@
 		 					.appendTo(".list-wrap > tr > .btn-location:last");		
 	 				};
 	 			} else if(val=="branch") { // 지점 발급일 경우
+	 				// 데이터 없다는 문구 삭제
+	 				if($(".list-wrap").find("td").text().indexOf("선택")!=-1){
+	 					$(".list-wrap").children().remove(); // 전체 삭제
+	 				}
 		 			// 지점명 추출
 	 				var branch = $("#branch").find("option:selected").data("name");
 	 			
@@ -232,8 +235,10 @@
 			                </tbody>
 						</table>
 					</div>
+					<hr>
 						<!-- 쿠폰 내용 작성 -->
 					<form action="regist" method="post">
+						<input type="hidden" name="admin_no" value="${admin_no}">
 						<div class="form-group">
 							<label>쿠폰명</label>
 							<input type="text" name="coupon_name" placeholder="발급할 쿠폰 내용을 입력하세요" class="form-control" required>
@@ -254,6 +259,7 @@
 							<input type="text" class="picker-finish form-control" name="finish" placeholder="연도-월-일">
 						</div>
 						<button class="btn btn-primary btn-block btn-regist">등록</button>
+						<br>
 					</form>
 				</div>
 			</div>
