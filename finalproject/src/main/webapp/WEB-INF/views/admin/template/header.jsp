@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,9 +11,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-
-
     <!-- Bootstrap core CSS-->
     <link href="${pageContext.request.contextPath}/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -102,10 +100,25 @@
             <span>관리자</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <h6 class="dropdown-header">관리자 로그인</h6>
-            <a class="dropdown-item" href="login">로그인</a>
-            <a class="dropdown-item" href="#">계정등록</a>
-            <a class="dropdown-item" href="#">비밀번호 찾기</a>
+            <h6 class="dropdown-header">관리자 로그인 메뉴</h6>
+            
+         <c:set var="rootPath" value="${pageContext.request.contextPath}"></c:set>
+	         	관리자 권한 : ${admininfo.admin_auth}
+         <c:choose>  
+         <c:when test="${admininfo.admin_auth eq '본사'}">
+            		<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/logout">로그아웃</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/regist">계정등록</a>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/list">계정 리스트</a>         	 	
+        </c:when>
+		<c:when test="${admininfo.admin_auth eq '지점'}">
+            		<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/logout">로그아웃</a>
+            		<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/info?admin_no=${admininfo.admin_no}">계정정보/수정</a>
+        </c:when>
+		<c:otherwise>
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/login">로그인</a>
+					<a class="dropdown-item" href="#">비밀번호 찾기</a>	         	 		
+		</c:otherwise>
+        </c:choose>            
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Other Pages:</h6>
             <a class="dropdown-item" href="404.jsp">404 Page</a>
@@ -151,7 +164,7 @@
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/addRemove">마일리지 적립/소멸</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/his_list">마일리지 내역조회</a>
           </div>
-        </li> 
+        </li>
         
          <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
