@@ -48,6 +48,26 @@
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
     <script>
         $(function(){
+        	
+        	$.urlParam = function(name) {
+        	    var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+        	                      .exec(window.location.href);
+        	    if (results == null) {
+        	         return 0;
+        	    }
+        	    return results[1] || 0;
+        	}
+        	
+        	if($.urlParam('member_no')){
+        		$('.modal').modal('hide');
+//         		console.log($.urlParam('member_no'));
+        		$(".member_no").val($.urlParam('member_no'));
+        		
+        	} else {
+        		// 모달 안사라지게
+                $('#test-modal').modal({backdrop:'static'});
+        	}
+        	
         	// 회원 검색 선택 시
         	$(".btn-search").click(function(){
         		var member_name = $(".m_name").val();
@@ -75,17 +95,16 @@
 	    	           		$(".member_name").val($(this).data("name"));
 	    	           		$(".member_email").val($(this).data("email"));
 	    	           		
-	    	           		// 읽기만 가능하게 변경
-	    	           		$(".member_name").prop("readonly", true);
-	    	           		$(".member_email").prop("readonly", true);
+// 	    	           		// 읽기만 가능하게 변경
+// 	    	           		$(".member_name").prop("readonly", true);
+// 	    	           		$(".member_email").prop("readonly", true);
     	               });
                     });
         		});
         		
         	});
         	
-        	// 모달 안사라지게
-            $('#test-modal').modal({backdrop:'static'});
+        	
         	
         	// 기간 버튼 선택 시
         	$(".btn-date").click(function(){
@@ -274,11 +293,11 @@
                 <!-- 회원정보 -->
                     <div class="col-4">
                         <label>회원명</label>
-                        <input type="text" name="member_name" class="form-control member_name">
+                        <input type="text" name="member_name" class="form-control member_name" value="${memberDto.member_name}" readonly>
                     </div>
                     <div class="col-6">
                         <label>이메일</label>
-                        <input type="text" name="member_email" class="form-control member_email">
+                        <input type="text" name="member_email" class="form-control member_email" value="${memberDto.member_email}" readonly>
                     </div>
                     <div class="col-2">
                     	<label style="color: white">재선택</label>

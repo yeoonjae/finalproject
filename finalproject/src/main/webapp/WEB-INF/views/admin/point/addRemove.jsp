@@ -147,7 +147,7 @@
                                     <td>
                                         <button class="btn btn-primary btn-edit" data-name="${memberDto.member_name}" 
                                         data-email="${memberDto.member_email}" data-no="${memberDto.member_no}">수정</button>
-                                        <a href="list">
+                                        <a href="his_list?member_no=${memberDto.member_no}">
                                             <button class="btn btn-primary del">내역</button>
                                         </a>
                                     </td>
