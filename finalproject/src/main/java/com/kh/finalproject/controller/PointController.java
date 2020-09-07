@@ -162,11 +162,17 @@ public class PointController {
 	}
 	
 	@GetMapping("/his_list")
-	public String his_list(Model model) {
+	public String his_list(Model model, @RequestParam(required = false, defaultValue = "0") int member_no) {
 		// 지점명 select를 위한 지점 목록 전달
 		List<BranchDto> branchList = branchDao.getList();
 		model.addAttribute("branchList", branchList);
 		
+		// 회원번호가 함께 올 경우 회원정보 전달
+		if(member_no!=0) {
+			MemberDto memberDto = memberDao.get(member_no);			
+			model.addAttribute("memberDto", memberDto);
+		}
+				
 		return "admin/point/his_list";
 	}
 	

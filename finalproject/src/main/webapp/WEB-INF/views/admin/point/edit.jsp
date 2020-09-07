@@ -48,6 +48,9 @@
             });
             
             $(".btn-edit").click(function(e){
+            	if(!$(".point_score").val() || !$(".point_detail").val()){
+            		return;
+            	}
             	if(confirm("정말 수정하시겠습니까?")){
             		document.querySelector(".form").submit();
             	} else {
