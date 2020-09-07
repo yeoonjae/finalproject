@@ -8,7 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MemberController {
 	@RequestMapping("/")//첫 주소
 	public String root() {
-		return "member/member_index";
+		return "member/home_index";
+	}
+	
+	@RequestMapping("/user")//첫 주소
+	public String memberRoot() {
+		return "member/user_index";
 	}
 
 }
