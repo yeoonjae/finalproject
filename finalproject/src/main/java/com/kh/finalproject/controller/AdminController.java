@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/admin")
 public class AdminController {
 	
-	
 	@RequestMapping("/")//첫 주소
 	public String root() {
 		return "admin/admin_index";

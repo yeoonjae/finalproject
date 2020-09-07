@@ -25,4 +25,15 @@ public interface MemberDao {
 	
 	// 회원 검색
 	List<MemberDto> search(Map<String, Object> param);
+	
+	void delete(int member_no);
+	
+	void changePw(String pw);
+	int edit(MemberDto memberDto);
+	void join(MemberDto memberDto);
+	boolean login(String member_email, String member_pw);
+	int getNo(String member_email);
+	void updateLoginTime(int member_no);
+	int getSeq();
+	String getId(String member_name);
 }

@@ -89,7 +89,8 @@
                             <li><a href="#service">공지사항</a></li>                    
                             <li><a href="#portfolio">지점 스토리</a></li>                    
                             <li><a href="#pricing">가맹 문의</a></li>
-                            <li><a href="#pricing">회원가입</a></li>                      
+                            <li><a href="${pageContext.request.contextPath}/member/account/join">회원가입</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/account/login">로그인</a></li>                      
 <!--                             <li><a href="#blog">Blog</a></li>                     -->
 <!--                             <li><a href="#contact">Contact</a></li>   -->
                         </ul>

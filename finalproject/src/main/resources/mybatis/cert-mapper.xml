@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	mapper는 구문을 만들 수 있는 영역
+	일반적으로 테이블당 1개씩의 mapper를 둔다
+	
+	- namespace : 영역을 외부에서 부르기 위한 별칭(일반적으로 테이블 이름으로 사용)
+ -->
+<mapper namespace="cert">
+
+<!--
+    <insert id="regist" parameterType="com.kh.spring07.entity.StudentDto">
+    
+    </insert>
+    
+    또는
+   
+    <insert id="regist" parameterType="student">
+		INSERT INTO student(
+			name, age, score, when
+		) VALUES(
+			#{name}, #{age}, #{score}, sysdate
+		)
+	</insert>
+	
+	알아야 할 설정값
+	- id : 구문을 외부에서 호출하기 위한 식별값
+	- parameterType : 구문을 실행하기 위해 필요한 데이터 유형(매개변수와 유사)
+	- resultType : 구문이 실행된 결과 유형(반환형과 유사)
+-->
+	
+	<insert id="regist" parameterType="certDto">
+		INSERT INTO cert(
+			who, secret, when
+		) VALUES(
+			#{who}, #{secret}, sysdate
+		)
+	</insert>
+
+	<!-- 
+	xml에서는 못쓰는 글자가 존재하는데 이를 해결하기 위해 다음 구문이 필요
+	
+	<![CDATA[
+		
+	]]>
+	-->	
+	<select id="validate" resultType="certDto" parameterType="certDto">
+		SELECT * FROM cert
+		WHERE 
+			who = #{who} 
+			and secret = #{secret}
+			and when between sysdate - 5/24/60 and sysdate
+	</select>
+	<delete id="remove" parameterType="certDto">
+		delete cert where who=#{who} and secret=#{secret}
+	</delete>
+	<!-- 5분이 지난 인증 정보를 삭제하는 구문 -->
+	<delete id="clear">
+	<![CDATA[
+		delete cert where when < sysdate - 5/24/60
+		]]>
+	</delete>
+</mapper>
