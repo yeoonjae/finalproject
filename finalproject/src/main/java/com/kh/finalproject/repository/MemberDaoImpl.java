@@ -17,8 +17,11 @@ public class MemberDaoImpl implements MemberDao{
 	
 	@Autowired
 	private SqlSession sqlSession;
+
+
 	@Autowired
 	private PasswordEncoder encoder;
+	
 	// 회원 리스트 조회
 	@Override
 	public List<MemberDto> getList() {
@@ -36,12 +39,24 @@ public class MemberDaoImpl implements MemberDao{
 	public void minusPoint(PointHisDto pointHisDto) {
 		sqlSession.update("member.minusPoint", pointHisDto);		
 	}
-	//회원 정보 조회
+
+	// 지점별 회원 목록
 	@Override
+	public List<MemberDto> getList(int branch_no) {
+		return sqlSession.selectList("member.getList2", branch_no);
+	}
+
+	// 회원 검색
+	@Override
+	public List<MemberDto> search(Map<String, Object> param) {
+		return sqlSession.selectList("member.search", param);
+	}
+
+	// 회원 단일조회
 	public MemberDto get(int member_no) {
-		
 		return sqlSession.selectOne("member.get", member_no);
 	}
+		
 	//회원 정보 삭제
 	@Override
 	public void delete(int member_no) {
@@ -98,6 +113,4 @@ public class MemberDaoImpl implements MemberDao{
 	public String getId(String member_name) {
 		return sqlSession.selectOne("member.getId", member_name);
 	}
-
-	
 }

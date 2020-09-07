@@ -19,5 +19,7 @@ public class MemberDto {
 	private String member_join;
 	private String member_login;
 	private int member_charge;
-
+	// 지점명, 지역명 추가
+	private String branch_name;
+	private String local_name;
 }

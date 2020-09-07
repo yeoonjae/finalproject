@@ -76,7 +76,7 @@
 	<!-- Root Logger -->
 	<root>
 		<!-- info로 설정하면 info보다 중요한 warn,error를 보겠다는 의미 -->
-		<priority value="debug" />
+		<priority value="info" />
 		<appender-ref ref="console"/>
 <!-- 		<appender-ref ref="daily"/> -->
 	</root>
