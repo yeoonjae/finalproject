@@ -56,6 +56,8 @@ public class MemberDaoImpl implements MemberDao{
 	//회원 정보 수정
 	@Override
 	public int edit(MemberDto memberDto) {
+		String pw = encoder.encode(memberDto.getMember_pw());
+		memberDto.setMember_pw(pw);
 		return sqlSession.update("member.edit", memberDto);
 	}
 	//회원 가입
