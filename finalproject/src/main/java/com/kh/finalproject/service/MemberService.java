@@ -1,5 +1,7 @@
 package com.kh.finalproject.service;
 
-public interface MemberService {
+import javax.servlet.http.HttpSession;
 
+public interface MemberService {
+	boolean check(String pw, HttpSession session);
 }

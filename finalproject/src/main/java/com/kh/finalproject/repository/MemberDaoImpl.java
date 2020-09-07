@@ -1,9 +1,12 @@
 package com.kh.finalproject.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalproject.entity.MemberDto;
@@ -14,6 +17,8 @@ public class MemberDaoImpl implements MemberDao{
 	
 	@Autowired
 	private SqlSession sqlSession;
+	@Autowired
+	private PasswordEncoder encoder;
 	// 회원 리스트 조회
 	@Override
 	public List<MemberDto> getList() {
@@ -50,8 +55,29 @@ public class MemberDaoImpl implements MemberDao{
 	}
 	//회원 가입
 	@Override
-	public void write(MemberDto memberDto) {
+	public void join(MemberDto memberDto) {
+		
 		// TODO Auto-generated method stub
 		sqlSession.insert("member.join", memberDto);
+	}
+	//로그인
+	@Override
+	public boolean login(String id, String pw) {
+		MemberDto memberDto = sqlSession.selectOne("member.login", id);
+		if(memberDto !=null) {	
+			return encoder.matches(pw, memberDto.getMember_pw());
+		}
+		return false;
+	}
+	//아이디로 번호 받기
+	@Override
+	public int getNo(String id) {
+		return sqlSession.selectOne("member.getNo", id);
+	}
+	//로그인 시간 갱신
+	@Override
+	public void updateLoginTime(int no) {
+		// TODO Auto-generated method stub
+		sqlSession.update("member.updateLoginTime", no);
 	}
 }

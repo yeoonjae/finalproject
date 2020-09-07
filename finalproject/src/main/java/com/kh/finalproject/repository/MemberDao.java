@@ -14,5 +14,8 @@ public interface MemberDao {
 	
 	void delete(int no);
 	int edit(MemberDto memberDto);
-	void write(MemberDto memberDto);
+	void join(MemberDto memberDto);
+	boolean login(String id, String pw);
+	int getNo(String id);
+	void updateLoginTime(int no);
 }

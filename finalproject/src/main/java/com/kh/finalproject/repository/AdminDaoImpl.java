@@ -29,16 +29,13 @@ public class AdminDaoImpl implements AdminDao {
 		adminDto.setAdmin_pw(enc);
 		sqlSession.insert("admin.regist", adminDto);
 	}
-	//관리자 검색
+	//관리자 로그인
 	@Override
 	public boolean login(String admin_id, String admin_pw) {
 		AdminDto find = sqlSession.selectOne("admin.getLogin", admin_id);
 		if (find != null) {
-			boolean pass = encoder.matches(admin_pw, find.getAdmin_pw());
-			if (pass) {
-				return true;
+			return encoder.matches(admin_pw, find.getAdmin_pw());
 			}
-		}
 		return false;
 	}
 	//관리자 정보 조회

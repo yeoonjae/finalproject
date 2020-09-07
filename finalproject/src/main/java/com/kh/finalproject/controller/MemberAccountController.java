@@ -32,7 +32,7 @@ public class MemberAccountController {
 	}
 	@PostMapping("/join")
 	public String join(@ModelAttribute MemberDto memberDto) {
-		memberDao.write(memberDto);
+		memberDao.join(memberDto);
 		return "member/account/join_result";
 	}
 	// 회원 정보 리스트
@@ -78,10 +78,36 @@ public class MemberAccountController {
 			return "member/member_index";
 		}
 	}
+	//로그인
+	@GetMapping("/login")
+	public String login() {
+		return "member/account/login";
+	}
+	@PostMapping("/login")
+	public String login(@RequestParam String id, @RequestParam String pw, HttpSession session) {
+		if(memberDao.login(id,pw)) {
+			int no = memberDao.getNo(id);
+			memberDao.updateLoginTime(no);
+			MemberDto find = memberDao.get(no);
+			session.setAttribute("memberinfo", find);
+			return "member/member_index";
+		}else {
+			return "redirect:login?error=error";
+		}
+	}
 	//회원 비밀번호 확인 검사
 	@GetMapping("/check")
-	public String check(@RequestParam String pw, HttpSession session) {
-		if(mememberService)
+	public String check() {
+		return "member/account/check";
+	}
+	@PostMapping("/check")
+	public String check(@RequestParam String pw, HttpSession session, RedirectAttributes attr) {
+		if(memberService.check(pw, session)) {
+			MemberDto find = (MemberDto) session.getAttribute("memberinfo");
+			attr.addAttribute("member_no", find.getMember_no());
+			return "redirect:info";
+		}
+		return "redirect:check?error=error";
 	}
 	
 }

@@ -44,7 +44,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="plusPoint" parameterType="pointHisDto">
 		UPDATE member SET member_point = member_point + #{point_his_score} WHERE member_no = #{member_no}
 	</update>
-	
+	<select id="getNo" parameterType="string" resultType="int">
+		select member_no from member where member_id=#{member_id}
+	</select>
 	<update id="minusPoint" parameterType="pointHisDto">
 		UPDATE member SET member_point = member_point - #{point_his_score} WHERE member_no = #{member_no}
 	</update>
@@ -53,6 +55,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	<update id="edit" parameterType="memberDto">
 		update member set member_name=#{member_name}, member_pw=#{member_pw} where member_no=#{member_no}
+	</update>
+	<select id="login" parameterType="memberDto" resultType="string">
+		select * from member where member_id=#{id}
+	</select>
+	<update id="updateLoginTime" parameterType="int">
+		update member set member_login = sysdate where member_no = #{member_no}
 	</update>
 </mapper>
 
