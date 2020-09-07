@@ -102,8 +102,6 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">관리자 로그인 메뉴</h6>
-            
-         <c:set var="rootPath" value="${pageContext.request.contextPath}"></c:set>
 	         	관리자 권한 : ${admininfo.admin_auth}
          <c:choose>  
          <c:when test="${admininfo.admin_auth eq '본사'}">

@@ -10,12 +10,16 @@ public interface MemberDao {
 	List<MemberDto> getList();
 	void plusPoint(PointHisDto pointHisDto);
 	void minusPoint(PointHisDto pointHisDto);
-	MemberDto get(int no);
+	MemberDto get(int member_no);
 	
-	void delete(int no);
+	void delete(int member_no);
+	
+	void changePw(String pw);
 	int edit(MemberDto memberDto);
 	void join(MemberDto memberDto);
-	boolean login(String id, String pw);
-	int getNo(String id);
-	void updateLoginTime(int no);
+	boolean login(String member_email, String member_pw);
+	int getNo(String member_email);
+	void updateLoginTime(int member_no);
+	int getSeq();
+	String getId(String member_name);
 }

@@ -38,15 +38,20 @@ public class MemberDaoImpl implements MemberDao{
 	}
 	//회원 정보 조회
 	@Override
-	public MemberDto get(int no) {
+	public MemberDto get(int member_no) {
 		
-		return sqlSession.selectOne("member.get", no);
+		return sqlSession.selectOne("member.get", member_no);
 	}
 	//회원 정보 삭제
 	@Override
-	public void delete(int no) {
+	public void delete(int member_no) {
 		// TODO Auto-generated method stub
-		sqlSession.delete("member.delete", no);
+		sqlSession.delete("member.delete", member_no);
+	}
+	//비밀번호 수정
+	@Override
+	public void changePw(String pw) {
+		sqlSession.update("member.changePw", pw);
 	}
 	//회원 정보 수정
 	@Override
@@ -56,28 +61,41 @@ public class MemberDaoImpl implements MemberDao{
 	//회원 가입
 	@Override
 	public void join(MemberDto memberDto) {
-		
+		String pw = encoder.encode(memberDto.getMember_pw());
+		memberDto.setMember_pw(pw);
 		// TODO Auto-generated method stub
 		sqlSession.insert("member.join", memberDto);
 	}
 	//로그인
 	@Override
-	public boolean login(String id, String pw) {
-		MemberDto memberDto = sqlSession.selectOne("member.login", id);
+	public boolean login(String member_email, String member_pw) {
+		MemberDto memberDto = sqlSession.selectOne("member.login", member_email);
 		if(memberDto !=null) {	
-			return encoder.matches(pw, memberDto.getMember_pw());
+			return encoder.matches(member_pw, memberDto.getMember_pw());
 		}
 		return false;
 	}
 	//아이디로 번호 받기
 	@Override
-	public int getNo(String id) {
-		return sqlSession.selectOne("member.getNo", id);
+	public int getNo(String member_email) {
+		return sqlSession.selectOne("member.getNo", member_email);
 	}
 	//로그인 시간 갱신
 	@Override
-	public void updateLoginTime(int no) {
+	public void updateLoginTime(int member_no) {
 		// TODO Auto-generated method stub
-		sqlSession.update("member.updateLoginTime", no);
+		sqlSession.update("member.updateLoginTime", member_no);
 	}
+	//마지막 회원 번호 가져오기
+	@Override
+	public int getSeq() {
+		return sqlSession.selectOne("member.getSeq");
+	}
+	//이름으로 이메일 찾기
+	@Override
+	public String getId(String member_name) {
+		return sqlSession.selectOne("member.getId", member_name);
+	}
+
+	
 }

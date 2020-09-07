@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:if test="${not empty admininfo.admin_auth}">
+<c:choose>
+<c:when test="${not empty admininfo.admin_auth}">
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>	
-</c:if>
+</c:when>
+<c:when test="${not empty memberinfo}">
+<jsp:include page="/WEB-INF/views/member/template/user_header.jsp"></jsp:include>	
+</c:when>
+</c:choose>
 <div id="content-wrapper">
 	<div class="container-fluid">
 		<ol class="breadcrumb">
@@ -26,10 +31,10 @@
 				<input type="text" class="form-control" name="member_pw">
 				</div>
 				<div class="form-group">
-				<input type="submit" value="수정">
+				<input type="submit" value="수정" required>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
-<jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/views/member/template/footer.jsp"></jsp:include>

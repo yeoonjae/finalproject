@@ -18,5 +18,4 @@ public class MemberServiceImpl implements MemberService {
 		MemberDto find = (MemberDto) session.getAttribute("memberinfo");
 		return encoder.matches(pw, find.getMember_pw());
 	}
-
 }
