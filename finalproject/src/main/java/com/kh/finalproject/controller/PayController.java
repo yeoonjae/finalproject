@@ -2,6 +2,8 @@ package com.kh.finalproject.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,10 +47,13 @@ public class PayController {
 	}
 	
 	@RequestMapping("/pay_detail")
-	public String getPayIist(@RequestParam int member_no, Model model, RedirectAttributes attr) {
-		List<PayInfoDto> list = payDao.getPayInfo(member_no); 
+	public String getPayIist(Model model,HttpSession session) {
+		
+		int member_no = (int) session.getAttribute("member_no");	
+		
+		List<PayInfoDto> list = payDao.getPayInfo(member_no); 		
 		model.addAttribute("list", list);
-		attr.addAttribute("member_no", member_no);
+		
 		
 		return "member/pay/pay_detail";
 	}
