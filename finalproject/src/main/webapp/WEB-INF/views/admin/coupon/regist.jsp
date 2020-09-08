@@ -56,18 +56,32 @@
 	 				}
 	 				// 지역명 추출
 	 				var local = $("#local").find("option:selected").data("name");
+	 				
+	 				
+	 				
 	 				// 지역명이 같은 td가 없을 경우 추가(중복방지)
 	 				if($(".list-wrap").find("td").text().indexOf(local) < 0){
+		 				// 지역번호 추출
+		 				var local_no = $("#local").find("option:selected").val();
 		 				// tr 생성
 		 				$(".list-wrap").append(tr);
 		 				// td 생성
-		 				$(tr).append('<td>지역</td><td>'+local+' 전체</td><td class="btn-location"></td>');
+		 				$(tr).append('<td>지역</td><td data-no="'+local_no+'">'+local+' 전체</td><td class="btn-location"></td>');
 		 				// 삭제버튼 생성
 		 				$(btn).text("삭제")
 		 					.attr("type","button")
 		 					.attr("class", "btn btn-primary")
 	 						// 삭제버튼 클릭 시
 		 					.click(function(){
+		 						// 해당 input 삭제
+		 						var no = $(this).parents('td').prev().data('no');
+		 						// 방법 1) 되긴하지만 비추
+// 								$("input[name=local_no][value="+no+"]").remove();
+		 						// 방법 2) 추천!
+								$("input[name=local_no]").filter(function(){
+									//console.log(this, this.value);
+									return $(this).val() == no;//if($(this).val()==no) return true; else return false;
+								}).remove();
 		 						// 해당 행 삭제
 		 						$(this).parents("tr").remove();
 		 						// 선택된 대상이 없을 경우
@@ -76,6 +90,8 @@
 		 						}
 		 					})
 		 					.appendTo(".list-wrap > tr > .btn-location:last");		
+		 				// input hidden 생성하여 해당 지역번호 값 넣기
+		 				$("<input>").attr("type", "hidden").attr("name", "local_no").val(local_no).appendTo(".hidden-wrap");
 	 				};
 	 			} else if(val=="branch") { // 지점 발급일 경우
 	 				// 데이터 없다는 문구 삭제
@@ -85,18 +101,26 @@
 		 			// 지점명 추출
 	 				var branch = $("#branch").find("option:selected").data("name");
 	 			
-	 				// 지역명이 같은 td가 없을 경우 추가(중복방지)
+	 				// 지점명이 같은 td가 없을 경우 추가(중복방지)
 	 				if($(".list-wrap").find("td").text().indexOf(branch) < 0){
+	 					// 지점 번호 추출
+	 					var branch_no = $("#branch").find("option:selected").val();
 	 					// tr 생성
 		 				$(".list-wrap").append(tr);
 	 					// td 생성
-		 				$(tr).append('<td>지점</td><td>'+branch+'</td><td class="btn-location"></td>');
+		 				$(tr).append('<td>지점</td><td data-no="'+branch_no+'">'+branch+'</td><td class="btn-location"></td>');
 	 					// 삭제버튼 생성
 		 				$(btn).text("삭제")
 		 					.attr("type","button")
 		 					.attr("class", "btn btn-primary")
 		 					// 삭제버튼 클릭 시 
 		 					.click(function(){
+		 						// 해당 input 삭제
+		 						var no = $(this).parents('td').prev().data('no');
+		 						$("input[name=branch_no]").filter(function(){
+									//console.log(this, this.value);
+									return $(this).val() == no;//if($(this).val()==no) return true; else return false;
+								}).remove();
 		 						// 해당 행 삭제
 		 						$(this).parents("tr").remove();
 		 						// 선택된 대상이 없을 경우
@@ -105,6 +129,8 @@
 		 						}
 		 					})
 		 					.appendTo(".list-wrap > tr > .btn-location:last");
+		 				// input hidden 생성하여 해당 지역번호 값 넣기
+		 				$("<input>").attr("type", "hidden").attr("name", "branch_no").val(branch_no).appendTo(".hidden-wrap");
 	 				}
 	 			} else { // 전체 발급일 경우
 	 				$(".list-wrap").children().remove(); // 전체 행 삭제
@@ -212,7 +238,7 @@
 						</select>
 						<select id="branch" name="branch_no" class="form-control" hidden>
 							<c:forEach items="${branchList}" var="branchDto">
-								<option value="${branchDto.branch_name}" data-name="${branchDto.branch_name}">${branchDto.branch_name}</option>
+								<option value="${branchDto.branch_no}" data-name="${branchDto.branch_name}">${branchDto.branch_name}</option>
 							</c:forEach>
 						</select>
 						<br>
@@ -238,7 +264,9 @@
 					<hr>
 						<!-- 쿠폰 내용 작성 -->
 					<form action="regist" method="post">
-						<input type="hidden" name="admin_no" value="${admin_no}">
+						<div class="hidden-wrap">
+							<input type="hidden" name="admin_no" value="${admininfo.admin_no}">
+						</div>
 						<div class="form-group">
 							<label>쿠폰명</label>
 							<input type="text" name="coupon_name" placeholder="발급할 쿠폰 내용을 입력하세요" class="form-control" required>
