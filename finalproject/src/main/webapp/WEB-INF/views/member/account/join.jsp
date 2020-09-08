@@ -7,6 +7,14 @@
 <br>
 <br>
 <br>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script> 
+<script>
+	function checkEmail(){
+		var input =document.querySelector(".input");
+		var span = document.querySelector(".span");
+		var name= input.value
+	}
+</script>
 <div id="content-wrapper">
 	<div class="container-fluid" >
 		<ol class="breadcrumb">

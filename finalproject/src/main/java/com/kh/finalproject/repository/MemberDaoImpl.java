@@ -63,11 +63,7 @@ public class MemberDaoImpl implements MemberDao{
 		// TODO Auto-generated method stub
 		sqlSession.delete("member.delete", member_no);
 	}
-	//비밀번호 수정
-	@Override
-	public void changePw(String pw) {
-		sqlSession.update("member.changePw", pw);
-	}
+	
 	//회원 정보 수정
 	@Override
 	public int edit(MemberDto memberDto) {
@@ -110,7 +106,16 @@ public class MemberDaoImpl implements MemberDao{
 	}
 	//이름으로 이메일 찾기
 	@Override
-	public String getId(String member_name) {
-		return sqlSession.selectOne("member.getId", member_name);
+	public List<String> getId(String member_name) {
+		return sqlSession.selectList("member.getId", member_name);
+	}
+	//비밀번호 수정
+	@Override
+	public void changePw(int no, String member_pw) {
+		// TODO Auto-generated method stub
+		Map<String,Object> map =new HashMap<String,Object>();
+		map.put("member_no", no);
+		map.put("member_pw", member_pw);
+		sqlSession.update("member.changePw", map);
 	}
 }

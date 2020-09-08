@@ -14,27 +14,16 @@
 <div id="content-wrapper">
 	<div class="container-fluid">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item">회원 정보 수정</li>
+			<li class="breadcrumb-item">이메일 찾기</li>
 		</ol>
 		<div class="container-form offset-sm-3 col-sm-6 offset-md-3 col-md-6">
-			<form action="${pageContext.request.contextPath}/member/account/edit" method="post">
-				<div class="form-group">
-				회원번호 : ${memberDto.member_no} 
-				<input type="hidden" name="member_no" value="${memberDto.member_no}">
-				</div>
-				<div class="form-group">
-				회원 이메일 : ${memberDto.member_email}
-				</div>
+			<form action="${pageContext.request.contextPath}/member/account/find_email" method="post">
 				<div class="form-group">
 				회원 이름:
-				<input type="text" class="form-control" name="member_name" value="${memberDto.member_name}">
+				<input type="text" class="form-control" name="member_name">
 				</div>
 				<div class="form-group">
-				회원 비밀번호 :
-				<input type="text" class="form-control" name="member_pw">
-				</div>
-				<div class="form-group">
-				<input type="submit" value="수정" required>
+				<input type="submit" value="이메일 찾기" required>
 				</div>
 			</form>
 		</div>

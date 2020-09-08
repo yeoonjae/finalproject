@@ -1,6 +1,7 @@
 package com.kh.finalproject.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalproject.entity.CertDto;
@@ -130,15 +130,15 @@ public class MemberAccountController {
 		return "redirect:check?error=error";
 	}
 	//이메일 찾기
-	@GetMapping("/find_id")
+	@GetMapping("/find_email")
 	public String findId() {
-		return "member/account/find_id";
+		return "member/account/find_email";
 	}
-	@PostMapping("/find_id")
+	@PostMapping("/find_email")
 	public String findId(@RequestParam String member_name ,Model model) {
-		String member_email = memberDao.getId(member_name);
+		List<String> member_email = memberDao.getId(member_name);
 		model.addAttribute("member_email", member_email);
-		return "member/account/find_id_result";
+		return "member/account/find_email_result";
 	}
 	//비밀번호 찾기 이메일 인증
 	@GetMapping("/find_pw")
@@ -146,26 +146,30 @@ public class MemberAccountController {
 		return "member/account/find_pw";
 	}
 	@PostMapping("/find_pw")
-	public String findPw(@RequestParam String member_email, HttpServletRequest request) {
-		String ip = request.getRemoteAddr();
-		String secret =certService.generateCertification(ip);
-		emailService.sendSimpleMessage(member_email, "공돌이 인증번호", "인증번호: " + secret);
-		return "member/account/find_pw_check";
-	}
-	//이메일 인증 번호 받기
-	@GetMapping("/find_pw_check")
-	public String findPwCheck() {
-		return "member/account/find_pw_check";
-	}
-	@PostMapping("/find_pw_check")
-	@ResponseBody
-	public String check(@RequestParam String secret, @RequestParam String email,
+	public String findPw(@RequestParam String member_email, 
 			HttpServletRequest request, RedirectAttributes attr
 			) {
 		String ip = request.getRemoteAddr();
+		String secret =certService.generateCertification(ip);
+		attr.addAttribute("member_email", member_email);
+		emailService.sendSimpleMessage(member_email, "공돌이 인증번호", "인증번호: " + secret);
+		return "redirect:find_pw_check";
+	}
+	//이메일 인증 번호 받기
+	@GetMapping("/find_pw_check")
+	public String findPwCheck(Model model, @RequestParam String member_email) {
+		model.addAttribute("member_email", member_email);
+		return "member/account/find_pw_check";
+	}
+	@PostMapping("/find_pw_check")
+	public String check(@RequestParam String secret, String member_email,
+			HttpServletRequest request, RedirectAttributes attr
+			) {
+		
+		String ip = request.getRemoteAddr();
 		boolean result = certDao.validate(CertDto.builder().who(ip).secret(secret).build());
 		if(result) {
-			int no = memberDao.getNo(email);
+			int no = memberDao.getNo(member_email);
 			attr.addAttribute("member_no", no);
 			return "redirect:change_pw";
 		}
@@ -173,13 +177,16 @@ public class MemberAccountController {
 	}
 	//비번 바꾸기
 	@GetMapping("/change_pw")
-	public String changePw() {
+	public String changePw(@RequestParam int member_no, Model model) {
+		MemberDto memberDto = memberDao.get(member_no);
+		model.addAttribute("memberDto", memberDto);
 		return "member/account/change_pw";
 	}
 	@PostMapping("/change_pw")
-	public String changePw(@RequestParam("member_no") int no, @RequestParam String pw,
+	public String changePw(@RequestParam("member_no") int no, @RequestParam String member_pw,
 			RedirectAttributes attr, HttpSession session) {
-		memberDao.changePw(pw);
+		memberDao.changePw(no, member_pw);
+		
 		MemberDto memberDto  = memberDao.get(no);
 		session.setAttribute("memberinfo", memberDto);
 		attr.addAttribute("member_no", no);

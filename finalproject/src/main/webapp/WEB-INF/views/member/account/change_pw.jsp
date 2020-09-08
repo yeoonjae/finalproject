@@ -14,10 +14,10 @@
 <div id="content-wrapper">
 	<div class="container-fluid">
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item">회원 정보 수정</li>
+			<li class="breadcrumb-item">비밀번호 변경</li>
 		</ol>
 		<div class="container-form offset-sm-3 col-sm-6 offset-md-3 col-md-6">
-			<form action="${pageContext.request.contextPath}/member/account/edit" method="post">
+			<form action="${pageContext.request.contextPath}/member/account/change_pw" method="post">
 				<div class="form-group">
 				회원번호 : ${memberDto.member_no} 
 				<input type="hidden" name="member_no" value="${memberDto.member_no}">
@@ -26,8 +26,7 @@
 				회원 이메일 : ${memberDto.member_email}
 				</div>
 				<div class="form-group">
-				회원 이름:
-				<input type="text" class="form-control" name="member_name" value="${memberDto.member_name}">
+				회원 이름: ${memberDto.member_name}
 				</div>
 				<div class="form-group">
 				회원 비밀번호 :
