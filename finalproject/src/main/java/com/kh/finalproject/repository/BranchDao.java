@@ -15,4 +15,8 @@ public interface BranchDao {
 	BranchDto get(int branch_no);
 	//지점 수정
 	void edit(BranchDto branchDto);
+	//지점번호 조회
+	List<Integer> getNo();
+	//지역별 지점번호 조회
+	List<Integer> getNo2(int local_no);
 }

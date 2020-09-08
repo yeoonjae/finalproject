@@ -63,6 +63,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE branch_no = #{branch_no}
 	</update>
 	
+	<!-- 지점번호 조회 -->
+	<select id="getNo" resultType="int">
+		SELECT branch_no FROM branch
+	</select>
+	
+	<select id="getNo2" resultType="int" parameterType="int">
+		SELECT branch_no FROM branch WHERE local_no = #{local_no}
+	</select>
 </mapper>
 
 
