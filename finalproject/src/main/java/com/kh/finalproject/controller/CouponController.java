@@ -6,12 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalproject.entity.BranchDto;
+import com.kh.finalproject.entity.CouponDto;
 import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.repository.BranchDao;
 import com.kh.finalproject.repository.LocalDao;
+import com.kh.finalproject.service.CouponService;
 
 @Controller
 @RequestMapping("/admin/coupon")
@@ -22,6 +27,9 @@ public class CouponController {
 	
 	@Autowired
 	private BranchDao branchDao;
+	
+	@Autowired
+	private CouponService couponService;
 	
 	@GetMapping("/regist")
 	public String regist(Model model) {
@@ -34,5 +42,13 @@ public class CouponController {
 		model.addAttribute("branchList", branchList);
 		
 		return "admin/coupon/regist";
+	}
+	
+	@PostMapping("/regist")
+	public String regist(@RequestParam(required = false, defaultValue = "0") int[] branch_no, 
+			@RequestParam(required = false, defaultValue = "0") int[] local_no, @ModelAttribute CouponDto couponDto) {
+		couponService.regist(branch_no, local_no, couponDto);
+		
+		return "redirect:regist";
 	}
 }

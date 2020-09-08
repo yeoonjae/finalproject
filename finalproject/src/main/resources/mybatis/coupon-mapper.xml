@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	mapper는 구문을 만들 수 있는 영역
+	일반적으로 테이블당 1개씩의 mapper를 둔다
+	
+	- namespace : 영역을 외부에서 부르기 위한 별칭(일반적으로 테이블 이름으로 사용)
+ -->
+<mapper namespace="coupon">
+	
+	<insert id="registA" parameterType="couponDto">
+		INSERT INTO coupon(
+			coupon_no,
+			branch_no,
+			admin_no,
+			coupon_name,
+			coupon_discount,
+			coupon_category,
+			coupon_start,
+			coupon_finish
+		) VALUES (
+			coupon_seq.nextval,
+			#{branch_no},
+			#{admin_no},			
+			#{coupon_name},
+			#{coupon_discount},
+			'전체',
+			#{coupon_start},
+			#{coupon_finish}
+		)
+	</insert>
+	
+	<insert id="registB" parameterType="couponDto">
+		INSERT INTO coupon(
+			coupon_no,
+			branch_no,
+			admin_no,
+			coupon_name,
+			coupon_discount,
+			coupon_category,
+			coupon_start,
+			coupon_finish
+		) VALUES (
+			coupon_seq.nextval,
+			#{branch_no},
+			#{admin_no},			
+			#{coupon_name},
+			#{coupon_discount},
+			'지점',
+			#{coupon_start},
+			#{coupon_finish}
+		)
+	</insert>
+	
+</mapper>
+
+
+
+

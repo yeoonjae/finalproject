@@ -129,7 +129,7 @@
 		 						}
 		 					})
 		 					.appendTo(".list-wrap > tr > .btn-location:last");
-		 				// input hidden 생성하여 해당 지역번호 값 넣기
+		 				// input hidden 생성하여 해당 지점번호 값 넣기
 		 				$("<input>").attr("type", "hidden").attr("name", "branch_no").val(branch_no).appendTo(".hidden-wrap");
 	 				}
 	 			} else { // 전체 발급일 경우
@@ -265,7 +265,8 @@
 						<!-- 쿠폰 내용 작성 -->
 					<form action="regist" method="post">
 						<div class="hidden-wrap">
-							<input type="hidden" name="admin_no" value="${admininfo.admin_no}">
+<%-- 							<input type="hidden" name="admin_no" value="${admininfo.admin_no}"> --%>
+							<input type="hidden" name="admin_no" value=1>
 						</div>
 						<div class="form-group">
 							<label>쿠폰명</label>
@@ -280,11 +281,11 @@
 						<!-- 쿠폰 시작일 설정 -->
 						<div class="form-group">
 							<label>쿠폰 시작일</label>
-							<input type="text" class="picker-start form-control" name="start" placeholder="연도-월-일">
+							<input type="text" class="picker-start form-control" name="coupon_start" placeholder="연도-월-일">
 						</div>
 						<div class="form-group">
 							<label>쿠폰 만료일</label>
-							<input type="text" class="picker-finish form-control" name="finish" placeholder="연도-월-일">
+							<input type="text" class="picker-finish form-control" name="coupon_finish" placeholder="연도-월-일">
 						</div>
 						<button class="btn btn-primary btn-block btn-regist">등록</button>
 						<br>
