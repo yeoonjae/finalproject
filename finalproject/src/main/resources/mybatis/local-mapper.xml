@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="get" parameterType="String" resultType="localDto">
 		SELECT * FROM local WHERE local_name=#{local_name}
 	</select>
+	
 </mapper>
 
 
