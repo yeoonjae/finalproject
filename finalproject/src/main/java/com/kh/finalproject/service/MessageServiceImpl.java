@@ -21,7 +21,7 @@ public class MessageServiceImpl implements MessageService{
 
 
 	//메세지 등록
-	public void regist(MessageVO messageVO) {
+	public void regist(MessageVO messageVO,AdminDto adminDto) {
 		MessageDto messageDto = new MessageDto();
 		int message_no = sqlSession.selectOne("message.getSeq");
 		messageDto.setMessage_no(message_no);
@@ -49,7 +49,8 @@ public class MessageServiceImpl implements MessageService{
 			managerDto.setMessage_manager_type("발신");
 			sqlSession.insert("message.sendManager", managerDto);
 		}else if(receiver.length < 2 && receiver[0].equals("전체 회원")){
-			List<MemberDto> list = sqlSession.selectList("member.getList");
+			
+			List<MemberDto> list = sqlSession.selectList("member.getBranch");
 			//회원(주인공)--수신으로 받기
 			for(int i=0;i<list.size();i++) {
 				MessageMemberDto memberDto = new MessageMemberDto();

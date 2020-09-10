@@ -29,8 +29,4 @@ public class MessageDaoImpl implements MessageDao{
 		sqlSession.delete("message.manager_delete", message_manager_no);
 		
 	}
-	
-	
-	
-
 }

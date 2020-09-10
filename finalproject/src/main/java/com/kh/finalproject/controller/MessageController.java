@@ -49,9 +49,9 @@ public class MessageController {
 	}
 	
 	@PostMapping("/send_message_manager")
-	public String regist(@ModelAttribute MessageVO messageVO) {
-		System.out.println(messageVO.getReceiver_name());
-		messageService.regist(messageVO);
+	public String regist(@ModelAttribute MessageVO messageVO,HttpSession session) {
+		AdminDto adminDto = (AdminDto) session.getAttribute("admininfo");
+		messageService.regist(messageVO,adminDto);
 		return "redirect:send_message_manager";
 	}
 	

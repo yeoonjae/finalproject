@@ -1,3 +1,4 @@
+<%@page import="com.kh.finalproject.entity.AdminDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
@@ -57,8 +58,6 @@
 			    		 $(".who").prop("disabled",false);
 			    		 console.log("삭제후",table.children("tbody").children("tr").children("td").html());
 			    	}))    		 
-	    			 
-	    		 
 	    	 }
 	    	 if(select==2){//전체 지점장
 	    		 var tag = "<tr class='name-tr'><td colspan='3' class='name'>전체 지점장</td><td><button type='button' class='btn btn-outline-secondary remove-bnt'>삭제</button></td></tr>";
@@ -125,6 +124,14 @@
 	            	});
 	            	
 	    	 }
+	    	
+	    	if(select==4){
+	    		var admin_no = $(".admin_no");
+	    		console.log(admin_no);
+	    		
+	    	}
+	    	
+	    	
 	    	
 	    	//대상을 선택하는 구문
 	    	//1. 기존에 선택된 사람들을 삭제
@@ -321,6 +328,7 @@
 					<div class="tab-pane fade show active send-form" id="send-mail">
 						<br>
 							<!-- 쪽지보내기 -->
+							<input class="admin_no" type="hidden" value="${admininfo.admin_no}">
 							<form action="send_message_manager" method="post">
 								<fieldset>
 									<div class="form-group">

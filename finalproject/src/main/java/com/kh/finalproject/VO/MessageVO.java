@@ -11,4 +11,5 @@ public class MessageVO {
 	private String[] receiver_name;
 	private String message_title;
 	private String message_content;
+	
 }
