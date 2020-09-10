@@ -28,22 +28,24 @@
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
     <script>
         $(function(){
-        	
+        	// 수정버튼 클릭 시
+        	// input창에 데이터 입력되도록
             $(".btn-edit").click(function(){
                 $(".member_name").val($(this).data("name"));
                 $(".member_email").val($(this).data("email"));
                 $(".member_no").val($(this).data("no"));
                 
                 $(".select-result").text("");
-                $(".btn-regist").attr("disabled", false);
+                $(".btn-regist").attr("disabled", false); // 등록 버튼 활성화
                 
         	});
             
+        	// 등록버튼 클릭 시
             $(".btn-regist").click(function(e){
             	var name = $(".membr_name").val();
             	var email = $(".member_email").val();
             	
-            	if(!name || !email){
+            	if(!name || !email){ // 비어있는 input창이 있을 경우
             		return;
             	}
             	
@@ -54,14 +56,17 @@
             	}
             });
             
+        	// 정렬 선택 시 form 전송
             $("#order").change(function(){
             	document.querySelector(".list-form").submit();
             });
         });
+        
+        // 다른 페이지에서 넘어올 경우 (파라미터가 있는 경우)
         $(window).on("load", function(){
         	if($(".membr_name").val()) {
-        		$(".select-result").removeClass("on");
-        		$(".btn-regist").attr("disabled", false);
+        		$(".select-result").removeClass("on");	// 회원 선택하라는 span 숨김
+        		$(".btn-regist").attr("disabled", false); // 등록버튼 활성화
         	}
         });
     </script>
@@ -155,6 +160,7 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <br><br>
                 </div>
             </div>
             <div class="card-footer small text-muted">
