@@ -119,9 +119,9 @@
             <div class="card-header">
                 <i class="fas fa-table"></i> 회원 검색
             </div>
-            <div class="card-body offset-sm-1 col-sm-10 offset-md-1 col-md-10">
+            <div class="card-body offset-sm-2 col-sm-8 offset-md-2 col-md-8">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>
