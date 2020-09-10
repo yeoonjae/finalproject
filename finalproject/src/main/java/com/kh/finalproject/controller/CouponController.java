@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.CouponDto;
 import com.kh.finalproject.entity.LocalDto;
@@ -45,7 +46,7 @@ public class CouponController {
 		
 		// 지점 목록 전달
 		List<BranchDto> branchList = branchDao.getList();
-		model.addAttribute("branchList", branchList);
+		model.addAttribute("branchList", branchList);		
 		
 		return "admin/coupon/regist";
 	}
