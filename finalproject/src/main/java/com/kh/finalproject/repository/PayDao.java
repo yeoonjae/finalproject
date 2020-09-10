@@ -5,6 +5,8 @@ import java.util.List;
 import com.kh.finalproject.entity.MemberBranchDto;
 import com.kh.finalproject.entity.PayHisDto;
 import com.kh.finalproject.entity.PayInfoDto;
+import com.kh.finalproject.entity.PayPointDto;
+import com.kh.finalproject.entity.PointHisDto;
 
 public interface PayDao {
 	
@@ -22,5 +24,19 @@ public interface PayDao {
 	
 	// 회원 번호로 회원 결제 내역 조회 
 	List<PayInfoDto> getPayInfo(int member_no);
+	
+	void plusPoint(PayPointDto payPointDto );
+	void minusPoint(PayPointDto payPointDto);
+	
+	//결제 승인후 마일리지 정보 임시 저장 
+	void payPointRegist(PayPointDto payPointDto);
+
+	
+	//번호 뽑기
+	int getSeq();
+
+	// 결제 적립/차감 내역 point_history에 저장
+	void registUsePoint(PayPointDto payPointDto);
+	void registReward(PayPointDto payPointDto);
 	
 }

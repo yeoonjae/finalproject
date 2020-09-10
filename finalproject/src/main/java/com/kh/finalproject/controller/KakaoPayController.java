@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalproject.entity.PayHisDto;
+import com.kh.finalproject.entity.PayPointDto;
+import com.kh.finalproject.entity.PointHisDto;
 import com.kh.finalproject.pay.KakaoPayFinishVO;
 import com.kh.finalproject.pay.KakaoPayHistoryVO;
 import com.kh.finalproject.pay.KakaoPayResultVO;
@@ -48,8 +50,10 @@ public class KakaoPayController {
 
 	@PostMapping("/prepare")
 	public String prepare(@RequestParam int member_no, 
-										@RequestParam int license_no,
-										@RequestParam int sale_price,
+										@RequestParam int license_no, // 이용권 번호 
+										@RequestParam int sale_price, //총 할인 금액
+										@RequestParam int use_point2, //사용한 마일리지
+										@RequestParam int reward, // 적립금
 										@ModelAttribute KakaoPayStartVO startVO, 
 										HttpSession session) throws URISyntaxException {
 		
@@ -68,10 +72,12 @@ public class KakaoPayController {
 		session.setAttribute("partner_user_id", startVO.getPartner_user_id());
 		session.setAttribute("tid", resultVO.getTid());
 
-		// 세션에 저장 (회원 번호, 이용권 번호, 할인금액)
+		// 세션에 저장 (회원 번호, 이용권 번호, 할인금액+ 마일리지 사용금액, 적립금)
 		session.setAttribute("member_no", member_no);
 		session.setAttribute("license_no", license_no);
 		session.setAttribute("sale_price", sale_price);
+		session.setAttribute("use_point2", use_point2); // 사용 마일리지
+		session.setAttribute("reward", reward); // 적립 마일리지
 		
 		return "redirect:" + resultVO.getNext_redirect_pc_url();
 	}
@@ -85,6 +91,8 @@ public class KakaoPayController {
 		int member_no = (int) session.getAttribute("member_no");
 		int license_no = (int) session.getAttribute("license_no");
 		int sale_price = (int) session.getAttribute("sale_price");
+		int use_point2 = (int) session.getAttribute("use_point2");
+		int reward = (int) session.getAttribute("reward");
 		
 		// 승인 요청 발송 
 		KakaoPayFinishVO finishVO = kakaoPayService.approve(partner_order_id, partner_user_id, pg_token, tid);
@@ -93,18 +101,18 @@ public class KakaoPayController {
 		log.debug("결제 금액 ={}",finishVO.getAmount().getTotal());
 		
 		//  데이터베이스에 INSERT
-		int pay_his_price= finishVO.getAmount().getTotal();
 		
 		String pay_his_date = finishVO.getApproved_at();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd'T'HH:mm:ss");
-		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd'T'HH:mm:ss");	
 		Date date = sdf.parse(pay_his_date);
 		
+		int pay_his_price= finishVO.getAmount().getTotal();
 		String tid_no = finishVO.getTid();
 		String pay_his_method = finishVO.getPayment_method_type();
 		
 		log.debug("결제 승인 날짜 = {}",pay_his_date);
 		
+		// 결제 내역에 추가 
 		PayHisDto payHisDto = PayHisDto.builder()
 															.tid_no(tid_no)
 															.license_no(license_no)
@@ -113,9 +121,30 @@ public class KakaoPayController {
 															.pay_his_discount(sale_price)
 															.pay_his_price(pay_his_price)
 															.pay_his_method(pay_his_method)
-														.build();
+														.build();		
 		payDao.payInfoInsert(payHisDto); 
-
+		 
+		//결제 포인트 사용/적립 내역 테이블에 저장 
+		PayPointDto payPointDto = PayPointDto.builder()
+																		.tid_no(tid_no)
+																		.member_no(member_no)
+																		.pay_use_point(use_point2)
+																		.reward(reward)
+																	.build();
+		payDao.payPointRegist(payPointDto);
+		
+		// 회원 포인트 업데이트 (적립/차감)
+		payDao.plusPoint(payPointDto);
+		payDao.minusPoint(payPointDto);
+		
+		//마일리지 기록 남기기
+		if(use_point2>0) {
+			payDao.registUsePoint(payPointDto);
+		}
+		if(reward>0) {
+			payDao.registReward(payPointDto);
+		}
+		
 		return "redirect:pay_success";
 	}
 	

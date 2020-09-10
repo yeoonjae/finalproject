@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.finalproject.entity.MemberBranchDto;
 import com.kh.finalproject.entity.PayHisDto;
 import com.kh.finalproject.entity.PayInfoDto;
+import com.kh.finalproject.entity.PayPointDto;
+import com.kh.finalproject.entity.PointHisDto;
 
 @Repository
 public class PayDaoImpl implements PayDao{
@@ -47,6 +49,39 @@ public class PayDaoImpl implements PayDao{
 	@Override
 	public List<PayInfoDto> getPayInfo(int member_no) {
 		return sqlSession.selectList("pay.getPayInfo",member_no);
+	}
+
+	@Override
+	public void plusPoint(PayPointDto payPointDto) {
+		sqlSession.update("pay.plusPoint", payPointDto);
+	}
+
+	@Override
+	public void minusPoint(PayPointDto payPointDto) {
+		sqlSession.update("pay.minusPoint", payPointDto);	
+	}
+
+	@Override
+	public void payPointRegist(PayPointDto payPointDto) {
+		sqlSession.insert("pay.payPointRegist",payPointDto);
+		
+	}
+	
+	
+	@Override
+	public int getSeq() {
+		return sqlSession.selectOne("pay.getSeq");
+	}	
+	
+	@Override
+	public void registReward(PayPointDto payPointDto) {
+		sqlSession.insert("pay.registReward", payPointDto);
+	}
+
+	@Override
+	public void registUsePoint(PayPointDto payPointDto) {
+		sqlSession.insert("pay.registUsePoint", payPointDto);
+		
 	}
 
 
