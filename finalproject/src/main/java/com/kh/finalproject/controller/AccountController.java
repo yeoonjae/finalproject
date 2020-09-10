@@ -86,11 +86,12 @@ public class AccountController {
 		public String login(@RequestParam String admin_id,@RequestParam String admin_pw, HttpSession session) {
 			if(adminDao.login(admin_id,admin_pw)) {
 				int no = adminDao.getNo(admin_id);
+				adminDao.updateLoginTime(no);
 				AdminDto find = adminDao.get(no);
 				session.setAttribute("admininfo", find);
 				return "admin/admin_index";
-			}else {			
-				return "admin/account/login?error";
+			}else {
+				return "redirect:login?error=error";
 			}
 		}
 		//로그아웃

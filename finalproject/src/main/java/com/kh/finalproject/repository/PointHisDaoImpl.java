@@ -1,5 +1,8 @@
 package com.kh.finalproject.repository;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -21,8 +24,10 @@ public class PointHisDaoImpl implements PointHisDao{
 	public void regist(PointHisDto pointHisDto) {
 		sqlSession.insert("pointHis.regist", pointHisDto);
 	}
-	
 
-	
-	
+	@Override
+	public List<PointHisDto> getList(Map<String, Object> param) {
+		return sqlSession.selectList("pointHis.getList", param);
+	}
+
 }

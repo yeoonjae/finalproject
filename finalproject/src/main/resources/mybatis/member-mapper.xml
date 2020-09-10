@@ -14,9 +14,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getList" resultType="memberDto">
 		SELECT * FROM member ORDER BY member_no ASC
 	</select>
+		
+	<select id="getSeq" resultType="int">
+		SELECT member_no FROM member WHERE member_no =(SELECT max(member_no) FROM member)
+	</select>
 	
-	<select id="get" parameterType="int" resultType="memberDto">
-		SELECT * FROM member WHERE member_no = #{member_no}
+	<insert id="join" parameterType="memberDto">
+		insert into member (
+			member_no,
+			member_name,
+			member_email,
+			member_pw,
+			member_point,
+			member_join,
+			member_login,
+			member_charge
+		)
+		values(
+			#{member_no},
+			#{member_name},
+			#{member_email},
+			#{member_pw},
+			0,
+			sysdate,
+			null,
+			0
+		)
+	</insert>
+	
+	<select id="getNo" parameterType="string" resultType="int">
+		select member_no from member where member_email=#{member_email}
 	</select>
 	
 	<select id="getBranch">
@@ -28,11 +55,74 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE member SET member_point = member_point + #{point_his_score} WHERE member_no = #{member_no}
 	</update>
 	
+	<delete id="delete" parameterType="int">
+		delete member where member_no=#{member_no}
+	</delete>
+	
+	<update id="edit" parameterType="memberDto">
+		update member set member_name=#{member_name}, member_pw=#{member_pw} where member_no=#{member_no}
+	</update>
+	
+	<select id="login" parameterType="string" resultType="memberDto">
+		select * from member where member_email=#{member_email}
+	</select>
+	
+	<update id="updateLoginTime" parameterType="int">
+		update member set member_login = sysdate where member_no = #{member_no}
+	</update>
+	
+	<select id="getId" parameterType="string" resultType="string">
+		select member_email from member where member_name=#{member_name}
+	</select>
+	
+	<!-- 진영 코드  -->
+	<!-- 회원목록(지점명+지역명) -->
+	<select id="getList" resultType="memberDto">
+		SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME FROM MEMBER m
+			LEFT OUTER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO
+			LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+		ORDER BY b.branch_no DESC
+	</select>
+
+	<!-- 지점별 회원목록(지점명+지역명) -->
+	<select id="getList2" resultType="memberDto" parameterType="int">
+		SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME FROM MEMBER m
+			LEFT OUTER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO
+			LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+			<if test="branch_no != 0">
+				WHERE m.branch_no = #{branch_no}
+			</if>
+		ORDER BY b.branch_no DESC
+	</select>
+
+	<!-- 지점별 회원 검색(이름검색) -->
+	<select id="search" parameterType="map" resultType="memberDto">
+		SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME FROM MEMBER m
+			LEFT OUTER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO
+			LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+			WHERE instr(m.member_name, #{member_name}) > 0
+		<if test="branch_no != 0">
+			AND m.branch_no = #{branch_no}
+		</if>
+		ORDER BY b.branch_no DESC
+	</select>
+	
+	<!-- 회원 단일 조회 -->
+	<select id="get" parameterType="int" resultType="memberDto">
+		SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME FROM MEMBER m
+			LEFT OUTER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO
+			LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+			WHERE member_no = #{member_no}
+	</select>
+	
+	<!-- 회원 마일리지 수정 코드 -->
+	<update id="plusPoint" parameterType="pointHisDto">
+		UPDATE member SET member_point = member_point + #{point_his_score} WHERE member_no = #{member_no}
+	</update>
+	
 	<update id="minusPoint" parameterType="pointHisDto">
 		UPDATE member SET member_point = member_point - #{point_his_score} WHERE member_no = #{member_no}
 	</update>
+	
 </mapper>
-
-
-
 

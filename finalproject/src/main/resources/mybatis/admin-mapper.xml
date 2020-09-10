@@ -83,4 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getAdminNO" parameterType="String" resultType="int">
 		SELECT admin_no FROM admin WHERE admin_name=#{admin_name}
 	</select>
+	<update id="updateLoginTime" parameterType="int">
+		update admin set admin_login=sysdate where admin_no=#{admin_no} 
+	</update>
 </mapper>
