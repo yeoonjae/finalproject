@@ -53,6 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
+	<!-- 회원 결제 내역 조회   -->
 	<select id="getPayInfo" resultType="payInfoDto" parameterType="int">
 		SELECT * 
 		FROM pay_his p 
@@ -61,6 +62,68 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT OUTER JOIN MEMBER m
 			ON p.MEMBER_NO = m.MEMBER_NO 
 		WHERE m.member_no=#{member_no}
-	</select>
+		ORDER BY p.PAY_HIS_DATE DESC
+	</select> 
+	
+	<!-- 회원 마일리지 수정 코드 -->
+	<update id="plusPoint"  parameterType="payPointDto">
+		UPDATE member SET member_point = member_point + #{reward} WHERE member_no = #{member_no}
+	</update> 
+	
+	<update id="minusPoint" parameterType="payPointDto">
+		UPDATE member SET member_point = member_point - #{pay_use_point} WHERE member_no = #{member_no}
+	</update> 
+	
+	
+	<insert id="payPointRegist" parameterType="payPointDto">
+		INSERT INTO pay_point(
+			tid_no,
+			member_no,
+			pay_use_point,
+			reward
+		) VALUES(
+			#{tid_no},
+			#{member_no},
+			#{pay_use_point},
+			#{reward}
+		)
+	</insert>
+		
+		
+	<select id="getSeq" resultType="int">
+		SELECT point_his_seq.nextval FROM dual
+	</select>	
+	
+	<insert id="registUsePoint" parameterType="payPointDto">
+		INSERT INTO point_his(
+			point_his_no,
+			member_no,
+			point_no,
+			point_his_score,
+			point_his_detail
+		) VALUES (
+			point_his_seq.nextval,
+			#{member_no},
+			32,
+			#{pay_use_point},
+			'결제 시 차감'
+		)
+	</insert>
+	
+	<insert id="registReward" parameterType="payPointDto">
+		INSERT INTO point_his(
+			point_his_no,
+			member_no,
+			point_no,
+			point_his_score,
+			point_his_detail
+		) VALUES (
+			point_his_seq.nextval,
+			#{member_no},
+			31,
+			#{reward},
+			'결제 시 적립'
+		)
+	</insert>
 
 </mapper>

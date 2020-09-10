@@ -30,7 +30,7 @@
 					<h1>결제 성공 !</h1>
 
 					<a href="${pageContext.request.contextPath}/member/pay/pay_detail">
-						<input type="button">결제내역조회
+						<input type="button" value="결제내역조회" class="btn btn-primary"> 
 					</a>				
 
 				</div>

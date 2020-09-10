@@ -28,6 +28,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.finalproject.entity.MemberBranchDto" alias="memberBranchDto"/>
 		<typeAlias type="com.kh.finalproject.entity.PayHisDto" alias="payHisDto"/>
 		<typeAlias type="com.kh.finalproject.entity.PayInfoDto" alias="payInfoDto"/>
+		<typeAlias type="com.kh.finalproject.entity.PayPointDto" alias="payPointDto"/>
 	</typeAliases>
 	
 </configuration>

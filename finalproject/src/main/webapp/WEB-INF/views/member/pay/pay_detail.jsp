@@ -54,7 +54,7 @@
 							<td>할인 금액</td>
 							<td>결제 금액</td>
 <!-- 							<td>적립 포인트</td> -->
-<!-- 							<td>상태</td> -->
+							<td>상태</td>
 						</tr>
 						<c:forEach var="payInfoDto" items="${list}">
 						<tr>
@@ -65,7 +65,7 @@
 							<td>${payInfoDto.pay_his_discount}</td>
 							<td>${payInfoDto.pay_his_price}</td>
 <%-- 							<td>${payHisDto.}</td> --%>
-<%-- 							<td>${payHisDto.}</td> --%>
+							<td>${payInfoDto.pay_his_state}</td>
 						</tr>
 						</c:forEach>
 					</table>

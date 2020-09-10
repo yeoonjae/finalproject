@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalproject.entity.LicenseDto;
 import com.kh.finalproject.entity.MemberBranchDto;
-import com.kh.finalproject.entity.PayHisDto;
 import com.kh.finalproject.entity.PayInfoDto;
 import com.kh.finalproject.repository.LicenseDao;
 import com.kh.finalproject.repository.PayDao;
@@ -53,7 +52,6 @@ public class PayController {
 		
 		List<PayInfoDto> list = payDao.getPayInfo(member_no); 		
 		model.addAttribute("list", list);
-		
 		
 		return "member/pay/pay_detail";
 	}

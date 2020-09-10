@@ -31,8 +31,8 @@
 			var time = $(this).data().time;// 시간 불러오기 
 			var price2 = price.toLocaleString();// 세자리 단위로 , 붙이기
 			var no = $(this).data().no;
-			
-			var point = 0;
+
+			var point = parseInt(0);
 			
 			// 카카오페이에 상품명 전송 
 			$(".item_name").val(time + "시간 이용권");
@@ -57,11 +57,16 @@
 			$(".reward").text(reward);
 			
 
-			// 카카오페이에 최종 결제금액 전송
+			// 카카오페이에 전송
 			$(".total_amount").val(total_price);
-			// 카카오페이에 최종 할인금액 전송
 			$(".sale_price").val(sale_price);
-
+			$(".use_point2").val(point);
+			$(".reward").val(reward);
+			
+			console.log("총가격"+total_price);
+			console.log("적립"+reward);
+			console.log("사용포인트"+point);
+			
 		});
 
 		// 마일리지 값 입력
@@ -72,38 +77,46 @@
 				$(".use_point").val("");
 			} 
 			else {
-				var use_point = $(this).val(); // 입력 마일리지 값 읽어오기 
+				var totalPrice = calcResult(); //최종 결제 금액 계산값 읽어오기
+				var price = parseInt($("input[name=license]:checked").data("price"));
+				var use_point = parseInt($(this).val()); // 입력 마일리지 값 읽어오기 
+				
 				var member_point = $(".use_all_point").data().point; //회원 보유 마일리지 값 
-				var member_point2 = parseInt(member_point).toLocaleString(); //소수점 찍기 
-
-				//console.log("회원 마일리지 :"+member_point);
-				//console.log("입력 금액 : " + use_point);
+				var member_point2 = parseInt(member_point).toLocaleString(); //소수점 찍기 				
 
 				$(".use_point").text(use_point); // 마일리지 할인 금액에 해당 값 설정 
-
+				
 				///// 입력 마일리지 > 회원 마일리지 일 경우 
-				if (parseInt(use_point) > parseInt(member_point)) { // 숫자로 변환 
+				if (use_point > parseInt(member_point)) { // 숫자로 변환 
 					alert("사용 가능 마일리지는" + member_point2 + "P 입니다.");
 
 					$(".use_point").val("");
 					$(".use_point").text("");
-					$(".total_price").text(price);
+					$(".total_price").text(price); //이용권 가격으로 초기화 
+				}
+				if(use_point>totalPrice){
+					
 				}
 
-				// 최종 결제금액 설정 
-				var total_price = calcResult();
-				$(".total_price").text(total_price);
+
+				$(".total_price").text(totalPrice);
 
 				// 최종 할인금액 계산
 				var sale_price = salePrice();
 				
 				//적립금 계산
 				var reward = pointReward();
-				$(".reward").text(parseInt(reward));
-
+				$(".reward").text(reward);
+				
 				// 카카오페이에 최종 결제금액+최종 할인금액 전송
-				$(".total_amount").val(total_price);
+				$(".total_amount").val(totalPrice);
 				$(".sale_price").val(sale_price);
+				$(".use_point2").val(use_point);
+				$(".reward").val(reward);
+				
+				console.log("총가격"+totalPrice);
+				console.log("적립"+reward);
+				console.log("사용포인트"+use_point);
 			}
 		});
 
@@ -124,9 +137,9 @@
 					$(".use_point").text(total_price);
 
 					point = total_price;
-
 					total_price = total_price - point;
-				} else {
+				} 
+				else { //아닐경우 
 					$(".use_point").val(point);
 					$(".use_point").text(point);
 
@@ -141,10 +154,17 @@
 				//적립금 계산 
 				var reward = pointReward();
 				$(".reward").text(reward);
+				
 
 				// 카카오페이에 최종 결제금액 전송
 				$(".total_amount").val(total_price);
 				$(".sale_price").val(sale_price);
+				$(".use_point2").val(point);
+				$(".reward").val(reward);
+				
+				console.log("총가격"+total_price);
+				console.log("적립"+reward);
+				console.log("사용포인트"+point);
 			}
 		});
 
@@ -158,7 +178,7 @@
 		var license = $("input[name=license]:checked").data("price");
 		var point = $("input.use_point").val() || 0;
 		var total_price = parseInt(license) - parseInt(point);
-
+		
 		return total_price;
 	}
 
@@ -172,7 +192,7 @@
 	// 적립예정 포인트 계산 
 	function pointReward() {
 		var total_price = $(".total_price").text();
-		var reward = parseInt(total_price) * 0.02;
+		var reward = parseInt(parseInt(total_price) * 0.02);
 		//console.log(reward);
 
 		return reward;
@@ -184,7 +204,7 @@
 		var coupon = 0;
 		
 		var sum = parseInt(point) + parseInt(coupon);
-		console.log(sum);
+		//console.log("할인금액: "+ sum);
 		
 		return sum;
 		
@@ -409,6 +429,8 @@
 							<div align="right">
 								<!--  카카오페이에 상품명, 총 금액 전송  -->
 								<form action="prepare" method="post">
+									<input type="hidden" name="reward" class="reward"><!--  적립금  -->
+									<input type="hidden" name="use_point2" class="use_point2"> <!--  사용한 마일리지  -->
 									<input type="hidden" name="sale_price" class="sale_price"><!-- 할인 금액 -->
 									<input type="hidden" name="license_no" class="license_no"> <!-- 이용권 번호 -->
 									<input type="hidden" name="member_no" value="${memberBranchDto.member_no}"><!-- 회원 번호 -->
@@ -492,10 +514,9 @@
 								<h4 class="bold">마일리지 사용</h4>
 								<div>
 									<div class="padding5 ">
-										<input type="text" class="use_point use_design" name=""
-											placeholder="0원"> <span> <input type="button"
-											class="use_all_point btn btn-primary"
-											data-point=" ${memberBranchDto.member_point}" value="전액 사용">
+										<input type="text" class="use_point use_design" placeholder="0원"> 
+										<span> 
+											<input type="button" class="use_all_point btn btn-primary" data-point=" ${memberBranchDto.member_point}" value="전액 사용">
 										</span>
 									</div>
 									<div>

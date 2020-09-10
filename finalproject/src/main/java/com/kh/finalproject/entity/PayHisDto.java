@@ -17,4 +17,5 @@ public class PayHisDto {
 	private int pay_his_discount;
 	private String pay_his_method;
 	private int pay_his_price;
+	private String pay_his_state;
 }
