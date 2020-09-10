@@ -18,4 +18,5 @@ public class PayInfoDto {
 	private int pay_his_price;
 	private int license_time;
 	private int license_price;
+	private String pay_his_state;
 }
