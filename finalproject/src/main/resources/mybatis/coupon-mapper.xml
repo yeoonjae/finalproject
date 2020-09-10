@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	- namespace : 영역을 외부에서 부르기 위한 별칭(일반적으로 테이블 이름으로 사용)
  -->
 <mapper namespace="coupon">
-	
+	<!-- 전체 지점 쿠폰 등록 -->
 	<insert id="registA" parameterType="couponDto">
 		INSERT INTO coupon(
 			coupon_no,
@@ -20,7 +20,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			coupon_discount,
 			coupon_category,
 			coupon_start,
-			coupon_finish
+			coupon_finish,
+			group_no
 		) VALUES (
 			coupon_seq.nextval,
 			#{branch_no},
@@ -29,10 +30,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{coupon_discount},
 			'전체',
 			#{coupon_start},
-			#{coupon_finish}
+			#{coupon_finish},
+			#{group_no}
 		)
 	</insert>
 	
+	<!-- 특정 지점 쿠폰 등록 -->
 	<insert id="registB" parameterType="couponDto">
 		INSERT INTO coupon(
 			coupon_no,
@@ -42,7 +45,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			coupon_discount,
 			coupon_category,
 			coupon_start,
-			coupon_finish
+			coupon_finish,
+			group_no
 		) VALUES (
 			coupon_seq.nextval,
 			#{branch_no},
@@ -51,10 +55,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{coupon_discount},
 			'지점',
 			#{coupon_start},
-			#{coupon_finish}
+			#{coupon_finish},
+			#{group_no}
 		)
 	</insert>
 	
+	<!-- 쿠폰 목록  -->
+	<select id="getList" parameterType="map" resultType="couponDto">
+		SELECT * FROM (
+			SELECT  c.*, b.BRANCH_NAME, ROW_NUMBER() OVER (PARTITION BY c.group_no ORDER BY c.branch_no DESC) AS RankNo 
+			FROM coupon c INNER JOIN BRANCH b ON c.BRANCH_NO = b.BRANCH_NO WHERE 
+		<choose>
+			<!-- 지점별 목록일 때 -->
+			<when test="branch_no != 0">
+				c.branch_no = #{branch_no} <!--AND  c.COUPON_CATEGORY = '지점' -->
+			</when>
+			<!-- 전체 발급한 목록일 때  -->
+			<otherwise>
+				c.COUPON_CATEGORY = '전체'
+			</otherwise>
+		</choose>
+		<if test="order == 'start'"> <!-- 예정일 경우 -->
+				AND to_Date(c.COUPON_START, 'yyyy-mm-dd') <![CDATA[>]]> to_date(sysdate, 'yyyy-mm-dd')
+		</if>
+		<if test="order == 'ing'"> <!-- 유효일 경우 -->
+				AND to_Date(c.COUPON_START, 'yyyy-mm-dd') <![CDATA[<=]]> to_date(sysdate, 'yyyy-mm-dd')
+				AND to_Date(c.COUPON_FINISH , 'yyyy-mm-dd') <![CDATA[>=]]> to_date(sysdate, 'yyyy-mm-dd')
+			
+		</if>
+		<if test="order == 'finish'"> <!-- 만료일 경우 -->
+				AND to_Date(c.COUPON_START, 'yyyy-mm-dd') <![CDATA[<=]]> to_date(sysdate, 'yyyy-mm-dd')
+				AND to_Date(c.COUPON_FINISH , 'yyyy-mm-dd') <![CDATA[<]]> to_date(sysdate, 'yyyy-mm-dd')
+		</if>
+			) T WHERE RankNo = 1
+	</select>
+	
+	<!-- 쿠폰 그룹번호 추출 -->
+	<select id="getGroupSeq" resultType="int">
+		SELECT coupon_group_seq.nextval FROM dual
+	</select>
+	
+	<!-- 쿠폰 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM coupon WHERE coupon_no = #{coupon_no}
+	</delete>
 </mapper>
 
 

@@ -1,6 +1,8 @@
 package com.kh.finalproject.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class CouponServiceImpl implements CouponService{
 	
 	@Override
 	public void regist(int[] branch_no, int[] local_no, CouponDto couponDto) {
+		int group_no = couponDao.getGroupSeq();
 		
 		if(branch_no[0]==0 && local_no[0]==0) { // 전체 지점일 경우
 			// 전체 지점번호 가져오기
@@ -28,6 +31,7 @@ public class CouponServiceImpl implements CouponService{
 			// 전체지점 쿠폰 등록
 			for(int i=0; i<list.size(); i++) {
 				couponDto.setBranch_no(list.get(i));
+				couponDto.setGroup_no(group_no);
 				couponDao.registA(couponDto);
 			}
 			
@@ -40,6 +44,7 @@ public class CouponServiceImpl implements CouponService{
 					List<Integer> list = branchDao.getNo2(local_no[i]);
 					// 지점 개수만큼 등록
 					for(int j=0; j<list.size(); j++) {
+						couponDto.setGroup_no(group_no);
 						couponDto.setBranch_no(list.get(j));
 						couponDao.registB(couponDto);
 					}
@@ -49,12 +54,23 @@ public class CouponServiceImpl implements CouponService{
 			if(branch_no[0]!=0) { // 지점이 선택된 경우
 				// 선택된 지점 개수만큼 등록
 				for(int i=0; i<branch_no.length; i++) {
+					couponDto.setGroup_no(group_no);
 					couponDto.setBranch_no(branch_no[i]);
 					couponDao.registB(couponDto);
 				}
 			}
 		}
 		
+	}
+
+	// 쿠폰 목록
+	@Override
+	public List<CouponDto> getList(int branch_no, String order) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("branch_no", branch_no);
+		param.put("order", order);
+		
+		return couponDao.getList(param);
 	}
 	
 
