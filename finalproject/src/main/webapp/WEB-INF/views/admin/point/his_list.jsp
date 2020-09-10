@@ -250,12 +250,21 @@
                         	<!-- 지점 선택 -->
                             <div class="row">
                             	<div class="col-5">
-                                	<select name="branch_no" class="form-control col-10 branch_no">
-										<option value="0">지점전체</option>
-										<c:forEach items="${branchList}" var="branchDto">
-											<option value="${branchDto.branch_no}">${branchDto.branch_name}</option>
-										</c:forEach>
-									</select>
+                            	<c:choose>
+                            		<c:when test="${admininfo.admin_auth eq '본사'}">
+	                                	<select name="branch_no" class="form-control col-10 branch_no">
+											<option value="0">지점전체</option>
+											<c:forEach items="${branchList}" var="branchDto">
+												<option value="${branchDto.branch_no}">${branchDto.branch_name}</option>
+											</c:forEach>
+										</select>
+                            		</c:when>
+                            		<c:otherwise>
+	                                	<select name="branch_no" class="form-control branch_no col-10">
+	                                		<option value="${branchList.branch_no}">${branchList.branch_name}</option>
+										</select>                            			
+                            		</c:otherwise>
+                            	</c:choose>
                                 </div>
                                 <div class="col-7">
                                 	<!-- 이름 검색 -->

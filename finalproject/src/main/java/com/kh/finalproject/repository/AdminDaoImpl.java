@@ -86,4 +86,9 @@ public class AdminDaoImpl implements AdminDao {
 		sqlSession.selectList("admin.updateLoginTime", no);
 	}
 	
+	// 관리자 지점과 JOIN한 정보 단일 조회
+	public AdminDto getAdminInfo(int admin_no) {
+		return sqlSession.selectOne("admin.getAdminInfo", admin_no);
+	}
+	
 }

@@ -30,6 +30,8 @@ public interface AdminDao {
 	List<AdminDto> getBranchAdminList();
 	//관리자 로그인 시간 업데이트
 	void updateLoginTime(int no);
+	// 관리자 지점과 JOIN한 정보 단일 조회
+	AdminDto getAdminInfo(int admin_no);
 
 
 
