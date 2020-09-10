@@ -335,7 +335,7 @@
             <div class="card-body offset-md-2 col-md-8 offset-sm-2 col-sm-8">
             <hr><br>
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+                    <table class="table table-hover" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <!-- 마일리지 내역 항목 -->
