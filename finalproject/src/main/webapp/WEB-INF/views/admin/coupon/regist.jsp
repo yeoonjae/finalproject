@@ -265,8 +265,7 @@
 						<!-- 쿠폰 내용 작성 -->
 					<form action="regist" method="post">
 						<div class="hidden-wrap">
-<%-- 							<input type="hidden" name="admin_no" value="${admininfo.admin_no}"> --%>
-							<input type="hidden" name="admin_no" value=1>
+							<input type="hidden" name="admin_no" value="${admininfo.admin_no}">
 						</div>
 						<div class="form-group">
 							<label>쿠폰명</label>
