@@ -84,8 +84,6 @@ public class AccountController {
 		
 		@PostMapping("/login")
 		public String login(@RequestParam String admin_id,@RequestParam String admin_pw, HttpSession session) {
-			//id랑 password라는 이름으로 requestParam받았습니당
-			//중간 처리과정만 Dao만들어서 적어서 완성해주세욤!-연재
 			if(adminDao.login(admin_id,admin_pw)) {
 				int no = adminDao.getNo(admin_id);
 				AdminDto find = adminDao.get(no);

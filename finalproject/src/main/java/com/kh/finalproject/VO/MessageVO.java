@@ -1,7 +1,5 @@
 package com.kh.finalproject.VO;
 
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

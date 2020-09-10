@@ -44,9 +44,7 @@
 									})
 						});
 
-		$(".delete")
-				.click(
-						function() {
+		$(".delete").click(function() {
 							var hidden = $(this).next("input");
 							var local_no = hidden.val();
 							if (!local_no) {
@@ -106,9 +104,7 @@
 										href="#" role="button" aria-haspopup="true"
 										aria-expanded="false">${localDto.local_name}</a>
 										<div class="dropdown-menu" style="">
-											<!-- 						          <a class="dropdown-item delete" onclick="if(!confirm('삭제하시겠습니까?')){return false;}">삭제</a> -->
-											<a class="dropdown-item delete">삭제</a> <input class="no"
-												type="hidden" value="${localDto.local_no}">
+											<a class="dropdown-item delete">삭제</a> <input class="no" type="hidden" value="${localDto.local_no}">
 										</div></li>
 								</c:forEach>
 

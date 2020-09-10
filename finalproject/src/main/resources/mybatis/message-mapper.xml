@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="message">
 	<!-- 메세지 등록(내용과 제목) -->
-	<insert id="regist" parameterType="MessageDto">
+	<insert id="regist" parameterType="messageDto">
 		insert into message values(#{message_no},#{message_title},#{message_content})
 	</insert>
 	
@@ -13,8 +13,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT message_seq.nextval FROM dual
 	</select>
 	
+	
 	<!-- 매니저 연결테이블에 저장 -->
-	<insert id="sendManager" parameterType="MessageManagerDto">
+	<insert id="sendManager" parameterType="messageManagerDto">
 		insert into MESSAGE_MANAGER values(
 			message_manager_seq.nextval,
 			#{message_no},
@@ -27,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 회원 연결 테이블에 저장 -->
-	<insert id="sendMember" parameterType="MessageManagerDto">
+	<insert id="sendMember" parameterType="messageManagerDto">
 		insert into MESSAGE_Member values(
 			message_member_seq.nextval,
 			#{message_no},
@@ -38,4 +39,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{message_member_type}
 		)
 	</insert>
+	
+	<!-- 관리자 수신함 -->
+	<select id="inboxAdmin" parameterType="int" resultType="messageManagerDto">
+			SELECT a.admin_name,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_MANAGER mm 
+			LEFT OUTER JOIN admin a ON mm.ADMIN_NO2 = a.ADMIN_NO 	
+			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
+			WHERE MESSAGE_MANAGER_TYPE = '수신' AND mm.ADMIN_NO =#{admin_no}
+			ORDER BY mm.MESSAGE_MANAGER_DATE DESC
+	</select>
+	
+	<!-- 관리자 발신함 -->
+	<select id="outboxAdmin" parameterType="int" resultType="messageManagerDto">
+			SELECT a.admin_name ,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_MANAGER mm	
+			left OUTER JOIN Message m ON m.MESSAGE_NO = mm.MESSAGE_NO
+			LEFT OUTER JOIN admin a ON mm.ADMIN_NO2 = a.ADMIN_NO 
+			WHERE mm.ADMIN_NO =1 AND mm.MESSAGE_MANAGER_TYPE ='발신' 
+			ORDER BY mm.MESSAGE_MANAGER_DATE DESC
+	</select>
+	
+	<!-- 관리자 연결테이블 메세지 삭제 -->
+	<delete id="manager_delete" parameterType="int">
+		DELETE message_manager WHERE message_manager_no=#{message_manager_no}
+	</delete>
 </mapper>
