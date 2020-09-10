@@ -10,7 +10,7 @@
           <!-- Breadcrumbs-->
           <ol class="breadcrumb">
             <li class="breadcrumb-item">
-              <a href="#">Dashboard</a>
+              <a href="#">지점관리</a>
             </li>
             <li class="breadcrumb-item active">Tables</li>
           </ol>
@@ -19,10 +19,10 @@
           <div class="card mb-3">
             <div class="card-header">
               <i class="fas fa-table"></i>
-              Data Table Example</div>
+              	지점목록</div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered" id="" width="100%" cellspacing="0" style="text-align: center;">
+                <table class="table table-bordered" id="dataTable" width="100%" id="dataTable"cellspacing="0" style="text-align: center;">
                   <thead>
                     <tr>
 	                  <th>지점명</th>

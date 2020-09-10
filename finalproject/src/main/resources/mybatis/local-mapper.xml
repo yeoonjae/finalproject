@@ -20,6 +20,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM local WHERE local_name=#{local_name}
 	</select>
 	
+	<!-- 지역에 등록된 지점이 있는지 검사하는 구문 -->
+	<select id="isHaveBranch" parameterType="int" resultType="localDto">
+		SELECT * FROM LOCAL l LEFT OUTER JOIN branch b ON l.LOCAL_NO = b.LOCAL_NO WHERE b.BRANCH_NO IS not NULL AND l.LOCAL_NO = #{local_no}
+	</select>
+	
+	<!-- 지역 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE local WHERE local_no=#{local_no}
+	</delete>
+
 </mapper>
 
 

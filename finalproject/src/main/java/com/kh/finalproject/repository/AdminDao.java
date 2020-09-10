@@ -1,6 +1,9 @@
 package com.kh.finalproject.repository;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.AdminDto;
 
@@ -23,6 +26,8 @@ public interface AdminDao {
 	List<AdminDto> getList(String col, String order);
 	//관리자 번호 얻어오기
 	int getSeq();
+	//관리자 권한 '지점'만 뽑기
+	List<AdminDto> getBranchAdminList();
 	//관리자 로그인 시간 업데이트
 	void updateLoginTime(int no);
 
