@@ -22,11 +22,12 @@
 		.span-wrap{
 			text-align: center;
 		}
-		.his-detail {
+		.detail-result.on {
 			color: blue;
 			font-size: small;
+			display: inline-block;
 		}
-		.his-detail.off{
+		.detail-result{
 			display: none;
 		}
 		.his-type.red{
@@ -81,25 +82,30 @@
                 	var str;
                 	
                 	$(".list-table").html("");
-                	
-                	$.each(response.data , function(i){
-                        var str = '<tr><td>' + response.data[i].branch_name + '</td><td>' 
-                        		+ response.data[i].member_name + '</td><td>' 
-                        		+ response.data[i].member_email 
-                        		+ '</td><td><button class="btn-primary btn btn-select" data-dismiss="modal" data-name="' + response.data[i].member_name 
-                        		+'" data-email="'+response.data[i].member_email+'" data-no="'+ response.data[i].member_no +'">선택</button></td></tr>';
-    	               $(".list-table").append(str);
-    	               $(".list-table").find(".btn-select").click(function(){
-    	            	// 회원정보 input에 이름과 이메일 값 넣어주기
-    	            		$(".member_no").val($(this).data("no"));
-	    	           		$(".member_name").val($(this).data("name"));
-	    	           		$(".member_email").val($(this).data("email"));
-	    	           		
-// 	    	           		// 읽기만 가능하게 변경
-// 	    	           		$(".member_name").prop("readonly", true);
-// 	    	           		$(".member_email").prop("readonly", true);
-    	               });
-                    });
+                	if(response.data){
+	                	$.each(response.data , function(i){
+	                        var str = '<tr><td>' + response.data[i].branch_name + '</td><td>' 
+	                        		+ response.data[i].member_name + '</td><td>' 
+	                        		+ response.data[i].member_email 
+	                        		+ '</td><td><button class="btn-primary btn btn-select" data-dismiss="modal" data-name="' + response.data[i].member_name 
+	                        		+'" data-email="'+response.data[i].member_email+'" data-no="'+ response.data[i].member_no +'">선택</button></td></tr>';
+	    	               $(".list-table").append(str);
+	    	               $(".list-table").find(".btn-select").click(function(){
+	    	            	// 회원정보 input에 이름과 이메일 값 넣어주기
+	    	            		$(".member_no").val($(this).data("no"));
+		    	           		$(".member_name").val($(this).data("name"));
+		    	           		$(".member_email").val($(this).data("email"));
+		    	           		
+	// 	    	           		// 읽기만 가능하게 변경
+	// 	    	           		$(".member_name").prop("readonly", true);
+	// 	    	           		$(".member_email").prop("readonly", true);
+	    	               });
+	                    });
+                	}
+                	if($(".list-table").find("td").length == 0){
+                		$(".list-table").html("");
+ 						$(".list-table").append("<tr>").append('<td colspan="4">검색 결과가 없습니다</td>');
+                	}
         		});
         		
         	});
@@ -141,17 +147,18 @@
         			// 리스트 출력
         			$.each(response.data , function(i){
                         var str = '<tr><td>' + response.data[i].point_his_date.substring(0, 10) + '</td><td class="his-type">' 
-                        				+ response.data[i].point_type + '</td><td>'
-                        				+ response.data[i].point_detail +'<br><span class="his-detail">사유 : ' + response.data[i].point_his_detail + '</span></td><td>'
+                        				+ response.data[i].point_type + '</td><td class="his-detail">'
+                        				+ response.data[i].point_detail +'<br><span class="detail-result" data-no="'+response.data[i].point_no+'">사유 : ' + response.data[i].point_his_detail + '</span></td><td>'
                         				+ response.data[i].point_his_score +'점</td></tr>';
     	               $(".his-list").append(str);
                     });
         			
         			// 관리자 적립이 아닐 경우 사유 안나오게
-        			$.each($(".his-detail") , function(i){
-        				var span = $(this).text();
-        				if(span.match("null")){
-        					$(this).addClass("off");
+        			$.each($(".detail-result"), function(i){
+        				var no = $(this).data("no");
+	        			console.log(no);
+        				if(no==1 || no==2){
+        					$(this).addClass("on");
         				}
         			});
         			
@@ -288,7 +295,7 @@
          	</ol>
         <br>
         <div class="row">
-            <div class="col-8 offset-2 search-wrap">
+            <div class="offset-md-2 col-md-8 offset-sm-2 col-sm-8 search-wrap">
                 <div class="row">
                 <!-- 회원정보 -->
                     <div class="col-4">
@@ -325,7 +332,7 @@
                 </div>
             </div>
             <!-- 테이블 -->
-            <div class="card-body offset-2 col-8">
+            <div class="card-body offset-md-2 col-md-8 offset-sm-2 col-sm-8">
             <hr><br>
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover" width="100%" cellspacing="0">
