@@ -25,7 +25,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.finalproject.entity.PointDto" alias="pointDto"/>
 		<typeAlias type="com.kh.finalproject.entity.PointHisDto" alias="pointHisDto"/>
 		<typeAlias type="com.kh.finalproject.entity.MemberDto" alias="memberDto"/>
+		<typeAlias type="com.kh.finalproject.entity.BranchImgDto" alias="branchImgDto"/>
+		<typeAlias type="com.kh.finalproject.entity.MessageManagerDto" alias="messageManagerDto"/>
+		<typeAlias type="com.kh.finalproject.entity.MessageMemberDto" alias="messageMemberDto"/>
+		<typeAlias type="com.kh.finalproject.entity.MessageDto" alias="messageDto"/>
 		<typeAlias type="com.kh.finalproject.entity.MemberBranchDto" alias="memberBranchDto"/>
+		<typeAlias type="com.kh.finalproject.entity.PayHisDto" alias="payHisDto"/>
+		<typeAlias type="com.kh.finalproject.entity.PayInfoDto" alias="payInfoDto"/>
+		<typeAlias type="com.kh.finalproject.entity.PayPointDto" alias="payPointDto"/>
 		<typeAlias type="com.kh.finalproject.entity.CertDto" alias="certDto"/>
 	</typeAliases>
 </configuration>

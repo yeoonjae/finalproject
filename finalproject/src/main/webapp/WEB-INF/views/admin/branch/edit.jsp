@@ -54,7 +54,15 @@
 					</tr>
 					<tr>
 						<th scope="row">지점 관리자</th>
-						<td><input class="form-control" type="text" name="admin_no" value="${branchDto.admin_name}"></td>
+						<td>
+							<select class="form-control" id="exampleSelect1" name="admin_no">
+								<c:forEach var="admin" items="${admin}">
+									<option value="${admin.admin_no}">
+										${admin.admin_name}
+									</option>
+								</c:forEach>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<th scope="row">평수</th>
@@ -92,7 +100,6 @@
 					<tr>
 						<th scope="row" colspan="2">
 								<input type="submit" class="btn col-sm-2 btn-outline-secondary" id="edit" value="수정">
-							<button class="btn col-sm-2 btn-outline-secondary">지점삭제</button>
 						</th>
 					</tr>
 				</tbody>

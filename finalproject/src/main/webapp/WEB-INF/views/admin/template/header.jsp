@@ -3,9 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-	
+	<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -68,9 +67,11 @@
             <i class="fas fa-envelope fa-fw"></i>
             <span class="badge badge-danger">7</span>
           </a>
+          
+          <!-- 메세지 부분 -->
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send_message_manager">쪽지함</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send_message_manager">쪽지보내기</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>
           </div>

@@ -28,27 +28,61 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		null
 		)
 	</insert>
+	
+	<!-- 관리자 로그인 정보가져오기 -->
 	<select id ="getLogin" parameterType="String" resultType="adminDto">
 		select * from admin where admin_id=#{admin_id}
 	</select>
+	
+	<!-- 관리자 단일조회 -->
 	<select id="get" parameterType="int" resultType="adminDto">
 		select * from admin where admin_no=#{admin_no}
 	</select>
+	
+	<!-- 관리자번호 조회 -->
 	<select id="getNo" parameterType="String" resultType="int">
 		select admin_no from admin where admin_id=#{admin_id} 
 	</select>
+	
+	<!-- 관리자 정보 수정 -->
 	<update id="edit" parameterType="adminDto">
 		update admin set admin_name=#{admin_name}, admin_pw=#{admin_pw} where admin_no=#{admin_no}
 	</update>
+	
+	<!-- 관리자 목록 -->
 	<select id="list1" resultType="adminDto">
 		select * from admin order by admin_no asc
 	</select>
+	
+	<!-- 관리자 (정렬) 목록 -->
 	<select id="list2" parameterType="map" resultType="adminDto">
 		select * from admin order by ${col} ${order}
 	</select>
+	
+	<!-- 관리자 탈퇴 -->
 	<delete id="delete" parameterType="int">
 		delete admin where admin_no=#{admin_no}
 	</delete>
+	
+	<!-- 지점등록이 되지 않은 권한이 '지점'인 관리자 조회 -->
+	<select id="getBranchAdminList" resultType="adminDto">
+		SELECT * FROM ADMIN a LEFT OUTER JOIN BRANCH b ON a.ADMIN_NO=b.ADMIN_NO WHERE b.BRANCH_NO IS NULL AND a.ADMIN_AUTH ='지점' ORDER BY admin_name ASC
+	</select>
+	
+	<!-- 관리자 지점과 JOIN한 조회 -->
+	<select id="getAdminInfo" parameterType="int" resultType="adminDto">
+		SELECT a.*,b.BRANCH_NAME FROM admin a LEFT OUTER JOIN branch b ON a.ADMIN_NO = b.ADMIN_NO WHERE b.admin_no=#{admin_no}
+	</select>
+	
+	<!-- 모든 '지점' 관리자 조회 -->
+	<select id="getBranchAdmin" resultType="adminDto">
+		SELECT * FROM admin WHERE admin_auth='지점'
+	</select>
+	
+	<!-- 관리자 이름으로 번호조회 -->
+	<select id="getAdminNO" parameterType="String" resultType="int">
+		SELECT admin_no FROM admin WHERE admin_name=#{admin_name}
+	</select>
 	<update id="updateLoginTime" parameterType="int">
 		update admin set admin_login=sysdate where admin_no=#{admin_no} 
 	</update>

@@ -37,4 +37,5 @@ public interface MemberDao {
 	List<String> getId(String member_name);
 
 	void changePw(int no, String member_pw);
+
 }

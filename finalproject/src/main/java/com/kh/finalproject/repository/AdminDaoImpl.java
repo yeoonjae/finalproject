@@ -74,6 +74,12 @@ public class AdminDaoImpl implements AdminDao {
 		map.put("order", order);
 		return sqlSession.selectList("admin.list2", map);
 	}
+	
+	//'지점'관리자 목록
+	public List<AdminDto> getBranchAdminList() {
+		return sqlSession.selectList("admin.getBranchAdminList");
+	}
+		
 	//관리자 로그인 시간 업데이트
 	@Override
 	public void updateLoginTime(int no) {
