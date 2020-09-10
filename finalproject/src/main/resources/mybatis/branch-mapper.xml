@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 지점등록  -->
 	<insert id="regist">
 		insert into branch values(
-			branch_seq.nextval,
+			#{branch_no},
 			#{local_no},
 			#{admin_no},
 			#{branch_name},
@@ -63,6 +63,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE branch_no = #{branch_no}
 	</update>
 	
+	<select id="getName" parameterType="String" resultType="branchDto">
+		SELECT * FROM branch WHERE branch_name=#{branch_name}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE branch WHERE branch_no=#{branch_no}
+	</delete>
 </mapper>
 
 

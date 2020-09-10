@@ -15,6 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT point_his_seq.nextval FROM dual
 	</select>
 	
+	<!-- 회원 마일리지 내역 등록 -->
 	<insert id="regist" parameterType="pointHisDto">
 		INSERT INTO point_his(
 			point_his_no,
@@ -31,6 +32,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
+	<!-- 회원별 마일리지 내역 조회 -->
+	<select id="getList" parameterType="map" resultType="pointHisDto">
+		SELECT ph.*,p.POINT_TYPE, p.POINT_DETAIL FROM point p
+			LEFT OUTER JOIN POINT_HIS ph ON p.point_no = ph.point_no
+				WHERE ph.MEMBER_NO = #{member_no}
+				<if test="start != finish">
+					AND ph.POINT_HIS_DATE
+					BETWEEN TO_DATE('${start} 00:00:00', 'yyyy-mm-dd hh24:mi:ss')
+					AND TO_DATE('${finish} 23:59:59', 'yyyy-mm-dd hh24:mi:ss')				
+				</if>
+				<if test="start == finish">
+					AND TO_CHAR(POINT_HIS_DATE, 'yyyy-mm-dd') = #{start}
+				</if>
+		ORDER BY ph.POINT_HIS_DATE DESC
+	</select>
+	
+	<select id="getDate" parameterType="int" resultType="String">
+		SELECT to_char(
+		<if test="date == 7">
+			sysdate-#{date},
+		</if>
+		<if test="date != 7">
+			add_months(sysdate,-#{date}),
+		</if>
+		'yyyy-mm-dd') FROM dual
+	</select>
+	
+	<select id="sysdate" resultType="String">
+		SELECT to_char(sysdate,'yyyy-mm-dd') FROM dual
+	</select>
 </mapper>
 
 

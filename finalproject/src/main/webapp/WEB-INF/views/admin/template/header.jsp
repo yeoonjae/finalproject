@@ -1,12 +1,10 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-	
+	<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -69,9 +67,11 @@
             <i class="fas fa-envelope fa-fw"></i>
             <span class="badge badge-danger">7</span>
           </a>
+          
+          <!-- 메세지 부분 -->
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send_message_manager">쪽지함</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send_message_manager">쪽지보내기</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
@@ -102,8 +102,6 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">관리자 로그인 메뉴</h6>
-            
-         <c:set var="rootPath" value="${pageContext.request.contextPath}"></c:set>
 	         	관리자 권한 : ${admininfo.admin_auth}
          <c:choose>  
          <c:when test="${admininfo.admin_auth eq '본사'}">
@@ -116,8 +114,7 @@
             		<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/info?admin_no=${admininfo.admin_no}">계정정보/수정</a>
         </c:when>
 		<c:otherwise>
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/login">로그인</a>
-					<a class="dropdown-item" href="#">비밀번호 찾기</a>	         	 		
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/login">로그인</a>    	 		
 		</c:otherwise>
         </c:choose>            
             <div class="dropdown-divider"></div>
@@ -163,9 +160,9 @@
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/edit">마일리지 수정</a>
             <h6 class="dropdown-header">회원 관리</h6>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/addRemove">마일리지 적립/소멸</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/list">마일리지 내역조회</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/his_list">마일리지 내역조회</a>
           </div>
-        </li> 
+        </li>
         
          <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -180,6 +177,23 @@
             <h6 class="dropdown-header">Other Pages:</h6>
             <a class="dropdown-item" href="404.jsp">404 Page</a>
             <a class="dropdown-item" href="blank.jsp">Blank Page</a>
+          </div>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>쿠폰 관리</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <h6 class="dropdown-header">본사 관리</h6>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/regist">쿠폰 등록</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/edit">쿠폰 수정/삭제</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/list">목록 조회</a>
+            <h6 class="dropdown-header">지점 관리</h6>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/request">쿠폰 등록 요청</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/req_edit">요청 수정/삭제</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/req_list">진행 목록</a>
           </div>
         </li>
         

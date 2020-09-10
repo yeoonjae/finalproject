@@ -30,4 +30,11 @@ public class LocalDaoImpl implements LocalDao{
 		LocalDto localDto = sqlSession.selectOne("local.get", local_name);
 		return localDto;
 	}
+
+	//지역 삭제
+	public void delete(int local_no) {
+		sqlSession.delete("local.delete",local_no);
+	}
+
+
 }

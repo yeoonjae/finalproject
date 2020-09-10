@@ -1,12 +1,16 @@
 package com.kh.finalproject.repository;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.kh.finalproject.entity.BranchDto;
+import com.kh.finalproject.entity.BranchImgDto;
 
 public interface BranchDao {
 	//지점 등록 메소드(지점 번호 반환)
-	int regist(BranchDto branchDto);
+	int regist(BranchDto branchDto,List<MultipartFile> file) throws IllegalStateException, IOException;
 	//지점 리스트
 	List<BranchDto> getList();
 	//배치도 등록
@@ -15,4 +19,6 @@ public interface BranchDao {
 	BranchDto get(int branch_no);
 	//지점 수정
 	void edit(BranchDto branchDto);
+	//지점 삭제
+	void delete(int branch_no);
 }

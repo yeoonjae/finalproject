@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +26,7 @@
 	integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" 
 	crossorigin="anonymous">
 	</script>
+	
 	<script>
 		
 	</script>
@@ -60,7 +61,14 @@
                 </label>
               </div>
             </div>
+            <div class="form-group">
+            <c:if test="${not empty param.error}">
+            	<div class="form-label-group">
+            		<font color="FF0000">입력하신 로그인 정보가 맞지 않습니다.</font>
+            	</div>
+            </c:if>
             <input type="submit" class="btn btn-primary btn-block" value="Login">
+            </div>
           </form>
           <div class="text-center">
           	<br>
