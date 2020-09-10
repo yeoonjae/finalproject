@@ -17,6 +17,12 @@
 		.table {
 			text-align: center;
 		}
+		.type.navy {
+			color: navy;
+		}
+		.type.red {
+			color: red;
+		}
 	</style>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -24,6 +30,16 @@
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
  <script>
         $(function(){
+        	// 유형에 따라 글자 색상 설정
+        	$.each($(".type"), function(i){
+				var td = $(this).text();
+				if(td=="적립"){
+					$(this).addClass("navy");
+				} else {					
+					$(this).addClass("red");
+				}
+			});
+        	
         	var result;
         	
         	// 상세내용 입력 시
@@ -153,7 +169,7 @@
 				<div class="card-header">
 					<i class="fas fa-table"></i> 마일리지 유형 목록
 				</div>
-				<div class="card-body offset-sm-1 col-sm-10 offset-md-1 col-md-10">
+				<div class="card-body offset-md-2 col-md-8 offset-sm-2 col-sm-8">
 					<div class="table-responsive">
 						<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
 							<thead>
@@ -176,7 +192,7 @@
 							<tbody>
 								<c:forEach items="${list}" var="pointDto">
 									<tr>
-										<td>${pointDto.point_type}</td>
+										<td class="type">${pointDto.point_type}</td>
 										<td>${pointDto.point_detail}</td>
 										<td>${pointDto.point_score}</td>
 										<td>
