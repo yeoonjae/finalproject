@@ -148,21 +148,6 @@
           </div>
         </li>        
         
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>마일리지 관리</span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <h6 class="dropdown-header">유형 관리</h6>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/regist">마일리지 등록</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/edit">마일리지 수정</a>
-            <h6 class="dropdown-header">회원 관리</h6>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/addRemove">마일리지 적립/소멸</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/his_list">마일리지 내역조회</a>
-          </div>
-        </li>
-        
          <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
@@ -182,17 +167,45 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
+            <span>마일리지 관리</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          <c:choose>
+          	<c:when test="${admininfo.admin_auth eq '본사'}">
+            <h6 class="dropdown-header">유형 관리</h6>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/regist">마일리지 등록</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/edit">마일리지 수정</a>
+            <h6 class="dropdown-header">회원 관리</h6>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/addRemove">마일리지 적립/소멸</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/his_list">마일리지 내역조회</a>
+            </c:when>
+          	<c:when test="${admininfo.admin_auth eq '지점'}">
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/point/his_list">마일리지 내역조회</a>
+            </c:when>
+          </c:choose>
+          </div>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
             <span>쿠폰 관리</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <h6 class="dropdown-header">본사 관리</h6>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/regist">쿠폰 등록</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/edit">쿠폰 수정/삭제</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/list">목록 조회</a>
+          <c:choose>
+          	<c:when test="${admininfo.admin_auth eq '본사'}">
+	            <h6 class="dropdown-header">본사 관리</h6>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/regist">쿠폰 등록</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/edit">쿠폰 수정/삭제</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/list">목록 조회</a>
+          	</c:when>
+          	<c:when test="${admininfo.admin_auth eq '지점'}">
             <h6 class="dropdown-header">지점 관리</h6>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/request">쿠폰 등록 요청</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/req_edit">요청 수정/삭제</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/req_list">진행 목록</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/request">쿠폰 등록 요청</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/req_edit">요청 수정/삭제</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/req_list">진행 목록</a>
+          	</c:when>
+          </c:choose>
           </div>
         </li>
         
