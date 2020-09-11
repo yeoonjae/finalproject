@@ -31,6 +31,32 @@
 </style>
 <script>
 	$(function(){
+		var getUrlParameter = function getUrlParameter(sParam) {
+		    var sPageURL = window.location.search.substring(1),
+		        sURLVariables = sPageURL.split('&'),
+		        sParameterName,
+		        i;
+
+		    for (i = 0; i < sURLVariables.length; i++) {
+		        sParameterName = sURLVariables[i].split('=');
+
+		        if (sParameterName[0] === sParam) {
+		            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+		        }
+		    }
+		};
+		var where = getUrlParameter('where');
+		if(where == 'inbox'){//쪽지함을 클릭해서 들어왔을 때
+			$(".send-mail-tab").removeClass('active').removeClass('show');
+			$(".outbox-tab").removeClass('active').removeClass('show');
+			$(".inbox-tab").addClass("active").addClass("show");
+		}else if(where == 'outbox'){
+			$(".send-mail-tab").removeClass('active').removeClass('show');
+			$(".inbox-tab").removeClass('active').removeClass('show');
+			$(".outbox-tab").addClass("active").addClass("show");
+		}
+		
+		
 		var local = $(".local-list");
 		var branch = $(".branch-list");
 		var table = $(".receive-list-table");
@@ -112,12 +138,12 @@
 	            			method:"get"
 	            		})
 	            		.then(function(response){
+	            			console.log(response.data);
 	            			var tag = "<tr class='name-tr'></td><td class='no'>"+response.data.admin_no+
 	            						"</td><td>"+response.data.branch_name+
 				            			"</td><td>"+response.data.admin_auth+
 				            			"</td><td class='name'>"+response.data.admin_name+
 				            			"</td><td><button class='btn btn-outline-secondary remove-bnt' type='button'>삭제</button></td></tr>";
-				            			
 	            			table.append(tag);
 	            			table.show();
 					    	$(".remove-bnt").on("click",(function(){
@@ -180,7 +206,7 @@
 		    		    $("<input>").attr("type","hidden").attr("value",$(this).parents("tr").children(".no").text()).attr("name","receiver_name").insertAfter(receiver);
 		    		    
 	    		    }else if($(".name").length = 1){
-	    		    	if($(".name").text() == "전체 회원"){
+	    		    	if($(".name").text() == "전체 회원" || $(".name").text() == "전체 지점장"){
 	    		    		receiver.attr("value",$(this).text());
 		    		    	$("<input>").attr("type","hidden").attr("value",$(this).text()).attr("name","receiver_name").insertAfter(receiver);
 	    		    	}else{
@@ -220,6 +246,7 @@
 	    $(".inbox-tr").click(function(){
 	    	$("#inbox-modal").modal('show');
 	    	
+	    	
 	    	//모달
 	    	var title = $(this).parents(".table").next().children().children().children().children(".inbox-title");
 	    	var content = $(this).parents(".table").next().children().children().children().children(".inbox-content");
@@ -237,7 +264,17 @@
 	    	content.text(inputContent);
 	    	date.text(dateTd);
 	    	del.val(deleteInput);
+	    	
+	    	axios({
+	    		url:"${pageContext.request.contextPath}/test/message/update?message_manager_no="+deleteInput,
+    			method:"get"
+	    	})
+	    	.then(function(response){
+	    		console.log("성공");
+	    	})
 	    });
+	    
+	   
 	    
 	});
 	    
@@ -251,16 +288,16 @@
 			<div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
 				<ul class="nav nav-tabs">
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#home">받은 쪽지 보기</a>
+						<a class="nav-link inbox-tab" data-toggle="tab" href="#home">받은 쪽지 보기</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#profile">보낸 쪽지</a>
+						<a class="nav-link outbox-tab" data-toggle="tab" href="#profile">보낸 쪽지</a>
 					</li>
-					<li class="nav-item"><a class="nav-link active"
-						data-toggle="tab" href="#send-mail">쪽지 보내기</a></li>
+					<li class="nav-item">
+					<a class="nav-link active send-mail-tab" data-toggle="tab" href="#send-mail">쪽지 보내기</a></li>
 				</ul>
 				<div id="myTabContent" class="tab-content">
-					<div class="tab-pane fade" id="home">
+					<div class="tab-pane fade inbox-tab" id="home">
 						<br>
 						<p>
 						<!-- 수신함 -->
@@ -307,7 +344,7 @@
 							 </div>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="profile">
+					<div class="tab-pane fade outbox-tab" id="profile">
 						<br>
 						<p>
 						<!-- 발신함 -->
@@ -397,7 +434,7 @@
 							 </div>
 						</div>
 					</div>
-					<div class="tab-pane fade show active send-form" id="send-mail">
+					<div class="tab-pane fade show active send-form send-mail-tab" id="send-mail">
 						<br>
 							<!-- 쪽지보내기 -->
 							<input class="admin_no" type="hidden" value="${admininfo.admin_no}">

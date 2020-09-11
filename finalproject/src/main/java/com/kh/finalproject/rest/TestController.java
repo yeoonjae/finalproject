@@ -138,4 +138,10 @@ public class TestController {
 	public MemberDto memberBranchInfo(@RequestParam int member_no) {
 		return sqlSession.selectOne("member.get", member_no);
 	}
+	
+	//쪽지 조회수
+	@GetMapping("/message/update")
+	public void updateRead(@RequestParam int message_manager_no) {
+		sqlSession.update("message.updateManagerRead", message_manager_no);
+	}
 }

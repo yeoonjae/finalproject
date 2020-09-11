@@ -62,13 +62,17 @@
 			                  	<a href="${pageContext.request.contextPath}/admin/branch/layout_regist?branch_no=${branch.branch_no}">
 			                  		<button class="btn btn-outline-secondary btn-sm">배치도등록</button>
 			                  	</a>
-	                  			<button class="btn btn-outline-secondary btn-sm">회원보기</button>
+			                  	<a href="${pageContext.request.contextPath}/admin/branch/member_list?branch_no=${branch.branch_no}">
+	                  				<button class="btn btn-outline-secondary btn-sm">회원보기</button>
+	                  			</a>
 			                  	<a href="detail?branch_no=${branch.branch_no}">
 				                	<button class="btn btn-outline-secondary btn-sm">상세보기</button>
 			                  	</a>
                   			</c:when>
                   			<c:otherwise>
-                  				<button class="btn btn-outline-secondary btn-sm">회원보기</button>
+                  				<a href="${pageContext.request.contextPath}/admin/branch/member_list?branch_no=${branch.branch_no}">
+	                  				<button class="btn btn-outline-secondary btn-sm">회원보기</button>
+	                  			</a>
 			                  	<input type="hidden" value="500" name="hi">
 			                  	<a href="detail?branch_no=${branch.branch_no}">
 				                	<button class="btn btn-outline-secondary btn-sm">상세보기</button>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalproject.VO.MessageVO;
 import com.kh.finalproject.entity.AdminDto;
@@ -70,15 +71,17 @@ public class MessageController {
 	
 	//관리자 수신함 삭제
 	@PostMapping("/message_delete_inbox")
-	public String deleteInbox(@RequestParam int message_manager_no) {
+	public String deleteInbox(@RequestParam int message_manager_no,RedirectAttributes attr ) {
 		messageService.deleteInbox(message_manager_no);
+		attr.addAttribute("where", "inbox");
 		return "redirect:send_message_manager";
 	}
 	
 	//관리자 발신함 삭제
 	@PostMapping("/message_delete_outbox")
-	public String deleteOutbox(@RequestParam int message_manager_no) {
+	public String deleteOutbox(@RequestParam int message_manager_no,RedirectAttributes attr ) {
 		messageService.deleteOutbox(message_manager_no);
+		attr.addAttribute("where", "outbox");
 		return "redirect:send_message_manager";
 	}
 }

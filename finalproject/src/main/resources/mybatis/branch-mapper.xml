@@ -78,6 +78,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT branch_no FROM branch WHERE admin_no=#{admin_no}
 	</select>
 	
+	<!-- 지점별 회원 보유현황 -->
+	<select id="memberList" parameterType="int" resultType="memberDto">
+		SELECT * FROM member WHERE branch_no = #{branch_no}
+	</select>
 </mapper>
 
 

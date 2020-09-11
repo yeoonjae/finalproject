@@ -70,8 +70,8 @@
           
           <!-- 메세지 부분 -->
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send_message_manager">쪽지함</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send_message_manager">쪽지보내기</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send_message_manager?where=inbox">쪽지함</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send_message_manager?where=send">쪽지보내기</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>
           </div>

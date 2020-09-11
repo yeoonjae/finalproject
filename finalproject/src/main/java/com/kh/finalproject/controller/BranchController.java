@@ -1,6 +1,5 @@
 package com.kh.finalproject.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -17,8 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
-import com.kh.finalproject.entity.BranchImgDto;
 import com.kh.finalproject.entity.LocalDto;
+import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.repository.AdminDao;
 import com.kh.finalproject.repository.BranchDao;
 import com.kh.finalproject.repository.LocalDao;
@@ -108,6 +107,14 @@ public class BranchController {
 	public String edit(@RequestParam int branch_no) {
 		branchDao.delete(branch_no);
 		return "redirect:list";
+	}
+	
+	//지점별 회원 현황
+	@GetMapping("/member_list")
+	public String memberList(@RequestParam int branch_no,Model model) {
+		List<MemberDto> list = branchDao.getMemberList(branch_no);
+		model.addAttribute("list", list);
+		return "admin/branch/member_list";
 	}
 	
 }

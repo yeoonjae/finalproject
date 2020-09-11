@@ -28,8 +28,7 @@ public class MessageServiceImpl implements MessageService{
 	public void regist(MessageVO messageVO,AdminDto adminDto) {
 		//지점관리자 번호 받아서 지점관리자가 갖고있는 지점 가져오기
 		int sender_no = sqlSession.selectOne("admin.getAdminNO",messageVO.getSender_name());
-		int branch_no = sqlSession.selectOne("branch.getBranch", sender_no);
-
+		
 
 		//message 저장
 		MessageDto messageDto = new MessageDto();
@@ -62,6 +61,7 @@ public class MessageServiceImpl implements MessageService{
 			
 		//지점 전체 회원
 		}else if(receiver.length < 2 && receiver[0].equals("전체 회원")){
+			int branch_no = sqlSession.selectOne("branch.getBranch", sender_no);
 			List<MemberDto> list = sqlSession.selectList("member.getBranchList",branch_no);
 			//회원(주인공)--수신으로 받기
 			for(int i=0;i<list.size();i++) {
