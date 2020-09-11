@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 회원 연결 테이블에 저장 -->
-	<insert id="sendMember" parameterType="messageManagerDto">
+	<insert id="sendMember" parameterType="messageMemberDto">
 		insert into MESSAGE_Member values(
 			message_member_seq.nextval,
 			#{message_no},
@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
-	<!-- 관리자 수신함 -->
+	<!-- 본사 관리자 수신함 -->
 	<select id="inboxAdmin" parameterType="int" resultType="messageManagerDto">
 			SELECT a.admin_name,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_MANAGER mm 
 			LEFT OUTER JOIN admin a ON mm.ADMIN_NO2 = a.ADMIN_NO 	
@@ -49,17 +49,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			ORDER BY mm.MESSAGE_MANAGER_DATE DESC
 	</select>
 	
+	<!-- 지점관리자 발신함 -->
+	<select id="outboxManager" parameterType="int" resultType="messageMemberDto">
+		SELECT a.member_name ,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_Member mm	
+			left OUTER JOIN Message m ON m.MESSAGE_NO = mm.MESSAGE_NO
+			LEFT OUTER JOIN member a ON mm.MEMBER_NO = a.member_no 
+			WHERE mm.ADMIN_NO =#{admin_no} AND mm.MESSAGE_Member_TYPE ='발신' 
+			ORDER BY mm.MESSAGE_Member_DATE DESC
+	</select>
+	
+	
 	<!-- 관리자 발신함 -->
 	<select id="outboxAdmin" parameterType="int" resultType="messageManagerDto">
 			SELECT a.admin_name ,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_MANAGER mm	
 			left OUTER JOIN Message m ON m.MESSAGE_NO = mm.MESSAGE_NO
 			LEFT OUTER JOIN admin a ON mm.ADMIN_NO2 = a.ADMIN_NO 
-			WHERE mm.ADMIN_NO =1 AND mm.MESSAGE_MANAGER_TYPE ='발신' 
+			WHERE mm.ADMIN_NO =#{admin_no} AND mm.MESSAGE_MANAGER_TYPE ='발신' 
 			ORDER BY mm.MESSAGE_MANAGER_DATE DESC
 	</select>
 	
 	<!-- 관리자 연결테이블 메세지 삭제 -->
-	<delete id="manager_delete" parameterType="int">
+	<delete id="managerDelete" parameterType="int">
 		DELETE message_manager WHERE message_manager_no=#{message_manager_no}
 	</delete>
+	
+	<!-- 회원 연결테이블 메세지 삭제 -->
+	<delete id="memberDelete" parameterType="int">
+		DELETE message_member WHERE message_member_no=#{message_member_no}
+	</delete>
+	
 </mapper>

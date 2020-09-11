@@ -34,6 +34,8 @@
 		var local = $(".local-list");
 		var branch = $(".branch-list");
 		var table = $(".receive-list-table");
+		var member = $(".member-list");
+		member.hide();
 		local.hide();
 		branch.hide();
 		table.hide();
@@ -49,7 +51,7 @@
 	    	 var branch = $(".branch-list");
 	    	 var select = $(this).val();
 	    	 if(select==1){//전체 회원이면
-	    		 var tag = "<tr><td colspan='3' class='name'>전체 회원</td><td><button type='button' class='btn btn-outline-secondary remove-bnt'>삭제</button></td></tr>";
+	    		 var tag = "<tr><td colspan='4' class='name'>전체 회원</td><td><button type='button' class='btn btn-outline-secondary remove-bnt'>삭제</button></td></tr>";
 				 $(".receive-list-table").append(tag);
 				 table.show();
 				 $(".who").prop("disabled",true);
@@ -60,7 +62,7 @@
 			    	}))    		 
 	    	 }
 	    	 if(select==2){//전체 지점장
-	    		 var tag = "<tr class='name-tr'><td colspan='3' class='name'>전체 지점장</td><td><button type='button' class='btn btn-outline-secondary remove-bnt'>삭제</button></td></tr>";
+	    		 var tag = "<tr class='name-tr'><td colspan='4' class='name'>전체 지점장</td><td><button type='button' class='btn btn-outline-secondary remove-bnt'>삭제</button></td></tr>";
 				 $(".receive-list-table").append(tag);
 				 table.show();
 				 $(".who").prop("disabled",true);
@@ -110,7 +112,8 @@
 	            			method:"get"
 	            		})
 	            		.then(function(response){
-	            			var tag = "<tr class='name-tr'><td>"+response.data.branch_name+
+	            			var tag = "<tr class='name-tr'></td><td class='no'>"+response.data.admin_no+
+	            						"</td><td>"+response.data.branch_name+
 				            			"</td><td>"+response.data.admin_auth+
 				            			"</td><td class='name'>"+response.data.admin_name+
 				            			"</td><td><button class='btn btn-outline-secondary remove-bnt' type='button'>삭제</button></td></tr>";
@@ -122,16 +125,45 @@
 					    	}))
 	            		})
 	            	});
-	            	
 	    	 }
-	    	
+	    	//회원 검색을 선택하면 --> 해당 지점 회원 이름 나옴
 	    	if(select==4){
-	    		var admin_no = $(".admin_no");
-	    		console.log(admin_no);
+	    		var admin_no = $(".admin_no").val();
+	    		$(".member-list").show();
+// 	    		$(".who").prop("disabled",true);
+	    		axios({
+	    			url:"${pageContext.request.contextPath}/test/message/member?admin_no="+admin_no,
+        			method:"get"
+	    		})
+	    		.then(function(response){
+	    			console.log(response.data);
+	    			$.each(response.data,function(i){
+            			$("<option>").attr("value",response.data[i].member_no).attr("class","member-option").text(response.data[i].member_name).appendTo(member);
+            		})
+	    		})
 	    		
 	    	}
 	    	
-	    	
+	    	//회원선택을 완료하면
+	    	member.change(function(){
+	    		$(".member-list").show();
+	    		var member_no = $(".member-list").val();
+        		var table = $(".receive-list-table");
+        		axios({
+        			url:"${pageContext.request.contextPath}/test/message/memberInfo?member_no="+member_no,
+        			method:"get"
+        		}).then(function(response){
+        			var tag =  "<tr class='name-tr'><td class='no'>"+response.data.member_no+
+        			"</td><td>"+response.data.branch_name+
+        			"</td><td>회원</td><td class='name'>"+response.data.member_name+
+        			"</td><td><button class='btn btn-outline-secondary remove-bnt' type='button'>삭제</button></td></tr>";
+        			table.append(tag);
+        			table.show();
+			    	$(".remove-bnt").on("click",(function(){
+			    		$(this).parents("tr").remove();
+			    	}))
+        		})
+	    	});
 	    	
 	    	//대상을 선택하는 구문
 	    	//1. 기존에 선택된 사람들을 삭제
@@ -139,16 +171,24 @@
 	    	$("#save").click(function(){
 		    	$("input").remove("input[name=receiver_name]");
 		    	$('.name').each(function() {
+		    		var all = "전체 회원";
 	    		    var receiver = $("#receiver");//받는사람 input칸
 	    		    var sum = ($(".name").length)-1;
 	    		    if($(".name").length > 1){//tr안에 있는 td의 클래스 이름이 name이다
 	    		    	console.log($(this).text());
 		    		    receiver.attr("value",$(this).text()+"외"+sum+"명");
-		    		    $("<input>").attr("type","hidden").attr("value",$(this).text()).attr("name","receiver_name").insertAfter(receiver);
+		    		    $("<input>").attr("type","hidden").attr("value",$(this).parents("tr").children(".no").text()).attr("name","receiver_name").insertAfter(receiver);
 		    		    
 	    		    }else if($(".name").length = 1){
-	    		    	receiver.attr("value",$(this).text());
-	    		    	$("<input>").attr("type","hidden").attr("value",$(this).text()).attr("name","receiver_name").insertAfter(receiver);
+	    		    	if($(".name").text() == "전체 회원"){
+	    		    		receiver.attr("value",$(this).text());
+		    		    	$("<input>").attr("type","hidden").attr("value",$(this).text()).attr("name","receiver_name").insertAfter(receiver);
+	    		    	}else{
+		    		    	receiver.attr("value",$(this).text());
+		    		    	$("<input>").attr("type","hidden").attr("value",$(this).parents("tr").children(".no").text()).attr("name","receiver_name").insertAfter(receiver);
+	    		    	}
+	    		    }else if($(".name").length < 1){
+	    		    	$("#receiver").attr("value","");
 	    		    }
 	    		 });
 	    	});
@@ -257,7 +297,7 @@
 							                <h6 class="modal-title inbox-content"></h6>  
 							            </div>
 							            <div class="modal-footer">
-							                <form action="message_delete" method="post">
+							                <form action="message_delete_inbox" method="post">
 								                <input type="hidden" class="inbox-delete" name="message_manager_no">
 								                <input type="submit" class="btn btn-outline-danger" value="삭제">
 							            	</form>
@@ -285,20 +325,52 @@
 									<td class="outbox-title-td">
 									${outbox.message_title}
 										<input type="hidden" class="outbox-content-input" value="${outbox.message_content}">
-										<input type="hidden" class="outbox-no-input" value="${outbox.message_manager_no}">
+										<c:choose>
+											<c:when test="${admininfo.admin_auth eq '본사'}">
+												<input type="hidden" class="outbox-no-input" value="${outbox.message_manager_no}">
+											</c:when>
+											<c:otherwise>
+												<input type="hidden" class="outbox-no-input" value="${outbox.message_member_no}">
+											</c:otherwise>
+										</c:choose>
 									</td>
 									
 									<td>
 									<c:choose>
-										<c:when test="${outbox.admin_name eq '본사'}">
-											전체 지점장
+										<c:when test="${admininfo.admin_auth eq '본사'}">
+											<c:choose>
+												<c:when test="${outbox.admin_name eq '본사'}">
+													전체 지점장
+												</c:when>
+												<c:otherwise>
+													${outbox.admin_name}
+												</c:otherwise>
+											</c:choose>
+										</c:when>
+										<c:when test="${admininfo.admin_auth eq '지점'}">
+											<c:choose>
+												<c:when test="${outbox.member_no eq '0'}">
+													전체회원
+												</c:when>
+												<c:otherwise>
+													${outbox.member_name}
+												</c:otherwise>
+											</c:choose>
+										</c:when>
+									</c:choose>
+									
+									</td>
+									<td class="outbox-date-td">
+									<c:choose>
+										<c:when test="${admininfo.admin_auth eq '본사'}">
+											${outbox.message_manager_date}
 										</c:when>
 										<c:otherwise>
-											${outbox.admin_name}
+											${outbox.message_member_date}
 										</c:otherwise>
 									</c:choose>
+									
 									</td>
-									<td class="outbox-date-td">${outbox.message_manager_date}</td>
 								</tr>
 							</c:forEach>
 							</tbody>
@@ -315,7 +387,7 @@
 							                <h6 class="modal-title outbox-content"></h6>  
 							            </div>
 							            <div class="modal-footer">
-							            <form action="message_delete" method="post">
+							            <form action="message_delete_outbox" method="post">
 							                <input type="hidden" class="outbox-delete" name="message_manager_no">
 							                <input type="submit" class="btn btn-outline-danger" value="삭제">
 							            </form>
@@ -339,16 +411,16 @@
 									<div class="form-group">
 										<label for="exampleInputPassword1">받는 사람</label>
 										<!-- 수신인 --> 
-										<input type="text" class="form-control receive" id="receiver" autocomplete="off">
+										<input type="text" class="form-control receive" id="receiver" autocomplete="off" required="required">
 										
 									</div>
 									<div class="form-group">
 										<label for="exampleSelect1">제목</label> 
-										<input type="text" class="form-control" id="exampleInputEmail1" name="message_title" autocomplete="off">
+										<input type="text" class="form-control" id="exampleInputEmail1" name="message_title" autocomplete="off" required="required">
 									</div>
 									<div class="form-group">
 										<label for="exampleTextarea">쪽지 내용</label>
-										<textarea class="form-control" id="exampleTextarea" rows="3" name="message_content" autocomplete="off"></textarea>
+										<textarea class="form-control" id="exampleTextarea" rows="3" name="message_content" autocomplete="off" required="required"></textarea>
 									</div>
 									<button type="submit" class="btn btn-outline-secondary btn-block">쪽지 보내기</button>
 								</fieldset>
@@ -365,7 +437,7 @@
 											</div>
 											<div class="modal-body">
 												<div class="form-group">
-											        <select class="custom-select who">
+											        <select class="custom-select who" required="required">
 											        <c:choose>
 											        	<c:when test="${admininfo.admin_auth eq '본사'}">
 												          <option selected="">받는 사람 선택</option>
@@ -379,19 +451,27 @@
 											        	</c:when>
 											        </c:choose>
 											        </select>
+											        <!-- 지역검색 -->
 											        <select class="local-list custom-select" name="loacl_no">
 											        	<option value="">지역 검색</option>
 											        </select>
+											        <!-- 지점선택 -->
 											        <select class="branch-list custom-select" name="branch_no">
 											        	<option value="">지점 검색</option>
 											        </select>
+											        <!-- 회원 선택 -->
+											        <select class="member-list custom-select" name="member_no">
+											        	<option value="">회원 검색</option>
+											        </select>
 											        <hr>
+											        <!-- 선택한 목록 테이블 -->
 											        <table class="table receive-list-table" id="mytable">
 											        	<thead>
 											        		<tr>
-											        			<th colspan="4">받는사람 목록</th>
+											        			<th colspan="5">받는사람 목록</th>
 											        		</tr>
 											        		<tr>
+											        			<th>번호</th>
 											        			<th>지점</th>
 											        			<th>분류</th>
 											        			<th>이름</th>

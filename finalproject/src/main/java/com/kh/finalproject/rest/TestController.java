@@ -126,4 +126,16 @@ public class TestController {
 		return sqlSession.selectList("admin.getBranchAdmin");
 	}
 	
+	//관리자번호로 지점 --> 지점에 속한 회원들 읽어오기
+	@GetMapping("/message/member")
+	public List<MemberDto> memberBranchList(@RequestParam int admin_no){
+		int branch_no = sqlSession.selectOne("branch.getBranch", admin_no);
+		return sqlSession.selectList("member.getBranchList", 47);
+	}
+	
+	//회원번호로 정보+지점정보까지 읽어오기
+	@GetMapping("/message/memberInfo")
+	public MemberDto memberBranchInfo(@RequestParam int member_no) {
+		return sqlSession.selectOne("member.get", member_no);
+	}
 }

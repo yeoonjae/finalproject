@@ -83,6 +83,9 @@
 							<a href="delete?branch_no=${branchDto.branch_no}">
 								<button class="btn col-sm-2 btn-outline-secondary">지점삭제</button>
 							</a>
+							<a href="list">
+								<button class="btn col-sm-2 btn-outline-secondary">목록보기</button>
+							</a>
 						</th>
 					</tr>
 				</tbody>
@@ -91,12 +94,11 @@
 	</div>
 </div>
 <script>
-        var canvas = new fabric.Canvas('c');
-        canvas.loadFromJSON('${branchDto.branch_layout}');
-        for(var i=0;i<${branchDto.branch_layout}.objects.length;i++){
-        	canvas.item(i).selectable = false;	
-        }
-        console.log(${branchDto.branch_layout}.objects);
-        
+var canvas = new fabric.Canvas('c');
+canvas.loadFromJSON('${branchDto.branch_layout}');
+for(var i=0;i<${branchDto.branch_layout}.objects.length;i++){
+	canvas.item(i).selectable = false;	
+}
+console.log(${branchDto.branch_layout}.objects);
 </script>
 <jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>
