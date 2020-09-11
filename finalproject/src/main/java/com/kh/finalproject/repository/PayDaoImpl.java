@@ -1,6 +1,8 @@
 package com.kh.finalproject.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,38 +53,95 @@ public class PayDaoImpl implements PayDao{
 		return sqlSession.selectList("pay.getPayInfo",member_no);
 	}
 
+	//결제 후 마일리지 적립
 	@Override
 	public void plusPoint(PayPointDto payPointDto) {
 		sqlSession.update("pay.plusPoint", payPointDto);
 	}
 
+	//결제 후 마일리지 차감 
 	@Override
 	public void minusPoint(PayPointDto payPointDto) {
 		sqlSession.update("pay.minusPoint", payPointDto);	
 	}
 
+	// 결제 후 마일리지 차감/적립 정보 등록 
 	@Override
 	public void payPointRegist(PayPointDto payPointDto) {
 		sqlSession.insert("pay.payPointRegist",payPointDto);
 		
 	}
-	
-	
-	@Override
-	public int getSeq() {
-		return sqlSession.selectOne("pay.getSeq");
-	}	
-	
+
+	// 적립금 디비에 저장
 	@Override
 	public void registReward(PayPointDto payPointDto) {
 		sqlSession.insert("pay.registReward", payPointDto);
 	}
-
+	//사용한 마일리지 디비에 저장
 	@Override
 	public void registUsePoint(PayPointDto payPointDto) {
-		sqlSession.insert("pay.registUsePoint", payPointDto);
+		sqlSession.insert("pay.registUsePoint", payPointDto);		
+	}
+
+	// 회원 보유 시간 충전 
+	@Override
+	public void addCharge(int member_no,int license_time) {
+		Map<Object, Object> map = new HashMap<>();
+		map.put("member_no", member_no);
+		map.put("license_time",license_time);
+		sqlSession.update("pay.addCharge", map);	
+	}
+
+	// @@@@@@@@결제 취소 후 @@@@@@@@
+	//결제 상태 변경 (결제 완료 -> 결제 취소 )
+	@Override
+	public void changeStatus(String tid) {
+		sqlSession.update("pay.changeStatus", tid);		
+	}
+
+	@Override
+	public void rePlusPoint(int member_no, int pay_use_point) {
+		Map<Object, Object> map = new HashMap<>();
+		map.put("member_no", member_no);
+		map.put("pay_use_point",pay_use_point);
+		sqlSession.update("pay.rePlusPoint", map);
 		
 	}
+
+	@Override
+	public void reMinusPoint(int member_no, int reward) {
+		Map<Object, Object> map = new HashMap<>();
+		map.put("member_no", member_no);
+		map.put("reward",reward);
+		sqlSession.update("pay.reMinusPoint", map);
+	}
+
+	@Override
+	public void reRegistUsePoint(int member_no, int pay_use_point) {
+		Map<Object, Object> map = new HashMap<>();
+		map.put("member_no", member_no);
+		map.put("pay_use_point",pay_use_point);
+		sqlSession.insert("pay.reRegistUsePoint", map);
+	}
+
+	@Override
+	public void reRegistReward(int member_no, int reward) {
+		Map<Object, Object> map = new HashMap<>();
+		map.put("member_no", member_no);
+		map.put("reward",reward);
+		sqlSession.insert("pay.reRegistReward", map);
+	}
+
+	@Override
+	public void minusCharge(int member_no, int license_time) {
+		Map<Object, Object> map = new HashMap<>();
+		map.put("member_no", member_no);
+		map.put("license_time",license_time);
+		sqlSession.update("pay.minusCharge", map);	
+	}
+
+
+
 
 
 

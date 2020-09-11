@@ -30,13 +30,25 @@ public interface PayDao {
 	
 	//결제 승인후 마일리지 정보 임시 저장 
 	void payPointRegist(PayPointDto payPointDto);
-
+	// 결제 성공 후 회원 보유 시간 update 
+	void addCharge(int member_no,int license_time);
 	
-	//번호 뽑기
-	int getSeq();
 
 	// 결제 적립/차감 내역 point_history에 저장
 	void registUsePoint(PayPointDto payPointDto);
 	void registReward(PayPointDto payPointDto);
+
+	//결제 취소 후 결제 상태 변경 
+	void changeStatus(String tid);
 	
+	//결제 취소 후 마일리지 적립/차감 취소 
+	void rePlusPoint(int member_no,int pay_use_point);
+	void reMinusPoint(int member_no,int reward);
+	
+	// 결제 취소 후 적립/차감 내역 point_history에 저장
+	void reRegistUsePoint(int member_no,int pay_use_point);
+	void reRegistReward(int member_no,int reward);
+	
+	// 결제 취소 후 회원 보유 시간 차감 
+	void minusCharge(int member_no,int license_time);
 }
