@@ -10,6 +10,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.kh.finalproject.pay.KakaoPayDeleteVO;
 import com.kh.finalproject.pay.KakaoPayFinishVO;
 import com.kh.finalproject.pay.KakaoPayHistoryVO;
 import com.kh.finalproject.pay.KakaoPayResultVO;
@@ -119,5 +120,33 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 	
 		return historyVO;
 
+	}
+
+	@Override
+	public KakaoPayDeleteVO delete(String tid, int cancel_amount) throws URISyntaxException {
+		// 1. 도구 생성
+		RestTemplate template = new RestTemplate();
+						
+		// 2. Header 생성 
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "KakaoAK d57c34e99d6acf363a578ead15befe0a");
+		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		// 3. Body 생성
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>();
+		body.add("cid", CID);
+		body.add("tid", tid);
+		body.add("cancel_amount", String.valueOf(cancel_amount));
+		body.add("cancel_tax_free_amount",cancel_tax_free_amount);
+		
+		// 4. Header 와 Body를 합성
+		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body,headers);
+		
+		// 5. 주소 정의 
+		URI uri = new URI("https://kapi.kakao.com/v1/payment/cancel");
+		
+		KakaoPayDeleteVO deleteVO = template.postForObject(uri, entity, KakaoPayDeleteVO.class);	
+		
+		return deleteVO;
 	}
 }

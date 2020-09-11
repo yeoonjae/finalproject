@@ -25,12 +25,10 @@
 			<div class="row">
 				<div class="main_service roomy-100">
 
-					<h3>이용권 결제 상세 조회</h3>
+					<h3>상세 내역 조회</h3>
 					<h4>결제번호 : ${historyVO.tid}</h4>
 					<h4>상품명 : ${historyVO.item_name}</h4>
-					
-					
-					
+					<h4>주문 상태 : ${historyVO.status}</h4>	
 				</div>
 			</div>
 		</div>

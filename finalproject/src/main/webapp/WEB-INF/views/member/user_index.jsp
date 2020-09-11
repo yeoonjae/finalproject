@@ -86,7 +86,7 @@
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
               
-                            <li><a href="#about">상품 충전</a></li>                    
+                            <li><a href="${pageContext.request.contextPath}/member/pay/pay_main">상품 충전</a></li>                    
                             <li><a href="#service">개인석</a></li>                    
                             <li><a href="#portfolio">스터디룸</a></li>                    
                             <li><a href="#pricing">리뷰</a></li>  

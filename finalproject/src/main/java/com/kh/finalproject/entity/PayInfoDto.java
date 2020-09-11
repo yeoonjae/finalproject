@@ -13,10 +13,13 @@ public class PayInfoDto {
 	private String tid_no;
 	private int member_no;
 	private Date pay_his_date;
+	private String pay_his_date2;
 	private int pay_his_discount;
 	private String pay_his_method;
 	private int pay_his_price;
 	private int license_time;
 	private int license_price;
 	private String pay_his_state;
+	private int pay_use_point;
+	private int reward;
 }

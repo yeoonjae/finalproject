@@ -28,15 +28,16 @@
 			//CSS 설정 
 			//$(this).children().css("font-weight","bold");
 			var price = $(this).data().price; // 가격 불러오기 
-			var time = $(this).data().time;// 시간 불러오기 
+			var time = parseInt($(this).data().time);// 시간 불러오기 
 			var price2 = price.toLocaleString();// 세자리 단위로 , 붙이기
 			var no = $(this).data().no;
 
 			var point = parseInt(0);
 			
 			// 카카오페이에 상품명 전송 
-			$(".item_name").val(time + "시간 이용권");
-			$(".license_no").val(no);
+// 			$(".item_name").val(time + "시간 이용권");
+// 			$(".license_no").val(no);
+// 			$(".license_time").val(time);
 
 			$(".time").text(time + "시간").css("font-weight", "bold"); // 시간 설정 
 			$(".price").text(price2 + "원").css("font-weight", "bold"); //가격 설정
@@ -62,6 +63,9 @@
 			$(".sale_price").val(sale_price);
 			$(".use_point2").val(point);
 			$(".reward").val(reward);
+			$(".item_name").val(time + "시간 이용권");
+			$(".license_no").val(no);
+			$(".license_time").val(time);
 			
 			console.log("총가격"+total_price);
 			console.log("적립"+reward);
@@ -388,13 +392,15 @@
 								</tr>
 								<tr>
 									<td class="resultType">마일리지 사용</td>
-									<td class="resultPrice">(-) <span
+									<td class="resultPrice">(-) 
+									<span
 										class="resultFont use_point"></span> <span>원</span>
 									</td>
 								</tr>
 								<tr>
 									<td class="resultType">최종 결제 금액</td>
-									<td class="resultPrice"><span
+									<td class="resultPrice">
+									<span
 										class="resultFont total_price">0</span> <span
 										style="color: red">원</span></td>
 								</tr>
@@ -432,8 +438,8 @@
 									<input type="hidden" name="reward" class="reward"><!--  적립금  -->
 									<input type="hidden" name="use_point2" class="use_point2"> <!--  사용한 마일리지  -->
 									<input type="hidden" name="sale_price" class="sale_price"><!-- 할인 금액 -->
+									<input type="hidden" name="license_time" class="license_time"> <!-- 이용권 번호 -->
 									<input type="hidden" name="license_no" class="license_no"> <!-- 이용권 번호 -->
-									<input type="hidden" name="member_no" value="${memberBranchDto.member_no}"><!-- 회원 번호 -->
 									<input type="hidden" name="item_name" class="item_name"><!-- 상품명 -->
 									<input type="hidden" name="total_amount" class="total_amount"><!-- 총 결제금액 -->
 									<input type="submit" value="구매하기" class="btn btn-primary">
@@ -466,7 +472,8 @@
 																	data-no="${licenseDto.license_no}"> <span
 																	class="padding7 fontBold">${licenseDto.license_time}시간</span>
 																</td>
-																<td class="licensePrice"><span class="fontBold">${licenseDto.license_price}원</span>
+																<td class="licensePrice">
+																<span class="fontBold"><fmt:formatNumber value="${licenseDto.license_price}" pattern="#,###" />원</span>
 																</td>
 															</tr>
 														</table>
