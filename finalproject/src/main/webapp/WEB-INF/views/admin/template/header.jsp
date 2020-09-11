@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
 	<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,13 +23,33 @@
 
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/assets/css/sb-admin.css" rel="stylesheet">
+	
+	<script>
+	  
+	  $(function(){
 
+		  axios({
+				url:"${pageContext.request.contextPath}/test/message/count",
+				method:"get"
+			})
+			.then(function(response){
+				console.log(response.data);
+				if(response.data==0){
+	    			$(".readCount").hide();
+	    		}else{
+					$(".readCount").text(response.data);
+	    		}
+			})  
+	  })
+	  
+	</script>
+	
     <title>관리자 메인페이지</title>
     
   </head>
 
   <body id="page-top">
-
+	
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
       <a class="navbar-brand mr-1" href="${pageContext.request.contextPath}/admin/">GONGDORI</a>
@@ -53,7 +75,7 @@
         <li class="nav-item dropdown no-arrow mx-1">
           <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-bell fa-fw"></i>
-            <span class="badge badge-danger">9+</span>
+            <span class="badge badge-danger readCount"></span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
             <a class="dropdown-item" href="#">아안녕</a>

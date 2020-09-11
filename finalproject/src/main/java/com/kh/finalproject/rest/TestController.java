@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +31,9 @@ public class TestController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private HttpSession session;
 	
 	// 마일리지 유형 중복검사
 	@GetMapping("/point/regist")
@@ -141,7 +146,20 @@ public class TestController {
 	
 	//쪽지 조회수
 	@GetMapping("/message/update")
-	public void updateRead(@RequestParam int message_manager_no) {
+	public int updateRead(@RequestParam int message_manager_no) {
+		System.out.println("되니??");
 		sqlSession.update("message.updateManagerRead", message_manager_no);
+		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
+		int admin_no = adminDto.getAdmin_no();
+		return sqlSession.selectOne("message.managerReadCount", admin_no);
+	}
+	
+	//쪽지 span
+	@GetMapping("/message/count")
+	public int updateRead() {
+		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
+		int admin_no = adminDto.getAdmin_no();
+		int a = sqlSession.selectOne("message.managerReadCount", admin_no);
+		return a;
 	}
 }

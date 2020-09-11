@@ -42,11 +42,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 본사 관리자 수신함 -->
 	<select id="inboxAdmin" parameterType="int" resultType="messageManagerDto">
-			SELECT a.admin_name,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_MANAGER mm 
+					SELECT a.admin_name,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_MANAGER mm 
 			LEFT OUTER JOIN admin a ON mm.ADMIN_NO2 = a.ADMIN_NO 	
 			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
 			WHERE MESSAGE_MANAGER_TYPE = '수신' AND mm.ADMIN_NO =#{admin_no}
-			ORDER BY mm.MESSAGE_MANAGER_DATE DESC
+			ORDER BY mm.MESSAGE_MANAGER_READ ASC ,mm.MESSAGE_MANAGER_DATE DESC
 	</select>
 	
 	<!-- 지점관리자 발신함 -->

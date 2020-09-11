@@ -241,6 +241,10 @@
 	    	content.text(inputContent);
 	    	date.text(dateTd);
 	    	del.val(deleteInput);
+	    	
+	    	$(".close-btn").click(function(){
+	 		   location.reload();
+	 	   })
 	    });
 	    
 	    $(".inbox-tr").click(function(){
@@ -266,15 +270,25 @@
 	    	del.val(deleteInput);
 	    	
 	    	axios({
-	    		url:"${pageContext.request.contextPath}/test/message/update?message_manager_no="+deleteInput,
-    			method:"get"
-	    	})
-	    	.then(function(response){
-	    		console.log("성공");
-	    	})
+				url:"${pageContext.request.contextPath}/test/message/update?message_manager_no="+deleteInput,
+				method:"get"
+			})
+			.then(function(response){
+				console.log(response.data);
+				if(response.data==0){
+	    			$(".readCount").hide();
+	    		}else{
+					$(".readCount").text(response.data);
+	    		}
+			})  
+	    	
+	    	$(".close-btn").click(function(){
+	 		   location.reload();
+	 	   })
+	    	
+	    	var admin_no = $(".admin_no").val();
+	    	
 	    });
-	    
-	   
 	    
 	});
 	    
@@ -304,7 +318,7 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>제목</th>
+									<th style="width:50%;">제목</th>
 									<th>보낸사람</th>
 									<th>날짜</th>
 								</tr>
@@ -312,7 +326,14 @@
 							<tbody>
 							<c:forEach var="inbox" items="${inbox}">
 								<tr class="inbox-tr">
-									<td class="inbox-title-td">${inbox.message_title}</td>
+									<c:choose>
+										<c:when test="${inbox.message_manager_read eq 0}">
+											<td class="inbox-title-td" style="font-weight:bold;">${inbox.message_title}</td>
+										</c:when>
+										<c:otherwise>
+											<td class="inbox-title-td" style="color:gray;">${inbox.message_title}</td>
+										</c:otherwise>
+									</c:choose>
 									<td class="inbox-name_td">${inbox.admin_name}</td>
 									<td class="inbox-date-td">${inbox.message_manager_date}
 										<input type="hidden" class="inbox-content-input" value="${inbox.message_content}">
@@ -338,7 +359,7 @@
 								                <input type="hidden" class="inbox-delete" name="message_manager_no">
 								                <input type="submit" class="btn btn-outline-danger" value="삭제">
 							            	</form>
-							                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
+							                <button type="button" class="btn btn-outline-danger close-btn" data-dismiss="modal">닫기</button>
 							            </div>
 							       </div>
 							 </div>
@@ -351,7 +372,7 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>제목</th>
+									<th style="width:50%;">제목</th>
 									<th>받는사람</th>
 									<th>날짜</th>
 								</tr>
