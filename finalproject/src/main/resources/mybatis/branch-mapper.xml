@@ -63,13 +63,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE branch_no = #{branch_no}
 	</update>
 	
+	<!-- 지점이름으로 지점 뽑기 -->
 	<select id="getName" parameterType="String" resultType="branchDto">
 		SELECT * FROM branch WHERE branch_name=#{branch_name}
 	</select>
 	
+	<!-- 지점 번호 받아서 지점 뽑기 -->
 	<delete id="delete" parameterType="int">
 		DELETE branch WHERE branch_no=#{branch_no}
 	</delete>
+	
+	<!-- admin번호 받아서 branch 번호 넘기기 -->
+	<select id="getBranch" parameterType="int" resultType="int">
+		SELECT branch_no FROM branch WHERE admin_no=#{admin_no}
+	</select>
+	
+	<!-- 지점별 회원 보유현황 -->
+	<select id="memberList" parameterType="int" resultType="memberDto">
+		SELECT * FROM member WHERE branch_no = #{branch_no}
+	</select>
 </mapper>
 
 

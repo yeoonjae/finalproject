@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 회원 연결 테이블에 저장 -->
-	<insert id="sendMember" parameterType="messageManagerDto">
+	<insert id="sendMember" parameterType="messageMemberDto">
 		insert into MESSAGE_Member values(
 			message_member_seq.nextval,
 			#{message_no},
@@ -40,26 +40,79 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
-	<!-- 관리자 수신함 -->
+	<!-- 본사 관리자 수신함 -->
 	<select id="inboxAdmin" parameterType="int" resultType="messageManagerDto">
-			SELECT a.admin_name,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_MANAGER mm 
+					SELECT a.admin_name,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_MANAGER mm 
 			LEFT OUTER JOIN admin a ON mm.ADMIN_NO2 = a.ADMIN_NO 	
 			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
 			WHERE MESSAGE_MANAGER_TYPE = '수신' AND mm.ADMIN_NO =#{admin_no}
-			ORDER BY mm.MESSAGE_MANAGER_DATE DESC
+			ORDER BY mm.MESSAGE_MANAGER_READ ASC ,mm.MESSAGE_MANAGER_DATE DESC
 	</select>
+	
+	<!-- 지점관리자 발신함 -->
+	<select id="outboxManager" parameterType="int" resultType="messageMemberDto">
+		SELECT a.member_name ,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_Member mm	
+			left OUTER JOIN Message m ON m.MESSAGE_NO = mm.MESSAGE_NO
+			LEFT OUTER JOIN member a ON mm.MEMBER_NO = a.member_no 
+			WHERE mm.ADMIN_NO =#{admin_no} AND mm.MESSAGE_Member_TYPE ='발신' 
+			ORDER BY mm.MESSAGE_Member_DATE DESC
+	</select>
+	
 	
 	<!-- 관리자 발신함 -->
 	<select id="outboxAdmin" parameterType="int" resultType="messageManagerDto">
 			SELECT a.admin_name ,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_MANAGER mm	
 			left OUTER JOIN Message m ON m.MESSAGE_NO = mm.MESSAGE_NO
 			LEFT OUTER JOIN admin a ON mm.ADMIN_NO2 = a.ADMIN_NO 
-			WHERE mm.ADMIN_NO =1 AND mm.MESSAGE_MANAGER_TYPE ='발신' 
+			WHERE mm.ADMIN_NO =#{admin_no} AND mm.MESSAGE_MANAGER_TYPE ='발신' 
 			ORDER BY mm.MESSAGE_MANAGER_DATE DESC
 	</select>
 	
 	<!-- 관리자 연결테이블 메세지 삭제 -->
-	<delete id="manager_delete" parameterType="int">
+	<delete id="managerDelete" parameterType="int">
 		DELETE message_manager WHERE message_manager_no=#{message_manager_no}
 	</delete>
+	
+	<!-- 회원 연결테이블 메세지 삭제 -->
+	<delete id="memberDelete" parameterType="int">
+		DELETE message_member WHERE message_member_no=#{message_member_no}
+	</delete>
+	
+	<!-- 관리자 연결테이블 조회수 증가 -->
+	<update id="updateManagerRead" parameterType="int">
+		UPDATE message_manager 
+		SET message_manager_read = MESSAGE_MANAGER_READ +1 
+		WHERE MESSAGE_MANAGER_NO = #{message_manager_no}
+	</update>
+	
+	<!-- 회원 연결테이블 조회수 증가 -->
+	<update id="updateMemberRead" parameterType="int">
+		UPDATE message_member 
+		SET message_MEMBER_read = MESSAGE_MEMBER_READ+1 
+		WHERE MESSAGE_MEMBER_NO = #{message_member_no}
+	</update>
+	
+	<!-- 관리자 수신함 조회수 0인 애들 개수 -->
+	<select id="managerReadCount" parameterType="int" resultType="int">
+		SELECT count(*) FROM MESSAGE_MANAGER mm 
+			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
+			WHERE MESSAGE_MANAGER_TYPE = '수신' AND mm.ADMIN_NO = #{admin_no}
+			AND mm.MESSAGE_MANAGER_READ =0
+	</select>
+	
+	<!-- 회원 수신함 조회수 0인 애들 개수 -->
+	<select id="memberReadCount" parameterType="int" resultType="int">
+		SELECT count(*) FROM MESSAGE_member mm 
+			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
+			WHERE MESSAGE_MEMBER_TYPE = '수신' AND mm.MEMBER_NO = #{member_no}
+			AND mm.MESSAGE_MEMBER_READ =0
+	</select>
+	
+	<!-- 회원 수신함 -->
+	<select id="inboxMember" resultType="messageMemberDto" parameterType="int">
+		SELECT * FROM MESSAGE_MEMBER mm 
+			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
+			WHERE MESSAGE_MEMBER_TYPE = '수신' AND mm.MEMBER_NO = #{member_no}
+			ORDER BY mm.MESSAGE_MEMBER_READ ASC ,mm.MESSAGE_MEMBER_DATE DESC
+	</select>
 </mapper>

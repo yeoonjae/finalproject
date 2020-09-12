@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.BranchDto;
-import com.kh.finalproject.entity.BranchImgDto;
+import com.kh.finalproject.entity.MemberDto;
 
 public interface BranchDao {
 	//지점 등록 메소드(지점 번호 반환)
@@ -21,4 +21,6 @@ public interface BranchDao {
 	void edit(BranchDto branchDto);
 	//지점 삭제
 	void delete(int branch_no);
+	//지점별 회원 조회
+	List<MemberDto> getMemberList(int branch_no);
 }

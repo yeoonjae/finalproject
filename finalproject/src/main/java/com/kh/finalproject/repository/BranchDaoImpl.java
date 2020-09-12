@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.finalproject.VO.BranchImgVO;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.BranchImgDto;
+import com.kh.finalproject.entity.MemberDto;
 
 @Repository
 public class BranchDaoImpl implements BranchDao{
@@ -77,6 +77,11 @@ public class BranchDaoImpl implements BranchDao{
 	//지점 삭제 메소드
 	public void delete(int branch_no) {
 		sqlSession.delete("branch.delete", branch_no);
+	}
+
+	//지점별 회원 조회
+	public List<MemberDto> getMemberList(int branch_no) {
+		return sqlSession.selectList("branch.memberList", branch_no);
 	}
 
 }
