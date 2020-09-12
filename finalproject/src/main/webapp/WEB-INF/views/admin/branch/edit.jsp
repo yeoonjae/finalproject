@@ -55,13 +55,7 @@
 					<tr>
 						<th scope="row">지점 관리자</th>
 						<td>
-							<select class="form-control" id="exampleSelect1" name="admin_no">
-								<c:forEach var="admin" items="${admin}">
-									<option value="${admin.admin_no}">
-										${admin.admin_name}
-									</option>
-								</c:forEach>
-							</select>
+							<input class="form-control disabled" type="text" value="${branchDto.admin_name}" name="admin_no" readonly="readonly" required>
 						</td>
 					</tr>
 					<tr>

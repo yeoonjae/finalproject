@@ -81,7 +81,6 @@ public class AdminDaoImpl implements AdminDao {
 	}
 		
 	//관리자 로그인 시간 업데이트
-	@Override
 	public void updateLoginTime(int no) {
 		sqlSession.selectList("admin.updateLoginTime", no);
 	}

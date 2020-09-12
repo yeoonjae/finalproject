@@ -87,8 +87,6 @@ public class BranchController {
 	public String edit(@RequestParam int branch_no,Model model,RedirectAttributes attr) {
 		List<LocalDto> local = localDao.getList();
 		BranchDto branchDto = branchDao.get(branch_no);
-		List<AdminDto> list = adminDao.getList();
-		model.addAttribute("admin", list);
 		model.addAttribute("local", local);
 		model.addAttribute("branchDto", branchDto);
 		return "admin/branch/edit";

@@ -135,7 +135,7 @@ public class TestController {
 	@GetMapping("/message/member")
 	public List<MemberDto> memberBranchList(@RequestParam int admin_no){
 		int branch_no = sqlSession.selectOne("branch.getBranch", admin_no);
-		return sqlSession.selectList("member.getBranchList", 47);
+		return sqlSession.selectList("member.getBranchList", admin_no);
 	}
 	
 	//회원번호로 정보+지점정보까지 읽어오기
@@ -153,9 +153,7 @@ public class TestController {
 	//쪽지 조회수(회원)
 	@GetMapping("/message/memberUpdate")
 	public void updateReadMember(@RequestParam int message_member_no) {
-		System.out.println(message_member_no);
 		sqlSession.update("message.updateMemberRead", message_member_no);
-		System.out.println("되는건가");
 	}
 	
 	//쪽지 span
