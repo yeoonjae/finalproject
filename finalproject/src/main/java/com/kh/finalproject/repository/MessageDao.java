@@ -12,5 +12,7 @@ public interface MessageDao {
 	List<MessageManagerDto> outboxManager(int admin_no);
 	//메세지 발신함(지점관리자 로그인)
 	List<MessageMemberDto> outboxBranchManager(int admin_no);
+	//메세지 수신함(회원 로그인)
+	List<MessageMemberDto> inboxMember(int member_no);
 }
 

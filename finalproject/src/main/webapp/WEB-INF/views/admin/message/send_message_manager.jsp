@@ -274,12 +274,7 @@
 				method:"get"
 			})
 			.then(function(response){
-				console.log(response.data);
-				if(response.data==0){
-	    			$(".readCount").hide();
-	    		}else{
-					$(".readCount").text(response.data);
-	    		}
+				
 			})  
 	    	
 	    	$(".close-btn").click(function(){

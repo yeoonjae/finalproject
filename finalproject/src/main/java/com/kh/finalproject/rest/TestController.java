@@ -144,22 +144,34 @@ public class TestController {
 		return sqlSession.selectOne("member.get", member_no);
 	}
 	
-	//쪽지 조회수
+	//쪽지 조회수(지점장)
 	@GetMapping("/message/update")
-	public int updateRead(@RequestParam int message_manager_no) {
-		System.out.println("되니??");
+	public void updateRead(@RequestParam int message_manager_no) {
 		sqlSession.update("message.updateManagerRead", message_manager_no);
-		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
-		int admin_no = adminDto.getAdmin_no();
-		return sqlSession.selectOne("message.managerReadCount", admin_no);
+	}
+	
+	//쪽지 조회수(회원)
+	@GetMapping("/message/memberUpdate")
+	public void updateReadMember(@RequestParam int message_member_no) {
+		System.out.println(message_member_no);
+		sqlSession.update("message.updateMemberRead", message_member_no);
+		System.out.println("되는건가");
 	}
 	
 	//쪽지 span
 	@GetMapping("/message/count")
-	public int updateRead() {
+	public int count() {
 		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
 		int admin_no = adminDto.getAdmin_no();
 		int a = sqlSession.selectOne("message.managerReadCount", admin_no);
 		return a;
+	}
+	
+	//회원 안읽은 쪽지 개수
+	@GetMapping("/message/count_member")
+	public int countMember() {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+		return sqlSession.selectOne("message.memberReadCount", member_no);
 	}
 }

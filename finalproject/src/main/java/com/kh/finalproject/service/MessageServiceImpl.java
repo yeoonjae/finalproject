@@ -141,5 +141,11 @@ public class MessageServiceImpl implements MessageService{
 		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
 			sqlSession.delete("message.managerDelete", message_manager_no);
 	}
+
+	//수신함 메세지 삭제(회원)
+	public void deleteInboxMemeber(int message_member_no) {
+		sqlSession.delete("message.memberDelete", message_member_no);
+		
+	}
 	
 }

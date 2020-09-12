@@ -41,4 +41,10 @@ public class MessageDaoImpl implements MessageDao{
 		sqlSession.delete("message.managerDelete", message_manager_no);
 	}
 
+	//메세지 수신함(회원 로그인)
+	public List<MessageMemberDto> inboxMember(int member_no) {
+		List<MessageMemberDto> list = sqlSession.selectList("message.inboxMember", member_no);
+		return list;
+	}
+
 }

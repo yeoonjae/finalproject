@@ -24,7 +24,7 @@ import com.kh.finalproject.service.MessageService;
 
 @Controller
 @RequestMapping("/admin/message")
-public class MessageController {
+public class AdminMessageController {
 	
 	@Autowired
 	private MessageDao messageDao;
@@ -71,7 +71,7 @@ public class MessageController {
 	
 	//관리자 수신함 삭제
 	@PostMapping("/message_delete_inbox")
-	public String deleteInbox(@RequestParam int message_manager_no,RedirectAttributes attr ) {
+	public String deleteInbox(@RequestParam int message_manager_no,RedirectAttributes attr) {
 		messageService.deleteInbox(message_manager_no);
 		attr.addAttribute("where", "inbox");
 		return "redirect:send_message_manager";
