@@ -21,4 +21,5 @@ public interface BranchDao {
 	void edit(BranchDto branchDto);
 	//지점 삭제
 	void delete(int branch_no);
+	List<BranchDto> selectLocal(int local_no);
 }

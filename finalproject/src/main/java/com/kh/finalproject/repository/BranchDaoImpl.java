@@ -79,4 +79,10 @@ public class BranchDaoImpl implements BranchDao{
 		sqlSession.delete("branch.delete", branch_no);
 	}
 
+	@Override
+	public List<BranchDto> selectLocal(int local_no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("branch.localBranchList", local_no);
+	}
+
 }

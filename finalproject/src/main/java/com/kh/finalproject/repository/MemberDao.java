@@ -38,4 +38,6 @@ public interface MemberDao {
 
 	void changePw(int no, String member_pw);
 
+	Object overlap(String member_email);
+
 }

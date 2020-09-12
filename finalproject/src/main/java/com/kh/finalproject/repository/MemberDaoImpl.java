@@ -91,7 +91,7 @@ public class MemberDaoImpl implements MemberDao{
 	//아이디로 번호 받기
 	@Override
 	public int getNo(String member_email) {
-		return sqlSession.selectOne("member.getNo", member_email);
+		 return sqlSession.selectOne("member.getNo", member_email);
 	}
 	//로그인 시간 갱신
 	@Override
@@ -118,5 +118,11 @@ public class MemberDaoImpl implements MemberDao{
 		map.put("member_pw", member_pw);
 		sqlSession.update("member.changePw", map);
 
+	}
+	//중복 검사
+	@Override
+	public Object overlap(String member_email) {
+		return sqlSession.selectOne("member.overlap", member_email);
+		
 	}
 }

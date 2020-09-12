@@ -61,6 +61,9 @@
 				<div>
 					<a href="check?member_no=${memberDto.member_no}">회원 정보 수정</a>
 				</div>
+				<div>
+					<a href="check_delete?member_no=${memberDto.member_no}">회원 탈퇴</a>
+				</div>
 			</div>
 		</div>
 	</div>

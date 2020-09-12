@@ -18,6 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="join" parameterType="memberDto">
 		insert into member (
 			member_no,
+			branch_no,
 			member_name,
 			member_email,
 			member_pw,
@@ -28,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 		values(
 			#{member_no},
+			#{branch_no},
 			#{member_name},
 			#{member_email},
 			#{member_pw},
@@ -40,6 +42,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 이메일로 번호 받기  -->
 	<select id="getNo" parameterType="string" resultType="int">
 		select member_no from member where member_email=#{member_email}
+	</select>
+	<!-- 중복 확인 -->
+	<select id="overlap" parameterType="string" resultType="int">
+		select count(member_no) from member where member_email=#{member_email}
 	</select>
 	<!-- 번호로 회원 삭제  -->
 	<delete id="delete" parameterType="int">

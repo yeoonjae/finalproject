@@ -1,202 +1,237 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/member/template/home_header.jsp"></jsp:include>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <br>
 <br>
 <br>
 <br>
 <br>
 <style>
-        /* 입력창 관련 스타일 */
-        .form-input {
-            border: 1px solid black;
-        }
+.intext {
+	width: 100%;
+	padding-left: 0.5rem;
+	padding: 0.5rem;
+}
 
-        .form-input.correct {
-            border: 1px solid blue;
-        }
+.incorrect-message {
+	display: none;
+}
 
-        .form-input.incorrect {
-            border: 1px solid red;
-        }
+.correct-message {
+	display: none;
+}
+.unoverlap-message{
+	display: none;
+}
+.overlap-message{
+	display : none;
+}
+.email-input.unoverlap ~.unoverlap-message{
+	color: blue;
+	font-size: 16;
+	display: block;
+	font-size: 13px;
+	margin: 0.3rem;
+}
+.email-input.overlap ~.overlap-message{
+	color: red;
+	font-size: 16;
+	display: block;
+	font-size: 13px;
+	margin: 0.3rem;
+}
+.intext.correct ~.correct-message {
+	color: blue;
+	font-size: 16;
+	display: block;
+	font-size: 13px;
+	margin: 0.3rem;
+}
 
-        .correct-message {
-            color: blue;
-        }
+.intext.incorrect ~.incorrect-message {
+	color: red;
+	font-size: 16;
+	display: block;
+	font-size: 13px;
+	margin: 0.3rem;
+}
+.inemail.correct ~.correct-message {
+	color: blue;
+	font-size: 16;
+	display: block;
+	font-size: 13px;
+	margin: 0.3rem;
+}
 
-        .incorrect-message {
-            color: red;
-        }
-
-        /* 메시지 관련 스타일 */
-        .correct-message,
-        .incorrect-message {
-            display: none;
-        }
-
-        .form-input.correct~.correct-message {
-            display: block;
-        }
-
-        .form-input.incorrect~.incorrect-message {
-            display: block;
-        }
+.inemail.incorrect ~.incorrect-message {
+	color: red;
+	font-size: 16;
+	display: block;
+	font-size: 13px;
+	margin: 0.3rem;
+}
 </style>
-<script >
-   
-function pwCheck() {
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script>
+<script language="javascript">
+	function checkName() {
+		var regex = /[가-힣]{2,7}/g;
+		var nameTag = document.getElementById("name");
 
-    var regex = /[A-Za-z\d]{8,20}/g;
-    var pwTag = document.querySelector('input[name=member_pw]');
+		var isName = regex.test(nameTag.value);
+		nameTag.classList.remove("correct");
+		nameTag.classList.remove("incorrect");
 
-    var isCheckPw = regex.test(pwTag.value);
-
-
-    pwTag.classList.remove('correct');
-    pwTag.classList.remove('incorrect');
-
-    if (!isCheckPw) {
-        pwTag.classList.add('incorrect');
-        return false;
-    }
-    else{
-        return true;
-    }
-}
-    
-  function nameCheck() {
-    var regex = /[가-힣]{2,7}/g;
-	var nameTag = document.querySelector('input[name=member_name]');
-    
-	var isName = regex.test(nameTag.value);
-	
-	nameTag.classList.remove("incorrect");
-	
-    if (!isName) {
-        nameTag.classList.add('incorrect');
-        return false;
-    }
-    else {
-        return true;
-    }
-    
-}
-    
-function mailCheck() {
-   var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/gi;
-    var mailTag = document.querySelector('input[name=member_mail]');
-    
-    var isMail = regex.test(mailTag.value);
-    
-    mailTag.classList.remove("incorrect");
-    
-    if (!isMail) {
-    	mailTag.classList.add("incorrect");
-        return false;
-    }
-    else {
-        return true;
-    }
-    
-}
-
-    
-
-//폼 전송 여부를 판정하는 함수
-function checkForm() {
-    var nameIsValid = checkName();
-    var pwIsValid = checkPw();
-    var checkPwIsValid = checkCheckPw();
-    //아이디가 맞는 경우는 전송될테니까 추가적인 작업이 필요하지 않지만 틀린 경우는 처리를 해야한다.
-    var nameTag = document.getElementById("name");
-    var pwTag = document.getElementById("pw");
-    var checkPwTag = document.getElementById("checkPw"); 
-    //뭐가 붙어있을지 모르니 둘 다 삭제
-    nameTag.classList.remove("correct");
-    nameTag.classList.remove("incorrect");
-    pwTag.classList.remove("correct");
-    pwTag.classList.remove("incorrect");
-    checkPwTag.classList.remove("correct");
-    checkPwTag.classList.remove("incorrect");
-    if (nameIsValid == false) {
-        nameTag.classList.add("incorrect");
-    } else {
-        nameTag.classList.add("correct");
-    }
-    if (pwIsValid == false) {
-        pwTag.classList.add("incorrect");
-    } else{
-        pwTag.classList.add("correct");
-    }
-	if(checkPwIsValid==false){
-    checkPwTag.classList.add("incorrect");
-	}else{
-    checkPwTag.classList.add("correct");
-	}
-    if(!pwIsValid ||!nameIsValid || !checkPwIsValid){
-        return false;
-    }else{
-        return true;
-    }
-}
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script> 
-<script>
-	function checkOverLap(){
-		var email =document.querySelector(".email_input");
-		var span = document.querySelector(".email_input+.email_span");
-		var name= email.value;
-		console.log(name);
-		if(!name){
-			return;
+		if (!isName) {
+			nameTag.classList.add("incorrect");
+			return false;
+		} else {
+			nameTag.classList.add("correct");
+			return true;
 		}
-		axios({
-			url:"${pageContext.request.contextPath}/member_rest/overlap?member_email="+member_email,
-		method:"get"
-		})
-		.then(function(response){
-			console.log(response.data);
-			if(!response.data){
-				span.textContext = "사용 가능한 이메일입니다."
-			}else{
-				span.textContext = "이미 사용 중인 이메일입니다."
-			}
-		})
 	}
+
+	function checkEmail() {
+		var regex = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/gi;
+		var mailTag = document.getElementById("email");
+
+		var isMail = regex.test(mailTag.value);
+
+		mailTag.classList.remove("incorrect");
+		mailTag.classList.remove("correct");
+
+		if (!isMail) {
+			mailTag.classList.add("incorrect");
+			return false;
+		} else {
+			mailTag.classList.add("correct");
+			var input = document.querySelector(".email-input");
+			input.classList.remove("overlap");
+			input.classList.remove("unoverlap");
+			var member_email = input.value;
+			//axios를 이용하여 비동기 통신을 보낸다
+			//      		axios({옵션}).then(성공코드).catch(오류코드);
+			axios(
+					{
+						url : "${pageContext.request.contextPath}/member_rest/overlap?member_email="
+								+ member_email,
+						method : "get"
+					}).then(function(response){
+						console.log("리스폰트 데이터" +response.data);
+				if (!response.data) {//결과 없음 : 사용 가능한 이름
+					input.classList.add("unoverlap");
+				} else {//결과 있음 : 사용 불가능한 이름
+					input.classList.add("overlap");
+				}
+			});
+			return false;
+		}
+	}
+	function checkCheckEmail(){
+		var unoverlap = document.querySelector(".email-input.unoverlap");
+        var checkEmail = document.querySelector(".inemail.correct");
+        console.log("중복" + unoverlap);
+        console.log("체크"+checkEmail);
+        if(unoverlap!=null&&checkEmail!=null){
+        	return true;        	
+        }else{
+        	return false;
+        }
+	}
+	//isValid의 결과에 따라서 입력창에 correct / incorrect 클래스를 추가
+	//비밀번호를 검사하는 함수 : 반드시 true 또는 false를 반환해야 checkForm에서 사용이 가능하다
+	function checkPwd() {
+
+		var regex = /[0-9a-zA-Z]{8,20}/g;
+		var pwTag = document.getElementById("pw");
+		var isPw = regex.test(pwTag.value);
+		pwTag.classList.remove("correct");
+		pwTag.classList.remove("incorrect");
+		console.log(isPw);
+		if (!isPw) {
+			pwTag.classList.add("incorrect");
+			return false;
+		} else {
+			pwTag.classList.add("correct");
+			return true;
+		}
+	}
+	
+	function checkCheckPw() {
+		var pwTag = document.getElementById("pw");
+		var checkPwTag = document.getElementById("checkPw");
+		checkPwTag.classList.remove("correct");
+		checkPwTag.classList.remove("incorrect");
+		if (pwTag.value === checkPwTag.value) {
+			checkPwTag.classList.add("correct");
+		} else {
+			checkPwTag.classList.add("incorrect");
+		}
+		return pwTag.value === checkPwTag.value;
+	}
+	function checkForm1() {
+		console.log("이름" + checkName());
+		console.log("비밀번호" + checkPwd());
+		console.log("이메일 " + checkCheckEmail());
+		if (!checkName() || !checkCheckEmail() || !checkPwd()
+				|| !checkCheckPw()) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+</script>
+
+<script>
+	
 </script>
 <div id="content-wrapper">
-	<div class="container-fluid" >
+	<div class="container-fluid">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item">회원가입</li>
 		</ol>
 		<div class="container-form offset-sm-3 col-sm-6 offset-md-3 col-md-6">
-			<form action="${pageContext.request.contextPath}/member/account/join" method="post" onsubmit="return checkForm();">
+			<form action="${pageContext.request.contextPath}/member/account/join" method="post" onsubmit="return checkForm1();">
 				<div class="form-group">
-				<input type="hidden" name="member_no" value="${member_no+1}">
+					<input type="hidden" name="member_no" value="${member_no+1}">
 				</div>
 				<div class="form-group">
-				회원 이메일 : 
-				<input type="email" class="form-control email_input" name="member_email" onblur="checkOverlap();" maxlength="300">
-				<span class="email_span"></span>
+					회원 이메일 : 
+					<input type="email" class="form-control email-input inemail" name="member_email" id="email" onblur="checkEmail();" maxlength="300" placeholder="이메일 형식으로 입력하세요">
+					 <span class="correct-message" id="checkEmail">올바른 이메일 형식입니다</span> 
+					 <span class="incorrect-message">부적절한 이메일 형식입니다.</span> 
+					 <span class="overlap-message" >중복된 이메일이 있습니다.</span> 
+					 <span class="unoverlap-message"id="unoverlap">사용 가능한 이메일입니다.</span> 
 				</div>
 				<div class="form-group">
-				회원 이름:
-				<input type="text" class="form-control" id="name" name="member_name">
+					회원 이름: <input type="text" class="form-control intext" id="name" onblur="checkName();" name="member_name" placeholder="2~7자의 한글로 쓰세요"> 
+					<span class="correct-message">올바른 이름 형식입니다</span> 
+					<span class="incorrect-message">이름은 한글 2~7자로 구성하세요</span>
 				</div>
 				<div class="form-group">
-				회원 비밀번호 :
-				<input type="password" class="form-control" id="pw" name="member_pw">
+					회원 비밀번호 : <input type="password" class="form-control intext" id="pw" onblur="checkPwd();" name="member_pw" maxlength="16" placeholder="8~16자의 영문/숫자로 구성하세요"> 
+					<span class="correct-message">올바른 비밀번호 형식입니다</span> 
+					<span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로 8~16자 내외로 구성하세요</span>
 				</div>
 				<div class="form-group">
-				비밀번호 확인:
-				<input type="password" class="form-control" id="checkPw">
+					비밀번호 확인: <input type="password" class="form-control intext" id="checkPw" onblur="checkCheckPw();" maxlength="16"> 
+					<span class="correct-message">비밀번호가 일치합니다.</span>
+					<span class="incorrect-message">비밀번호가 불일치합니다.</span>
 				</div>
 				<div class="form-group">
-				<input type="submit" class="form-control" value="가입">
+					지점 선택 : 
+					<br>
+					<select name="branch_no">					
+					<c:forEach var="branchDto" items="${branchDto}">
+						<option class="form-control" value="${branchDto.branch_no}">${branchDto.branch_name}</option>
+					</c:forEach>
+					</select>
+				</div>
+				<div class="form-group">
+					<input type="submit" class="form-control" value="이메일 인증">
 				</div>
 			</form>
-		</div> 
+		</div>
 	</div>
 </div>
 <jsp:include page="/WEB-INF/views/member/template/footer.jsp"></jsp:include>

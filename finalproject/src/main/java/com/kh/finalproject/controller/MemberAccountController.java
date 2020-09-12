@@ -1,7 +1,6 @@
 package com.kh.finalproject.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.CertDto;
+import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.entity.MemberDto;
+import com.kh.finalproject.repository.BranchDao;
 import com.kh.finalproject.repository.CertDao;
+import com.kh.finalproject.repository.LocalDao;
 import com.kh.finalproject.repository.MemberDao;
 import com.kh.finalproject.service.CertService;
 import com.kh.finalproject.service.EmailService;
@@ -37,18 +40,38 @@ public class MemberAccountController {
 	private CertService certService;
 	@Autowired
 	private CertDao certDao;
+	@Autowired
+	private BranchDao branchDao;
+	@Autowired
+	private LocalDao localDao;
 	//회원 가입
 	@GetMapping("/join")
-	public String regist(Model model) {
+	public String join(Model model) {
 		int member_no = memberDao.getSeq();
 		model.addAttribute("member_no", member_no);
+		List<BranchDto> branchDto = branchDao.getList();
+		model.addAttribute("branchDto", branchDto);
+		List<LocalDto> localDto = localDao.getList();
+		model.addAttribute("localDto",localDto);
 		return "member/account/join";
 	}
 	@PostMapping("/join")
-	public String join(@ModelAttribute MemberDto memberDto) {
-		memberDao.join(memberDto);
-		
-		return "member/account/join_result";
+	public String join(@ModelAttribute MemberDto memberDto, HttpServletRequest request) {
+		String ip = request.getRemoteAddr();
+		String secret =certService.generateCertification(ip);
+		emailService.sendSimpleMessage(memberDto.getMember_email(), "공돌이 인증번호", "인증번호: " + secret);
+		return "member/account/cert_email";
+	}
+	//이메일 인증
+	@GetMapping("/cert_email")
+	public String certEmail(@ModelAttribute MemberDto memberDto, Model model){
+		model.addAttribute("memberDto", memberDto);
+		return "member/account/cert_email";
+	}
+	@PostMapping("/cert_email")
+	public String certEmail(@ModelAttribute MemberDto memberDto){	
+			memberDao.join(memberDto);	
+			return "member/account/join_result";
 	}
 	// 회원 정보 리스트
 	@GetMapping("/list")
@@ -89,7 +112,7 @@ public class MemberAccountController {
 		if (session.getAttribute("admininfo") != null) {
 			return "member/account/list";
 		} else {
-			return "member/user_index";
+			return "member/account/delete_result";
 		}
 	}
 	//로그인
@@ -129,6 +152,20 @@ public class MemberAccountController {
 		}
 		return "redirect:check?error=error";
 	}
+	//회원 탈퇴 확인 검사
+	@GetMapping("/check_delete")
+	public String check_delete() {
+		return "member/account/check_delete";
+	}
+	@PostMapping("/check_delete")
+	public String check_delete(@RequestParam String member_pw, HttpSession session, RedirectAttributes attr) {
+		MemberDto find = (MemberDto) session.getAttribute("memberinfo");		
+		if(memberService.check(member_pw, session)) {
+			attr.addAttribute("member_no", find.getMember_no());
+			return "redirect:delete";
+		}
+		return "redirect:check_delete?error=error";
+	}
 	//이메일 찾기
 	@GetMapping("/find_email")
 	public String findId() {
@@ -165,7 +202,6 @@ public class MemberAccountController {
 	public String check(@RequestParam String secret, String member_email,
 			HttpServletRequest request, RedirectAttributes attr
 			) {
-		
 		String ip = request.getRemoteAddr();
 		boolean result = certDao.validate(CertDto.builder().who(ip).secret(secret).build());
 		if(result) {

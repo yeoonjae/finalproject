@@ -28,6 +28,11 @@
 				<div class="form-group">
 				<input type="submit" value="인증하기" required>
 				</div>
+				<c:if test="${not empty param.error}">
+            	<div class="form-label-group">
+            		<font color="FF0000">입력하신 인증번호가 맞지  않거나 인증시간이 초과되었습니다.</font>
+            	</div>
+            </c:if>
 			</form>
 		</div>
 	</div>
