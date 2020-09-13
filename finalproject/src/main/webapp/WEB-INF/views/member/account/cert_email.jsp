@@ -35,8 +35,7 @@
 							+ secret,
 					method : "get"
 				}).then(function(response){
-					console.log("리스폰트 데이터" +response.data);
-			if (response.data) {//결과 없음 : 사용 가능한 이름
+			if (!response.data) {//결과 없음 : 사용 가능한 이름
 				input.classList.add("incorrect");
 			}
 		});
@@ -45,7 +44,6 @@
 	function checkCert(){
 		
         var checkSecret = document.querySelector(".insecret.incorrect");
-        console.log("체크"+checkSecret);
         if(checkSecret!=null){
         	return false;
         }else{

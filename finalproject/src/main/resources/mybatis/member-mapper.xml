@@ -91,31 +91,42 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY b.branch_no DESC
 	</select>
 
-	<!-- 지점별 회원 검색(이름검색) -->
-	<select id="search" parameterType="map" resultType="memberDto">
-		SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME FROM MEMBER m
-			LEFT OUTER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO
-			LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
-			WHERE instr(m.member_name, #{member_name}) > 0
-		<if test="branch_no != 0">
-			AND m.branch_no = #{branch_no}
-		</if>
-		ORDER BY b.branch_no DESC
+   <!-- 지점별 회원 검색(이름검색) -->
+   <select id="search" parameterType="map" resultType="memberDto">
+      SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME FROM MEMBER m
+         LEFT OUTER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO
+         LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+         WHERE instr(m.member_name, #{member_name}) > 0
+      <if test="branch_no != 0">
+         AND m.branch_no = #{branch_no}
+      </if>
+      ORDER BY b.branch_no DESC
+   </select>
+   
+   <!-- 회원 단일 조회 -->
+   <select id="get" parameterType="int" resultType="memberDto">
+      SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME FROM MEMBER m
+         LEFT OUTER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO
+         LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+         WHERE member_no = #{member_no}
+   </select>
+   
+   <!-- 회원 마일리지 수정 코드 -->
+   <update id="plusPoint" parameterType="pointHisDto">
+      UPDATE member SET member_point = member_point + #{point_his_score} WHERE member_no = #{member_no}
+   </update>
+   
+   <update id="minusPoint" parameterType="pointHisDto">
+      UPDATE member SET member_point = member_point - #{point_his_score} WHERE member_no = #{member_no}
+   </update>
+	
+	<!-- 지점번호로 해당 지점 회원들 검색 -->
+	<select id="getBranchList" parameterType="int" resultType="memberDto">
+		SELECT * FROM MEMBER WHERE branch_no=#{branch_no}
 	</select>
 	
-	<!-- 회원 단일 조회 -->
-	<select id="get" parameterType="int" resultType="memberDto">
-		SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME FROM MEMBER m
-			LEFT OUTER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO
-			LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
-			WHERE member_no = #{member_no}
+	<!-- 회원이름으로 회원 Dto뽑기 -->
+	<select id="getNoName" parameterType="String" resultType="int">
+		SELECT * FROM member WHERE member_name=#{member_name}
 	</select>
-	<!-- 회원 마일리지 수정 코드 -->
-	<update id="plusPoint" parameterType="pointHisDto">
-		UPDATE member SET member_point = member_point + #{point_his_score} WHERE member_no = #{member_no}
-	</update>
-	
-	<update id="minusPoint" parameterType="pointHisDto">
-		UPDATE member SET member_point = member_point - #{point_his_score} WHERE member_no = #{member_no}
-	</update>
 </mapper>
