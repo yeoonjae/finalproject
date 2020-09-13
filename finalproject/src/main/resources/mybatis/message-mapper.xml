@@ -115,4 +115,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHERE MESSAGE_MEMBER_TYPE = '수신' AND mm.MEMBER_NO = #{member_no}
 			ORDER BY mm.MESSAGE_MEMBER_READ ASC ,mm.MESSAGE_MEMBER_DATE DESC
 	</select>
+	
+	<!-- 연결 테이블에 없는 메세지 자동 삭제 -->
+	<delete id="messageAutoDelete">
+		DELETE FROM message 
+			WHERE MESSAGE_NO IN (SELECT a.MESSAGE_NO FROM message a 
+			LEFT OUTER JOIN MESSAGE_MANAGER b ON a.MESSAGE_NO =b.MESSAGE_NO 
+			LEFT OUTER JOIN MESSAGE_MEMBER c ON a.MESSAGE_NO =c.MESSAGE_NO 
+			WHERE b.MESSAGE_MANAGER_NO IS NULL AND c.MEMBER_NO IS null)
+	</delete>
 </mapper>
