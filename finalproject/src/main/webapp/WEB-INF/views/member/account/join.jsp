@@ -2,6 +2,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/member/template/home_header.jsp"></jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+
 <br>
 <br>
 <br>
@@ -72,8 +76,7 @@
 	margin: 0.3rem;
 }
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script>
-<script language="javascript">
+<script>
 	function checkName() {
 		var regex = /[가-힣]{2,7}/g;
 		var nameTag = document.getElementById("name");
@@ -169,6 +172,114 @@
 		}
 		return pwTag.value === checkPwTag.value;
 	}
+	$(function(){
+		
+		var local = $(".local-list");
+		var branch = $(".branch-list");
+		local.hide();
+		branch.hide();
+	    var modal = $(".modal-main");
+	    
+	    $(".receive").click(function(){
+			$("#send-modal").modal('show');
+	    })
+	    
+	    
+	    $(".who").change(function(){
+	    	 var local = $(".local-list");
+	    	 var branch = $(".branch-list");
+	    	 var select = $(this).val();
+	    	if(select==3){//지점장 선택을 했을 경우
+
+	            	
+            		//지점 비동기로 불러와서 목록 출력
+	            	local.on("change",(function(){
+	            		var local_no = $(".local-list").val();
+
+	            		axios({
+	            			url:"${pageContext.request.contextPath}/test/message/branchList?local_no="+local_no,
+	            			method : "get"
+	            		})
+	            		.then(function(response){
+	            			$(".branch-option").remove();
+	            			$.each(response.data,function(i){
+	            				$("<option>").attr("value",response.data[i].admin_no).attr("class","branch-option").text(response.data[i].branch_name).appendTo(branch);
+	            			})
+	            			branch.show();
+	            		})
+	            		}))
+	    	 
+	    	
+	    		
+	    	}
+	    	
+	    	
+	    	//대상을 선택하는 구문
+	    	//1. 기존에 선택된 사람들을 삭제
+	    	//2. 새로운 대상을 추가
+	    	$("#save").click(function(){
+		    	$("input").remove("input[name=receiver_name]");
+		    	$('.name').each(function() {
+		    		var all = "전체 회원";
+	    		    var receiver = $("#receiver");//받는사람 input칸
+	    		    var sum = ($(".name").length)-1;
+	    		    if($(".name").length > 1){//tr안에 있는 td의 클래스 이름이 name이다
+	    		    	console.log($(this).text());
+		    		    receiver.attr("value",$(this).text()+"외"+sum+"명");
+		    		    $("<input>").attr("type","hidden").attr("value",$(this).parents("tr").children(".no").text()).attr("name","receiver_name").insertAfter(receiver);
+		    		    
+	    		    }else if($(".name").length = 1){
+	    		    	if($(".name").text() == "전체 회원" || $(".name").text() == "전체 지점장"){
+	    		    		receiver.attr("value",$(this).text());
+		    		    	$("<input>").attr("type","hidden").attr("value",$(this).text()).attr("name","receiver_name").insertAfter(receiver);
+	    		    	}else{
+		    		    	receiver.attr("value",$(this).text());
+		    		    	$("<input>").attr("type","hidden").attr("value",$(this).parents("tr").children(".no").text()).attr("name","receiver_name").insertAfter(receiver);
+	    		    	}
+	    		    }else if($(".name").length < 1){
+	    		    	$("#receiver").attr("value","");
+	    		    }
+	    		 });
+	    	});
+	     })
+     	    		    	
+	    	//모달에 쪽지내용 넣기
+	    	title.text(titleTd);
+	    	content.text(inputContent);
+	    	date.text(dateTd);
+	    	del.val(deleteInput);
+	    	
+	    	$(".close-btn").click(function(){
+	 		   location.reload();
+	 	   })
+	    });
+	    
+	    $(".inbox-tr").click(function(){
+	    	$("#inbox-modal").modal('show');
+	    	
+	    	
+	    	
+	    	content.text(inputContent);
+
+	    	
+	    	axios({
+				url:"${pageContext.request.contextPath}/test/message/update?message_manager_no="+deleteInput,
+				method:"get"
+			})
+			.then(function(response){
+				
+			})  
+	    	
+	    	$(".close-btn").click(function(){
+	 		   location.reload();
+	 	   })
+	    	
+	    	var admin_no = $(".admin_no").val();
+	    	
+	    });
+	    
+	});
+	    
 	function checkForm1() {
 		console.log("이름" + checkName());
 		console.log("비밀번호" + checkPwd());
@@ -180,9 +291,7 @@
 			return true;
 		}
 	}
-</script>
 
-<script>
 	
 </script>
 <div id="content-wrapper">
@@ -228,7 +337,7 @@
 					</select>
 				</div>
 				<div class="form-group">
-					<input type="submit" class="form-control" value="이메일 인증">
+					<input type="submit" class="form-control"  value="이메일 인증">
 				</div>
 			</form>
 		</div>
