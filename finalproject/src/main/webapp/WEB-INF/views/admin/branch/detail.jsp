@@ -132,35 +132,31 @@
 							</c:forEach>
 						</td>
 					</tr>
-					<tr>
-						<td scope="row">
-<!-- 						이미지 슬라이더 영역 -->
-<!-- 					    <div class="swiper-container"> -->
+<!-- 					<tr> -->
+<!-- 						<td scope="row"> -->
+<!-- 						 	<div class="swiper-container"> -->
 <!-- 					        필수 영역 -->
 <!-- 					        <div class="swiper-wrapper"> -->
 <!-- 					            배치되는 이미지 또는 화면 -->
 <!-- 					            <div class="swiper-slide"> -->
-<!-- 					                <img src = "https://placeimg.com/120/120/animal"> -->
-<!-- 					                <img src = "https://placeimg.com/120/120/people"> -->
-<!-- 					                <img src = "https://placeimg.com/120/120/tech"> -->
+<!-- 					                <img src = "https://placeimg.com/600/300/animal"> -->
 <!-- 					            </div> -->
 <!-- 					            <div class="swiper-slide"> -->
+<!-- 					                <img src = "https://placeimg.com/600/300/people"> -->
 <!-- 					            </div> -->
 <!-- 					            <div class="swiper-slide"> -->
+<!-- 					                <img src = "https://placeimg.com/600/300/tech"> -->
 <!-- 					            </div> -->
 <!-- 					        </div> -->
 <!-- 					        페이지 위치 표시 영역(선택) -->
 <!-- 					        <div class="swiper-pagination"></div> -->
-					
+					  
 <!-- 					        이전/다음 버튼 (선택) -->
 <!-- 					        <div class="swiper-button-prev"></div> -->
 <!-- 					        <div class="swiper-button-next"></div> -->
-					
-<!-- 					        스크롤바(선택) -->
-<!-- 					        <div class="swiper-scrollbar"></div> -->
-<!-- 					    </div> -->
-						</td>
-					</tr>
+<!-- 					      </div> -->
+<!-- 						</td> -->
+<!-- 					</tr> -->
 					<tr>
 						<th scope="row" colspan="2">배치도</th>
 					</tr>

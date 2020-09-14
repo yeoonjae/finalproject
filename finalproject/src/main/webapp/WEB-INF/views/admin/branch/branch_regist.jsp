@@ -96,7 +96,7 @@
 								placeholder="숫자만 적어주세요" required>
 						</div>
 						<div class="form-group">
-							<label for="exampleInputFile">File input</label> 
+							<label for="exampleInputFile">사진 등록</label> 
 							<input type="file" class="form-control-file" name="file" id="exampleInputFile" multiple accept=".jpg,.png,.gif">
 						</div>
 					</fieldset>

@@ -70,8 +70,26 @@ public class BranchDaoImpl implements BranchDao{
 	}
 
 	//지점 수정
-	public void edit(BranchDto branchDto) {
+	public void edit(BranchDto branchDto,List<MultipartFile> file) throws IllegalStateException, IOException {
 		sqlSession.update("branch.edit", branchDto);
+		//사진등록
+		if(file.size() > 0 && !file.get(0).isEmpty()) {
+			for(MultipartFile f : file) {
+				//DB에 저장
+				int img_no = sqlSession.selectOne("branchImg.getSeq");
+				BranchImgDto branchImgDto = new BranchImgDto();
+				branchImgDto.setBranch_img_no(img_no);
+				branchImgDto.setBranch_img_name(Integer.toString(img_no));
+				branchImgDto.setBranch_img_size(f.getSize());
+				branchImgDto.setBranch_img_type(f.getContentType());
+				branchImgDto.setBranch_no(branchDto.getBranch_no());
+				sqlSession.insert("branchImg.regist", branchImgDto);
+				
+				//하드디스크에 저장
+				File target = new File("D:/upload",Integer.toString(img_no));
+				f.transferTo(target);
+			}
+		}
 	}
 
 	//지점 삭제 메소드

@@ -2,10 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
-<div id="content-wrapper">
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fabric@3.6.3/dist/fabric.js"></script>
-
 	<style>
 		.table{
 			text-align: center;
@@ -20,6 +16,30 @@
         }
 
 	</style>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fabric@3.6.3/dist/fabric.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+	<script>
+		$(function(){
+			$(".delete-img").click(function(){
+				var branchImgNo = $(this).prev().val();
+				if (confirm('해당 사진을 삭제하시겠습니까?')) {
+					location.href = "${pageContext.request.contextPath}/test/branch/deleteImg?branch_img_no="+ branchImgNo;
+					location.reload();
+				} else {
+					this.preventDefault();
+				}
+// 				axios({
+// 					url:"${pageContext.request.contextPath}/test/branch/deleteImg?branch_img_no="+ branchImgNo,
+// 					method : "get"
+// 				}).then(function(response){
+// 					console.log("삭제완료");
+// 				})
+			});
+		});
+	</script>
+<div id="content-wrapper">
 	<div class="container-fluid">
 			<!-- Breadcrumbs-->
 			<ol class="breadcrumb">
@@ -27,7 +47,7 @@
 				<li class="breadcrumb-item active">상세보기</li>
 			</ol>
 			<div class="table-wrapper container-form offset-sm-3">
-			<form action="edit" method="post" id="form">
+			<form action="edit" method="post" id="form" enctype="multipart/form-data">
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -55,7 +75,8 @@
 					<tr>
 						<th scope="row">지점 관리자</th>
 						<td>
-							<input class="form-control disabled" type="text" value="${branchDto.admin_name}" name="admin_no" readonly="readonly" required>
+							<input class="form-control disabled" type="text" value="${branchDto.admin_name}" readonly="readonly" required>
+							<input type="hidden" name="admin_no" value="${branchDto.admin_no}">
 						</td>
 					</tr>
 					<tr>
@@ -73,6 +94,31 @@
 					<tr>
 						<th scope="row">사물함 수</th>
 						<td><input class="form-control" type="text" name="branch_locker_cnt" value="${branchDto.branch_locker_cnt}"></td>
+					</tr>
+					<tr>
+						<th colspan="2">사진</th>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align: left;">
+						<c:choose>
+							<c:when test="${empty branchImg}">
+								<h6>해당 지점에 사진이 없습니다. 등록해주세요</h6>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="branchImg" items="${branchImg}">
+										${branchImg.branch_img_name}(${branchImg.branch_img_size})
+										<input type="hidden" class="branchImgNo" value="${branchImg.branch_img_no}">
+										<button type="button" class="btn btn-danger btn-sm delete-img">삭제</button><br>
+							</c:forEach>
+							</c:otherwise>
+						</c:choose>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<label for="exampleInputFile">사진 등록</label> 
+							<input type="file" class="form-control-file" name="file" id="exampleInputFile" multiple accept=".jpg,.png,.gif">
+						</td>
 					</tr>
 					<tr>
 						<th scope="row" colspan="2">배치도</th>

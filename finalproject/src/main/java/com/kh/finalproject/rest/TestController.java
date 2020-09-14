@@ -1,5 +1,7 @@
 package com.kh.finalproject.rest;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -180,10 +182,11 @@ public class TestController {
 		return sqlSession.selectOne("message.memberReadCount", member_no);
 	}
 	
-	//지점 이미지 다운로드
-	@GetMapping("/imgdownload/{img_no}")
-	public ResponseEntity<ByteArrayResource> getImg(@PathVariable int img_no) throws Exception {
-		ResponseEntity<ByteArrayResource> entity = branchService.getImg(img_no);
-		return entity;
+	
+	//지점이미지 삭제
+	@GetMapping("/branch/deleteImg")
+	public void deleteImg(@RequestParam int branch_img_no) {
+		sqlSession.delete("branchImg.delete", branch_img_no);
+		System.out.println("Test Controller 삭제완료");
 	}
 }

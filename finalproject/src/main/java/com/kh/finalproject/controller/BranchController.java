@@ -116,6 +116,8 @@ public class BranchController {
 	@GetMapping("/edit")
 	public String edit(@RequestParam int branch_no,Model model,RedirectAttributes attr) {
 		List<LocalDto> local = localDao.getList();
+		List<BranchImgDto> list = branchService.getBranchImg(branch_no);
+		model.addAttribute("branchImg", list);
 		BranchDto branchDto = branchDao.get(branch_no);
 		model.addAttribute("local", local);
 		model.addAttribute("branchDto", branchDto);
@@ -124,8 +126,8 @@ public class BranchController {
 	
 	//지점 수정
 	@PostMapping("/edit")
-	public String edit(RedirectAttributes attr,@ModelAttribute BranchDto branchDto) {
-		branchDao.edit(branchDto);
+	public String edit(RedirectAttributes attr,@ModelAttribute BranchDto branchDto,@RequestParam List<MultipartFile> file) throws IllegalStateException, IOException {
+		branchDao.edit(branchDto, file);
 		attr.addAttribute("branch_no", branchDto.getBranch_no());
 		return "redirect:detail";
 	}

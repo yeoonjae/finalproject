@@ -19,7 +19,7 @@ public interface BranchDao {
 	//지점 단일조회
 	BranchDto get(int branch_no);
 	//지점 수정
-	void edit(BranchDto branchDto);
+	void edit(BranchDto branchDto,List<MultipartFile> file) throws IllegalStateException, IOException;
 	//지점 삭제
 	void delete(int branch_no);
 	//지점별 회원 조회
