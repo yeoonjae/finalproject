@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.BranchDto;
+import com.kh.finalproject.entity.BranchImgDto;
 import com.kh.finalproject.entity.MemberDto;
 
 public interface BranchDao {

@@ -8,7 +8,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +23,7 @@ import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PointDto;
 import com.kh.finalproject.entity.PointHisDto;
+import com.kh.finalproject.service.BranchService;
 import com.kh.finalproject.service.MemberService;
 
 @RestController
@@ -34,6 +38,9 @@ public class TestController {
 	
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private BranchService branchService;
 	
 	// 마일리지 유형 중복검사
 	@GetMapping("/point/regist")
@@ -171,5 +178,12 @@ public class TestController {
 		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
 		int member_no = memberDto.getMember_no();
 		return sqlSession.selectOne("message.memberReadCount", member_no);
+	}
+	
+	//지점 이미지 다운로드
+	@GetMapping("/imgdownload/{img_no}")
+	public ResponseEntity<ByteArrayResource> getImg(@PathVariable int img_no) throws Exception {
+		ResponseEntity<ByteArrayResource> entity = branchService.getImg(img_no);
+		return entity;
 	}
 }

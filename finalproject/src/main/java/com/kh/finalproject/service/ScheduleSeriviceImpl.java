@@ -14,12 +14,10 @@ public class ScheduleSeriviceImpl implements ScheduleService{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	
+	//매일 자정마다 연결테이블에 없는 메세지들 삭제
 	@Scheduled(cron = "0 0 0 * * *")//매일 자정마다
 	public void messageAutoDelete() {
-		log.info("실행실행실행");
 		sqlSession.delete("message.messageAutoDelete");
-		log.info("삭제완료");
 	}
 
 }

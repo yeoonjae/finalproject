@@ -2,10 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
-<div id="content-wrapper">
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fabric@3.6.3/dist/fabric.js"></script>
-
 	<style>
 		.table{
 			text-align: center;
@@ -18,8 +14,74 @@
    		#c{
             background-color: grey;
         }
+        .swiper-container {
+			width: 100%;
+			max-height: 300px;
+		}
+		.swiper-container .swiper-slide>.game-wrap {
+			float: left;
+			width: 18.1%;
+			padding: 10px;
+			margin-top: 20px;
+		}
+		.swiper-container .swiper-slide, .swiper-container .swiper-slide .game_img
+			{
+			width: 180;
+			height: 130;
+		}
+		.swiper-container .swiper-slide {
+			margin-bottom: 10px;
+		}
+		.swiper-container .swiper-slide .game_name {
+			text-align: center;
+			font-size: 15px;
+		}
 
 	</style>
+<div id="content-wrapper">
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fabric@3.6.3/dist/fabric.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/swiper/js/swiper.min.js"></script>
+	<script>
+		// 창의 로딩이 완료되었을 때 실행할 코드를 예약
+		window.onload = function() {
+			//swiper 관련 코드를 이곳에 작성
+			// var mySwiper = new swiper('선택자', 옵션)
+			var mySwiper = new Swiper('.swiper-container', {
+				// Optional parameters
+				// swiper에 적용할 옵션들을 작성
+				direction : 'horizontal', // 표시방식(수직 : vartical / 수평 : horizontal)
+				loop : true, // 순환모드 여부(마지막과 처음이 이어지는 것)
+				// 자동재생 옵션그룹
+				autoplay : {
+					delay : 3000, // 자동재생 시간(1000 = 1초)
+				},
+				// 페이지 네비게이터 옵션그룹
+				pagination : {
+					el : '.swiper-pagination', // 적용대상의 선택자
+					type : 'bullets', // 네비게이터 모양(bullets, fraction, progressbar)
+				},
+				// 이전/다음 이동버튼 설정그룹
+				navigation : {
+					nextEl : '.swiper-button-next',
+					prevEl : '.swiper-button-prev',
+				},
+				// 스크롤바 옵션
+				//scrollbar: {
+				//    el: '.swiper-scrollbar',
+				//},
+				// 커서 모양을 손모양으로 변경
+				grabCursor : true,
+				// 슬라이드 전환효과
+				// effect: 'coverflow',
+				// effect: 'cube',
+				// effect: 'fade'
+				// effect: 'flip',
+				effect : 'slide', // 기본값
+			});
+		};	
+	</script>
+
 	<div class="container-fluid">
 			<!-- Breadcrumbs-->
 			<ol class="breadcrumb">
@@ -27,6 +89,7 @@
 				<li class="breadcrumb-item active">상세보기</li>
 			</ol>
 			<div class="table-wrapper container-form offset-sm-3">
+			<h2>${list}</h2>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -61,6 +124,42 @@
 					<tr>
 						<th scope="row">사물함 수</th>
 						<td>${branchDto.branch_locker_cnt} 개</td>
+					</tr>
+					<tr>
+						<td scope="row" colspan="2">
+							<c:forEach var="img" items="${branchImg}">
+								<img src="${pageContext.request.contextPath}/admin/branch/imgdownload/${img.branch_img_no}" style="height: 100px; width: 140px;">
+							</c:forEach>
+						</td>
+					</tr>
+					<tr>
+						<td scope="row">
+<!-- 						이미지 슬라이더 영역 -->
+<!-- 					    <div class="swiper-container"> -->
+<!-- 					        필수 영역 -->
+<!-- 					        <div class="swiper-wrapper"> -->
+<!-- 					            배치되는 이미지 또는 화면 -->
+<!-- 					            <div class="swiper-slide"> -->
+<!-- 					                <img src = "https://placeimg.com/120/120/animal"> -->
+<!-- 					                <img src = "https://placeimg.com/120/120/people"> -->
+<!-- 					                <img src = "https://placeimg.com/120/120/tech"> -->
+<!-- 					            </div> -->
+<!-- 					            <div class="swiper-slide"> -->
+<!-- 					            </div> -->
+<!-- 					            <div class="swiper-slide"> -->
+<!-- 					            </div> -->
+<!-- 					        </div> -->
+<!-- 					        페이지 위치 표시 영역(선택) -->
+<!-- 					        <div class="swiper-pagination"></div> -->
+					
+<!-- 					        이전/다음 버튼 (선택) -->
+<!-- 					        <div class="swiper-button-prev"></div> -->
+<!-- 					        <div class="swiper-button-next"></div> -->
+					
+<!-- 					        스크롤바(선택) -->
+<!-- 					        <div class="swiper-scrollbar"></div> -->
+<!-- 					    </div> -->
+						</td>
 					</tr>
 					<tr>
 						<th scope="row" colspan="2">배치도</th>
