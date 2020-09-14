@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/member/seat")
+@RequestMapping("/member")
 public class SeatController {
 	
 	@RequestMapping("/qrCheck")

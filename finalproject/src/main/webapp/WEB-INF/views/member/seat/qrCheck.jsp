@@ -27,6 +27,8 @@
 		//퇴실 버튼 클릭 시 
 		$('#out').click(function() {		
 			document.getElementById("qrcode").innerText=""; 		
+			
+			// 큐알코드 생성
 			var qrcode = new QRCode(document.getElementById("qrcode"), {
 				text : "${sessionScope.memberinfo.member_no}",
 				width : 200, //가로
