@@ -2,7 +2,9 @@ package com.kh.finalproject.controller;
 
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,7 +123,8 @@ public class MemberAccountController {
 		return "member/account/login";
 	}
 	@PostMapping("/login")
-	public String login(@RequestParam String member_email, @RequestParam String member_pw, HttpSession session) {
+	public String login(@RequestParam String member_email, @RequestParam String member_pw,
+			HttpSession session) {
 		if(memberDao.login(member_email,member_pw)) {
 			int member_no = memberDao.getNo(member_email);
 			memberDao.updateLoginTime(member_no);

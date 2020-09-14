@@ -172,113 +172,6 @@
 		}
 		return pwTag.value === checkPwTag.value;
 	}
-	$(function(){
-		
-		var local = $(".local-list");
-		var branch = $(".branch-list");
-		local.hide();
-		branch.hide();
-	    var modal = $(".modal-main");
-	    
-	    $(".receive").click(function(){
-			$("#send-modal").modal('show');
-	    })
-	    
-	    
-	    $(".who").change(function(){
-	    	 var local = $(".local-list");
-	    	 var branch = $(".branch-list");
-	    	 var select = $(this).val();
-	    	if(select==3){//지점장 선택을 했을 경우
-
-	            	
-            		//지점 비동기로 불러와서 목록 출력
-	            	local.on("change",(function(){
-	            		var local_no = $(".local-list").val();
-
-	            		axios({
-	            			url:"${pageContext.request.contextPath}/test/message/branchList?local_no="+local_no,
-	            			method : "get"
-	            		})
-	            		.then(function(response){
-	            			$(".branch-option").remove();
-	            			$.each(response.data,function(i){
-	            				$("<option>").attr("value",response.data[i].admin_no).attr("class","branch-option").text(response.data[i].branch_name).appendTo(branch);
-	            			})
-	            			branch.show();
-	            		})
-	            		}))
-	    	 
-	    	
-	    		
-	    	}
-	    	
-	    	
-	    	//대상을 선택하는 구문
-	    	//1. 기존에 선택된 사람들을 삭제
-	    	//2. 새로운 대상을 추가
-	    	$("#save").click(function(){
-		    	$("input").remove("input[name=receiver_name]");
-		    	$('.name').each(function() {
-		    		var all = "전체 회원";
-	    		    var receiver = $("#receiver");//받는사람 input칸
-	    		    var sum = ($(".name").length)-1;
-	    		    if($(".name").length > 1){//tr안에 있는 td의 클래스 이름이 name이다
-	    		    	console.log($(this).text());
-		    		    receiver.attr("value",$(this).text()+"외"+sum+"명");
-		    		    $("<input>").attr("type","hidden").attr("value",$(this).parents("tr").children(".no").text()).attr("name","receiver_name").insertAfter(receiver);
-		    		    
-	    		    }else if($(".name").length = 1){
-	    		    	if($(".name").text() == "전체 회원" || $(".name").text() == "전체 지점장"){
-	    		    		receiver.attr("value",$(this).text());
-		    		    	$("<input>").attr("type","hidden").attr("value",$(this).text()).attr("name","receiver_name").insertAfter(receiver);
-	    		    	}else{
-		    		    	receiver.attr("value",$(this).text());
-		    		    	$("<input>").attr("type","hidden").attr("value",$(this).parents("tr").children(".no").text()).attr("name","receiver_name").insertAfter(receiver);
-	    		    	}
-	    		    }else if($(".name").length < 1){
-	    		    	$("#receiver").attr("value","");
-	    		    }
-	    		 });
-	    	});
-	     })
-     	    		    	
-	    	//모달에 쪽지내용 넣기
-	    	title.text(titleTd);
-	    	content.text(inputContent);
-	    	date.text(dateTd);
-	    	del.val(deleteInput);
-	    	
-	    	$(".close-btn").click(function(){
-	 		   location.reload();
-	 	   })
-	    });
-	    
-	    $(".inbox-tr").click(function(){
-	    	$("#inbox-modal").modal('show');
-	    	
-	    	
-	    	
-	    	content.text(inputContent);
-
-	    	
-	    	axios({
-				url:"${pageContext.request.contextPath}/test/message/update?message_manager_no="+deleteInput,
-				method:"get"
-			})
-			.then(function(response){
-				
-			})  
-	    	
-	    	$(".close-btn").click(function(){
-	 		   location.reload();
-	 	   })
-	    	
-	    	var admin_no = $(".admin_no").val();
-	    	
-	    });
-	    
-	});
 	    
 	function checkForm1() {
 		console.log("이름" + checkName());
@@ -305,34 +198,23 @@
 					<input type="hidden" name="member_no" value="${member_no+1}">
 				</div>
 				<div class="form-group">
-					회원 이메일 : 
-					<input type="email" class="form-control email-input inemail" name="member_email" id="email" onblur="checkEmail();" maxlength="300" placeholder="이메일 형식으로 입력하세요">
-					 <span class="correct-message" id="checkEmail">올바른 이메일 형식입니다</span> 
-					 <span class="incorrect-message">부적절한 이메일 형식입니다.</span> 
-					 <span class="overlap-message" >중복된 이메일이 있습니다.</span> 
-					 <span class="unoverlap-message"id="unoverlap">사용 가능한 이메일입니다.</span> 
+					회원 이메일 : <input type="email" class="form-control email-input inemail" name="member_email" id="email" onblur="checkEmail();" maxlength="300" placeholder="이메일 형식으로 입력하세요"> <span class="correct-message" id="checkEmail">올바른 이메일 형식입니다</span> <span class="incorrect-message">부적절한 이메일 형식입니다.</span> <span class="overlap-message">중복된 이메일이 있습니다.</span> <span class="unoverlap-message" id="unoverlap">사용 가능한 이메일입니다.</span>
 				</div>
 				<div class="form-group">
-					회원 이름: <input type="text" class="form-control intext" id="name" onblur="checkName();" name="member_name" placeholder="2~7자의 한글로 쓰세요"> 
-					<span class="correct-message">올바른 이름 형식입니다</span> 
-					<span class="incorrect-message">이름은 한글 2~7자로 구성하세요</span>
+					회원 이름: <input type="text" class="form-control intext" id="name" onblur="checkName();" name="member_name" placeholder="2~7자의 한글로 쓰세요"> <span class="correct-message">올바른 이름 형식입니다</span> <span class="incorrect-message">이름은 한글 2~7자로 구성하세요</span>
 				</div>
 				<div class="form-group">
-					회원 비밀번호 : <input type="password" class="form-control intext" id="pw" onblur="checkPwd();" name="member_pw" maxlength="16" placeholder="8~16자의 영문/숫자로 구성하세요"> 
-					<span class="correct-message">올바른 비밀번호 형식입니다</span> 
-					<span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로 8~16자 내외로 구성하세요</span>
+					회원 비밀번호 : <input type="password" class="form-control intext" id="pw" onblur="checkPwd();" name="member_pw" maxlength="16" placeholder="8~16자의 영문/숫자로 구성하세요"> <span class="correct-message">올바른 비밀번호 형식입니다</span> <span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로 8~16자 내외로 구성하세요</span>
 				</div>
 				<div class="form-group">
-					비밀번호 확인: <input type="password" class="form-control intext" id="checkPw" onblur="checkCheckPw();" maxlength="16"> 
-					<span class="correct-message">비밀번호가 일치합니다.</span>
-					<span class="incorrect-message">비밀번호가 불일치합니다.</span>
+					비밀번호 확인: <input type="password" class="form-control intext" id="checkPw" onblur="checkCheckPw();" maxlength="16"> <span class="correct-message">비밀번호가 일치합니다.</span> <span class="incorrect-message">비밀번호가 불일치합니다.</span>
 				</div>
 				<div class="form-group">
 					지점 선택 : 
 					<br>
-					<select name="branch_no">					
+					<select  name="branch_no">					
 					<c:forEach var="branchDto" items="${branchDto}">
-						<option class="form-control" value="${branchDto.branch_no}">${branchDto.branch_name}</option>
+						<option class="form-control" value="${branchDto.local_no}">${branchDto.local_name}</option>
 					</c:forEach>
 					</select>
 				</div>
