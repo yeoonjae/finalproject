@@ -17,6 +17,9 @@
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
 	crossorigin="anonymous"></script>
+	
+<%-- <script src="${pageContext.request.contextPath}/resources/qr/jquery.min.js"></script> --%>
+	
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
@@ -36,9 +39,7 @@
 	}
 </style>
 
-<script>
-	
-</script>
+
 <main>
 	<section>
 		<div class="container">
@@ -62,7 +63,8 @@
 						<a href="${pageContext.request.contextPath}/member/pay/pay_detail">
 							<input type="button" value="홈으로 가기" class="btn btn-primary btn-lg"> 
 						</a>				
-					</div>					
+					</div>	
+									
 				</div>
 			</div>
 		</div>
