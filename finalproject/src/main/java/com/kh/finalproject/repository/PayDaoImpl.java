@@ -140,8 +140,11 @@ public class PayDaoImpl implements PayDao{
 		sqlSession.update("pay.minusCharge", map);	
 	}
 
-
-
+	@Override
+	public PayInfoDto getPayDetailInfo(String tid) {
+		PayInfoDto payInfoDto = sqlSession.selectOne("pay.getPayDetailInfo",tid);
+		return payInfoDto;
+	}
 
 
 

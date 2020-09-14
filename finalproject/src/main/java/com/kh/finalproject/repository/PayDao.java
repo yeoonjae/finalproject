@@ -51,4 +51,6 @@ public interface PayDao {
 	
 	// 결제 취소 후 회원 보유 시간 차감 
 	void minusCharge(int member_no,int license_time);
+	
+	PayInfoDto getPayDetailInfo(String tid); 
 }

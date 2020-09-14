@@ -58,4 +58,5 @@ public class PayController {
 		
 		return "member/pay/pay_detail";
 	}
+	
 }

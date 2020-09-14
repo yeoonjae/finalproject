@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{member_no},
 			#{pay_his_date},
 			#{pay_his_discount},
-			#{pay_his_method},
+			'카카오페이',
 			#{pay_his_price}
 		)
 	</insert>
@@ -66,6 +66,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE m.member_no=#{member_no}
 		ORDER BY p.PAY_HIS_DATE DESC
 	</select> 
+	
+		<!-- 주문 상세 내역 조회   -->
+	<select id="getPayDetailInfo" resultType="payInfoDto" parameterType="String">
+		SELECT p.*, pp.*,l.*,m.*,TO_CHAR(p.PAY_HIS_DATE ,'YYYY-MM-DD')AS PAY_HIS_DATE2
+		FROM pay_his p 
+		LEFT OUTER JOIN license l
+			ON p.LICENSE_NO = l.LICENSE_NO 
+		LEFT OUTER JOIN MEMBER m
+			ON p.MEMBER_NO = m.MEMBER_NO 
+		LEFT OUTER JOIN pay_point pp
+			ON p.tid_no = pp.tid_no 
+		WHERE p.tid_no=#{tid_no}
+	</select>
 	
 	<!--  회원 보유 시간 추가  -->
 	<update id="addCharge" parameterType="map">

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/member/template/user_header.jsp"></jsp:include>
@@ -17,52 +17,23 @@
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
 	crossorigin="anonymous"></script>
-<style>
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
-	.container{
-		text-align:center;
-		font-family: 'Noto Sans KR';
-	}
-	.font40{
-		font-size:40px;
-	}
-	.center{
-		text-align:center; 
-	}
-	.roomy-140{
-		padding-top:150px;
-		padding-bottom:150px; 
-	}
-</style>
 
 <script>
 	
 </script>
+
 <main>
 	<section>
 		<div class="container">
 			<div class="row">
-				<div class="main_service roomy-140 center">
+				<div class="main_service roomy-100">
+					<h1>결제를 실패했습니다.</h1>
 					<div>
-						<img src="${pageContext.request.contextPath}/resources/m/images/check.jpg" width="100px" height="100px">
+						<a href="${pageContext.request.contextPath}/member/user">
+							<input type="button" value="홈으로" class="btn btn-primary"> 
+						</a>			
 					</div>
-					<div>
-						<span class="font40">고객님의 주문이 완료 되었습니다.</span><br>
-					</div>
-					<div>
-<!-- 						<span>주문 번호 : </span> -->
-					</div>
-					<br><br><br>
-					<div>
-						<a href="${pageContext.request.contextPath}/member/pay/pay_detail">
-							<input type="button" value="결제내역조회" class="btn btn-primary btn-lg"> 
-						</a>
-
-						<a href="${pageContext.request.contextPath}/member/pay/pay_detail">
-							<input type="button" value="홈으로 가기" class="btn btn-primary btn-lg"> 
-						</a>				
-					</div>					
 				</div>
 			</div>
 		</div>
@@ -72,3 +43,4 @@
 
 <jsp:include page="/WEB-INF/views/member/template/footer.jsp"></jsp:include>
 
+    

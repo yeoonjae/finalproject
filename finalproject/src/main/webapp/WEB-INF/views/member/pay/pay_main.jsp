@@ -25,39 +25,27 @@
 		// 이용권 선택
 		$(".license_type").change(function() {
 
-			//CSS 설정 
-			//$(this).children().css("font-weight","bold");
 			var price = $(this).data().price; // 가격 불러오기 
 			var time = parseInt($(this).data().time);// 시간 불러오기 
 			var price2 = price.toLocaleString();// 세자리 단위로 , 붙이기
 			var no = $(this).data().no;
-
 			var point = parseInt(0);
-			
-			// 카카오페이에 상품명 전송 
-// 			$(".item_name").val(time + "시간 이용권");
-// 			$(".license_no").val(no);
-// 			$(".license_time").val(time);
 
 			$(".time").text(time + "시간").css("font-weight", "bold"); // 시간 설정 
 			$(".price").text(price2 + "원").css("font-weight", "bold"); //가격 설정
 
  			$(".use_point").val(""); // 마일리지 초기화 
  			$(".use_point").text(""); // 사용 마일리지 초기화 
-
 			
 			// 최종 결제금액 설정 
 			var total_price = calcResult();
 			$(".total_price").text(total_price);
-
 			// 최종 할인금액 설정
-			var sale_price = salePrice();
-				
+			var sale_price = salePrice();			
 			//적립금 계산 
 			var reward = pointReward();
 			$(".reward").text(reward);
 			
-
 			// 카카오페이에 전송
 			$(".total_amount").val(total_price);
 			$(".sale_price").val(sale_price);
@@ -66,10 +54,6 @@
 			$(".item_name").val(time + "시간 이용권");
 			$(".license_no").val(no);
 			$(".license_time").val(time);
-			
-			console.log("총가격"+total_price);
-			console.log("적립"+reward);
-			console.log("사용포인트"+point);
 			
 		});
 
@@ -82,28 +66,44 @@
 			} 
 			else {
 				var totalPrice = calcResult(); //최종 결제 금액 계산값 읽어오기
-				var price = parseInt($("input[name=license]:checked").data("price"));
+				var license_price = $("input[name=license]:checked").data("price");
 				var use_point = parseInt($(this).val()); // 입력 마일리지 값 읽어오기 
 				
 				var member_point = $(".use_all_point").data().point; //회원 보유 마일리지 값 
 				var member_point2 = parseInt(member_point).toLocaleString(); //소수점 찍기 				
 
 				$(".use_point").text(use_point); // 마일리지 할인 금액에 해당 값 설정 
-				
+				$(".total_price").text(totalPrice);
+
 				///// 입력 마일리지 > 회원 마일리지 일 경우 
 				if (use_point > parseInt(member_point)) { // 숫자로 변환 
-					alert("사용 가능 마일리지는" + member_point2 + "P 입니다.");
-
+					var use_point=0;
 					$(".use_point").val("");
 					$(".use_point").text("");
-					$(".total_price").text(price); //이용권 가격으로 초기화 
-				}
-				if(use_point>totalPrice){
-					
-				}
 
+					$(".total_price").text(license_price);
+					totalPrice = license_price;
+					alert("사용 가능 마일리지는 " + member_point2 + "P 입니다.");
+				}
+				////// 입력 마일리지 > 총 가격 일 경우
+				if(use_point > totalPrice){
+					use_point=0;
+					$(".use_point").val("");
+					$(".use_point").text("");
 
-				$(".total_price").text(totalPrice);
+					$(".total_price").text(license_price);
+					totalPrice = license_price;
+					alert("마일리지는 총 결제금액을 초과하여 사용할 수 없습니다.");
+				}
+				
+				if(isNaN(use_point)){
+					use_point=0;
+					$(".use_point").val("");
+					$(".use_point").text("");
+
+					$(".total_price").text(license_price);
+					totalPrice = license_price;
+				}
 
 				// 최종 할인금액 계산
 				var sale_price = salePrice();
@@ -134,22 +134,21 @@
 				// 총 결제금액 계산  
 				var total_price = calcResult();
 				var point = $(this).data().point;
-
+				
 				// 적립금이 총 결제금액보다 많을 경우 
-				if (total_price < point) {
+				if (total_price < point) {				
 					$(".use_point").val(total_price);
 					$(".use_point").text(total_price);
 
 					point = total_price;
 					total_price = total_price - point;
 				} 
-				else { //아닐경우 
+				else { 
 					$(".use_point").val(point);
 					$(".use_point").text(point);
 
 					total_price = calcResult();
 				}
-
 				$(".total_price").text(total_price);
 				
 				// 최종 할인금액 계산
@@ -157,8 +156,7 @@
 				
 				//적립금 계산 
 				var reward = pointReward();
-				$(".reward").text(reward);
-				
+				$(".reward").text(reward);				
 
 				// 카카오페이에 최종 결제금액 전송
 				$(".total_amount").val(total_price);
@@ -205,14 +203,12 @@
 	// 할인 금액 계산 
 	function salePrice(){
 		var point = $("input.use_point").val() || 0;
-		var coupon = 0;
-		
+		var coupon = 0;		
 		var sum = parseInt(point) + parseInt(coupon);
-		//console.log("할인금액: "+ sum);
-		
 		return sum;
-		
 	}
+
+	
 </script>
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
@@ -400,9 +396,8 @@
 								<tr>
 									<td class="resultType">최종 결제 금액</td>
 									<td class="resultPrice">
-									<span
-										class="resultFont total_price">0</span> <span
-										style="color: red">원</span></td>
+									<span class="resultFont total_price">0</span> 
+									<span style="color: red">원</span></td>
 								</tr>
 							</table>
 							<hr>
@@ -527,8 +522,7 @@
 										</span>
 									</div>
 									<div>
-										(사용 가능 마일리지 : <span style="color: red">
-											${memberBranchDto.member_point}P</span> )
+										(사용 가능 마일리지 : <span style="color: red"><fmt:formatNumber value="${memberBranchDto.member_point}" pattern="#,###" />P</span> )
 									</div>
 								</div>
 							</div>

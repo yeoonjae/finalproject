@@ -12,6 +12,7 @@ public class PayInfoDto {
 	private int pay_his_no;
 	private String tid_no;
 	private int member_no;
+	private String member_name;
 	private Date pay_his_date;
 	private String pay_his_date2;
 	private int pay_his_discount;

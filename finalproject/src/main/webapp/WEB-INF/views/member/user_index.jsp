@@ -116,6 +116,7 @@
                         <h6 class="title">Member Pages</h6>
                         <ul class="link">
                             <li><a href="${pageContext.request.contextPath}/member/account/info?member_no=${memberinfo.member_no}">마이페이지</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/pay/pay_detail">결제내역 조회</a></li>
                             <li><a href="#">상품 충전</a></li>
                             <li><a href="#">좌석 예약</a></li>
                             <li><a href="#">스터디룸 예약</a></li>

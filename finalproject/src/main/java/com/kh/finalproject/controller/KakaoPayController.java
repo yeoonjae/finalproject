@@ -112,7 +112,7 @@ public class KakaoPayController {
 		
 		int pay_his_price= finishVO.getAmount().getTotal();
 		String tid_no = finishVO.getTid();
-		String pay_his_method = finishVO.getPayment_method_type();
+		//String pay_his_method = finishVO.getPayment_method_type();
 	
 		// 결제 내역에 추가 
 		PayHisDto payHisDto = PayHisDto.builder()
@@ -122,7 +122,6 @@ public class KakaoPayController {
 															.pay_his_date(date)
 															.pay_his_discount(sale_price)
 															.pay_his_price(pay_his_price)
-															.pay_his_method(pay_his_method)
 														.build();		
 		payDao.payInfoInsert(payHisDto); 		 
 		
@@ -186,30 +185,42 @@ public class KakaoPayController {
 		// 결제 조회 페이지 
 		@GetMapping("/history")
 		public String history(@RequestParam String tid,Model model,HttpSession session) throws URISyntaxException {
-			MemberDto memberDto = (MemberDto) session.getAttribute("memberinfo"); 
-			int member_no = memberDto.getMember_no();
 			
-			//boolean isMine = memberinfo.getMember_no() == updto.getMember_no();
-			
+			// 결제 상세내역 조회를 위한 구문 
+			PayInfoDto payInfoDto = payDao.getPayDetailInfo(tid);
+			model.addAttribute("payInfoDto",payInfoDto);
 			
 			KakaoPayHistoryVO historyVO = kakaoPayService.history(tid);		
 			model.addAttribute("historyVO",historyVO);
 
 			return "member/pay/history";
 		}
+		// 결제 조회 및 취소 확인 페이지 
+		@GetMapping("/pay_delete")
+		public String pay_delete(@RequestParam String tid,Model model,HttpSession session) throws URISyntaxException {
+			
+			// 결제 상세내역 조회를 위한 구문 
+			PayInfoDto payInfoDto = payDao.getPayDetailInfo(tid);
+			model.addAttribute("payInfoDto",payInfoDto);
+			
+			KakaoPayHistoryVO historyVO = kakaoPayService.history(tid);		
+			model.addAttribute("historyVO",historyVO);
+
+			return "member/pay/pay_delete";
+		}
 		
 		// 결제번호와 결제금액을 받아 결제 취소를 수행하는 코드를 구현 
 		// 결제 취소
 		@GetMapping("/delete")
-		public String delete(@RequestParam int license_time, 
-										@RequestParam int reward, 
-										@RequestParam int pay_use_point ,
-										@RequestParam String tid, 
-										@RequestParam int cancel_amount,
-										HttpSession session) throws URISyntaxException {			
+		public String delete(@RequestParam String tid,@RequestParam int cancel_amount, HttpSession session) throws URISyntaxException {		
 			
 			kakaoPayService.delete(tid, cancel_amount);
-			
+
+			PayInfoDto payInfoDto = payDao.getPayDetailInfo(tid);
+			int license_time = payInfoDto.getLicense_time();
+			int reward = payInfoDto.getReward();
+			int pay_use_point = payInfoDto.getPay_use_point();
+					
 			MemberDto memberDto = (MemberDto) session.getAttribute("memberinfo"); 
 			int member_no = memberDto.getMember_no();
 			
