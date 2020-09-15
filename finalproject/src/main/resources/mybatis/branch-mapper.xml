@@ -48,6 +48,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
 	</select>
 	
+	<!-- 지점목록(이미지와 같이) -->
+	<select id="getListWithImg" resultType="branchDto">
+		SELECT * FROM branch a 
+		LEFT OUTER JOIN BRANCH_IMG b ON a.BRANCH_NO = b.BRANCH_NO
+	</select>
+	
 	<!-- 배치도 등록 -->
 	<update id="layout_regist" parameterType="map">
 		UPDATE branch SET branch_layout = #{branch_layout} WHERE branch_no = #{branch_no}
@@ -80,6 +86,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delete" parameterType="int">
 		DELETE branch WHERE branch_no=#{branch_no}
 	</delete>
+	
+	<!-- 지점 이미지와 함꼐 지점단일조회 -->
+	<select id="getWithImg" resultType="branchDto">
+		SELECT * FROM branch a 
+		LEFT OUTER JOIN BRANCH_IMG b ON a.BRANCH_NO = b.BRANCH_NO WHERE a.branch_no = #{branch_no}
+	</select>
 	
 	<!-- admin번호 받아서 branch 번호 넘기기 -->
 	<select id="getBranch" parameterType="int" resultType="int">

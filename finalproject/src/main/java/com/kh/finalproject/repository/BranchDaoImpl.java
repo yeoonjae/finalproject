@@ -110,4 +110,16 @@ public class BranchDaoImpl implements BranchDao{
 		System.out.println("Test Controller 삭제완료");
 	}
 
+	//지점 리스트(이미지 같이)
+	public List<BranchDto> getListWithImg() {
+		return sqlSession.selectList("branch.getListWithImg");
+	}
+
+	//지점 이미지와 같이 단일조회
+	public BranchDto getWithImg(int branch_no) {
+		return sqlSession.selectOne("branch.getWithImg", branch_no);
+	}
+	
+	
+
 }

@@ -29,7 +29,7 @@ public class FranchiseeController {
 	
 	@GetMapping("/list")
 	public String list(Model model) {
-		List<BranchDto> list = branchDao.getList();
+		List<BranchDto> list = branchDao.getListWithImg();
 		System.out.println(list);
 		model.addAttribute("list", list);
 		return "/member/franchisee/list";
@@ -37,7 +37,7 @@ public class FranchiseeController {
 	
 	@GetMapping("/detail")
 	public String detail(Model model,@RequestParam int branch_no) {
-		BranchDto branchDto = branchDao.get(branch_no);
+		BranchDto branchDto = branchDao.getWithImg(branch_no);
 		List<BranchImgDto> list = branchService.getBranchImg(branch_no);
 		model.addAttribute("branchImg", list);
 		model.addAttribute("branchDto", branchDto);

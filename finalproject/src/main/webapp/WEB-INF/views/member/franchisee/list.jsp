@@ -53,7 +53,14 @@
 											<div class="box">
 												<!-- 사진띄울 곳(left) -->
 												<div style="float: left;">
-													<img src = "https://placeimg.com/312/210/animal">
+													<c:choose>
+														<c:when test="${not empty branchList.branch_img_no}">
+															<img src="${pageContext.request.contextPath}/admin/branch/imgdownload/${branchList.branch_img_no}" style="height: 210px; width: 312px;">
+														</c:when>
+														<c:otherwise>
+															<img src = "https://placeimg.com/312/210/animal">
+														</c:otherwise>
+													</c:choose>
 												</div>
 												<!-- 지점 정보(right) -->
 												<div class="franchisee-list">
