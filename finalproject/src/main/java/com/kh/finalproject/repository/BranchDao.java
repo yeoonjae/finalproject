@@ -28,5 +28,5 @@ public interface BranchDao {
 	//지점 리스트 이미지와 같이
 	List<BranchDto> getListWithImg();
 	//지점 단일조회(이미지 같이)
-	BranchDto getWithImg(int branch_no);
+	List<BranchDto> getWithImg(int branch_no);
 }

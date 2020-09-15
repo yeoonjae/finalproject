@@ -16,27 +16,9 @@
             background-color: grey;
         }
         .swiper-container {
-			width: 100%;
-			max-height: 300px;
-		}
-		.swiper-container .swiper-slide>.game-wrap {
-			float: left;
-			width: 18.1%;
-			padding: 10px;
-			margin-top: 20px;
-		}
-		.swiper-container .swiper-slide, .swiper-container .swiper-slide .game_img
-			{
-			width: 180;
-			height: 130;
-		}
-		.swiper-container .swiper-slide {
-			margin-bottom: 10px;
-		}
-		.swiper-container .swiper-slide .game_name {
-			text-align: center;
-			font-size: 15px;
-		}
+            width: 674px;
+            justify-content: center;
+     	}
 
 	</style>
 <div id="content-wrapper">
@@ -133,36 +115,25 @@
 					</tr>
 					<tr>
 						<td scope="row" colspan="2">
-							<c:forEach var="img" items="${branchImg}">
-								<img src="${pageContext.request.contextPath}/admin/branch/imgdownload/${img.branch_img_no}" style="height: 100px; width: 140px;">
-							</c:forEach>
+<%-- 							<c:forEach var="img" items="${branchImg}"> --%>
+<%-- 								<img src="${pageContext.request.contextPath}/admin/branch/imgdownload/${img.branch_img_no}" style="height: 100px; width: 140px;"> --%>
+<%-- 							</c:forEach> --%>
 						</td>
 					</tr>
-<!-- 					<tr> -->
-<!-- 						<td scope="row"> -->
-<!-- 						 	<div class="swiper-container"> -->
-<!-- <!-- 					        필수 영역 --> 
-<!-- 					        <div class="swiper-wrapper"> -->
-<!-- <!-- 					            배치되는 이미지 또는 화면 --> 
-<!-- 					            <div class="swiper-slide"> -->
-<!-- 					                <img src = "https://placeimg.com/600/300/animal"> -->
-<!-- 					            </div> -->
-<!-- 					            <div class="swiper-slide"> -->
-<!-- 					                <img src = "https://placeimg.com/600/300/people"> -->
-<!-- 					            </div> -->
-<!-- 					            <div class="swiper-slide"> -->
-<!-- 					                <img src = "https://placeimg.com/600/300/tech"> -->
-<!-- 					            </div> -->
-<!-- 					        </div> -->
-<!-- <!-- 					        페이지 위치 표시 영역(선택) --> 
-<!-- 					        <div class="swiper-pagination"></div> -->
-					  
-<!-- <!-- 					        이전/다음 버튼 (선택) --> 
-<!-- 					        <div class="swiper-button-prev"></div> -->
-<!-- 					        <div class="swiper-button-next"></div> -->
-<!-- 					      </div> -->
-<!-- 						</td> -->
-<!-- 					</tr> -->
+					<tr>
+						<td scope="row" colspan="2">
+						 	<div class="swiper-container">
+					        <div class="swiper-wrapper">
+					            <c:forEach var="img" items="${branchImg}">
+									<img src="${pageContext.request.contextPath}/admin/branch/imgdownload/${img.branch_img_no}" style="height: 100px; width: 140px;padding-left: 5px;">
+								</c:forEach>
+					        </div>
+					        <div class="swiper-pagination"></div>
+					        <div class="swiper-button-prev"></div>
+					        <div class="swiper-button-next"></div>
+					      </div>
+						</td>
+					</tr>
 					<tr>
 						<th scope="row" colspan="2">배치도</th>
 					</tr>

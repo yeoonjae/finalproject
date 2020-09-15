@@ -106,6 +106,14 @@ public class BranchController {
 		return entity;
 	}
 	
+	//브랜치번호로 이미지 하나만 꺼내오기
+	@GetMapping("/imagedownload_one/{branch_no}")
+	@ResponseBody
+	public ResponseEntity<ByteArrayResource> getImgOne(@PathVariable int branch_no) throws Exception {
+		ResponseEntity<ByteArrayResource> entity = branchService.getImgOne(branch_no);
+		return entity;
+	}
+	
 	
 	//지점 수정
 	@GetMapping("/edit")

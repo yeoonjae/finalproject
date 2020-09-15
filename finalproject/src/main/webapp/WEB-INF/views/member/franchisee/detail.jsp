@@ -22,7 +22,7 @@
             width: 1100px;
 
             justify-content: center;
-        }
+     }
 </style>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/swiper/css/swiper.min.css">
     <script src="${pageContext.request.contextPath}/resources/swiper/js/swiper.min.js"></script>
@@ -129,14 +129,7 @@
 							<div class="box">
 								<!-- 사진띄울 곳(left) -->
 								<div style="float: left;">
-									<c:choose>
-										<c:when test="${not empty branchDto.branch_img_no}">
-											<img src="${pageContext.request.contextPath}/admin/branch/imgdownload/${branchDto.branch_img_no}" style="height: 210px; width: 312px;">
-										</c:when>
-										<c:otherwise>
-											<img src = "https://placeimg.com/312/210/animal">
-										</c:otherwise>
-									</c:choose>
+									<img src="${pageContext.request.contextPath}/admin/branch/imagedownload_one/${branchDto.branch_no}" style="height: 210px; width: 312px;">
 								</div>
 								<!-- 지점 정보(right) -->
 								<div class="franchisee-list">
@@ -172,7 +165,7 @@
 							            <!-- 배치되는 이미지 또는 화면 -->
 							            <c:forEach var="img" items="${branchImg}">
 							            	<div class="swiper-slide">
-												<img src="${pageContext.request.contextPath}/admin/branch/imgdownload/${img.branch_img_no}">
+												<img src="${pageContext.request.contextPath}/admin/branch/imgdownload/${img.branch_img_no}" style="width: 1101px; height: 500px;">
 											</div>
 										</c:forEach>
 							        </div>

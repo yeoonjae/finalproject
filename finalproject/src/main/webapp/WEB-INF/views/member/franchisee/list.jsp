@@ -55,7 +55,7 @@
 												<div style="float: left;">
 													<c:choose>
 														<c:when test="${not empty branchList.branch_img_no}">
-															<img src="${pageContext.request.contextPath}/admin/branch/imgdownload/${branchList.branch_img_no}" style="height: 210px; width: 312px;">
+															<img src="${pageContext.request.contextPath}/admin/branch/imagedownload_one/${branchList.branch_no}" style="height: 210px; width: 312px;">
 														</c:when>
 														<c:otherwise>
 															<img src = "https://placeimg.com/312/210/animal">
@@ -77,13 +77,13 @@
 						                            		</tr>
 						                            		<tr>
 						                            			<th class="table-th">영업시간</th>
-						                            			<td style="font-size: 15px;">연중 무휴 24시간</td>
+						                            			<td style="font-size: 15px;">24시간 영업</td>
 						                            		</tr>
 						                            	</tbody>
 						                            </table>
 						                            <div style="float: right;">
 						                            	<a href="${pageContext.request.contextPath}/member/franchisee/detail?branch_no=${branchList.branch_no}">
-						                            		<button class="btn">매장정보 상세보기</button>
+						                            		<button class="btn btn-outline-secondary">매장정보 상세보기</button>
 						                            	</a>
 						                            </div>
 												</div>

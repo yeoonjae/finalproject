@@ -116,8 +116,8 @@ public class BranchDaoImpl implements BranchDao{
 	}
 
 	//지점 이미지와 같이 단일조회
-	public BranchDto getWithImg(int branch_no) {
-		return sqlSession.selectOne("branch.getWithImg", branch_no);
+	public List<BranchDto> getWithImg(int branch_no) {
+		return sqlSession.selectList("branch.getWithImg", branch_no);
 	}
 	
 	

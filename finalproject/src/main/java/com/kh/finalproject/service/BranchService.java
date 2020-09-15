@@ -13,4 +13,6 @@ public interface BranchService {
 	
 	//지점별 이미지 list
 	List<BranchImgDto> getBranchImg(int branch_no);
+	
+	ResponseEntity<ByteArrayResource> getImgOne(int branch_no) throws Exception;
 }
