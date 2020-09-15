@@ -17,7 +17,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{branch_room_cnt},
 			#{branch_seat_cnt},
 			#{branch_locker_cnt},
-			#{branch_layout})
+			#{branch_layout},
+			#{branch_detail_addr},
+			#{branch_basic_addr},
+			#{branch_post})
 	</insert>
 	
 	<!-- 시퀀스 생성 -->
@@ -59,7 +62,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			branch_room_cnt = #{branch_room_cnt},
 			branch_seat_cnt = #{branch_seat_cnt},
 			branch_locker_cnt = #{branch_locker_cnt},
-			branch_layout = #{branch_layout}
+			branch_layout = #{branch_layout},
+			branch_post=#{branch_post},
+			branch_basic_addr = #{branch_basic_addr},
+			branch_detail_addr = #{branch_detail_addr}
 		WHERE branch_no = #{branch_no}
 	</update>
 	

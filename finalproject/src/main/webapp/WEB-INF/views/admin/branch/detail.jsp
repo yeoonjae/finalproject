@@ -102,8 +102,8 @@
 						<td>${branchDto.branch_no}</td>
 					</tr>
 					<tr>
-						<th scope="row">지역</th>
-						<td>${branchDto.local_name}</td>
+						<th scope="row">주소</th>
+						<td>[${branchDto.branch_post}]${branchDto.branch_basic_addr}</td>
 					</tr>
 					<tr>
 						<th scope="row">지점 관리자</th>

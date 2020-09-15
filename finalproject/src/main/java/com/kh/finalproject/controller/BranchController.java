@@ -94,10 +94,6 @@ public class BranchController {
 		List<BranchImgDto> list = branchService.getBranchImg(branch_no);
 		model.addAttribute("branchImg", list);
 		log.info("list{}.",list);
-		// 그 담에 스와이퍼 안에 이미지 태그를
-		// <c:forEach var="img" items="${브런치이미지디티오 리스트}">
-		//		<img src="${pageContext.request.contextPath}/a/detail/download/${img.img_no}" alt="">
-		//</c:forEach>
 		model.addAttribute("branchDto", branchDto);
 		attr.addAttribute("branch_no", branch_no);
 		return "admin/branch/detail";
