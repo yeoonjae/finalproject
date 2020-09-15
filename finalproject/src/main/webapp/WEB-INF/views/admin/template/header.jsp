@@ -124,7 +124,6 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">관리자 로그인 메뉴</h6>
-	         	관리자 권한 : ${admininfo.admin_auth}
          <c:choose>  
          <c:when test="${admininfo.admin_auth eq '본사'}">
             		<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/logout">로그아웃</a>
@@ -152,7 +151,7 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">회원 정보</h6>
-            <a class="dropdown-item" href="#">전체 회원 보기</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/member/account/list">전체 회원 보기</a>
             <a class="dropdown-item" href="#">회원 등록하기</a>
             <a class="dropdown-item" href="#">비밀번호 찾기</a>
             <div class="dropdown-divider"></div>

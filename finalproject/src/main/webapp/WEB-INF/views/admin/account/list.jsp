@@ -20,7 +20,6 @@
 								<th>관리자 번호</th>
 								<th>관리자 이름</th>
 								<th>관리자 아이디</th>
-								<th>관리자 비밀번호</th>
 								<th>관리자 가입일자</th>
 								<th>관리자 로그인일자</th>
 								<th>관리 메뉴</th>
@@ -32,7 +31,6 @@
 									<td>${adminDto.admin_no}</td>
 									<td>${adminDto.admin_name}</td>
 									<td>${adminDto.admin_id}</td>
-									<td>${adminDto.admin_pw}</td>
 									<td>${adminDto.admin_join}</td>
 									<td>${adminDto.admin_login}</td>
 									<td>

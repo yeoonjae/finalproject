@@ -59,19 +59,6 @@
 		<div class="container-form offset-sm-3 col-sm-6 offset-md-3 col-md-6">
 			<form action="${pageContext.request.contextPath}/member/account/cert_email" method="post" onsubmit="return checkCert();">
 				<div class="form-group">
-				인증번호 확인
-				<br>
-				member_email: ${memberDto.member_email}
-				<br>
-				${memberDto.member_no}
-				<br>
-				${memberDto.member_email}
-				<br>
-				${memberDto.member_name}
-				<br>
-				${memberDto.member_pw}
-				<br>
-				${memberDto.branch_no}
 				<input type="hidden" class="from-control" name="member_no" value="${memberDto.member_no}">
 				<input type="hidden" class="from-control" name="member_email" value="${memberDto.member_email}">
 				<input type="hidden" class="from-control" name="member_name" value="${memberDto.member_name}">
