@@ -12,6 +12,9 @@ import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.BranchImgDto;
 import com.kh.finalproject.repository.BranchDao;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/member/franchisee")
 public class FranchiseeController {
@@ -23,6 +26,7 @@ public class FranchiseeController {
 	public String list(Model model) {
 		List<BranchDto> list = branchDao.getList();
 		model.addAttribute("list", list);
+		log.info("", msg);
 		return "/member/franchisee/list";
 	}
 }

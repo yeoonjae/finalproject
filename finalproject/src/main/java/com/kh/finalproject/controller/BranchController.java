@@ -93,7 +93,6 @@ public class BranchController {
 		// 여기서 이제 브런치이미지디티오 리스트를 받아서 모델로 뿌려주는거야 
 		List<BranchImgDto> list = branchService.getBranchImg(branch_no);
 		model.addAttribute("branchImg", list);
-		log.info("list{}.",list);
 		model.addAttribute("branchDto", branchDto);
 		attr.addAttribute("branch_no", branch_no);
 		return "admin/branch/detail";
