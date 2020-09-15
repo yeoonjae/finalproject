@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pay">
+
+	<select id="getBranch" resultType="memberBranchDto" parameterType="int">
+		SELECT * FROM member m
+		LEFT OUTER JOIN branch b
+		ON m.BRANCH_NO = b.BRANCH_NO
+		WHERE member_no=#{member_no}
+	</select>
+
+	<!--  partner_order_id (가맹점 주문 번호 생성 ) -->
+	<select id="getOrderSeq" resultType="int">
+		SELECT p_order_seq.nextval FROM dual
+	</select>
+
+	<!-- 회원 이메일 가져오기 -->
+	<select id="getId" resultType="string">
+		SELECT member_email 
+		FROM member 
+		WHERE member_no=#{member_no}
+	</select>
+	
+<!-- 	<select id=getMemberNo resultType="int" > -->
+<!-- 		SELECT member_no -->
+<!-- 		FROM member -->
+<!-- 		WHERE member -->
+<!-- 	</select> -->
+	
+	<!-- 결제 내역에 데이터 추가  -->
+	<insert id="insertPayInfo" parameterType="payHisDto">
+		INSERT INTO pay_his(
+			pay_his_no,
+			tid_no,
+			license_no,
+			member_no,
+			pay_his_date,
+			pay_his_discount,
+			pay_his_method,
+			pay_his_price
+		) VALUES (
+			pay_his_seq.nextval,
+			#{tid_no},
+			#{license_no},
+			#{member_no},
+			#{pay_his_date},
+			#{pay_his_discount},
+			#{pay_his_method},
+			#{pay_his_price}
+		)
+	</insert>
+	
+	<!-- 회원 결제 내역 조회   -->
+	<select id="getPayInfo" resultType="payInfoDto" parameterType="int">
+		SELECT * 
+		FROM pay_his p 
+		LEFT OUTER JOIN license l
+			ON p.LICENSE_NO = l.LICENSE_NO 
+		LEFT OUTER JOIN MEMBER m
+			ON p.MEMBER_NO = m.MEMBER_NO 
+		WHERE m.member_no=#{member_no}
+		ORDER BY p.PAY_HIS_DATE DESC
+	</select> 
+	
+	<!-- 회원 마일리지 수정 코드 -->
+	<update id="plusPoint"  parameterType="payPointDto">
+		UPDATE member SET member_point = member_point + #{reward} WHERE member_no = #{member_no}
+	</update> 
+	
+	<update id="minusPoint" parameterType="payPointDto">
+		UPDATE member SET member_point = member_point - #{pay_use_point} WHERE member_no = #{member_no}
+	</update> 
+	
+	
+	<insert id="payPointRegist" parameterType="payPointDto">
+		INSERT INTO pay_point(
+			tid_no,
+			member_no,
+			pay_use_point,
+			reward
+		) VALUES(
+			#{tid_no},
+			#{member_no},
+			#{pay_use_point},
+			#{reward}
+		)
+	</insert>
+		
+		
+	<select id="getSeq" resultType="int">
+		SELECT point_his_seq.nextval FROM dual
+	</select>	
+	
+	<insert id="registUsePoint" parameterType="payPointDto">
+		INSERT INTO point_his(
+			point_his_no,
+			member_no,
+			point_no,
+			point_his_score,
+			point_his_detail
+		) VALUES (
+			point_his_seq.nextval,
+			#{member_no},
+			32,
+			#{pay_use_point},
+			'결제 시 차감'
+		)
+	</insert>
+	
+	<insert id="registReward" parameterType="payPointDto">
+		INSERT INTO point_his(
+			point_his_no,
+			member_no,
+			point_no,
+			point_his_score,
+			point_his_detail
+		) VALUES (
+			point_his_seq.nextval,
+			#{member_no},
+			31,
+			#{reward},
+			'결제 시 적립'
+		)
+	</insert>
+
+</mapper>

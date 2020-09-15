@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 지점이미지 mapping -->
+<mapper namespace="branchImg">
+
+	<!-- 이미지 등록  -->
+	<insert id="regist" parameterType="branchImgDto">
+		insert into branch_img values(
+			#{branch_img_no},
+			#{branch_no},
+			#{branch_img_name},
+			#{branch_img_size},
+			#{branch_img_type})
+	</insert>
+	
+	<!-- 시퀀스 생성 -->
+	<select id="getSeq" resultType="int">
+		SELECT branch_img_seq.nextval FROM dual
+	</select>
+	
+</mapper>
+
+
+
+

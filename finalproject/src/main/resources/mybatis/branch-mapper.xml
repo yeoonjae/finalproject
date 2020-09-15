@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 지점 mapping -->
+<mapper namespace="branch">
+
+	<!-- 지점등록  -->
+	<insert id="regist">
+		insert into branch values(
+			#{branch_no},
+			#{local_no},
+			#{admin_no},
+			#{branch_name},
+			#{branch_size},
+			#{branch_room_cnt},
+			#{branch_seat_cnt},
+			#{branch_locker_cnt},
+			#{branch_layout})
+	</insert>
+	
+	<!-- 시퀀스 생성 -->
+	<select id="getSeq" resultType="int">
+		SELECT branch_seq.nextval FROM dual
+	</select>
+	
+	<!-- 지점 단일 조회 -->
+	<select id="get" resultType="branchDto" parameterType="int">
+		SELECT * FROM branch b
+		LEFT OUTER JOIN admin a ON b.admin_no = a.admin_no
+		LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO WHERE branch_no=#{branch_no}
+	</select>
+	
+	<!-- 지역별 지점 조회 -->
+	<select id="localBranchList" parameterType="int" resultType="branchDto">
+		SELECT * FROM branch WHERE local_no=#{local_no} ORDER BY branch_no ASC
+	</select>
+	
+	<!-- 지점 목록 -->
+	<select id="getList" resultType="branchDto">
+		SELECT * FROM branch b
+		LEFT OUTER JOIN admin a ON b.admin_no = a.admin_no
+		LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+	</select>
+	
+	<!-- 배치도 등록 -->
+	<update id="layout_regist" parameterType="map">
+		UPDATE branch SET branch_layout = #{branch_layout} WHERE branch_no = #{branch_no}
+	</update>
+	
+	<!-- 지점 수정 -->
+	<update id="edit" parameterType="branchDto">
+		UPDATE branch SET 
+			admin_no = #{admin_no},
+			local_no = #{local_no},
+			branch_name = #{branch_name},
+			branch_size = #{branch_size},
+			branch_room_cnt = #{branch_room_cnt},
+			branch_seat_cnt = #{branch_seat_cnt},
+			branch_locker_cnt = #{branch_locker_cnt},
+			branch_layout = #{branch_layout}
+		WHERE branch_no = #{branch_no}
+	</update>
+	
+	<!-- 지점이름으로 지점 뽑기 -->
+	<select id="getName" parameterType="String" resultType="branchDto">
+		SELECT * FROM branch WHERE branch_name=#{branch_name}
+	</select>
+	
+	<!-- 지점 번호 받아서 지점 뽑기 -->
+	<delete id="delete" parameterType="int">
+		DELETE branch WHERE branch_no=#{branch_no}
+	</delete>
+	
+	<!-- admin번호 받아서 branch 번호 넘기기 -->
+	<select id="getBranch" parameterType="int" resultType="int">
+		SELECT branch_no FROM branch WHERE admin_no=#{admin_no}
+	</select>
+	
+	<!-- 지점별 회원 보유현황 -->
+	<select id="memberList" parameterType="int" resultType="memberDto">
+		SELECT * FROM member WHERE branch_no = #{branch_no}
+	</select>
+</mapper>
+
+
+
+

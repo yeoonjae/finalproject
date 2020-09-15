@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	mapper는 구문을 만들 수 있는 영역
+	일반적으로 테이블당 1개씩의 mapper를 둔다
+	
+	- namespace : 영역을 외부에서 부르기 위한 별칭(일반적으로 테이블 이름으로 사용)
+ -->
+<mapper namespace="pointHis">
+
+	<select id="getSeq" resultType="int">
+		SELECT point_his_seq.nextval FROM dual
+	</select>
+	
+	<!-- 회원 마일리지 내역 등록 -->
+	<insert id="regist" parameterType="pointHisDto">
+		INSERT INTO point_his(
+			point_his_no,
+			member_no,
+			point_no,
+			point_his_score,
+			point_his_detail
+		) VALUES (
+			#{point_his_no},
+			#{member_no},
+			#{point_no},
+			#{point_his_score},
+			#{point_his_detail}
+		)
+	</insert>
+	
+	<!-- 회원별 마일리지 내역 조회 -->
+	<select id="getList" parameterType="map" resultType="pointHisDto">
+		SELECT ph.*,p.POINT_TYPE, p.POINT_DETAIL FROM point p
+			LEFT OUTER JOIN POINT_HIS ph ON p.point_no = ph.point_no
+				WHERE ph.MEMBER_NO = #{member_no}
+				<if test="start != finish">
+					AND ph.POINT_HIS_DATE
+					BETWEEN TO_DATE('${start} 00:00:00', 'yyyy-mm-dd hh24:mi:ss')
+					AND TO_DATE('${finish} 23:59:59', 'yyyy-mm-dd hh24:mi:ss')				
+				</if>
+				<if test="start == finish">
+					AND TO_CHAR(POINT_HIS_DATE, 'yyyy-mm-dd') = #{start}
+				</if>
+		ORDER BY ph.POINT_HIS_DATE DESC
+	</select>
+	
+	<select id="getDate" parameterType="int" resultType="String">
+		SELECT to_char(
+		<if test="date == 7">
+			sysdate-#{date},
+		</if>
+		<if test="date != 7">
+			add_months(sysdate,-#{date}),
+		</if>
+		'yyyy-mm-dd') FROM dual
+	</select>
+	
+	<select id="sysdate" resultType="String">
+		SELECT to_char(sysdate,'yyyy-mm-dd') FROM dual
+	</select>
+</mapper>
+
+
+
+

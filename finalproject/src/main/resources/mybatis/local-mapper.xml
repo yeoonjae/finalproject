@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 지역 mapping -->
+<mapper namespace="local">
+	
+	<!-- 지역 등록 구문 -->
+	<insert id="regist" parameterType="String">
+		insert into local values(local_seq.nextval,#{local_name})
+	</insert>
+	
+	<!-- 지역 목록 출력 구문 -->
+	<select id="getList" resultType="localDto">
+		SELECT * FROM local ORDER BY local_name ASC
+	</select>
+	
+	<!-- 지역 단일조회 -->
+	<select id="get" parameterType="String" resultType="localDto">
+		SELECT * FROM local WHERE local_name=#{local_name}
+	</select>
+	
+	<!-- 지역에 등록된 지점이 있는지 검사하는 구문 -->
+	<select id="isHaveBranch" parameterType="int" resultType="localDto">
+		SELECT * FROM LOCAL l LEFT OUTER JOIN branch b ON l.LOCAL_NO = b.LOCAL_NO WHERE b.BRANCH_NO IS not NULL AND l.LOCAL_NO = #{local_no}
+	</select>
+	
+	<!-- 지역 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE local WHERE local_no=#{local_no}
+	</delete>
+</mapper>
+
+
+
