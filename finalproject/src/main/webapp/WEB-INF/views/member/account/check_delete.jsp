@@ -9,7 +9,7 @@
 		<div class="container-form offset-sm-3 col-sm-6 offset-md-3 col-md-6">
 			<form action="${pageContext.request.contextPath}/member/account/check_delete" method="post">
 				<div class="form-group">
-				회원 비밀번호 : <input type="text" class="form-control" name="member_pw">
+				회원 비밀번호 : <input type="password" class="form-control" name="member_pw">
 				</div>
 				<div class="form-group">
 				<input type="submit" value="확인">

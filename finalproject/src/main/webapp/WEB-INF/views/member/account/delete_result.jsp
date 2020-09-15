@@ -12,8 +12,9 @@
 			<br>
 			<br>
 			<br>
-			<h3 class="form-control"> 탈퇴 완료
-			</h3>	
+			<div class="form-cnotrol">
+			탈퇴 완료
+			</div>
 			<br>		
 			<br>		
 			<br>		

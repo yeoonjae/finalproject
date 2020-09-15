@@ -23,7 +23,7 @@
 				<br>
 				member_email: ${member_email}
 				<input type="hidden" class="from-control" name="member_email" value="${member_email}">
-				<input type="text" class="form-control" name="secret" >
+				<input type="text" class="form-control" name="secret"  maxlength="6">
 				</div>
 				<div class="form-group">
 				<input type="submit" value="인증하기" required>

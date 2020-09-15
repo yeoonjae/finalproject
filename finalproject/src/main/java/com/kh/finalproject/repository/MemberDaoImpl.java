@@ -115,7 +115,8 @@ public class MemberDaoImpl implements MemberDao{
 		// TODO Auto-generated method stub
 		Map<String,Object> map =new HashMap<String,Object>();
 		map.put("member_no", no);
-		map.put("member_pw", member_pw);
+		map.put("member_pw", encoder.encode(member_pw));
+		
 		sqlSession.update("member.changePw", map);
 
 	}

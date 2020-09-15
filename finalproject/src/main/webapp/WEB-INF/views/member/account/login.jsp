@@ -41,16 +41,16 @@
             var setCookieYN = getCookie("setCookieYN");
             
             if(setCookieYN == 'Y') {
-                $("#emailSaveCheck").prop("checked", true);
+                $("#idSaveCheck").prop("checked", true);
             } else {
-                $("#emailSaveCheck").prop("checked", false);
+                $("#idSaveCheck").prop("checked", false);
             }
             
             $("#inputEmail").val(userInputEmail); 
             
             //로그인 버튼 클릭
             $('#loginbtn').click(function() {
-                if($("#emailSaveCheck").is(":checked")){ 
+                if($("#idSaveCheck").is(":checked")){ 
                     var userInputEmail = $("#inputEmail").val();
                     setCookie("userInputEmail", userInputEmail, 60); 
                     setCookie("setCookieYN", "Y", 60);

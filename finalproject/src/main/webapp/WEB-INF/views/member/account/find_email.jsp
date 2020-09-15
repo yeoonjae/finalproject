@@ -20,7 +20,7 @@
 			<form action="${pageContext.request.contextPath}/member/account/find_email" method="post">
 				<div class="form-group">
 				회원 이름:
-				<input type="text" class="form-control" name="member_name">
+				<input type="text" class="form-control" name="member_name" placeholder="2~7자의 한글로 입력하세요" maxlength="21">
 				</div>
 				<div class="form-group">
 				<input type="submit" value="이메일 찾기" required>
