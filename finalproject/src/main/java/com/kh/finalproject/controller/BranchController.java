@@ -147,6 +147,10 @@ public class BranchController {
 		return "admin/branch/member_list";
 	}
 	
-	//사진 띄우기
+	//지점 이미지 삭제
+	@GetMapping("/deleteImg")
+	public void deleteImg(@RequestParam int branch_img_no) {
+		branchDao.deleteImg(branch_img_no);
+	}
 	
 }

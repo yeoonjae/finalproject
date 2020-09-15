@@ -9,6 +9,8 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.entity.BranchDto;
@@ -100,6 +102,12 @@ public class BranchDaoImpl implements BranchDao{
 	//지점별 회원 조회
 	public List<MemberDto> getMemberList(int branch_no) {
 		return sqlSession.selectList("branch.memberList", branch_no);
+	}
+
+	//지점 이미지 삭제
+	public void deleteImg(@RequestParam int branch_img_no) {
+		sqlSession.delete("branchImg.delete", branch_img_no);
+		System.out.println("Test Controller 삭제완료");
 	}
 
 }

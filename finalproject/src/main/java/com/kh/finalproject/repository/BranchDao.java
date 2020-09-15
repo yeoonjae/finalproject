@@ -24,4 +24,6 @@ public interface BranchDao {
 	void delete(int branch_no);
 	//지점별 회원 조회
 	List<MemberDto> getMemberList(int branch_no);
+	//지점 이미지 삭제
+	void deleteImg(int branch_img_no);
 }

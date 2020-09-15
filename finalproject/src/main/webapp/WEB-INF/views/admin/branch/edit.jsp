@@ -25,17 +25,11 @@
 			$(".delete-img").click(function(){
 				var branchImgNo = $(this).prev().val();
 				if (confirm('해당 사진을 삭제하시겠습니까?')) {
-					location.href = "${pageContext.request.contextPath}/test/branch/deleteImg?branch_img_no="+ branchImgNo;
+					location.href = "${pageContext.request.contextPath}/admin/branch/deleteImg?branch_img_no="+ branchImgNo;
 					location.reload();
 				} else {
 					this.preventDefault();
 				}
-// 				axios({
-// 					url:"${pageContext.request.contextPath}/test/branch/deleteImg?branch_img_no="+ branchImgNo,
-// 					method : "get"
-// 				}).then(function(response){
-// 					console.log("삭제완료");
-// 				})
 			});
 		});
 	</script>
@@ -108,7 +102,22 @@
 								<c:forEach var="branchImg" items="${branchImg}">
 										${branchImg.branch_img_name}(${branchImg.branch_img_size})
 										<input type="hidden" class="branchImgNo" value="${branchImg.branch_img_no}">
+<!-- 										<button type="button" class="btn btn-danger btn-sm viewImg" >사진보기</button> -->
 										<button type="button" class="btn btn-danger btn-sm delete-img">삭제</button><br>
+										
+										<!-- 사진 모달 -->
+										<div class="modal" id="inbox-modal">
+											<div class="modal-dialog">
+											       <div class="modal-content">
+											            <div class="modal-body">
+											                <h6 class="modal-title inbox-content"></h6>  
+											            </div>
+											            <div class="modal-footer">
+											                <button type="button" class="btn btn-outline-danger close-btn" data-dismiss="modal">닫기</button>
+											            </div>
+											       </div>
+											 </div>
+										</div>
 							</c:forEach>
 							</c:otherwise>
 						</c:choose>

@@ -182,11 +182,4 @@ public class TestController {
 		return sqlSession.selectOne("message.memberReadCount", member_no);
 	}
 	
-	
-	//지점이미지 삭제
-	@GetMapping("/branch/deleteImg")
-	public void deleteImg(@RequestParam int branch_img_no) {
-		sqlSession.delete("branchImg.delete", branch_img_no);
-		System.out.println("Test Controller 삭제완료");
-	}
 }
