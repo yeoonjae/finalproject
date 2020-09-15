@@ -133,7 +133,12 @@
 							<input class="form-control" type="text" name="branch_detail_addr" value="${branchDto.branch_detail_addr}" required>			
 						</td>
 					</tr>
-					
+					<tr>
+						<th scope="row">전화번호</th>
+						<td>
+							<input class="form-control" type="text" name="branch_phone" value="${branchDto.branch_phone}" required>
+						</td>
+					</tr>
 					<tr>
 						<th scope="row">평수</th>
 						<td><input class="form-control" type="text" name="branch_size" value="${branchDto.branch_size}"></td>
@@ -166,19 +171,19 @@
 <!-- 										<button type="button" class="btn btn-danger btn-sm viewImg" >사진보기</button> -->
 										<button type="button" class="btn btn-danger btn-sm delete-img">삭제</button><br>
 										
-<!-- 										사진 모달 -->
-<!-- 										<div class="modal" id="inbox-modal"> -->
-<!-- 											<div class="modal-dialog"> -->
-<!-- 											       <div class="modal-content"> -->
-<!-- 											            <div class="modal-body"> -->
-<!-- 											                <h6 class="modal-title inbox-content"></h6>   -->
-<!-- 											            </div> -->
-<!-- 											            <div class="modal-footer"> -->
-<!-- 											                <button type="button" class="btn btn-outline-danger close-btn" data-dismiss="modal">닫기</button> -->
-<!-- 											            </div> -->
-<!-- 											       </div> -->
-<!-- 											 </div> -->
-<!-- 										</div> -->
+										<!-- 사진 모달 -->
+										<div class="modal" id="inbox-modal">
+											<div class="modal-dialog">
+											       <div class="modal-content">
+											            <div class="modal-body">
+											                <h6 class="modal-title inbox-content"></h6>  
+											            </div>
+											            <div class="modal-footer">
+											                <button type="button" class="btn btn-outline-danger close-btn" data-dismiss="modal">닫기</button>
+											            </div>
+											       </div>
+											 </div>
+										</div>
 							</c:forEach>
 							</c:otherwise>
 						</c:choose>

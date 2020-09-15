@@ -31,6 +31,7 @@
 </style>
 <script>
 	$(function(){
+		//parameter받아오는 코드
 		var getUrlParameter = function getUrlParameter(sParam) {
 		    var sPageURL = window.location.search.substring(1),
 		        sURLVariables = sPageURL.split('&'),

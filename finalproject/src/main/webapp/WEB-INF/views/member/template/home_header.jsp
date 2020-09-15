@@ -72,8 +72,7 @@
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                             <i class="fa fa-bars"></i>
                         </button>
-                        <a class="navbar-brand" href="#brand">
-
+                        <a class="navbar-brand" href="${pageContext.request.contextPath}/member/">
                             <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-display m-top-10" alt="">
                             <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-scrolled" alt="">
 
@@ -87,14 +86,12 @@
               
                             <li><a href="#about">소개글</a></li>                    
                             <li><a href="#service">공지사항</a></li>                    
-                            <li><a href="#portfolio">지점 스토리</a></li>                    
+                            <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>                    
                             <li><a href="#pricing">가맹 문의</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/account/join">회원가입</a></li>                      
                             <li><a href="${pageContext.request.contextPath}/member/account/login">로그인</a></li>                      
-<!--                             <li><a href="#blog">Blog</a></li>                     -->
-<!--                             <li><a href="#contact">Contact</a></li>   -->
                         </ul>
-                    </div><!-- /.navbar-collapse -->
+                    </div>
                 </div>  
  
 

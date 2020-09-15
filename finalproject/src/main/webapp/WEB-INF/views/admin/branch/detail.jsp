@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/swiper/css/swiper.min.css">
 	<style>
 		.table{
 			text-align: center;
@@ -39,6 +40,7 @@
 
 	</style>
 <div id="content-wrapper">
+
 <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fabric@3.6.3/dist/fabric.js"></script>
     <script src="${pageContext.request.contextPath}/resources/swiper/js/swiper.min.js"></script>
@@ -102,12 +104,16 @@
 						<td>${branchDto.branch_no}</td>
 					</tr>
 					<tr>
+						<th scope="row">지점 관리자</th>
+						<td>${branchDto.admin_name}</td>
+					</tr>
+					<tr>
 						<th scope="row">주소</th>
 						<td>[${branchDto.branch_post}]${branchDto.branch_basic_addr}</td>
 					</tr>
 					<tr>
-						<th scope="row">지점 관리자</th>
-						<td>${branchDto.admin_name}</td>
+						<th scope="row">전화번호</th>
+						<td>${branchDto.branch_phone}</td>
 					</tr>
 					<tr>
 						<th scope="row">평수</th>
@@ -135,9 +141,9 @@
 <!-- 					<tr> -->
 <!-- 						<td scope="row"> -->
 <!-- 						 	<div class="swiper-container"> -->
-<!-- 					        필수 영역 -->
+<!-- <!-- 					        필수 영역 --> 
 <!-- 					        <div class="swiper-wrapper"> -->
-<!-- 					            배치되는 이미지 또는 화면 -->
+<!-- <!-- 					            배치되는 이미지 또는 화면 --> 
 <!-- 					            <div class="swiper-slide"> -->
 <!-- 					                <img src = "https://placeimg.com/600/300/animal"> -->
 <!-- 					            </div> -->
@@ -148,10 +154,10 @@
 <!-- 					                <img src = "https://placeimg.com/600/300/tech"> -->
 <!-- 					            </div> -->
 <!-- 					        </div> -->
-<!-- 					        페이지 위치 표시 영역(선택) -->
+<!-- <!-- 					        페이지 위치 표시 영역(선택) --> 
 <!-- 					        <div class="swiper-pagination"></div> -->
 					  
-<!-- 					        이전/다음 버튼 (선택) -->
+<!-- <!-- 					        이전/다음 버튼 (선택) --> 
 <!-- 					        <div class="swiper-button-prev"></div> -->
 <!-- 					        <div class="swiper-button-next"></div> -->
 <!-- 					      </div> -->

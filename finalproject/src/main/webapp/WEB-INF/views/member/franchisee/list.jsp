@@ -14,8 +14,12 @@
 		float: right;
     	width: 59.44%;
 	}
+	.table-th{
+		width: 81px;
+		
+	}
 </style>
-<section id="hello" class="home bg-mega">
+			<section id="hello" class="home bg-mega">
                 <div class="overlay"></div>
                 <div class="container" style="height: 400px;">
                     <div class="row">
@@ -35,7 +39,7 @@
                             <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
                                 <div class="head_title text-center">
                                     <h2>공도리 스터디카페 지점 안내</h2>
-                                    <div class="separator_auto"></div>
+                                    <div class="separator_auto" style="width: 400px;"></div>
                                 </div>
                             </div>
                             <!-- 전체 감싸는 영역 -->
@@ -43,7 +47,7 @@
 								<!-- 지점 ul을 감싸는 영역 -->
 								<div class="ul-wrapper">
 									<ul>
-									<c:forEach var="branchList" items="${list})">
+									<c:forEach var="branchList" items="${list}">
 										<li>
 											<!-- 하나의 지점을 감싸는 box -->
 											<div class="box">
@@ -53,17 +57,31 @@
 												</div>
 												<!-- 지점 정보(right) -->
 												<div class="franchisee-list">
-													<h3>${branchList.branch_name}</h3>
+													<h3 style="font-size: 23px;">${branchList.branch_name}</h3>
 													 <table class="table">
 						                            	<tbody>
 						                            		<tr>
-						                            			<th>주소</th>
-						                            			<td>[${branchList.local_name}]${branchList.branch_basic_addr} ${branchList.branch_detail_addr}</td>
+						                            			<th class="table-th">주소</th>
+						                            			<td style="font-size: 15px;">[${branchList.local_name}] ${branchList.branch_basic_addr} ${branchList.branch_detail_addr}</td>
+						                            		</tr>
+						                            		<tr>
+						                            			<th class="table-th">전화번호</th>
+						                            			<td style="font-size: 15px;">${branchList.branch_phone}</td>
+						                            		</tr>
+						                            		<tr>
+						                            			<th class="table-th">영업시간</th>
+						                            			<td style="font-size: 15px;">연중 무휴 24시간</td>
 						                            		</tr>
 						                            	</tbody>
 						                            </table>
+						                            <div style="float: right;">
+						                            	<a href="${pageContext.request.contextPath}/member/franchisee/detail?branch_no=${branchList.branch_no}">
+						                            		<button class="btn">매장정보 상세보기</button>
+						                            	</a>
+						                            </div>
 												</div>
 											</div>
+											<br><br>
 										</li>
 									</c:forEach>
 									</ul>

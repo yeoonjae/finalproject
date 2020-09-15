@@ -141,6 +141,12 @@
 							<input class="form-control" type="text" name="branch_detail_addr" placeholder="상세주소" required>
 						</div>
 						
+						<!-- 전화번호 입력 -->
+						<div class="form-group">
+							<label for="branchPhone">전화번호</label> 
+							<input class="form-control" type="number" id="branchPhone" name="branch_phone" placeholder="숫자만 적어주세요" required>
+						</div>
+						
 						<!-- 지점 내부 정보 입력 -->
 						<div class="form-group">
 							<label for="branchSize">평수</label> 

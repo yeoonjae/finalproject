@@ -19,6 +19,7 @@ public class BranchDto {
 	private String branch_post;
 	private String branch_basic_addr;
 	private String branch_detail_addr;
+	private String branch_phone;
 	private String branch_layout;
 	
 	private String local_name;
