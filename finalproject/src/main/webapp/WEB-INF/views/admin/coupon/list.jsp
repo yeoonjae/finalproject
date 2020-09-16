@@ -15,12 +15,15 @@
 		}
 		.coupon_issue.red{
 			color: red;
+			font-weight: 900;
 		}
 		.coupon_issue.blue{
 			color: blue;
+			font-weight: 900;
 		}
 		.coupon_issue.navy{
 			color: navy;
+			font-weight: 900;
 		}
 	</style>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script>
@@ -29,6 +32,8 @@
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
 	<script>
 		$(function(){
+			$('.modal').modal('hide');
+			
 			// 구분에 따라 글자 색상 설정
 			$.each($(".coupon_issue"), function(i){
 				var td = $(this).text();
@@ -87,10 +92,7 @@
 					e.preventDefault();
 					alert("이미 발급된 쿠폰은 수정할 수 없습니다");
 				} else {
-					if(confirm("수정 하시겠습니까?")){
-	            	} else {
-	            		e.preventDefault();
-	            	}
+					$(".modal").modal("show");
 				}
 			});
 			
@@ -118,13 +120,13 @@
             	<li class="breadcrumb-item active">조회</li>
             </ol>
             <div class="row">
-                <div class="offset-md-2 col-md-8 offset-sm-2 col-sm-8">
+                <div class="offset-md-1 col-md-10 offset-sm-1 col-sm-10">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a class="nav-link nav-all active" data-toggle="tab" href="#all">전체 대상</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link nav-branch disabled" data-toggle="tab" href="#branch">지점별 발급현황</a>
+                            <a class="nav-link nav-branch disabled" data-toggle="tab" href="#branch">지점 대상</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">지점선택</a>
@@ -151,9 +153,9 @@
                                             </th>
                                             <th>발급대상</th>
                                             <th>쿠폰명</th>
+                                            <th>할인률(%)</th>
                                             <th>기간</th>
                                             <th>발급일</th>
-                                            <th>비고</th>
                                         </tr>
                                     </thead>
                                     <tbody class="list-wrap">
@@ -169,6 +171,7 @@
 	                                        	</c:otherwise>
                                         	</c:choose>
                                             <td>${couponDto.coupon_name}</td>
+                                            <td>${couponDto.coupon_discount}</td>
                                             <td>
                                                 <p>
                                                     ${couponDto.coupon_start}
@@ -178,14 +181,6 @@
                                                 </p>
                                             </td>
                                             <td>${couponDto.coupon_date}</td>
-                                            <td>
-                                                <a href="edit?coupon_no=${couponDto.coupon_no}">
-                                                    <button class="btn btn-primary btn-edit" data-issue="${couponDto.coupon_issue}">수정</button>
-                                                </a>
-                                                <a href="delete/${couponDto.coupon_no}">
-                                                    <button class="btn btn-primary btn-delete" data-issue="${couponDto.coupon_issue}">삭제</button>
-                                                </a>
-                                            </td>
                                         </tr>
                                     	</c:forEach>
                                     </tbody>
@@ -194,6 +189,56 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <!-- 수정 모달 -->
+    <div class="modal" id="test-modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">쿠폰 수정</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          				<span aria-hidden="true">&times;</span>
+        			</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
+                                <div class="form-group">
+                                    <!-- 쿠폰 -->
+                                    <label>발급 대상</label> <span class="notice">변경불가</span>
+                                    <input class="form-control" type="text" name="branch_name" readonly>
+                                    <span class="notice">지점 변경을 원하시면 삭제 후 재등록 해주시기 바랍니다.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label>쿠폰명</label>
+                                    <input class="form-control" type="text" name="coupon_name">
+                                </div>
+                                <div class="form-group">
+                                    <label>할인률</label>
+                                    <input class="form-control" type="number" name="coupon_discount">
+                                </div>
+                                <div class="form-group">
+                                    <label>쿠폰 시작일</label>
+                                    <input class="form-control" type="date" name="coupon_start">
+                                </div>
+                                <div class="form-group">
+                                    <label>쿠폰 종료일</label>
+                                    <input class="form-control" type="date" name="coupon_finish">
+                                </div>
+                                <div class="hidden-wrap">
+                                	<input class="group_no" type="hidden" name="group_no">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+			        <button type="button" class="btn btn-sm btn-primary">Save changes</button>
+			        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+			    </div>
             </div>
         </div>
     </div>
