@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.finalproject.entity.MemberBranchDto;
+import com.kh.finalproject.entity.MemberCouponDto;
 import com.kh.finalproject.entity.PayHisDto;
 import com.kh.finalproject.entity.PayInfoDto;
 import com.kh.finalproject.entity.PayPointDto;
-import com.kh.finalproject.entity.PointHisDto;
+
 
 @Repository
 public class PayDaoImpl implements PayDao{
@@ -99,6 +100,7 @@ public class PayDaoImpl implements PayDao{
 		sqlSession.update("pay.changeStatus", tid);		
 	}
 
+	// 결제 취소 후 사용된 포인트 취소 
 	@Override
 	public void rePlusPoint(int member_no, int pay_use_point) {
 		Map<Object, Object> map = new HashMap<>();
@@ -107,7 +109,8 @@ public class PayDaoImpl implements PayDao{
 		sqlSession.update("pay.rePlusPoint", map);
 		
 	}
-
+	
+	// 결제 취소 후 적립된 포인트 취소
 	@Override
 	public void reMinusPoint(int member_no, int reward) {
 		Map<Object, Object> map = new HashMap<>();
@@ -116,6 +119,7 @@ public class PayDaoImpl implements PayDao{
 		sqlSession.update("pay.reMinusPoint", map);
 	}
 
+	// 결제 취소후 마일리지 내역 추가 
 	@Override
 	public void reRegistUsePoint(int member_no, int pay_use_point) {
 		Map<Object, Object> map = new HashMap<>();
@@ -132,6 +136,7 @@ public class PayDaoImpl implements PayDao{
 		sqlSession.insert("pay.reRegistReward", map);
 	}
 
+	// 결제 취소 후 충전된 시간 취소 
 	@Override
 	public void minusCharge(int member_no, int license_time) {
 		Map<Object, Object> map = new HashMap<>();
@@ -140,11 +145,33 @@ public class PayDaoImpl implements PayDao{
 		sqlSession.update("pay.minusCharge", map);	
 	}
 
+	// 주문 상세 조회 
 	@Override
 	public PayInfoDto getPayDetailInfo(String tid) {
 		PayInfoDto payInfoDto = sqlSession.selectOne("pay.getPayDetailInfo",tid);
 		return payInfoDto;
 	}
+
+	// 회원 보유 쿠폰 목록 조회 
+	@Override
+	public List<MemberCouponDto> coupon_getList(int member_no) {
+		return sqlSession.selectList("pay.coupon_getList",member_no);
+	}
+
+	// 결제 후 사용한 쿠폰 삭제 
+	@Override
+	public void deleteCoupon(int member_no, int coupon_no) {
+		Map<Object, Object> map = new HashMap<>();
+		map.put("member_no", member_no);
+		map.put("coupon_no",coupon_no);
+		sqlSession.delete("pay.deleteCoupon",map);
+	}
+
+	@Override
+	public void addCoupon(PayInfoDto payInfoDto) {
+		sqlSession.insert("pay.addCoupon",payInfoDto);
+	}
+	
 
 
 

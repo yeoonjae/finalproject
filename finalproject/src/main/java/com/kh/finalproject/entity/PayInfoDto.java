@@ -23,4 +23,7 @@ public class PayInfoDto {
 	private String pay_his_state;
 	private int pay_use_point;
 	private int reward;
+	private int coupon_discount;
+	private int coupon_no;
+	private int branch_no;
 }

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalproject.entity.LicenseDto;
 import com.kh.finalproject.entity.MemberBranchDto;
+import com.kh.finalproject.entity.MemberCouponDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PayInfoDto;
 import com.kh.finalproject.repository.LicenseDao;
@@ -43,6 +44,9 @@ public class PayController {
 		// 회원 지점명 가져오기 
 		MemberBranchDto memberBranchDto = payDao.getBranch(member_no);
 		model.addAttribute("memberBranchDto",memberBranchDto);
+		
+		List<MemberCouponDto> list2 = payDao.coupon_getList(member_no);
+		model.addAttribute("list2", list2);	
 		
 		return "member/pay/pay_main";
 	}

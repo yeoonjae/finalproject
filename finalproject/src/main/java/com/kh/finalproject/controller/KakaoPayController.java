@@ -52,6 +52,8 @@ public class KakaoPayController {
 	@PostMapping("/prepare")
 	public String prepare(@RequestParam int license_time, //이용권 시간 
 										@RequestParam int license_no, // 이용권 번호 
+										@RequestParam int coupon_no, // 쿠폰 번호 
+										@RequestParam int coupon_discount2, //쿠폰 할인 금액 
 										@RequestParam int sale_price, //총 할인 금액
 										@RequestParam int use_point2, //사용한 마일리지
 										@RequestParam int reward, // 적립금
@@ -81,9 +83,12 @@ public class KakaoPayController {
 		session.setAttribute("sale_price", sale_price);
 		session.setAttribute("use_point2", use_point2); // 사용 마일리지
 		session.setAttribute("reward", reward); // 적립 마일리지
+		session.setAttribute("coupon_discount2", coupon_discount2); // 쿠폰 할인 금액 
+		session.setAttribute("coupon_no", coupon_no); // 쿠폰 번호 
 		
 		return "redirect:" + resultVO.getNext_redirect_pc_url();
 	}
+	
 	
 	// 결제 승인 
 	@GetMapping("/success")
@@ -101,6 +106,8 @@ public class KakaoPayController {
 		int sale_price = (int) session.getAttribute("sale_price");
 		int use_point2 = (int) session.getAttribute("use_point2");
 		int reward = (int) session.getAttribute("reward");
+		int coupon_discount2 = (int) session.getAttribute("coupon_discount2");
+		int coupon_no = (int) session.getAttribute("coupon_no");
 		
 		// 승인 요청 발송 
 		KakaoPayFinishVO finishVO = kakaoPayService.approve(partner_order_id, partner_user_id, pg_token, tid);
@@ -131,8 +138,12 @@ public class KakaoPayController {
 																		.member_no(member_no)
 																		.pay_use_point(use_point2)
 																		.reward(reward)
+																		.coupon_discount(coupon_discount2)
+																		.coupon_no(coupon_no)
 																	.build();
 		payDao.payPointRegist(payPointDto);		
+		
+		//회원 충전 시간 업데이트 
 		payDao.addCharge(member_no, license_time);
 		
 		if(use_point2>0) {
@@ -146,6 +157,9 @@ public class KakaoPayController {
 			payDao.plusPoint(payPointDto);
 			//마일리지 내역 추가 
 			payDao.registReward(payPointDto);
+		}
+		if(coupon_no!=0) { // 쿠폰이 선택 된 경우 
+			payDao.deleteCoupon(member_no, coupon_no);
 		}
 		
 		return "redirect:pay_success";
@@ -220,7 +234,8 @@ public class KakaoPayController {
 			int license_time = payInfoDto.getLicense_time();
 			int reward = payInfoDto.getReward();
 			int pay_use_point = payInfoDto.getPay_use_point();
-					
+			int coupon_no = payInfoDto.getCoupon_no(); 
+			
 			MemberDto memberDto = (MemberDto) session.getAttribute("memberinfo"); 
 			int member_no = memberDto.getMember_no();
 			
@@ -237,9 +252,13 @@ public class KakaoPayController {
 				payDao.rePlusPoint(member_no, pay_use_point);
 				payDao.reRegistReward(member_no, reward);
 			}
+			// 사용된 쿠폰 재 지급
+			if(coupon_no!=0){
+				payDao.addCoupon(payInfoDto);
+			}
 			return "redirect:delete_finish";
 		}
-		
+
 		@GetMapping("/delete_finish")
 		public String delete_finish() {
 			

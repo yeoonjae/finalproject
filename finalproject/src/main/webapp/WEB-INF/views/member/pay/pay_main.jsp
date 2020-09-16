@@ -22,9 +22,53 @@
 <script>
 	$(function() {
 
-		// 이용권 선택
+		$(".use_coupon").change(function(){
+			if (isChecked() == false) {
+				alert("상품을 선택하세요.");
+				$(".use_coupon").val("0");
+			} 
+			else {
+					
+			//이용권 가격 읽어오기 
+			var license_price = parseInt($("input[name=license]:checked").data("price"));
+			var coupon_no = $(this).data().no;
+			console.log(coupon_no);
+// 			// 쿠폰 할인율 
+// 			var coupon_discount = $(this).data().discount;
+// 			console.log(coupon_discount);
+			
+			// 최종 결제금액 설정 
+			var total_price = calcResult();			
+			$(".total_price").text(total_price); 
+			// 최종 할인금액 설정
+			var sale_price = salePrice();			
+			//적립금 계산 
+			var reward = pointReward();
+			$(".reward").text(reward);
+			
+			//쿠폰 할인 금액 설정 + 카카오페이 전송 
+			var coupon_discount = calcCouponDiscount();
+ 			$(".coupon_total").text(coupon_discount); 
+			
+			// 카카오페이에 전송
+			$(".total_amount").val(total_price);
+			$(".sale_price").val(sale_price);
+			$(".reward").val(reward);
+			$(".coupon_no").val(coupon_no); // 쿠폰 번호 전송 
+			$(".coupon_discount2").val(coupon_discount); // 쿠폰 할인 금액 전송 
+			}
+		});
+		
+		/////////////////  이용권 선택
 		$(".license_type").change(function() {
-
+			
+			//쿠폰 할인 금액 설정 + 카카오페이 전송 
+			var coupon_discount = calcCouponDiscount();
+ 			var coupon_no = $(".use_coupon").data().no;
+			$(".coupon_total").text(coupon_discount); 
+			$(".coupon_discount2").val(coupon_discount);
+ 			$(".coupon_no").val(coupon_no);
+			
 			var price = $(this).data().price; // 가격 불러오기 
 			var time = parseInt($(this).data().time);// 시간 불러오기 
 			var price2 = price.toLocaleString();// 세자리 단위로 , 붙이기
@@ -57,7 +101,7 @@
 			
 		});
 
-		// 마일리지 값 입력
+		////////////////    마일리지 값 입력
 		$(".use_point").on("input", function() {
 			// 상품이 선택되어 있지 않은 경우 경고창 띄우기 
 			if (isChecked() == false) {
@@ -65,6 +109,12 @@
 				$(".use_point").val("");
 			} 
 			else {
+				//쿠폰 할인 금액 설정 + 카카오페이 전송 
+				var coupon_discount = calcCouponDiscount();
+	 			$(".coupon_total").text(coupon_discount); 
+				$(".coupon_discount").val(coupon_discount);
+				
+				
 				var totalPrice = calcResult(); //최종 결제 금액 계산값 읽어오기
 				var license_price = $("input[name=license]:checked").data("price");
 				var use_point = parseInt($(this).val()); // 입력 마일리지 값 읽어오기 
@@ -118,19 +168,21 @@
 				$(".use_point2").val(use_point);
 				$(".reward").val(reward);
 				
-				console.log("총가격"+totalPrice);
-				console.log("적립"+reward);
-				console.log("사용포인트"+use_point);
 			}
 		});
 
-		// 마일리지 전액 사용 버튼 선택  
+		//////////////////  마일리지 전액 사용 버튼 선택  
 		$(".use_all_point").click(function() {
 			if (isChecked() == false) {
 				alert("상품을 선택하세요.");
 				$(".use_point").val("");
 			} 
 			else {
+				//쿠폰 할인 금액 설정 + 카카오페이 전송 
+				var coupon_discount = calcCouponDiscount();
+	 			$(".coupon_total").text(coupon_discount); 
+				$(".coupon_discount").val(coupon_discount);
+				
 				// 총 결제금액 계산  
 				var total_price = calcResult();
 				var point = $(this).data().point;
@@ -163,12 +215,9 @@
 				$(".sale_price").val(sale_price);
 				$(".use_point2").val(point);
 				$(".reward").val(reward);
-				
-				console.log("총가격"+total_price);
-				console.log("적립"+reward);
-				console.log("사용포인트"+point);
+
 			}
-		});
+		});		
 
 	});
 
@@ -176,10 +225,37 @@
 	// - 상품 정보 확인
 	// - 마일리지 여부 확인
 	// - 최종 금액 계산
-	function calcResult() {
+	
+	//쿠폰만 사용할 경우 
+	function calcCoupon() {
 		var license = $("input[name=license]:checked").data("price");
+		var discount = $("input[name=use_coupon]:checked").data("discount");
+		
+		var total_coupon_price = parseInt(license) * (parseInt(100) - parseInt(discount)) * 0.01;
+		total_coupon_price = parseInt(total_coupon_price);
+		
+		//쿠폰 사용 후 총 금액 
+		return total_coupon_price;
+	}
+	
+	function calcCouponDiscount() {
+		var license = $("input[name=license]:checked").data("price");
+		var discount = $("input[name=use_coupon]:checked").data("discount");
+		
+		var coupon_discount =  (parseInt(license) * parseInt(discount)) * 0.01; 
+		coupon_discount = parseInt(coupon_discount);
+		
+		//console.log("쿠폰 할인~~~~ :"+coupon_discount)
+		//쿠폰 할인 금액
+		return coupon_discount;
+	}
+	
+	// 쿠폰 + 마일리지 할인 총 금액 
+	function calcResult() {
+		var price = calcCoupon(); // 쿠폰 사용 후 총 금액 (마일리지X)	
+		//var license = $("input[name=license]:checked").data("price");// 이용권 가격 
 		var point = $("input.use_point").val() || 0;
-		var total_price = parseInt(license) - parseInt(point);
+		var total_price = parseInt(price) - parseInt(point);
 		
 		return total_price;
 	}
@@ -187,7 +263,6 @@
 	// 체크 여부 판단
 	function isChecked() {
 		var is = $("input:radio[name='license']").is(":checked");
-		//console.log(is);
 		return is; // 체크가 되어있지 않으면 false반환
 	}
 
@@ -195,16 +270,17 @@
 	function pointReward() {
 		var total_price = $(".total_price").text();
 		var reward = parseInt(parseInt(total_price) * 0.02);
-		//console.log(reward);
-
 		return reward;
 	}
 	
 	// 할인 금액 계산 
 	function salePrice(){
+		var license = $("input[name=license]:checked").data("price");
 		var point = $("input.use_point").val() || 0;
-		var coupon = 0;		
-		var sum = parseInt(point) + parseInt(coupon);
+		
+		// 총가격 - (쿠폰 할인 금액) = 총 쿠폰 할인받은 금액 
+		var coupon = parseInt(license)-parseInt(calcCoupon());		
+		var sum = parseInt(point) + parseInt(coupon);		
 		return sum;
 	}
 
@@ -213,28 +289,28 @@
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
-/* 	input[type="radio"]:checked + .fontBold{ */
-/* 			font-weight: bold; */
-/* 	} */
-
-/* 	.container{ */
-/* 		box-sizing:border-box; */
-/* 		width: 100%; */
-/* 		height: auto; */
-/* 		margin-bottom:10%; */
-/* 		margin-top:5%; */
-/* 		padding-left:3%; */
-/* 		padding-right:3%; */
-/* 		font-family:'Noto Sans KR'; */
-/* 	} */
 .container {
 	font-family: 'Noto Sans KR';
 }
 
+.normal{
+	font-size:13px;  
+	color:#4f4d48;
+}
+
+.red{
+	color:red; 
+}
 .bold {
 	font-weight: bold;
 }
+.date{
+	color:#a6a6a6;
+}
 
+.margin20{
+	margin-left:20px; 
+}
 .padding10 {
 	padding-left: 10%;
 }
@@ -261,7 +337,7 @@
 
 .detail {
 	padding-left: 5%;
-	padding-right: 5%;
+	padding-right: 5%; 
 	padding-top: 5%;
 	color: #4f4d48;
 }
@@ -272,10 +348,11 @@
 }
 
 .use_design {
-	width: 40%;
+	width: 45%; 
 	height: 50px;
 	border: 1px solid #ebebeb;
 	font-size: 17px;
+	margin-left:20px; 
 }
 
 .use_point {
@@ -293,11 +370,14 @@
 .result {
 	box-sizing: border-box;
 	background-color: #f7f7f7;
-	width: 38%;
-	padding: 5%;
-	/*  		position:fixed;  */
-	/*  		right: 17%;  */
-	/*  		bottom:20px;  */
+	width: 28%;  
+	padding-left: 4%;
+	padding-right: 4%;  
+	padding-top:2%;
+	padding-bottom:1%;
+	position:fixed; 
+	right: 17%;  
+	top:13%; 
 }
 
 .licenseContainer {
@@ -305,17 +385,35 @@
 	height: 10px;
 }
 
-.licenseTime {
+.couponContainer{
+	width:100%;   
+	height: 30px;
+/* 	border: 1px solid red; */
+}
+
+.coupon{
 	text-align: left;
-	width: 60%;
-	padding-top: 2%;
+	width: 100%; 
+	padding:3%;
 	font-size: 17px;
 }
 
-.licensePrice {
+.font14{
+	font-size:15px;
+}
+
+.licenseTime {
 	text-align: left;
 	width: 40%;
-	padding-top: 2%;
+	padding-top: 1%;
+	padding-left:2%;
+	font-size: 17px;
+}
+ 
+.licensePrice {
+	text-align: left;
+	width: 60%;
+	padding-top: 1%;
 	font-size: 17px;
 }
 
@@ -362,15 +460,14 @@
 	width: 60%;
 }
 </style>
+
+
 <main>
 	<section>
 		<div class="container">
 			<div class="row">
 				<div class="main_service roomy-100">
 					<div>
-						<!-- 			<h1>이용권 결제</h1> -->
-						<hr>
-
 						<!--  총 결제금액  -->
 						<div class="result float_right">
 
@@ -378,19 +475,20 @@
 							<table class="resultContainer">
 								<tr>
 									<td class="resultType">상품 금액</td>
-									<td class="resultPrice"><span class="resultFont price">0원</span>
+									<td class="resultPrice">
+									<span class="resultFont price">0원</span>
 									</td>
 								</tr>
 								<tr>
 									<td class="resultType">쿠폰 할인</td>
-									<td class="resultPrice">(-) <span></span> <span>원</span>
+									<td class="resultPrice">(-) 
+									<span class="resultFont coupon_total"></span> <span>원</span>
 									</td>
 								</tr>
 								<tr>
 									<td class="resultType">마일리지 사용</td>
 									<td class="resultPrice">(-) 
-									<span
-										class="resultFont use_point"></span> <span>원</span>
+									<span class="resultFont use_point"></span> <span>원</span>
 									</td>
 								</tr>
 								<tr>
@@ -431,6 +529,8 @@
 								<!--  카카오페이에 상품명, 총 금액 전송  -->
 								<form action="prepare" method="post">
 									<input type="hidden" name="reward" class="reward"><!--  적립금  -->
+									<input type="hidden" name="coupon_discount2" class="coupon_discount2"><!--  쿠폰 할인 금액  -->
+									<input type="hidden" name="coupon_no" class="coupon_no"><!--  쿠폰 번호 (삭제 위함)  -->
 									<input type="hidden" name="use_point2" class="use_point2"> <!--  사용한 마일리지  -->
 									<input type="hidden" name="sale_price" class="sale_price"><!-- 할인 금액 -->
 									<input type="hidden" name="license_time" class="license_time"> <!-- 이용권 번호 -->
@@ -443,46 +543,31 @@
 
 						</div>
 
-
-						<div>
+						
 							<!-- 이용권 선택  -->
-							<div>
-								<h4 class="bold">상품 선택</h4>
-
-								<div class="col-md-6">
-									<div class="about_accordion wow fadeIn">
-										<div id="faq_main_content" class="faq_main_content">
-											<h6>
-												<i class="fa fa-angle-right"></i>상품을 선택하세요.
-											</h6>
-											<div>
-												<div class="content">
-													<c:forEach var="licenseDto" items="${list}">
-														<table class="licenseContainer">
-															<tr>
-																<td class="licenseTime"><input type="radio"
-																	class="license_type" name="license"
-																	data-time="${licenseDto.license_time}"
-																	data-price="${licenseDto.license_price}"
-																	data-no="${licenseDto.license_no}"> <span
-																	class="padding7 fontBold">${licenseDto.license_time}시간</span>
-																</td>
-																<td class="licensePrice">
-																<span class="fontBold"><fmt:formatNumber value="${licenseDto.license_price}" pattern="#,###" />원</span>
-																</td>
-															</tr>
-														</table>
-													</c:forEach>
-												</div>
-												<!-- End off accordion item-1 -->
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-
-							<hr align="left" class="width50">
+						<div class="subContainer">
+								<h4 class="bold">상품 선택</h4> 
+								<div>
+									<c:forEach var="licenseDto" items="${list}">
+										<table class="licenseContainer">
+											<tr>
+												<td class="licenseTime">
+												<input type="radio" class="license_type" name="license"
+													data-time="${licenseDto.license_time}"
+													data-price="${licenseDto.license_price}"
+													data-no="${licenseDto.license_no}"> <span
+													class="padding7 fontBold">${licenseDto.license_time}시간</span>
+												</td>
+												<td class="licensePrice">
+												<span class="fontBold"><fmt:formatNumber value="${licenseDto.license_price}" pattern="#,###" />원</span>
+												</td>
+											</tr>
+										</table>
+									</c:forEach>
+									</div>																
+							</div> 
+							<hr align="left" class="width50 align_left">
+							
 
 
 							<!-- 이용권 구매정보 -->
@@ -511,38 +596,89 @@
 							</div>
 							<hr align="left" class="width50 align_left">
 
-							<!-- 마일리지 사용 -->
+							<!-- 마일리지 및 쿠폰 사용 -->
 							<div class="subContainer">
-								<h4 class="bold">마일리지 사용</h4>
+								<h4 class="bold">마일리지사용</h4>
+								
+								<!--  마일리지 사용  -->
 								<div>
-									<div class="padding5 ">
+									<div class="padding3">
 										<input type="text" class="use_point use_design" placeholder="0원"> 
 										<span> 
 											<input type="button" class="use_all_point btn btn-primary" data-point=" ${memberBranchDto.member_point}" value="전액 사용">
 										</span>
 									</div>
-									<div>
+									<div class="margin20">
 										(사용 가능 마일리지 : <span style="color: red"><fmt:formatNumber value="${memberBranchDto.member_point}" pattern="#,###" />P</span> )
 									</div>
 								</div>
 							</div>
-							<hr align="left" class="width50">
-
-							<!--  쿠폰 사용  -->
-							<div>
-								<h4 class="bold">쿠폰 선택</h4>
-							</div>
-
-
-						</div>
+							<hr align="left" class="width50 align-left">
+						
+						
+						
+						<!--  쿠폰 선택  -->
+						<div>
+							<h4 class="bold">쿠폰선택
+							<span class="normal">(보유쿠폰  : <span class="red">2</span>장)</span> 
+							</h4>
+							<br>
+								<div class="col-md-4"> 
+									<div class="about_accordion wow fadeIn">
+										<div id="faq_main_content" class="faq_main_content">										
+										<!--  상품 선택  -->
+											<h6><i class="fa fa-angle-right"></i>쿠폰을 선택하세요.</h6>
+											<div>
+												<div class="content">
+														<table class="couponContainer">
+															<tr>
+																<td class="coupon">
+																<input type="radio" name="use_coupon" class="use_coupon" checked
+																data-discount="0"
+																data-no="0">														
+																<span class="padding7 fontBold">
+																	쿠폰 선택안함
+																</span>
+																</td>
+															</tr>
+														</table>
+													<c:forEach var="coupon" items="${list2}">
+														<table class="couponContainer">
+															<tr>
+																<td class="coupon">
+																<input type="radio" name="use_coupon" class="use_coupon"
+																	data-name="${coupon.coupon_name}"
+																	data-discount="${coupon.coupon_discount}"
+																	data-no="${coupon.coupon_no}"> 																	
+																<span class="padding7 fontBold">
+																	${coupon.coupon_name} [${coupon.coupon_discount}%]
+																</span>
+																<br>
+																 <span class="padding10 date font14"> 
+																 	${coupon.coupon_start} ~ ${coupon.coupon_finish}
+																</span>
+																</td>
+															</tr>
+														</table>
+													</c:forEach>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>		 
+								
 						<!--End off row -->
-					</div>
 					<!--End off container -->
+					<br><br><br><br>
+					<hr>
+					</div>
 				</div>
 			</div>
 		</div>
-	</section>
-	<!--End off Featured section-->
+
+	</section> 
+	<!--End off Featured section-->	
 </main>
 
 <jsp:include page="/WEB-INF/views/member/template/footer.jsp"></jsp:include>

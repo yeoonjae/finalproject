@@ -180,7 +180,7 @@
 										<td class="bold lg"><fmt:formatNumber
 												value="${payInfoDto.license_price}" pattern="#,###" /></td>
 										<td>-${payInfoDto.pay_use_point}P</td>
-										<td>-0</td>
+										<td>-${payInfoDto.coupon_discount}</td>
 										<td class="red">-<fmt:formatNumber
 												value="${payInfoDto.pay_his_discount}" pattern="#,###" /></td>
 										<td class="blue">+${payInfoDto.reward}P</td>

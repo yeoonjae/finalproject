@@ -4,12 +4,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="pay">
-
+	<!--  회원 지점 조회  -->
 	<select id="getBranch" resultType="memberBranchDto" parameterType="int">
-		SELECT * FROM member m
-		LEFT OUTER JOIN branch b
-		ON m.BRANCH_NO = b.BRANCH_NO
-		WHERE member_no=#{member_no}
+		SELECT *
+		FROM MEMBER m 
+			LEFT OUTER JOIN branch b 
+				ON m.BRANCH_NO = b.BRANCH_NO
+			WHERE member_no=#{member_no}
+	</select>
+
+	<!--  회원 보유 쿠폰 조회 -->
+	<select id="coupon_getList" resultType="memberCouponDto" parameterType="int"> 
+		SELECT *
+		 FROM MEMBER_COUPON mc
+			LEFT OUTER JOIN COUPON c
+				ON c.coupon_NO = mc.coupon_no
+			WHERE mc.member_no=#{member_no} 
 	</select>
 
 	<!--  partner_order_id (가맹점 주문 번호 생성 ) -->
@@ -84,6 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="addCharge" parameterType="map">
 			UPDATE member SET member_charge = member_charge + #{license_time} WHERE member_no=#{member_no}
 	</update>
+	
 	<!--  회원 보유 시간 차감 -->
 	<update id="minusCharge" parameterType="map">
 			UPDATE member SET member_charge = member_charge - #{license_time} WHERE member_no=#{member_no}
@@ -113,12 +124,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			tid_no,
 			member_no,
 			pay_use_point,
-			reward
+			reward, 
+			coupon_discount,
+			coupon_no
 		) VALUES(
 			#{tid_no},
 			#{member_no},
 			#{pay_use_point},
-			#{reward}
+			#{reward},
+			#{coupon_discount},
+			#{coupon_no}
 		)
 	</insert>
 	
@@ -186,5 +201,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{reward}
 		)
 	</insert>
+	
+	<delete id="deleteCoupon" parameterType="map">
+		DELETE member_coupon WHERE member_no=#{member_no} AND coupon_no=#{coupon_no}
+	</delete>
+	
+	<!--  결제 취소 시 사용한 쿠폰 재발급 -->
+	<insert id="addCoupon" parameterType="payInfoDto">
+		INSERT INTO member_coupon(
+			member_no,
+			coupon_no, 
+			branch_no
+		) VALUES(
+			#{member_no},
+			#{coupon_no},
+			#{branch_no}
+		)
+	</insert>
 
 </mapper>
+
+
+
+

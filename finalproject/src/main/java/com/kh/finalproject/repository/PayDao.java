@@ -3,15 +3,19 @@ package com.kh.finalproject.repository;
 import java.util.List;
 
 import com.kh.finalproject.entity.MemberBranchDto;
+import com.kh.finalproject.entity.MemberCouponDto;
 import com.kh.finalproject.entity.PayHisDto;
 import com.kh.finalproject.entity.PayInfoDto;
 import com.kh.finalproject.entity.PayPointDto;
-import com.kh.finalproject.entity.PointHisDto;
+
 
 public interface PayDao {
 	
 	// 회원 번호로 지점명 조회 
 	MemberBranchDto getBranch(int member_no);
+	
+	//회원번호로 회원보유쿠폰 목록 출력 
+	List<MemberCouponDto> coupon_getList(int member_no);
 	
 	//회원 번호로 회원 이메일 조회 
 	String getId(int member_no);
@@ -33,7 +37,6 @@ public interface PayDao {
 	// 결제 성공 후 회원 보유 시간 update 
 	void addCharge(int member_no,int license_time);
 	
-
 	// 결제 적립/차감 내역 point_history에 저장
 	void registUsePoint(PayPointDto payPointDto);
 	void registReward(PayPointDto payPointDto);
@@ -53,4 +56,8 @@ public interface PayDao {
 	void minusCharge(int member_no,int license_time);
 	
 	PayInfoDto getPayDetailInfo(String tid); 
+	
+	void deleteCoupon(int member_no, int coupon_no);
+	void addCoupon(PayInfoDto payInfoDto);
+	
 }

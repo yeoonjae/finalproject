@@ -22,18 +22,27 @@
 <script src="${pageContext.request.contextPath}/resources/qr/qrcode.js"></script>
 <style>
 
+/* 	.qr{ */
+/* 		width:30%; */
+/* 		text-align:center; */
+/* 	} */
+/* 	#qrcode{ */
+/* 		text-align:center; */
+/* 	} */
+	
+	
 </style>
 <script>
 	$(function() {
 
 		// 입실 버튼 클릭 시 
 		$('#in').click(function() {
-
+			document.getElementById("qrcode").innerText="";
 			// 큐알코드 생성
 			var qrcode = new QRCode(document.getElementById("qrcode"), {
 				text : "${sessionScope.memberinfo.member_no}",
-				width : 200, //가로
-				height : 200, //세로
+				width : 150, //가로
+				height : 150, //세로
 				colorDark : "#000000", //qr에서 어두운 색 (보통 검은색) 
 				colorLight : "#ffffff", //qr에서 밝은 색 (보통 하얀색) colorDark 보다 옅어야한다.
 				correctLevel : QRCode.CorrectLevel.H//qr코드 오류복원능력임 (L->M->Q->H)
@@ -61,22 +70,29 @@
 
 </script>
 
-<!--  user 메인 이미지  -->
+
 <section>
 	<div class="container">
 		<div class="row">
 			<div class="roomy-100">
+				<!--  user 메인 이미지  -->
 				<div>
 					<img src="${pageContext.request.contextPath}/resources/m/images/background/study2.jpg" width="100%" height="450px">
 				</div>				
-				<br><br>				
-				<div>
-					<button type="button" id="in" class="btn-primary">입/퇴실하기</button>
+				
+				<br><br>
+				
+				<!-- qr코드 생성 -->
+				<div class="qr">				
+					<div>
+						<button type="button" id="in" class="btn-primary">입/퇴실하기</button>
 <!-- 					<button type="button" id="out" class="btn-primary">퇴실</button> -->
+					</div>
+					<br>
+					<div id="qrcode"></div>
 				</div>
-				<br>
-				<div id="qrcode"></div>
-
+				
+				
 			</div>
 		</div>
 	</div>
