@@ -27,13 +27,25 @@
 		}
 		.type.navy {
 			color: navy;
+			font-weight: 600;
 		}
 		.type.red {
 			color: red;
+			font-weight: 600;
 		}
 		
 		.btn-wrap {
 			text-align: center;
+		}
+		
+		.btn-edit{
+			width: 40%;
+			margin-right:10px;
+		}
+		
+		.btn-list {
+			width: 40%;
+			margin-left:10px;
 		}
 	</style>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script>
@@ -64,6 +76,9 @@
        			$(".point_detail").val($(this).data("detail"));
        			$(".point_score").val($(this).data("score"));   
        			
+       			$(".point_score").attr("readonly", false);
+            	$(".point_detail").attr("readonly", false);
+       			
        			$(".btn-edit").attr("disabled", false);
        			$(".select-result").removeClass("on");
             });
@@ -73,6 +88,7 @@
             	if(!$(".point_score").val() || !$(".point_detail").val()){ // 비어있는 input이 있다면
             		return;
             	}
+            	
             	if(confirm("정말 수정하시겠습니까?")){
             		document.querySelector(".form").submit();
             	} else {
@@ -86,9 +102,12 @@
         	if($(".point_no").val()) {
         		$(".select-result").removeClass("on"); // 선택하라는 span 안보이게
         		$(".btn-edit").attr("disabled", false); // 버튼 비활성화
+        		$(".point_score").attr("readonly", false);
+            	$(".point_detail").attr("readonly", false);
         	}
         });
     </script>
+<body>
 <div id="content-wrapper">
 		<div class="container-fluid">
 			<!-- Breadcrumbs-->
@@ -99,33 +118,35 @@
             	<li class="breadcrumb-item active">수정</li>
          	</ol>
 			<div class="row">
-				<div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
+				<div class="offset-sm-4 col-sm-4 offset-md-4 col-md-4">
 	                <form action="edit" method="post" class="form">
-	                	<div class="form-group">
-	                        <label>유형번호</label> <span class="select-result on">수정할 유형을 아래 목록에서 선택해주세요</span>
-	                		<input type="text" class="form-control point_no" name="point_no" readonly required value="${pointDto.point_no}">
-	                	</div>
+	                	<input type="hidden" class="form-control point_no" name="point_no" required value="${pointDto.point_no}">
 	                    <div class="form-group">
-	                        <label>유형선택</label>
-	                        <select name="point_type" class="form-control point_type" required value="${pointDto.point_type}">
-	                            <option>적립</option>
-	                            <option>차감</option>
-	                        </select>
+	                    	<div class="row">
+	                    		<div class="col-5">
+			                        <label>유형</label>
+			                        <select name="point_type" class="form-control point_type" required value="${pointDto.point_type}">
+			                            <option>적립</option>
+			                            <option>차감</option>
+			                        </select>
+			                    </div>
+	                    		<div class="col-7">
+			                        <label>마일리지</label>
+			                        <input type="text" name="point_score" placeholder="마일리지를 입력하세요" class="form-control point_score" required readonly value="${pointDto.point_score}">
+	                    		</div>
+	                    	</div>
 	                    </div>
 	                    <div class="form-group">
 	                        <label>상세내용</label>
-	                        <input type="text" name="point_detail" placeholder="상세내용을 입력하세요" class="form-control point_detail" value="${pointDto.point_detail}" required>
-	                        <span class="detail_result"></span>
+	                        <input type="text" name="point_detail" placeholder="상세내용을 입력하세요" class="form-control point_detail" value="${pointDto.point_detail}" readonly required>
+		                    <span class="select-result on">수정할 유형을 아래 목록에서 선택해주세요</span>
 	                    </div>
-	                    <div class="form-group">
-	                        <label>마일리지</label>
-	                        <input type="text" name="point_score" placeholder="마일리지를 입력하세요" class="form-control point_score" required value="${pointDto.point_score}">
-	                    </div>
+	                    <br>
 	                    <div class="btn-wrap">
 		                    <button class="btn btn-primary btn-edit" disabled>수정</button>
 		                    &nbsp;&nbsp;&nbsp;
 		                    <a href="regist">
-				                <button class="btn btn-primary btn-list" type="button">목록</button>
+				                <button class="btn btn-secondary btn-list" type="button">목록</button>
 		                    </a>
 	                    </div>
 	                </form>
@@ -145,7 +166,7 @@
 									<!-- 유형별 정렬 방법 선택 -->
 									<th>
 										<form action="list2" method="post" class="list-form">
-											<select name="point_type" id="order" class="form-control">
+											<select name="point_type" id="order" class="form-control form-inline">
 												<option value="all">전체</option>
 												<option ${param.point_type=="적립"?'selected':''}>적립</option>
 												<option ${param.point_type=="차감"?'selected':''}>차감</option>
@@ -164,7 +185,7 @@
 										<td>${pointDto.point_detail}</td>
 										<td>${pointDto.point_score}</td>
 										<td>
-											<button class="btn btn-primary btn-select"
+											<button class="btn btn-sm btn-primary btn-select"
 											data-no="${pointDto.point_no}" data-type="${pointDto.point_type}" 
 											data-detail="${pointDto.point_detail}" data-score="${pointDto.point_score}">선택</button>
 										</td>
