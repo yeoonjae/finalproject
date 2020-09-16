@@ -1,7 +1,5 @@
 package com.kh.finalproject.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalproject.VO.PagingVO;
 import com.kh.finalproject.entity.MemberDto;
-import com.kh.finalproject.entity.MessageMemberDto;
 import com.kh.finalproject.repository.MessageDao;
 import com.kh.finalproject.service.MessageService;
 
@@ -50,8 +48,14 @@ public class MemberMessageController {
 		}
 	
 	@PostMapping("/message_member_delete_inbox")
-	public String inboxMember(@RequestParam int message_member_no) {
+	public String inboxMember(
+			@RequestParam int message_member_no,
+			@RequestParam int nowPage,
+			@RequestParam int cntPerPage,
+			RedirectAttributes attr) {
 		messageService.deleteInboxMemeber(message_member_no);
+		attr.addAttribute("nowPage", nowPage);
+		attr.addAttribute("cntPerPage", cntPerPage);
 		return "redirect:message";
 	}
 }

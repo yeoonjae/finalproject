@@ -32,8 +32,34 @@
 		location.href="message?nowPage=${paging.nowPage}&cntPerPage="+sel;
 	}
 		$(function(){
+			//parameter받아오는 코드
+			var getUrlParameter = function getUrlParameter(sParam) {
+			    var sPageURL = window.location.search.substring(1),
+			        sURLVariables = sPageURL.split('&'),
+			        sParameterName,
+			        i;
+
+			    for (i = 0; i < sURLVariables.length; i++) {
+			        sParameterName = sURLVariables[i].split('=');
+
+			        if (sParameterName[0] === sParam) {
+			            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+			        }
+			    }
+			};
+			
+			//현재페이지와 몇개씩 나오는지 받는 페이징 파라미터
+			var nowPage = getUrlParameter('nowPage');
+			var cntPerPage = getUrlParameter('cntPerPage');
+			
+			//해당 메세지를 클릭 시 모달로 메세지 내용 보여주기
 		    $(".inbox-tr").click(function(){
 		    	$("#inbox-modal").modal('show');
+		    	
+		    	//삭제를 해도 해당 페이지가 뜨게끔 파라미터 첨부
+				console.log("nowPage : "+nowPage+"cntPerPage : "+cntPerPage);
+		    	$(".nowPage").attr("value",nowPage);
+		    	$(".cntPerPage").attr("value",cntPerPage);
 		    	
 		    	//모달
 		    	var title = $(this).parents(".table").next().children().children().children().children(".inbox-title");
@@ -47,7 +73,6 @@
 		    	var dateTd = $(this).children(".inbox-date-td").text();//보낸 날짜
 		    	var messageMemberNo = $(this).children().find(".inbox-no-input").val();
 		    	
-		    	console.log(messageMemberNo);
 		    	//모달에 쪽지내용 넣기
 		    	title.text(titleTd);
 		    	content.text(inputContent);
@@ -59,16 +84,16 @@
 					method:"get"
 				})
 				.then(function(response){
-					
 				})  
 		    	
+				//모달 닫기 버튼 누를 시 현재 페이지 리로드(조회한거 표시)
 		    	$(".close-btn").click(function(){
-		 		   location.reload();
+		    		location.reload();
 		 	   })
 		    	
 		    });
 		});		
-		
+	
 	</script>
 	<!--  여기서부터 섹션이 나뉨 -->
       <section id="" class="">
@@ -136,6 +161,8 @@
 										<form action="message_member_delete_inbox" method="post">
 											<input type="hidden" class="inbox-delete" name="message_member_no">
 											<input type="submit" class="btn btn-outline-danger" value="삭제">
+											<input type="hidden" name="nowPage" class="nowPage">
+											<input type="hidden" name="cntPerPage" class="cntPerPage">
 											<button type="button" class="btn btn-outline-danger close-btn" data-dismiss="modal">닫기</button>
 										</form>
 									</div>
