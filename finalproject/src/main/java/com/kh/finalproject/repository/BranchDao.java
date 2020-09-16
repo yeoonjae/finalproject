@@ -23,6 +23,8 @@ public interface BranchDao {
 	List<Integer> getNo();
 	//지역별 지점번호 조회
 	List<Integer> getNo2(int local_no);
+	//관리자별 지점번호 조회
+	int getNo3(int admin_no);
 	//지점 삭제
 	void delete(int branch_no);
 }

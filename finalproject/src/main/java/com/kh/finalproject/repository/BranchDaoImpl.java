@@ -91,4 +91,9 @@ public class BranchDaoImpl implements BranchDao{
 		sqlSession.delete("branch.delete", branch_no);
 	}
 
+	@Override
+	public int getNo3(int admin_no) {
+		return sqlSession.selectOne("branch.getNo3", admin_no);
+	}
+
 }
