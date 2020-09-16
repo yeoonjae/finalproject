@@ -162,9 +162,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	<!-- 스케줄러 -->
-	
-	
+	<!-- 스케줄러 -->	
 	<!-- 시작일이 오늘인 쿠폰 조회 -->
 	<select id="todayStart" resultType="couponDto">
 		SELECT c.coupon_no, c.branch_no, m.member_no FROM coupon c 
@@ -174,7 +172,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 종료일이 오늘인 쿠폰 조회 -->
 	<select id="todayFinish" resultType="couponDto">
-		SELECT coupon_no FROM coupon WHERE to_char(c.COUPON_FINISH, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+		SELECT coupon_no FROM coupon WHERE to_char(COUPON_FINISH, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
 	</select>
 	
 </mapper>
