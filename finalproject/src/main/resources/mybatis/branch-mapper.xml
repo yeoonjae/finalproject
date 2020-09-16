@@ -68,6 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT branch_no FROM branch
 	</select>
 	
+	<!-- 지역번호와 일치하는 지점번호 조회 -->
 	<select id="getNo2" resultType="int" parameterType="int">
 		SELECT branch_no FROM branch WHERE local_no = #{local_no}
 	</select>
@@ -79,6 +80,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delete" parameterType="int">
 		DELETE branch WHERE branch_no=#{branch_no}
 	</delete>
+	
+	<!-- 관리자 번호와 일치하는 지점번호 조회 -->
+	<select id="getNo3" parameterType="int" resultType="int">
+		SELECT branch_no FROM branch WHERE admin_no = #{admin_no}
+	</select>
 </mapper>
 
 
