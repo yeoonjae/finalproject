@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.finalproject.VO.MessageVO;
-import com.kh.finalproject.VO.PagingMessageVO;
+import com.kh.finalproject.VO.PagingVO;
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.MessageDto;
@@ -152,7 +152,7 @@ public class MessageServiceImpl implements MessageService{
 	}
 
 	//메세지 수신함(회원 로그인) + 페이징
-	public List<MessageMemberDto> inboxMember(int member_no, PagingMessageVO pagingVO) {
+	public List<MessageMemberDto> inboxMember(int member_no, PagingVO pagingVO) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("member_no", member_no);
 		map.put("start", pagingVO.getStart());

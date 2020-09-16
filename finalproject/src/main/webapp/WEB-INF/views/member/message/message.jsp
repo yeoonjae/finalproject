@@ -121,6 +121,27 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						<!-- 수신함 모달 -->
+						<div class="modal" id="inbox-modal">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title inbox-title"></h5>
+										<h6 class="modal-title inbox-date" style="float: right;"></h6>
+									</div>
+									<div class="modal-body">
+										<h6 class="modal-title inbox-content"></h6>  
+									</div>
+									<div class="modal-footer">
+										<form action="message_member_delete_inbox" method="post">
+											<input type="hidden" class="inbox-delete" name="message_member_no">
+											<input type="submit" class="btn btn-outline-danger" value="삭제">
+											<button type="button" class="btn btn-outline-danger close-btn" data-dismiss="modal">닫기</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
 						<!-- 페이지네이션 -->
 						<div style="display: block; text-align: center;">	
 						<c:if test="${paging.startPage != 1 }">
@@ -140,28 +161,6 @@
 								<a class="page-link" href="${pageContext.request.contextPath}/member/message/message?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&raquo;</a>
 						</c:if>
 						</div>
-						
-					<!-- 수신함 모달 -->
-					<div class="modal" id="inbox-modal">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title inbox-title"></h5>
-									<h6 class="modal-title inbox-date" style="float: right;"></h6>
-								</div>
-								<div class="modal-body">
-									<h6 class="modal-title inbox-content"></h6>  
-								</div>
-								<div class="modal-footer">
-									<form action="message_member_delete_inbox" method="post">
-										<input type="hidden" class="inbox-delete" name="message_member_no">
-										<input type="submit" class="btn btn-outline-danger" value="삭제">
-										<button type="button" class="btn btn-outline-danger close-btn" data-dismiss="modal">닫기</button>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>

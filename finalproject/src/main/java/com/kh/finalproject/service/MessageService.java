@@ -3,7 +3,7 @@ package com.kh.finalproject.service;
 import java.util.List;
 
 import com.kh.finalproject.VO.MessageVO;
-import com.kh.finalproject.VO.PagingMessageVO;
+import com.kh.finalproject.VO.PagingVO;
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.MessageMemberDto;
 
@@ -25,5 +25,5 @@ public interface MessageService {
 	int countMessage(int member_no);
 	
 	//메세지 수신함(회원 로그인) + 페이징
-	List<MessageMemberDto> inboxMember(int member_no, PagingMessageVO pagingVO);
+	List<MessageMemberDto> inboxMember(int member_no, PagingVO pagingVO);
 }
