@@ -9,15 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
+import com.kh.finalproject.entity.CouponDto;
+import com.kh.finalproject.entity.CouponReqDto;
 import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PointDto;
 import com.kh.finalproject.entity.PointHisDto;
+import com.kh.finalproject.repository.CouponDao;
 import com.kh.finalproject.service.MemberService;
 
 @RestController
@@ -29,6 +31,9 @@ public class TestController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private CouponDao couponDao;
 	
 	// 마일리지 유형 중복검사
 	@GetMapping("/point/regist")
@@ -83,6 +88,73 @@ public class TestController {
 	@GetMapping("/branch/local_name")
 	public LocalDto localName(@RequestParam String local_name) {
 		return sqlSession.selectOne("local.get", local_name);
+	}
+	
+	@GetMapping("/coupon/branchList")
+	public List<BranchDto> getBranchList(@RequestParam int group_no) {
+		return sqlSession.selectList("coupon.getBranchList", group_no);
+	}
+	
+	@GetMapping("/coupon/edit")
+	public void edit(@RequestParam int group_no, @RequestParam String coupon_name,
+			@RequestParam int coupon_discount, @RequestParam String coupon_start, @RequestParam String coupon_finish) {
+		CouponDto couponDto = CouponDto.builder()
+										.group_no(group_no)
+										.coupon_name(coupon_name)
+										.coupon_discount(coupon_discount)
+										.coupon_start(coupon_start)
+										.coupon_finish(coupon_finish)
+									.build();
+		sqlSession.update("coupon.edit", couponDto);
+	}
+	
+	@GetMapping("/coupon/delete")
+	public void delete(@RequestParam int branch_no, @RequestParam int group_no) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("branch_no", branch_no);
+		param.put("group_no", group_no);
+		sqlSession.delete("coupon.branchDelete", param);
+	}
+	
+	// 쿠폰 요청 승인
+	@GetMapping("/coupon/req/approval")
+	public void approval(@RequestParam int coupon_req_no) {
+		// 요청 테이블 승인으로 수정
+		sqlSession.update("couponReq.approval", coupon_req_no);
+		
+		// 그룹번호 시퀀스 가져오기
+		int group_no = couponDao.getGroupSeq();
+		
+		// 쿠폰 요청 정보 가져와서 쿠폰 dto에 설정
+		CouponReqDto reqDto = sqlSession.selectOne("couponReq.get", coupon_req_no);
+		CouponDto couponDto = CouponDto.builder()
+								.branch_no(reqDto.getBranch_no())
+								.admin_no(reqDto.getAdmin_no())
+								.coupon_name(reqDto.getCoupon_req_name())
+								.coupon_discount(reqDto.getCoupon_req_discount())
+								.coupon_start(reqDto.getCoupon_req_start())
+								.coupon_finish(reqDto.getCoupon_req_finish())
+								.group_no(group_no)
+								.build();
+		// 쿠폰 테이블에 등록하기
+		sqlSession.insert("coupon.registB", couponDto);
+		
+	}
+	
+	// 쿠폰 요청 거절
+	@GetMapping("/coupon/req/refuse")
+	public void refuse(@RequestParam int coupon_req_no, String coupon_req_detail) {
+		// 요청 테이블 거절로 수정
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("coupon_req_no", coupon_req_no);
+		param.put("coupon_req_detail", coupon_req_detail);
+		sqlSession.update("couponReq.refuse", param);
+	}
+	
+	// 쿠폰 요청 삭제
+	@GetMapping("/coupon/req/delete")
+	public void delete(@RequestParam int coupon_req_no) {
+		sqlSession.delete("couponReq.delete", coupon_req_no);
 	}
 	
 	//지역 내 지점 확인
