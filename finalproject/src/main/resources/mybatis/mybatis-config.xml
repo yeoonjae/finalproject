@@ -23,6 +23,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.finalproject.entity.AdminDto" alias="adminDto"/>
 		<typeAlias type="com.kh.finalproject.entity.LicenseDto" alias="licenseDto"/>
 		<typeAlias type="com.kh.finalproject.entity.CouponDto" alias="couponDto"/>
+		<typeAlias type="com.kh.finalproject.entity.CouponReqDto" alias="couponReqDto"/>
+		<typeAlias type="com.kh.finalproject.entity.MemberCouponDto" alias="memberCouponDto"/>
 		<typeAlias type="com.kh.finalproject.entity.PointDto" alias="pointDto"/>
 		<typeAlias type="com.kh.finalproject.entity.PointHisDto" alias="pointHisDto"/>
 		<typeAlias type="com.kh.finalproject.entity.MemberDto" alias="memberDto"/>
