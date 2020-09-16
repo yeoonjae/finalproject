@@ -1,7 +1,5 @@
 package com.kh.finalproject.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.finalproject.VO.PagingMessageVO;
 import com.kh.finalproject.VO.PagingVO;
 import com.kh.finalproject.entity.MemberDto;
-import com.kh.finalproject.entity.MessageMemberDto;
 import com.kh.finalproject.repository.MessageDao;
 import com.kh.finalproject.service.MessageService;
 
@@ -29,7 +27,7 @@ public class MemberMessageController {
 	private MessageService messageService;
 	
 	@GetMapping("/message")
-	public String inbox(PagingVO vo,HttpSession session,Model model
+	public String inbox(PagingMessageVO vo,HttpSession session,Model model
 			, @RequestParam(value="nowPage", required=false)String nowPage
 			, @RequestParam(value="cntPerPage", required=false)String cntPerPage
 			) {
@@ -43,10 +41,9 @@ public class MemberMessageController {
 		} else if (cntPerPage == null) { 
 			cntPerPage = "5";
 		}
-		vo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		vo = new PagingMessageVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		model.addAttribute("paging", vo);
 		model.addAttribute("list", messageService.inboxMember(memberDto.getMember_no(), vo));
-//		int member_no = memberDto.getMember_no();
 		return "/member/message/message";
 		}
 	
