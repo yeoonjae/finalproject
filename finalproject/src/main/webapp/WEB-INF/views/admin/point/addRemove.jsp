@@ -80,7 +80,7 @@
             <li class="breadcrumb-item active">적립 및 차감</li>
         </ol>
         <div class="row">
-            <div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
+            <div class="offset-sm-4 col-sm-4 offset-md-4 col-md-4">
             	<div class="form-group">
                 	<label>회원명</label> <span class="select-result on">수정할 회원을 아래 목록에서 선택해주세요</span>
                     <input type="text" name="member_name" class="form-control member_name" disabled>
@@ -119,7 +119,7 @@
             <div class="card-header">
                 <i class="fas fa-table"></i> 회원 검색
             </div>
-            <div class="card-body offset-sm-2 col-sm-8 offset-md-2 col-md-8">
+            <div class="card-body offset-sm-1 col-sm-10 offset-md-1 col-md-10">
                 <div class="table-responsive">
                     <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -150,10 +150,10 @@
                                     <td>${memberDto.member_email}</td>
                                     <td>${memberDto.member_point}</td>
                                     <td>
-                                        <button class="btn btn-primary btn-edit" data-name="${memberDto.member_name}" 
+                                        <button class="btn btn-sm btn-primary btn-edit" data-name="${memberDto.member_name}" 
                                         data-email="${memberDto.member_email}" data-no="${memberDto.member_no}">선택</button>
                                         <a href="his_list?member_no=${memberDto.member_no}">
-                                            <button class="btn btn-primary del">내역조회</button>
+                                            <button class="btn btn-sm btn-secondary del">내역조회</button>
                                         </a>
                                     </td>
                                 </tr>
