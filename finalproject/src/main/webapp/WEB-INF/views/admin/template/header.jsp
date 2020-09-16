@@ -195,16 +195,17 @@
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <c:choose>
           	<c:when test="${admininfo.admin_auth eq '본사'}">
-	            <h6 class="dropdown-header">본사 관리</h6>
+	            <h6 class="dropdown-header">발급 관리</h6>
 	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/regist">쿠폰 등록</a>
 	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/edit">쿠폰 수정/삭제</a>
 	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/list">목록 조회</a>
+	            <h6 class="dropdown-header">요청 관리</h6>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/req/list">지점별 요청 목록</a>
           	</c:when>
           	<c:when test="${admininfo.admin_auth eq '지점'}">
             <h6 class="dropdown-header">지점 관리</h6>
-	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/request">쿠폰 등록 요청</a>
-	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/req_edit">요청 수정/삭제</a>
-	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/req_list">진행 목록</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/req/regist">요청 및 진행현황</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/coupon/req/edit">요청 수정/삭제</a>
           	</c:when>
           </c:choose>
           </div>
