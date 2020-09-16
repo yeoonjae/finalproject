@@ -32,12 +32,18 @@
 		}
 		.his-type.red{
 			color: red;
+			font-weight: 600;
 		}
 		.his-type.blue{
 			color: navy;
+			font-weight: 600;
 		}
 		.table {
 			text-align: center;
+		}
+		.btn-reselect {
+			font-size: small;
+			height: 38px;
 		}
 	</style>
     <script src="${pageContext.request.contextPath}/resources/assets/js/moment.min.js"></script>
@@ -87,7 +93,7 @@
 	                        var str = '<tr><td>' + response.data[i].branch_name + '</td><td>' 
 	                        		+ response.data[i].member_name + '</td><td>' 
 	                        		+ response.data[i].member_email 
-	                        		+ '</td><td><button class="btn-primary btn btn-select" data-dismiss="modal" data-name="' + response.data[i].member_name 
+	                        		+ '</td><td><button class="btn-primary btn-sm btn btn-select" data-dismiss="modal" data-name="' + response.data[i].member_name 
 	                        		+'" data-email="'+response.data[i].member_email+'" data-no="'+ response.data[i].member_no +'">선택</button></td></tr>';
 	    	               $(".list-table").append(str);
 	    	               $(".list-table").find(".btn-select").click(function(){
@@ -325,9 +331,9 @@
                 <input type="hidden" name="member_no" class="member_no">
                 <div class="row">
                     <div class="col-4 btn-group">
-                        <button class="btn btn-primary btn-date" type="button" data-date="7">1주일</button>
-                        <button class="btn btn-primary btn-date" type="button" data-date="1">1개월</button>
-                        <button class="btn btn-primary btn-date" type="button" data-date="3">3개월</button>
+                        <button class="btn btn-sm btn-primary btn-date" type="button" data-date="7">1주일</button>
+                        <button class="btn btn-sm btn-primary btn-date" type="button" data-date="1">1개월</button>
+                        <button class="btn btn-sm btn-primary btn-date" type="button" data-date="3">3개월</button>
                     </div>
                     <div class="col-3">
                         <input type="text" class="picker-start form-control start" name="start" placeholder="시작일을 선택해주세요">
@@ -335,8 +341,8 @@
                     <div class="col-3">
                         <input type="text" class="picker-end form-control finish" name="finish" placeholder="종료일을 선택해주세요">
                     </div>
-                    <div class="col-2">
-                        <button class="btn btn-primary btn-block btn-list">검색</button>
+                    <div class="col-2 btn-group">
+                        <button class="btn btn-sm btn-primary btn-block btn-list">검색</button>
                     </div>
                 </div>
             </div>
