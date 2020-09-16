@@ -201,7 +201,7 @@
                 format: 'YYYY-MM-DD',
                 
                 //한 화면에 표시될 달의 개수
-                numberOfMonths: 1,
+                numberOfMonths: 2,
                 
                 //시작일 지정
                 // minDate:new Date(),//- 오늘부터 선택 가능

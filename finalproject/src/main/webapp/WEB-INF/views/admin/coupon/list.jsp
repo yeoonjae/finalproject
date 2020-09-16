@@ -192,56 +192,6 @@
             </div>
         </div>
     </div>
-    <!-- 수정 모달 -->
-    <div class="modal" id="test-modal">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">쿠폰 수정</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          				<span aria-hidden="true">&times;</span>
-        			</button>
-                </div>
-                <div class="modal-body">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
-                                <div class="form-group">
-                                    <!-- 쿠폰 -->
-                                    <label>발급 대상</label> <span class="notice">변경불가</span>
-                                    <input class="form-control" type="text" name="branch_name" readonly>
-                                    <span class="notice">지점 변경을 원하시면 삭제 후 재등록 해주시기 바랍니다.</span>
-                                </div>
-                                <div class="form-group">
-                                    <label>쿠폰명</label>
-                                    <input class="form-control" type="text" name="coupon_name">
-                                </div>
-                                <div class="form-group">
-                                    <label>할인률</label>
-                                    <input class="form-control" type="number" name="coupon_discount">
-                                </div>
-                                <div class="form-group">
-                                    <label>쿠폰 시작일</label>
-                                    <input class="form-control" type="date" name="coupon_start">
-                                </div>
-                                <div class="form-group">
-                                    <label>쿠폰 종료일</label>
-                                    <input class="form-control" type="date" name="coupon_finish">
-                                </div>
-                                <div class="hidden-wrap">
-                                	<input class="group_no" type="hidden" name="group_no">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-			        <button type="button" class="btn btn-sm btn-primary">Save changes</button>
-			        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-			    </div>
-            </div>
-        </div>
-    </div>
 </body>
 </html>
 <jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>
