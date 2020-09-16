@@ -29,8 +29,11 @@ public class CouponDaoImpl implements CouponDao {
 	}
 	// 쿠폰 목록 조회
 	@Override
+	public List<CouponDto> getList(String order) {
+		return sqlSession.selectList("coupon.getListA", order);
+	}
 	public List<CouponDto> getList(Map<String, Object> param) {
-		return sqlSession.selectList("coupon.getList", param);
+		return sqlSession.selectList("coupon.getListB", param);
 	}
 	// 쿠폰 그룹번호 추출
 	@Override
@@ -39,10 +42,26 @@ public class CouponDaoImpl implements CouponDao {
 	}
 	// 쿠폰 삭제
 	@Override
-	public void delete(int coupon_no) {
-		sqlSession.delete("coupon.delete", coupon_no);
+	public void delete(int group_no) {
+		sqlSession.delete("coupon.delete", group_no);
 		
 	}
+	// 그룹번호 일치하는 지점번호 조회
+	@Override
+	public List<CouponDto> getCouponList(String order) {
+		return sqlSession.selectList("coupon.getCouponList", order);
+	}
 	
+	// 시작일이 오늘인 쿠폰 조회
+	@Override
+	public List<CouponDto> todayStart() {
+		return sqlSession.selectList("coupon.todayStart");
+	}
+
+	// 종료일이 오늘인 쿠폰 조회
+	@Override
+	public List<CouponDto> todayFinish() {
+		return sqlSession.selectList("coupon.todayFinish");
+	}
 
 }

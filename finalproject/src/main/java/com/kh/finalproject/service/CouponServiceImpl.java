@@ -1,5 +1,6 @@
 package com.kh.finalproject.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,13 @@ public class CouponServiceImpl implements CouponService{
 		
 	}
 
-	// 쿠폰 목록
+	// 전체 대상 쿠폰 목록
+	@Override
+	public List<CouponDto> getList(String order) {
+		
+		return couponDao.getList(order);
+	}
+	// 지점대상 쿠폰 목록
 	@Override
 	public List<CouponDto> getList(int branch_no, String order) {
 		Map<String, Object> param = new HashMap<String, Object>();
