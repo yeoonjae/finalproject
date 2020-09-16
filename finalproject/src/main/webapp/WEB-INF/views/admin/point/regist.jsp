@@ -19,10 +19,19 @@
 		}
 		.type.navy {
 			color: navy;
+			font-weight: 600;
 		}
 		.type.red {
 			color: red;
+			font-weight: 600;
 		}
+		.btn-wrap {
+			text-align: center;
+		}
+		.target {
+			width: 150px;
+		}
+		
 	</style>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -126,6 +135,7 @@
             });
         });
 </script>
+</head>
 	<div id="content-wrapper">
 		<div class="container-fluid">
 			<!-- Breadcrumbs-->
@@ -137,14 +147,23 @@
          	</ol>
 
 			<div class="row">
-				<div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
+				<div class="offset-sm-4 col-sm-4 offset-md-4 col-md-4">
 					<form action="regist" method="post" class="form">
 						<!-- 마일리지 유형 선택 -->
 						<div class="form-group">
-							<label>유형선택</label> <select name="point_type" class="form-control">
-								<option>적립</option>
-								<option>차감</option>
-							</select>
+							<div class="row">
+								<div class="col-5">
+									<label>유형</label> <select name="point_type" class="form-control target">
+										<option>적립</option>
+										<option>차감</option>
+									</select>
+								</div>
+								<!-- 마일리지 점수 입력 -->
+								<div class="col-7">
+									<label>마일리지</label> <input type="text" name="point_score"
+										placeholder="마일리지를 입력하세요" class="form-control point_score" required>
+								</div>
+							</div>
 						</div>
 						<!-- 마일리지 상세내용 작성 -->
 						<div class="form-group">
@@ -153,12 +172,10 @@
 							<div class="valid-feedback">사용 가능한 유형입니다</div>
 							<div class="invalid-feedback">동일한 유형이 존재합니다</div>
 						</div>
-						<!-- 마일리지 점수 입력 -->
-						<div class="form-group">
-							<label>마일리지</label> <input type="text" name="point_score"
-								placeholder="마일리지를 입력하세요" class="form-control point_score" required>
-						</div>
-						<button class="btn btn-primary btn-block btn-regist">등록</button>
+						<br>
+						<div class="btn-wrap">
+							<button class="btn btn-primary btn-block btn-regist">등 록</button>		                    
+	                    </div>
 					</form>
 				</div>
 			</div>
@@ -196,10 +213,11 @@
 										<td>${pointDto.point_score}</td>
 										<td>
 											<a href="edit?point_no=${pointDto.point_no}">
-												<button class="btn btn-primary">수정</button>
+												<button class="btn btn-sm btn-primary">수정</button>
 											</a>
+											&nbsp;&nbsp;
 											<a class="link" href="delete/${pointDto.point_no}">
-												<button class="btn btn-primary del">삭제</button>
+												<button class="btn btn-sm btn-danger del">삭제</button>
 											</a>
 										</td>
 									</tr>
