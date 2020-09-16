@@ -115,13 +115,6 @@
 					</tr>
 					<tr>
 						<td scope="row" colspan="2">
-<%-- 							<c:forEach var="img" items="${branchImg}"> --%>
-<%-- 								<img src="${pageContext.request.contextPath}/admin/branch/imgdownload/${img.branch_img_no}" style="height: 100px; width: 140px;"> --%>
-<%-- 							</c:forEach> --%>
-						</td>
-					</tr>
-					<tr>
-						<td scope="row" colspan="2">
 						 	<div class="swiper-container">
 					        <div class="swiper-wrapper">
 					            <c:forEach var="img" items="${branchImg}">

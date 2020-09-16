@@ -43,15 +43,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 지점 목록 -->
 	<select id="getList" resultType="branchDto">
-		SELECT * FROM branch b
+		SELECT * FROM (SELECT rownum rn,T.*FROM (SELECT * FROM branch b
 		LEFT OUTER JOIN admin a ON b.admin_no = a.admin_no
-		LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
+		LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO ORDER BY branch_no DESC)T)
 	</select>
 	
-	<!-- 지점목록(이미지와 같이) -->
-	<select id="getListWithImg" resultType="branchDto">
-		SELECT * FROM branch a 
-		LEFT OUTER JOIN BRANCH_IMG b ON a.BRANCH_NO = b.BRANCH_NO
+	<!-- 지점 목록(페이징처리) -->
+	<select id="getListPaging" resultType="branchDto">
+		SELECT * FROM (SELECT rownum rn,T.*FROM (SELECT * FROM branch b
+		LEFT OUTER JOIN admin a ON b.admin_no = a.admin_no
+		LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO ORDER BY branch_no DESC)T)
+		WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
 	<!-- 배치도 등록 -->
@@ -102,6 +104,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="memberList" parameterType="int" resultType="memberDto">
 		SELECT * FROM member WHERE branch_no = #{branch_no}
 	</select>
+	
+	<!-- 총 지점 개수 출력 -->
+	<select id="countBranch" resultType="int">
+		SELECT count(*) FROM branch
+	</select>
+	
 </mapper>
 
 

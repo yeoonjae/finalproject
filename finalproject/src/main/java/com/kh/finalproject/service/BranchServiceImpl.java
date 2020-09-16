@@ -13,6 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.kh.finalproject.VO.PagingVO;
+import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.BranchImgDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +28,6 @@ public class BranchServiceImpl implements BranchService {
 	// 이미지 다운로드
 	public ResponseEntity<ByteArrayResource> getImg(int branch_img_no) throws Exception {
 		BranchImgDto branchImgDto = sqlSession.selectOne("branchImg.getImg", branch_img_no);
-		System.out.println(branchImgDto);
 		if (branchImgDto == null) {
 			return ResponseEntity.notFound().build();
 		} else {
@@ -73,4 +74,13 @@ public class BranchServiceImpl implements BranchService {
 		return list;
 	}
 
+	// 게시글 총 개수
+	public int countBranch() {
+		return sqlSession.selectOne("branch.countBranch");
+	}
+
+	//페이징 처리 게시글 조회
+	public List<BranchDto> selectBranch(PagingVO pagingVO) {
+		return sqlSession.selectList("branch.getListPaging", pagingVO);
+	}
 }

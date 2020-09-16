@@ -18,7 +18,21 @@
 		width: 81px;
 		
 	}
+	.page-link {
+		text-decoration: none;
+		font-size: 23px;
+	}
+	.form-control{
+		width: 280px;
+		float: right;
+	}
 </style>
+<script>
+	function selChange() {
+		var sel = document.getElementById('cntPerPage').value;
+		location.href="list?nowPage=${paging.nowPage}&cntPerPage="+sel;
+	}
+</script>
 			<section id="hello" class="home bg-mega">
                 <div class="overlay"></div>
                 <div class="container" style="height: 400px;">
@@ -42,9 +56,22 @@
                                     <div class="separator_auto" style="width: 400px;"></div>
                                 </div>
                             </div>
+							<div class="row col-xs-12">
+								<select id="cntPerPage" name="sel" onchange="selChange()" class="form-control">
+									<option value="5"
+										<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
+									<option value="10"
+										<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
+									<option value="15"
+										<c:if test="${paging.cntPerPage == 15}">selected</c:if>>15줄 보기</option>
+									<option value="20"
+										<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄 보기</option>
+								</select>
+							</div> <!-- 옵션선택 끝 -->
                             <!-- 전체 감싸는 영역 -->
 							<div class="row col-xs-12">
 								<!-- 지점 ul을 감싸는 영역 -->
+								<br>
 								<div class="ul-wrapper">
 									<ul>
 									<c:forEach var="branchList" items="${list}">
@@ -93,11 +120,28 @@
 									</c:forEach>
 									</ul>
 								</div>
-	                           
+								<!-- 페이지네이션 -->
+								<div style="display: block; text-align: center;">	
+								<c:if test="${paging.startPage != 1 }">
+										<a class="page-link" href="${pageContext.request.contextPath}/member/franchisee/list?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&laquo;</a>
+								</c:if>
+								<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+									<c:choose>
+										<c:when test="${p == paging.nowPage }">
+												<b class="page-link">${p }</b>
+										</c:when>
+										<c:when test="${p != paging.nowPage }">
+												<a class="page-link" href="${pageContext.request.contextPath}/member/franchisee/list?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p }</a>
+										</c:when>
+									</c:choose>
+								</c:forEach>
+								<c:if test="${paging.endPage != paging.lastPage}">
+										<a class="page-link" href="${pageContext.request.contextPath}/member/franchisee/list?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&raquo;</a>
+								</c:if>
+								</div>
                             </div>
                         </div>
-                    </div><!--End off row -->
-                </div><!--End off container -->
-            </section> <!--End off Featured section-->
-
+                    </div>
+                </div>
+            </section>
 <jsp:include page="/WEB-INF/views/member/template/footer.jsp"></jsp:include>

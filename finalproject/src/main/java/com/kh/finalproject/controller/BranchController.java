@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalproject.VO.Criteria;
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.BranchImgDto;
@@ -155,5 +156,6 @@ public class BranchController {
 	public void deleteImg(@RequestParam int branch_img_no) {
 		branchDao.deleteImg(branch_img_no);
 	}
+	
 	
 }

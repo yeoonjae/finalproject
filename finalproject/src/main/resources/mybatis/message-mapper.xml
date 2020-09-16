@@ -108,12 +108,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND mm.MESSAGE_MEMBER_READ =0
 	</select>
 	
-	<!-- 회원 수신함 -->
-	<select id="inboxMember" resultType="messageMemberDto" parameterType="int">
-		SELECT * FROM MESSAGE_MEMBER mm 
+	<!-- 회원 수신함 + 페이징-->
+<!-- 	<select id="inboxMember" resultType="messageMemberDto" parameterType="int">
+		SELECT * FROM (SELECT rownum rn,T.*FROM (SELECT * FROM MESSAGE_MEMBER mm 
+			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
+			WHERE MESSAGE_MEMBER_TYPE = '수신' AND mm.MEMBER_NO = 27
+			ORDER BY mm.MESSAGE_MEMBER_READ ASC ,mm.MESSAGE_MEMBER_DATE DESC)T)
+			WHERE RN BETWEEN #{start} AND #{end}
+	</select> -->
+	
+	<!-- 회원 수신함 + 페이징-->
+	<select id="inboxMember" resultType="messageMemberDto" parameterType="map">
+		SELECT * FROM (SELECT rownum rn,T.*FROM (SELECT * FROM MESSAGE_MEMBER mm 
 			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
 			WHERE MESSAGE_MEMBER_TYPE = '수신' AND mm.MEMBER_NO = #{member_no}
-			ORDER BY mm.MESSAGE_MEMBER_READ ASC ,mm.MESSAGE_MEMBER_DATE DESC
+			ORDER BY mm.MESSAGE_MEMBER_READ ASC ,mm.MESSAGE_MEMBER_DATE DESC)T)
+			WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
 	<!-- 연결 테이블에 없는 메세지 자동 삭제 -->
@@ -124,4 +134,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			LEFT OUTER JOIN MESSAGE_MEMBER c ON a.MESSAGE_NO =c.MESSAGE_NO 
 			WHERE b.MESSAGE_MANAGER_NO IS NULL AND c.MEMBER_NO IS null)
 	</delete>
+	
+	<!-- 페이징을 위한 회원 수신함 메세지 개수 -->
+	<select id="countMessage" resultType="int" parameterType="int">
+		SELECT count(*) FROM (SELECT rownum rn,T.*FROM (SELECT * FROM MESSAGE_MEMBER mm 
+			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
+			WHERE MESSAGE_MEMBER_TYPE = '수신' AND mm.MEMBER_NO = #{member_no}
+			ORDER BY mm.MESSAGE_MEMBER_READ ASC ,mm.MESSAGE_MEMBER_DATE DESC)T)
+	</select>
+	
+	<!--  -->
 </mapper>

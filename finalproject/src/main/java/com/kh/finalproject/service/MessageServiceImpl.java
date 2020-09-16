@@ -1,6 +1,8 @@
 package com.kh.finalproject.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.finalproject.VO.MessageVO;
+import com.kh.finalproject.VO.PagingVO;
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.MessageDto;
@@ -146,6 +149,21 @@ public class MessageServiceImpl implements MessageService{
 	public void deleteInboxMemeber(int message_member_no) {
 		sqlSession.delete("message.memberDelete", message_member_no);
 		
+	}
+
+	//메세지 수신함(회원 로그인) + 페이징
+	public List<MessageMemberDto> inboxMember(int member_no, PagingVO pagingVO) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("member_no", member_no);
+		map.put("start", pagingVO.getStart());
+		map.put("end", pagingVO.getEnd());
+		List<MessageMemberDto> list = sqlSession.selectList("message.inboxMember", map);
+		return list;
+	}
+
+	//페이징 처리를 위한 메세지 개수
+	public int countMessage(int member_no) {
+		return sqlSession.selectOne("message.countMessage",member_no);
 	}
 	
 }

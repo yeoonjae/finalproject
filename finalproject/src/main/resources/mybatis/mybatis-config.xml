@@ -34,6 +34,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.finalproject.entity.PayInfoDto" alias="payInfoDto"/>
 		<typeAlias type="com.kh.finalproject.entity.PayPointDto" alias="payPointDto"/>
 		<typeAlias type="com.kh.finalproject.entity.CertDto" alias="certDto"/>
+		<typeAlias type="com.kh.finalproject.VO.PagingVO" alias="pagingVO"/>
 	</typeAliases>
 </configuration>
 

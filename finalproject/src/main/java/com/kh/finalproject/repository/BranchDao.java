@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.finalproject.VO.Criteria;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.MemberDto;
 
@@ -13,6 +14,12 @@ public interface BranchDao {
 	int regist(BranchDto branchDto,List<MultipartFile> file) throws IllegalStateException, IOException;
 	//지점 리스트
 	List<BranchDto> getList();
+	
+	//지점 리스트
+	List<BranchDto> getList(Criteria cri);
+	
+	
+	
 	//배치도 등록
 	void layout_regist(String branch_layout,int branch_no);
 	//지점 단일조회
@@ -29,4 +36,5 @@ public interface BranchDao {
 	List<BranchDto> getListWithImg();
 	//지점 단일조회(이미지 같이)
 	List<BranchDto> getWithImg(int branch_no);
+	
 }

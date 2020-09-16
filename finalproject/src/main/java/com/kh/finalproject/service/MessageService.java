@@ -1,7 +1,12 @@
 package com.kh.finalproject.service;
 
+import java.util.List;
+
 import com.kh.finalproject.VO.MessageVO;
+import com.kh.finalproject.VO.PagingVO;
 import com.kh.finalproject.entity.AdminDto;
+import com.kh.finalproject.entity.MessageDto;
+import com.kh.finalproject.entity.MessageMemberDto;
 
 public interface MessageService {
 
@@ -16,4 +21,10 @@ public interface MessageService {
 
 	//메세지 삭제(회원 수신함)
 	void deleteInboxMemeber(int message_member_no);
+	
+	//페이징 처리를 위한 메세지 개수
+	int countMessage(int member_no);
+	
+	//메세지 수신함(회원 로그인) + 페이징
+	List<MessageMemberDto> inboxMember(int member_no, PagingVO pagingVO);
 }

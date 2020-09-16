@@ -17,8 +17,20 @@
 		.btn{
 			radius:15%;
 		}
+		.form-control{
+			width: 160px;
+			float: right;
+			height: 30px;
+		}
+		.head_title{
+			padding-bottom: 0px;		
+		}
 	</style>
 	<script>
+	function selChange() {
+		var sel = document.getElementById('cntPerPage').value;
+		location.href="message?nowPage=${paging.nowPage}&cntPerPage="+sel;
+	}
 		$(function(){
 		    $(".inbox-tr").click(function(){
 		    	$("#inbox-modal").modal('show');
@@ -56,12 +68,31 @@
 		    	
 		    });
 		});		
+		
 	</script>
 	<!--  여기서부터 섹션이 나뉨 -->
       <section id="" class="">
 		<div class="container">
 			<div class="row">
+			<div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
 				<div class="main_service roomy-100" style="height: 800px;">					
+                   <div class="head_title text-center">
+                      <h2>쪽지함</h2>
+                      <div class="separator_auto" style="width: 180px;"></div>
+                   </div>
+                   <div class="">
+						<select id="cntPerPage" name="sel" onchange="selChange()" class="form-control">
+							<option value="5"
+								<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
+							<option value="10"
+								<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
+							<option value="15"
+								<c:if test="${paging.cntPerPage == 15}">selected</c:if>>15줄 보기</option>
+							<option value="20"
+								<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄 보기</option>
+						</select>
+						<br><br><br>
+					</div> <!-- 옵션선택 끝 -->
 						<table class="table">
 							<thead>
 								<tr>
@@ -90,6 +121,26 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						<!-- 페이지네이션 -->
+						<div style="display: block; text-align: center;">	
+						<c:if test="${paging.startPage != 1 }">
+								<a class="page-link" href="${pageContext.request.contextPath}/member/message/message?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&laquo;</a>
+						</c:if>
+						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+							<c:choose>
+								<c:when test="${p == paging.nowPage }">
+										<b class="page-link">${p }</b>
+								</c:when>
+								<c:when test="${p != paging.nowPage }">
+										<a class="page-link" href="${pageContext.request.contextPath}/member/message/message?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p }</a>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${paging.endPage != paging.lastPage}">
+								<a class="page-link" href="${pageContext.request.contextPath}/member/message/message?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&raquo;</a>
+						</c:if>
+						</div>
+						
 					<!-- 수신함 모달 -->
 					<div class="modal" id="inbox-modal">
 						<div class="modal-dialog">
@@ -114,6 +165,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</section>
 
 <jsp:include page="/WEB-INF/views/member/template/footer.jsp"></jsp:include>

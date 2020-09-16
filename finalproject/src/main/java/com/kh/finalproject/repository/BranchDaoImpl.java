@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.finalproject.VO.Criteria;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.BranchImgDto;
 import com.kh.finalproject.entity.MemberDto;
@@ -57,6 +58,12 @@ public class BranchDaoImpl implements BranchDao{
 		return list;
 	}
 
+	//페이징+list
+	public List<BranchDto> getList(Criteria cri) {
+		return sqlSession.selectList("branch.getList",cri);
+	}
+
+	
 	//배치도 등록
 	public void layout_regist(String branch_layout, int branch_no) {
 		Map<Object, Object> map = new HashMap<>();
@@ -119,6 +126,7 @@ public class BranchDaoImpl implements BranchDao{
 	public List<BranchDto> getWithImg(int branch_no) {
 		return sqlSession.selectList("branch.getWithImg", branch_no);
 	}
+
 	
 	
 
