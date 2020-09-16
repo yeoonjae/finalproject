@@ -31,9 +31,37 @@
 </style>
 <script>
 	$(function(){
+		var getUrlParameter = function getUrlParameter(sParam) {
+		    var sPageURL = window.location.search.substring(1),
+		        sURLVariables = sPageURL.split('&'),
+		        sParameterName,
+		        i;
+
+		    for (i = 0; i < sURLVariables.length; i++) {
+		        sParameterName = sURLVariables[i].split('=');
+
+		        if (sParameterName[0] === sParam) {
+		            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+		        }
+		    }
+		};
+		var where = getUrlParameter('where');
+		if(where == 'inbox'){//쪽지함을 클릭해서 들어왔을 때
+			$(".send-mail-tab").removeClass('active').removeClass('show');
+			$(".outbox-tab").removeClass('active').removeClass('show');
+			$(".inbox-tab").addClass("active").addClass("show");
+		}else if(where == 'outbox'){
+			$(".send-mail-tab").removeClass('active').removeClass('show');
+			$(".inbox-tab").removeClass('active').removeClass('show');
+			$(".outbox-tab").addClass("active").addClass("show");
+		}
+		
+		
 		var local = $(".local-list");
 		var branch = $(".branch-list");
 		var table = $(".receive-list-table");
+		var member = $(".member-list");
+		member.hide();
 		local.hide();
 		branch.hide();
 		table.hide();
@@ -49,7 +77,7 @@
 	    	 var branch = $(".branch-list");
 	    	 var select = $(this).val();
 	    	 if(select==1){//전체 회원이면
-	    		 var tag = "<tr><td colspan='3' class='name'>전체 회원</td><td><button type='button' class='btn btn-outline-secondary remove-bnt'>삭제</button></td></tr>";
+	    		 var tag = "<tr><td colspan='4' class='name'>전체 회원</td><td><button type='button' class='btn btn-outline-secondary remove-bnt'>삭제</button></td></tr>";
 				 $(".receive-list-table").append(tag);
 				 table.show();
 				 $(".who").prop("disabled",true);
@@ -60,7 +88,7 @@
 			    	}))    		 
 	    	 }
 	    	 if(select==2){//전체 지점장
-	    		 var tag = "<tr class='name-tr'><td colspan='3' class='name'>전체 지점장</td><td><button type='button' class='btn btn-outline-secondary remove-bnt'>삭제</button></td></tr>";
+	    		 var tag = "<tr class='name-tr'><td colspan='4' class='name'>전체 지점장</td><td><button type='button' class='btn btn-outline-secondary remove-bnt'>삭제</button></td></tr>";
 				 $(".receive-list-table").append(tag);
 				 table.show();
 				 $(".who").prop("disabled",true);
@@ -110,11 +138,12 @@
 	            			method:"get"
 	            		})
 	            		.then(function(response){
-	            			var tag = "<tr class='name-tr'><td>"+response.data.branch_name+
+	            			console.log(response.data);
+	            			var tag = "<tr class='name-tr'></td><td class='no'>"+response.data.admin_no+
+	            						"</td><td>"+response.data.branch_name+
 				            			"</td><td>"+response.data.admin_auth+
 				            			"</td><td class='name'>"+response.data.admin_name+
 				            			"</td><td><button class='btn btn-outline-secondary remove-bnt' type='button'>삭제</button></td></tr>";
-				            			
 	            			table.append(tag);
 	            			table.show();
 					    	$(".remove-bnt").on("click",(function(){
@@ -122,16 +151,45 @@
 					    	}))
 	            		})
 	            	});
-	            	
 	    	 }
-	    	
+	    	//회원 검색을 선택하면 --> 해당 지점 회원 이름 나옴
 	    	if(select==4){
-	    		var admin_no = $(".admin_no");
-	    		console.log(admin_no);
+	    		var admin_no = $(".admin_no").val();
+	    		$(".member-list").show();
+// 	    		$(".who").prop("disabled",true);
+	    		axios({
+	    			url:"${pageContext.request.contextPath}/test/message/member?admin_no="+admin_no,
+        			method:"get"
+	    		})
+	    		.then(function(response){
+	    			console.log(response.data);
+	    			$.each(response.data,function(i){
+            			$("<option>").attr("value",response.data[i].member_no).attr("class","member-option").text(response.data[i].member_name).appendTo(member);
+            		})
+	    		})
 	    		
 	    	}
 	    	
-	    	
+	    	//회원선택을 완료하면
+	    	member.change(function(){
+	    		$(".member-list").show();
+	    		var member_no = $(".member-list").val();
+        		var table = $(".receive-list-table");
+        		axios({
+        			url:"${pageContext.request.contextPath}/test/message/memberInfo?member_no="+member_no,
+        			method:"get"
+        		}).then(function(response){
+        			var tag =  "<tr class='name-tr'><td class='no'>"+response.data.member_no+
+        			"</td><td>"+response.data.branch_name+
+        			"</td><td>회원</td><td class='name'>"+response.data.member_name+
+        			"</td><td><button class='btn btn-outline-secondary remove-bnt' type='button'>삭제</button></td></tr>";
+        			table.append(tag);
+        			table.show();
+			    	$(".remove-bnt").on("click",(function(){
+			    		$(this).parents("tr").remove();
+			    	}))
+        		})
+	    	});
 	    	
 	    	//대상을 선택하는 구문
 	    	//1. 기존에 선택된 사람들을 삭제
@@ -139,16 +197,24 @@
 	    	$("#save").click(function(){
 		    	$("input").remove("input[name=receiver_name]");
 		    	$('.name').each(function() {
+		    		var all = "전체 회원";
 	    		    var receiver = $("#receiver");//받는사람 input칸
 	    		    var sum = ($(".name").length)-1;
 	    		    if($(".name").length > 1){//tr안에 있는 td의 클래스 이름이 name이다
 	    		    	console.log($(this).text());
 		    		    receiver.attr("value",$(this).text()+"외"+sum+"명");
-		    		    $("<input>").attr("type","hidden").attr("value",$(this).text()).attr("name","receiver_name").insertAfter(receiver);
+		    		    $("<input>").attr("type","hidden").attr("value",$(this).parents("tr").children(".no").text()).attr("name","receiver_name").insertAfter(receiver);
 		    		    
 	    		    }else if($(".name").length = 1){
-	    		    	receiver.attr("value",$(this).text());
-	    		    	$("<input>").attr("type","hidden").attr("value",$(this).text()).attr("name","receiver_name").insertAfter(receiver);
+	    		    	if($(".name").text() == "전체 회원" || $(".name").text() == "전체 지점장"){
+	    		    		receiver.attr("value",$(this).text());
+		    		    	$("<input>").attr("type","hidden").attr("value",$(this).text()).attr("name","receiver_name").insertAfter(receiver);
+	    		    	}else{
+		    		    	receiver.attr("value",$(this).text());
+		    		    	$("<input>").attr("type","hidden").attr("value",$(this).parents("tr").children(".no").text()).attr("name","receiver_name").insertAfter(receiver);
+	    		    	}
+	    		    }else if($(".name").length < 1){
+	    		    	$("#receiver").attr("value","");
 	    		    }
 	    		 });
 	    	});
@@ -175,10 +241,15 @@
 	    	content.text(inputContent);
 	    	date.text(dateTd);
 	    	del.val(deleteInput);
+	    	
+	    	$(".close-btn").click(function(){
+	 		   location.reload();
+	 	   })
 	    });
 	    
 	    $(".inbox-tr").click(function(){
 	    	$("#inbox-modal").modal('show');
+	    	
 	    	
 	    	//모달
 	    	var title = $(this).parents(".table").next().children().children().children().children(".inbox-title");
@@ -197,6 +268,21 @@
 	    	content.text(inputContent);
 	    	date.text(dateTd);
 	    	del.val(deleteInput);
+	    	
+	    	axios({
+				url:"${pageContext.request.contextPath}/test/message/update?message_manager_no="+deleteInput,
+				method:"get"
+			})
+			.then(function(response){
+				
+			})  
+	    	
+	    	$(".close-btn").click(function(){
+	 		   location.reload();
+	 	   })
+	    	
+	    	var admin_no = $(".admin_no").val();
+	    	
 	    });
 	    
 	});
@@ -211,23 +297,23 @@
 			<div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
 				<ul class="nav nav-tabs">
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#home">받은 쪽지 보기</a>
+						<a class="nav-link inbox-tab" data-toggle="tab" href="#home">받은 쪽지 보기</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" data-toggle="tab" href="#profile">보낸 쪽지</a>
+						<a class="nav-link outbox-tab" data-toggle="tab" href="#profile">보낸 쪽지</a>
 					</li>
-					<li class="nav-item"><a class="nav-link active"
-						data-toggle="tab" href="#send-mail">쪽지 보내기</a></li>
+					<li class="nav-item">
+					<a class="nav-link active send-mail-tab" data-toggle="tab" href="#send-mail">쪽지 보내기</a></li>
 				</ul>
 				<div id="myTabContent" class="tab-content">
-					<div class="tab-pane fade" id="home">
+					<div class="tab-pane fade inbox-tab" id="home">
 						<br>
 						<p>
 						<!-- 수신함 -->
 						<table class="table">
 							<thead>
 								<tr>
-									<th>제목</th>
+									<th style="width:50%;">제목</th>
 									<th>보낸사람</th>
 									<th>날짜</th>
 								</tr>
@@ -235,7 +321,14 @@
 							<tbody>
 							<c:forEach var="inbox" items="${inbox}">
 								<tr class="inbox-tr">
-									<td class="inbox-title-td">${inbox.message_title}</td>
+									<c:choose>
+										<c:when test="${inbox.message_manager_read eq 0}">
+											<td class="inbox-title-td" style="font-weight:bold;">${inbox.message_title}</td>
+										</c:when>
+										<c:otherwise>
+											<td class="inbox-title-td" style="color:gray;">${inbox.message_title}</td>
+										</c:otherwise>
+									</c:choose>
 									<td class="inbox-name_td">${inbox.admin_name}</td>
 									<td class="inbox-date-td">${inbox.message_manager_date}
 										<input type="hidden" class="inbox-content-input" value="${inbox.message_content}">
@@ -257,24 +350,24 @@
 							                <h6 class="modal-title inbox-content"></h6>  
 							            </div>
 							            <div class="modal-footer">
-							                <form action="message_delete" method="post">
+							                <form action="message_delete_inbox" method="post">
 								                <input type="hidden" class="inbox-delete" name="message_manager_no">
 								                <input type="submit" class="btn btn-outline-danger" value="삭제">
 							            	</form>
-							                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
+							                <button type="button" class="btn btn-outline-danger close-btn" data-dismiss="modal">닫기</button>
 							            </div>
 							       </div>
 							 </div>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="profile">
+					<div class="tab-pane fade outbox-tab" id="profile">
 						<br>
 						<p>
 						<!-- 발신함 -->
 						<table class="table">
 							<thead>
 								<tr>
-									<th>제목</th>
+									<th style="width:50%;">제목</th>
 									<th>받는사람</th>
 									<th>날짜</th>
 								</tr>
@@ -285,20 +378,52 @@
 									<td class="outbox-title-td">
 									${outbox.message_title}
 										<input type="hidden" class="outbox-content-input" value="${outbox.message_content}">
-										<input type="hidden" class="outbox-no-input" value="${outbox.message_manager_no}">
+										<c:choose>
+											<c:when test="${admininfo.admin_auth eq '본사'}">
+												<input type="hidden" class="outbox-no-input" value="${outbox.message_manager_no}">
+											</c:when>
+											<c:otherwise>
+												<input type="hidden" class="outbox-no-input" value="${outbox.message_member_no}">
+											</c:otherwise>
+										</c:choose>
 									</td>
 									
 									<td>
 									<c:choose>
-										<c:when test="${outbox.admin_name eq '본사'}">
-											전체 지점장
+										<c:when test="${admininfo.admin_auth eq '본사'}">
+											<c:choose>
+												<c:when test="${outbox.admin_name eq '본사'}">
+													전체 지점장
+												</c:when>
+												<c:otherwise>
+													${outbox.admin_name}
+												</c:otherwise>
+											</c:choose>
+										</c:when>
+										<c:when test="${admininfo.admin_auth eq '지점'}">
+											<c:choose>
+												<c:when test="${outbox.member_no eq '0'}">
+													전체회원
+												</c:when>
+												<c:otherwise>
+													${outbox.member_name}
+												</c:otherwise>
+											</c:choose>
+										</c:when>
+									</c:choose>
+									
+									</td>
+									<td class="outbox-date-td">
+									<c:choose>
+										<c:when test="${admininfo.admin_auth eq '본사'}">
+											${outbox.message_manager_date}
 										</c:when>
 										<c:otherwise>
-											${outbox.admin_name}
+											${outbox.message_member_date}
 										</c:otherwise>
 									</c:choose>
+									
 									</td>
-									<td class="outbox-date-td">${outbox.message_manager_date}</td>
 								</tr>
 							</c:forEach>
 							</tbody>
@@ -315,7 +440,7 @@
 							                <h6 class="modal-title outbox-content"></h6>  
 							            </div>
 							            <div class="modal-footer">
-							            <form action="message_delete" method="post">
+							            <form action="message_delete_outbox" method="post">
 							                <input type="hidden" class="outbox-delete" name="message_manager_no">
 							                <input type="submit" class="btn btn-outline-danger" value="삭제">
 							            </form>
@@ -325,7 +450,7 @@
 							 </div>
 						</div>
 					</div>
-					<div class="tab-pane fade show active send-form" id="send-mail">
+					<div class="tab-pane fade show active send-form send-mail-tab" id="send-mail">
 						<br>
 							<!-- 쪽지보내기 -->
 							<input class="admin_no" type="hidden" value="${admininfo.admin_no}">
@@ -339,16 +464,16 @@
 									<div class="form-group">
 										<label for="exampleInputPassword1">받는 사람</label>
 										<!-- 수신인 --> 
-										<input type="text" class="form-control receive" id="receiver" autocomplete="off">
+										<input type="text" class="form-control receive" id="receiver" autocomplete="off" required="required">
 										
 									</div>
 									<div class="form-group">
 										<label for="exampleSelect1">제목</label> 
-										<input type="text" class="form-control" id="exampleInputEmail1" name="message_title" autocomplete="off">
+										<input type="text" class="form-control" id="exampleInputEmail1" name="message_title" autocomplete="off" required="required">
 									</div>
 									<div class="form-group">
 										<label for="exampleTextarea">쪽지 내용</label>
-										<textarea class="form-control" id="exampleTextarea" rows="3" name="message_content" autocomplete="off"></textarea>
+										<textarea class="form-control" id="exampleTextarea" rows="3" name="message_content" autocomplete="off" required="required"></textarea>
 									</div>
 									<button type="submit" class="btn btn-outline-secondary btn-block">쪽지 보내기</button>
 								</fieldset>
@@ -365,7 +490,7 @@
 											</div>
 											<div class="modal-body">
 												<div class="form-group">
-											        <select class="custom-select who">
+											        <select class="custom-select who" required="required">
 											        <c:choose>
 											        	<c:when test="${admininfo.admin_auth eq '본사'}">
 												          <option selected="">받는 사람 선택</option>
@@ -379,19 +504,27 @@
 											        	</c:when>
 											        </c:choose>
 											        </select>
+											        <!-- 지역검색 -->
 											        <select class="local-list custom-select" name="loacl_no">
 											        	<option value="">지역 검색</option>
 											        </select>
+											        <!-- 지점선택 -->
 											        <select class="branch-list custom-select" name="branch_no">
 											        	<option value="">지점 검색</option>
 											        </select>
+											        <!-- 회원 선택 -->
+											        <select class="member-list custom-select" name="member_no">
+											        	<option value="">회원 검색</option>
+											        </select>
 											        <hr>
+											        <!-- 선택한 목록 테이블 -->
 											        <table class="table receive-list-table" id="mytable">
 											        	<thead>
 											        		<tr>
-											        			<th colspan="4">받는사람 목록</th>
+											        			<th colspan="5">받는사람 목록</th>
 											        		</tr>
 											        		<tr>
+											        			<th>번호</th>
 											        			<th>지점</th>
 											        			<th>분류</th>
 											        			<th>이름</th>

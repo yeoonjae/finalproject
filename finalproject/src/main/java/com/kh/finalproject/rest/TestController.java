@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +36,9 @@ public class TestController {
 	
 	@Autowired
 	private CouponDao couponDao;
+	
+	@Autowired
+	private HttpSession session;
 	
 	// 마일리지 유형 중복검사
 	@GetMapping("/point/regist")
@@ -198,4 +203,47 @@ public class TestController {
 		return sqlSession.selectList("admin.getBranchAdmin");
 	}
 	
+	//관리자번호로 지점 --> 지점에 속한 회원들 읽어오기
+	@GetMapping("/message/member")
+	public List<MemberDto> memberBranchList(@RequestParam int admin_no){
+		int branch_no = sqlSession.selectOne("branch.getBranch", admin_no);
+		return sqlSession.selectList("member.getBranchList", 47);
+	}
+	
+	//회원번호로 정보+지점정보까지 읽어오기
+	@GetMapping("/message/memberInfo")
+	public MemberDto memberBranchInfo(@RequestParam int member_no) {
+		return sqlSession.selectOne("member.get", member_no);
+	}
+	
+	//쪽지 조회수(지점장)
+	@GetMapping("/message/update")
+	public void updateRead(@RequestParam int message_manager_no) {
+		sqlSession.update("message.updateManagerRead", message_manager_no);
+	}
+	
+	//쪽지 조회수(회원)
+	@GetMapping("/message/memberUpdate")
+	public void updateReadMember(@RequestParam int message_member_no) {
+		System.out.println(message_member_no);
+		sqlSession.update("message.updateMemberRead", message_member_no);
+		System.out.println("되는건가");
+	}
+	
+	//쪽지 span
+	@GetMapping("/message/count")
+	public int count() {
+		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
+		int admin_no = adminDto.getAdmin_no();
+		int a = sqlSession.selectOne("message.managerReadCount", admin_no);
+		return a;
+	}
+	
+	//회원 안읽은 쪽지 개수
+	@GetMapping("/message/count_member")
+	public int countMember() {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+		return sqlSession.selectOne("message.memberReadCount", member_no);
+	}
 }

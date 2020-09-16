@@ -94,6 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          LEFT OUTER JOIN LOCAL l ON l.LOCAL_NO = b.LOCAL_NO
          WHERE member_no = #{member_no}
    </select>
+   
    <!-- 회원 마일리지 수정 코드 -->
    <update id="plusPoint" parameterType="pointHisDto">
       UPDATE member SET member_point = member_point + #{point_his_score} WHERE member_no = #{member_no}
@@ -102,6 +103,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <update id="minusPoint" parameterType="pointHisDto">
       UPDATE member SET member_point = member_point - #{point_his_score} WHERE member_no = #{member_no}
    </update>
+	
+	<!-- 지점번호로 해당 지점 회원들 검색 -->
+	<select id="getBranchList" parameterType="int" resultType="memberDto">
+		SELECT * FROM MEMBER WHERE branch_no=#{branch_no}
+	</select>
+	
+	<!-- 회원이름으로 회원 Dto뽑기 -->
+	<select id="getNoName" parameterType="String" resultType="int">
+		SELECT * FROM member WHERE member_name=#{member_name}
+	</select>
 	
 </mapper>
 
