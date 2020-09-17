@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	mapper는 구문을 만들 수 있는 영역
+	일반적으로 테이블당 1개씩의 mapper를 둔다
+	
+	- namespace : 영역을 외부에서 부르기 위한 별칭(일반적으로 테이블 이름으로 사용)
+ -->
+<mapper namespace="seat">
+	
+	<insert id="regist" parameterType="seatDto">
+		INSERT INTO seat(
+			seat_no,
+			branch_no,
+			seat_row,
+			seat_col,
+			seat_direction,
+			seat_type,
+			seat_state
+		) VALUES (
+			seat_seq.nextval,
+			#{branch_no},
+			#{seat_row},
+			#{seat_col},
+			#{seat_direction},
+			#{seat_type},
+			#{seat_state}
+		)
+	</insert>
+	
+	<!-- 지점별 좌석 정보 조회 -->
+	<select id="getList" parameterType="int" resultType="seatDto">
+		SELECT * FROM seat WHERE BRANCH_NO = #{branch_no} ORDER BY seat_row, seat_col ASC
+	</select>
+	
+	<!-- 지점별 좌석 row 최대값 -->
+	<select id="getRow" parameterType="int" resultType="int">
+		SELECT T.seat_row FROM (
+			SELECT s.seat_row, ROW_NUMBER() OVER (
+				PARTITION BY s.branch_no ORDER BY s.seat_row DESC) AS RankNo FROM seat s
+			) T 
+		WHERE RankNo = 1
+	</select>
+	
+	<!-- 지점별 좌석 col 최대값 -->
+	<select id="getCol" parameterType="int" resultType="int">
+		SELECT T.seat_col FROM (
+			SELECT s.seat_col, ROW_NUMBER() OVER (
+				PARTITION BY s.branch_no ORDER BY s.seat_col DESC) AS RankNo FROM seat s
+			) T 
+		WHERE RankNo = 1
+	</select>
+	
+	<insert id="entrance" parameterType="map">
+		INSERT INTO entrance VALUES(
+			entrance_seq.nextval,
+			#{branch_no},
+			#{entrance_location}
+		)
+	</insert>
+	
+	<select id="getEntrance" parameterType="int" resultType="String">
+		SELECT entrance_location FROM entrance WHERE branch_no = #{branch_no}
+	</select>
+</mapper>
+
+
+
+
