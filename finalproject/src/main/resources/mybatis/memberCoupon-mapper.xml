@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	mapper는 구문을 만들 수 있는 영역
+	일반적으로 테이블당 1개씩의 mapper를 둔다
+	
+	- namespace : 영역을 외부에서 부르기 위한 별칭(일반적으로 테이블 이름으로 사용)
+ -->
+<mapper namespace="memberCoupon">
+	<!-- 회원 쿠폰 보유현황 테이블에 등록 -->
+	<insert id="regist" parameterType="memberCouponDto">
+		INSERT INTO member_coupon(
+			member_no,
+			coupon_no,
+			branch_no
+		) VALUES (
+			#{member_no},
+			#{coupon_no},
+			#{branch_no}
+		)
+	</insert>
+	
+	<!-- 회원 쿠폰 보유현황 테이블에서 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM member_coupon WHERE coupon_no = #{coupon_no}
+	</delete>
+	
+	<!-- 회원 쿠폰 목록 조회 -->
+	<select id="getList" resultType="memberCouponDto">
+		SELECT c.* FROM member_coupon m LEFT OUTER JOIN coupon c ON m.coupon_no = c.coupon_no
+	</select>
+	
+</mapper>
+
+
+
+

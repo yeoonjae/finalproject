@@ -79,6 +79,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE branch_no = #{branch_no}
 	</update>
 	
+	<!-- 지점번호 조회 -->
+	<select id="getNo" resultType="int">
+		SELECT branch_no FROM branch
+	</select>
+	
+	<!-- 지역번호와 일치하는 지점번호 조회 -->
+	<select id="getNo2" resultType="int" parameterType="int">
+		SELECT branch_no FROM branch WHERE local_no = #{local_no}
+	</select>
+
 	<!-- 지점이름으로 지점 뽑기 -->
 	<select id="getName" parameterType="String" resultType="branchDto">
 		SELECT * FROM branch WHERE branch_name=#{branch_name}
@@ -95,6 +105,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		LEFT OUTER JOIN BRANCH_IMG b ON a.BRANCH_NO = b.BRANCH_NO WHERE a.branch_no = #{branch_no}
 	</select>
 	
+
+	<!-- 관리자 번호와 일치하는 지점번호 조회 -->
+	<select id="getNo3" parameterType="int" resultType="int">
+		SELECT branch_no FROM branch WHERE admin_no = #{admin_no}
+	</select>
+
 	<!-- admin번호 받아서 branch 번호 넘기기 -->
 	<select id="getBranch" parameterType="int" resultType="int">
 		SELECT branch_no FROM branch WHERE admin_no=#{admin_no}

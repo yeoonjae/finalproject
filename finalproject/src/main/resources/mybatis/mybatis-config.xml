@@ -22,8 +22,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.finalproject.entity.LocalDto" alias="localDto"/>
 		<typeAlias type="com.kh.finalproject.entity.AdminDto" alias="adminDto"/>
 		<typeAlias type="com.kh.finalproject.entity.LicenseDto" alias="licenseDto"/>
+		<typeAlias type="com.kh.finalproject.entity.CouponDto" alias="couponDto"/>
+		<typeAlias type="com.kh.finalproject.entity.CouponReqDto" alias="couponReqDto"/>
+		<typeAlias type="com.kh.finalproject.entity.MemberCouponDto" alias="memberCouponDto"/>
 		<typeAlias type="com.kh.finalproject.entity.PointDto" alias="pointDto"/>
 		<typeAlias type="com.kh.finalproject.entity.PointHisDto" alias="pointHisDto"/>
+		<typeAlias type="com.kh.finalproject.entity.SeatDto" alias="seatDto"/>
 		<typeAlias type="com.kh.finalproject.entity.MemberDto" alias="memberDto"/>
 		<typeAlias type="com.kh.finalproject.entity.BranchImgDto" alias="branchImgDto"/>
 		<typeAlias type="com.kh.finalproject.entity.MessageManagerDto" alias="messageManagerDto"/>
@@ -38,6 +42,3 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.finalproject.VO.PagingVO" alias="pagingVO"/>
 	</typeAliases>
 </configuration>
-
-
-

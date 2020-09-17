@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PointDto;
 import com.kh.finalproject.entity.PointHisDto;
+import com.kh.finalproject.repository.AdminDao;
 import com.kh.finalproject.repository.BranchDao;
 import com.kh.finalproject.repository.MemberDao;
 import com.kh.finalproject.repository.PointDao;
@@ -39,6 +43,9 @@ public class PointController {
 	
 	@Autowired
 	private BranchDao branchDao;
+	
+	@Autowired
+	private AdminDao adminDao;
 	
 	@Autowired
 	private PointHisService pointHisService;
@@ -162,10 +169,23 @@ public class PointController {
 	}
 	
 	@GetMapping("/his_list")
-	public String his_list(Model model, @RequestParam(required = false, defaultValue = "0") int member_no) {
-		// 지점명 select를 위한 지점 목록 전달
-		List<BranchDto> branchList = branchDao.getList();
-		model.addAttribute("branchList", branchList);
+	public String his_list(Model model, @RequestParam(required = false, defaultValue = "0") int member_no, HttpSession session) {
+		// session에서 관리자 지점 조회
+		// 본사면 전체지점, 지점이면 해당 지점 정보만 전송
+		AdminDto adminDto = (AdminDto) session.getAttribute("admininfo");
+		
+		if(adminDto.getAdmin_auth().equals("본사")) {
+			// 지점명 select를 위한 지점 목록 전달
+			List<BranchDto> branchList = branchDao.getList();
+			model.addAttribute("branchList", branchList);			
+		} else {
+			AdminDto admininfo = adminDao.getAdminInfo(adminDto.getAdmin_no());
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("branch_no", admininfo.getBranch_no());
+			param.put("branch_name", admininfo.getBranch_name());
+			model.addAttribute("branchList", param);
+		}
+		
 		
 		// 회원번호가 함께 올 경우 회원정보 전달
 		if(member_no!=0) {
@@ -175,17 +195,5 @@ public class PointController {
 				
 		return "admin/point/his_list";
 	}
-	
-//	@PostMapping("/his_list")
-//	public String his_list(@RequestParam int member_no, @RequestParam String start, @RequestParam String finish,
-//			Model model) {
-//		System.out.println(member_no);
-//
-//		List<PointHisDto> list = pointHisService.getList(member_no, start, finish);
-//		model.addAttribute("list", list);
-//		
-//		System.out.println(list.size());
-//		return "admin/point/his_list";
-//	}
 	
 }
