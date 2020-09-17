@@ -107,10 +107,10 @@
 	// 	    	           		$(".member_email").prop("readonly", true);
 	    	               });
 	                    });
-                	}
-                	if($(".list-table").find("td").length == 0){
-                		$(".list-table").html("");
- 						$(".list-table").append("<tr>").append('<td colspan="4">검색 결과가 없습니다</td>');
+	                	if($(".list-table").find("td").length == 0){
+	                		$(".list-table").html("");
+	 						$(".list-table").append("<tr>").append('<td colspan="4">검색 결과가 없습니다</td>');
+	                	}
                 	}
         		});
         		
@@ -178,6 +178,10 @@
         				}
         			});
         			
+        			if($(".his-list").find("td").length == 0){
+                		$(".his-list").html("");
+ 						$(".his-list").append("<tr>").append('<td colspan="4">검색 결과가 없습니다</td>');
+                	}
         			
         		});
         		
