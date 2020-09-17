@@ -174,4 +174,8 @@ public class TestController {
 		int member_no = memberDto.getMember_no();
 		return sqlSession.selectOne("message.memberReadCount", member_no);
 	}
+	@GetMapping("/notice/content")
+	public String content(@RequestParam int notice_no) {
+		return sqlSession.selectOne("notice.contentOnly", notice_no);
+	}
 }

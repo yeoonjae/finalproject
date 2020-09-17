@@ -26,6 +26,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="content" parameterType="int" resultType="noticeDto">
 		select * from notice where notice_no =#{notice_no}
 	</select>
+	<select id="contentOnly" parameterType="int" resultType="string">
+		select notice_content from notice where notice_no=#{notice_no}
+	</select>
 	<!-- 공지 정보 수정 -->
 	<update id="edit" parameterType="noticeDto">
 		update notice set notice_title=#{notice_title}, notice_content=#{notice_content}, notice_time=sysdate where notice_no=#{notice_no}

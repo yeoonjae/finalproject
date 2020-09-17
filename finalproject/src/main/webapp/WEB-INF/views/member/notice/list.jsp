@@ -15,6 +15,9 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 	integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
 	crossorigin="anonymous">
+<script>
+
+</script>
 <div id="content-wrapper">
 	<div class="container-fluid">
 		<ol class="breadcrumb">
@@ -26,23 +29,13 @@
 					<table class="table table-bordered" id="dataTable" width="auto" cellspacing="0">
 						<thead>
 							<tr>
-								<th>공지 번호</th>
-								<th>공지 제목</th>
-								<c:if test="${admininfo.admin_auth eq '본사'}">
-									<th>관리자 메뉴</th>
-								</c:if>
+								<th>공지 사항</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="list" items="${list}">
 								<tr>
-									<td>${list.notice_no}</td>
 									<td>${list.notice_title}</td>
-									<c:if test="${admininfo.admin_auth eq '본사'}">
-										<td><a href="content?notice_no=${list.notice_no}">내용</a> | <a
-												href="edit?notice_no=${list.notice_no}">수정</a> | <a
-												href="delete?notice_no=${list.notice_no}">삭제</a></td>
-									</c:if>
 								</tr>
 							</c:forEach>
 						</tbody>
