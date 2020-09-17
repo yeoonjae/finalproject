@@ -11,6 +11,87 @@
 <jsp:include page="/WEB-INF/views/member/template/home_header.jsp"></jsp:include>	
 </c:otherwise>
 </c:choose>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js"
+    integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A=="
+    crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+</script>
+<style>
+    .intext {
+        width: 100%;
+        padding-left: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .incorrect-message {
+        display: none;
+    }
+
+    .correct-message {
+        display: none;
+    }
+
+    .unoverlap-message {
+        display: none;
+    }
+
+    .overlap-message {
+        display: none;
+    }
+
+    .email-input.unoverlap~.unoverlap-message {
+        color: blue;
+        font-size: 16;
+        display: block;
+        font-size: 13px;
+        margin: 0.3rem;
+    }
+
+    .email-input.overlap~.overlap-message {
+        color: red;
+        font-size: 16;
+        display: block;
+        font-size: 13px;
+        margin: 0.3rem;
+    }
+
+    .intext.correct~.correct-message {
+        color: blue;
+        font-size: 16;
+        display: block;
+        font-size: 13px;
+        margin: 0.3rem;
+    }
+
+    .intext.incorrect~.incorrect-message {
+        color: red;
+        font-size: 16;
+        display: block;
+        font-size: 13px;
+        margin: 0.3rem;
+    }
+
+    .inemail.correct~.correct-message {
+        color: blue;
+        font-size: 16;
+        display: block;
+        font-size: 13px;
+        margin: 0.3rem;
+    }
+
+    .inemail.incorrect~.incorrect-message {
+        color: red;
+        font-size: 16;
+        display: block;
+        font-size: 13px;
+        margin: 0.3rem;
+    }
+</style>
 <div id="content-wrapper">
 	<div class="container-fluid">
 		<ol class="breadcrumb">
