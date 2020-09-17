@@ -161,9 +161,36 @@ public class MessageServiceImpl implements MessageService{
 		return list;
 	}
 
-	//페이징 처리를 위한 메세지 개수
+	//(회원)페이징 처리를 위한 메세지 개수
 	public int countMessage(int member_no) {
 		return sqlSession.selectOne("message.countMessage",member_no);
 	}
-	
+
+	//(지점 관리자)발신함 메세지 개수
+	public int outboxCountBranchManager(int admin_no) {
+		return sqlSession.selectOne("message.outboxCountBranchManager", admin_no);
+	}
+
+	//(지점관리자)발신함 + 페이징
+	public List<MessageMemberDto> outboxBranchManager(int admin_no, PagingVO pagingVO) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("admin_no", admin_no);
+		map.put("start", pagingVO.getStart());
+		map.put("end", pagingVO.getEnd());
+		return sqlSession.selectList("message.outboxBranchManager", map);
+	}
+
+	//(지점,본사관리자)수신함 메세지 개수
+	public int inboxCountManager(int admin_no) {
+		return sqlSession.selectOne("message.inboxCountManager", admin_no);
+	}
+
+	//(지점,본사관리자)수신함 + 페이징
+	public List<MessageManagerDto> inboxManager(int admin_no, PagingVO pagingVO) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("admin_no", admin_no);
+		map.put("start", pagingVO.getStart());
+		map.put("end", pagingVO.getEnd());
+		return sqlSession.selectList("message.inboxManager", map);
+	}
 }

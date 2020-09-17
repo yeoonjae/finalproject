@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	<!-- 매니저 연결테이블에 저장 -->
+	<!-- (매니저) 연결테이블에 저장 -->
 	<insert id="sendManager" parameterType="messageManagerDto">
 		insert into MESSAGE_MANAGER values(
 			message_manager_seq.nextval,
@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
-	<!-- 회원 연결 테이블에 저장 -->
+	<!-- (회원) 연결 테이블에 저장 -->
 	<insert id="sendMember" parameterType="messageMemberDto">
 		insert into MESSAGE_Member values(
 			message_member_seq.nextval,
@@ -40,26 +40,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
-	<!-- 본사 관리자 수신함 -->
-	<select id="inboxAdmin" parameterType="int" resultType="messageManagerDto">
-					SELECT a.admin_name,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_MANAGER mm 
+	<!-- (관리자) 수신함 + 페이징 -->
+	<select id="inboxManager" parameterType="map" resultType="messageManagerDto">
+		SELECT * FROM (SELECT rownum rn,T.*FROM (
+		SELECT mm.*,m.message_title,m.message_content, CASE 
+			WHEN MESSAGE_manager_READ = 0 THEN '0' 
+			when MESSAGE_manager_READ> 0 THEN '1'
+			END AS read_count 
+			FROM MESSAGE_manager mm 
+			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 
+			WHERE admin_NO = #{admin_no} and MESSAGE_manager_TYPE = '수신'
+			ORDER BY read_count ASC,mm.MESSAGE_manager_DATE DESC)T)
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<!-- (본사,지점관리자)수신함 메세지 개수 -->
+	<select id="inboxCountManager" parameterType="int" resultType="int">
+		SELECT count(*) FROM MESSAGE_MANAGER mm 
 			LEFT OUTER JOIN admin a ON mm.ADMIN_NO2 = a.ADMIN_NO 	
 			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
 			WHERE MESSAGE_MANAGER_TYPE = '수신' AND mm.ADMIN_NO =#{admin_no}
 			ORDER BY mm.MESSAGE_MANAGER_READ ASC ,mm.MESSAGE_MANAGER_DATE DESC
 	</select>
 	
-	<!-- 지점관리자 발신함 -->
-	<select id="outboxManager" parameterType="int" resultType="messageMemberDto">
-		SELECT a.member_name ,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_Member mm	
+	<!-- (지점관리자) 발신함 메세지 개수 -->
+	<select id="outboxCountBranchManager" parameterType="int" resultType="int">
+		SELECT count(*) FROM MESSAGE_Member mm	
 			left OUTER JOIN Message m ON m.MESSAGE_NO = mm.MESSAGE_NO
 			LEFT OUTER JOIN member a ON mm.MEMBER_NO = a.member_no 
 			WHERE mm.ADMIN_NO =#{admin_no} AND mm.MESSAGE_Member_TYPE ='발신' 
 			ORDER BY mm.MESSAGE_Member_DATE DESC
 	</select>
 	
+	<!-- (지점관리자) 발신함 + 페이징 -->
+	<select id="outboxBranchManager" parameterType="map" resultType="messageMemberDto">
+		SELECT * FROM (SELECT rownum rn,T.*FROM (
+		SELECT * FROM MESSAGE_Member mm	
+					left OUTER JOIN Message m ON m.MESSAGE_NO = mm.MESSAGE_NO
+					LEFT OUTER JOIN member a ON mm.MEMBER_NO = a.member_no 
+					WHERE mm.ADMIN_NO =#{admin_no} AND mm.MESSAGE_Member_TYPE ='발신' 
+					ORDER BY mm.MESSAGE_Member_DATE DESC
+		)T)WHERE RN BETWEEN #{start} AND #{end}
+	</select>
 	
-	<!-- 관리자 발신함 -->
+	<!-- (본사 관리자) 발신함 -->
 	<select id="outboxAdmin" parameterType="int" resultType="messageManagerDto">
 			SELECT a.admin_name ,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_MANAGER mm	
 			left OUTER JOIN Message m ON m.MESSAGE_NO = mm.MESSAGE_NO
@@ -68,31 +92,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			ORDER BY mm.MESSAGE_MANAGER_DATE DESC
 	</select>
 	
-	<!-- 관리자 연결테이블 메세지 삭제 -->
+	<!-- (관리자) 연결테이블 메세지 삭제 -->
 	<delete id="managerDelete" parameterType="int">
 		DELETE message_manager WHERE message_manager_no=#{message_manager_no}
 	</delete>
 	
-	<!-- 회원 연결테이블 메세지 삭제 -->
+	<!-- (회원) 연결테이블 메세지 삭제 -->
 	<delete id="memberDelete" parameterType="int">
 		DELETE message_member WHERE message_member_no=#{message_member_no}
 	</delete>
 	
-	<!-- 관리자 연결테이블 조회수 증가 -->
+	<!-- (관리자) 연결테이블 조회수 증가 -->
 	<update id="updateManagerRead" parameterType="int">
 		UPDATE message_manager 
 		SET message_manager_read = MESSAGE_MANAGER_READ +1 
 		WHERE MESSAGE_MANAGER_NO = #{message_manager_no}
 	</update>
 	
-	<!-- 회원 연결테이블 조회수 증가 -->
+	<!-- (회원) 연결테이블 조회수 증가 -->
 	<update id="updateMemberRead" parameterType="int">
 		UPDATE message_member 
 		SET message_MEMBER_read = MESSAGE_MEMBER_READ+1 
 		WHERE MESSAGE_MEMBER_NO = #{message_member_no}
 	</update>
 	
-	<!-- 관리자 수신함 조회수 0인 애들 개수 -->
+	<!-- (본사,지점관리자)관리자 수신함 조회수 0인 애들 개수 -->
 	<select id="managerReadCount" parameterType="int" resultType="int">
 		SELECT count(*) FROM MESSAGE_MANAGER mm 
 			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
@@ -100,7 +124,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND mm.MESSAGE_MANAGER_READ =0
 	</select>
 	
-	<!-- 회원 수신함 조회수 0인 애들 개수 -->
+	<!-- (회원) 수신함 조회수 0인 애들 개수 -->
 	<select id="memberReadCount" parameterType="int" resultType="int">
 		SELECT count(*) FROM MESSAGE_member mm 
 			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
@@ -108,7 +132,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			AND mm.MESSAGE_MEMBER_READ =0
 	</select>
 	
-	<!-- 회원 수신함 + 페이징-->
+	<!-- (회원) 수신함 + 페이징-->
 	<select id="inboxMember" resultType="messageMemberDto" parameterType="map">
 		SELECT * FROM (SELECT rownum rn,T.*FROM (
 		SELECT mm.*,m.message_title,m.message_content, CASE 
@@ -131,7 +155,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			WHERE b.MESSAGE_MANAGER_NO IS NULL AND c.MEMBER_NO IS null)
 	</delete>
 	
-	<!-- 페이징을 위한 회원 수신함 메세지 개수 -->
+	<!-- (회원) 페이징을 위한 회원 수신함 메세지 개수 -->
 	<select id="countMessage" resultType="int" parameterType="int">
 		SELECT count(*) FROM (SELECT rownum rn,T.*FROM (SELECT * FROM MESSAGE_MEMBER mm 
 			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 	
@@ -139,5 +163,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			ORDER BY mm.MESSAGE_MEMBER_READ ASC ,mm.MESSAGE_MEMBER_DATE DESC)T)
 	</select>
 	
-	<!--  -->
 </mapper>

@@ -202,7 +202,6 @@
 	    		    var receiver = $("#receiver");//받는사람 input칸
 	    		    var sum = ($(".name").length)-1;
 	    		    if($(".name").length > 1){//tr안에 있는 td의 클래스 이름이 name이다
-	    		    	console.log($(this).text());
 		    		    receiver.attr("value",$(this).text()+"외"+sum+"명");
 		    		    $("<input>").attr("type","hidden").attr("value",$(this).parents("tr").children(".no").text()).attr("name","receiver_name").insertAfter(receiver);
 		    		    
@@ -287,9 +286,6 @@
 	    });
 	    
 	});
-	    
-	
-	
 </script>
 
 <div id="content-wrapper" style="padding-top: 60px;">
@@ -298,10 +294,10 @@
 			<div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
 				<ul class="nav nav-tabs">
 					<li class="nav-item">
-						<a class="nav-link inbox-tab" data-toggle="tab" href="#home">받은 쪽지 보기</a>
+						<a class="nav-link inbox-tab" href="${pageContext.request.contextPath}/admin/message/inbox">받은 쪽지 보기</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link outbox-tab" data-toggle="tab" href="#profile">보낸 쪽지</a>
+						<a class="nav-link outbox-tab" href="${pageContext.request.contextPath}/admin/message/outbox">보낸 쪽지</a>
 					</li>
 					<li class="nav-item">
 					<a class="nav-link active send-mail-tab" data-toggle="tab" href="#send-mail">쪽지 보내기</a></li>
@@ -361,101 +357,11 @@
 							 </div>
 						</div>
 					</div>
-					<div class="tab-pane fade outbox-tab" id="profile">
-						<br>
-						<p>
-						<!-- 발신함 -->
-						<table class="table">
-							<thead>
-								<tr>
-									<th style="width:50%;">제목</th>
-									<th>받는사람</th>
-									<th>날짜</th>
-								</tr>
-							</thead>
-							<tbody>
-							<c:forEach var="outbox" items="${outbox}">
-								<tr class="outbox-tr">
-									<td class="outbox-title-td">
-									${outbox.message_title}
-										<input type="hidden" class="outbox-content-input" value="${outbox.message_content}">
-										<c:choose>
-											<c:when test="${admininfo.admin_auth eq '본사'}">
-												<input type="hidden" class="outbox-no-input" value="${outbox.message_manager_no}">
-											</c:when>
-											<c:otherwise>
-												<input type="hidden" class="outbox-no-input" value="${outbox.message_member_no}">
-											</c:otherwise>
-										</c:choose>
-									</td>
-									
-									<td>
-									<c:choose>
-										<c:when test="${admininfo.admin_auth eq '본사'}">
-											<c:choose>
-												<c:when test="${outbox.admin_name eq '본사'}">
-													전체 지점장
-												</c:when>
-												<c:otherwise>
-													${outbox.admin_name}
-												</c:otherwise>
-											</c:choose>
-										</c:when>
-										<c:when test="${admininfo.admin_auth eq '지점'}">
-											<c:choose>
-												<c:when test="${outbox.member_no eq '0'}">
-													전체회원
-												</c:when>
-												<c:otherwise>
-													${outbox.member_name}
-												</c:otherwise>
-											</c:choose>
-										</c:when>
-									</c:choose>
-									
-									</td>
-									<td class="outbox-date-td">
-									<c:choose>
-										<c:when test="${admininfo.admin_auth eq '본사'}">
-											${outbox.message_manager_date}
-										</c:when>
-										<c:otherwise>
-											${outbox.message_member_date}
-										</c:otherwise>
-									</c:choose>
-									
-									</td>
-								</tr>
-							</c:forEach>
-							</tbody>
-						</table>
-						<!-- 받신함 모달 -->
-						<div class="modal" id="outbox-modal">
-							<div class="modal-dialog">
-							       <div class="modal-content">
-							            <div class="modal-header">
-							                <h6 class="modal-title outbox-title"></h6>
-							                <h6 class="modal-title outbox-date"></h6>
-							            </div>
-							            <div class="modal-body">
-							                <h6 class="modal-title outbox-content"></h6>  
-							            </div>
-							            <div class="modal-footer">
-							            <form action="message_delete_outbox" method="post">
-							                <input type="hidden" class="outbox-delete" name="message_manager_no">
-							                <input type="submit" class="btn btn-outline-danger" value="삭제">
-							            </form>
-							                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">닫기</button>
-							            </div>
-							       </div>
-							 </div>
-						</div>
-					</div>
 					<div class="tab-pane fade show active send-form send-mail-tab" id="send-mail">
 						<br>
 							<!-- 쪽지보내기 -->
 							<input class="admin_no" type="hidden" value="${admininfo.admin_no}">
-							<form action="send_message_manager" method="post">
+							<form action="send" method="post">
 								<fieldset>
 									<div class="form-group">
 										<label for="exampleInputEmail1">보내는 사람</label>

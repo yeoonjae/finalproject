@@ -61,11 +61,7 @@
       <!-- Navbar Search -->
       <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-              <i class="fas fa-search"></i>
-            </button>
           </div>
         </div>
       </form>
@@ -74,14 +70,14 @@
       <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow mx-1">
           <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="badge badge-danger readCount"></span>
             <i class="fas fa-envelope fa-fw"></i>
-            <span class="badge badge-danger">7</span>
           </a>
           
           <!-- 메세지 부분 -->
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send_message_manager?where=inbox">쪽지함</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send_message_manager?where=send">쪽지보내기</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/inbox">쪽지함</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send">쪽지보내기</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
