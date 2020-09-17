@@ -15,7 +15,13 @@ public class BranchDto {
 	private int branch_room_cnt;
 	private int branch_seat_cnt;
 	private int branch_locker_cnt;
+	
+	private String branch_post;
+	private String branch_basic_addr;
+	private String branch_detail_addr;
+	private String branch_phone;
 	private String branch_layout;
+	private int branch_img_no;
 	private String local_name;
 	private String admin_name;
 }

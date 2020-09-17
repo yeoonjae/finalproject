@@ -81,9 +81,13 @@ public class AdminDaoImpl implements AdminDao {
 	}
 		
 	//관리자 로그인 시간 업데이트
-	@Override
 	public void updateLoginTime(int no) {
 		sqlSession.selectList("admin.updateLoginTime", no);
+	}
+	
+	// 관리자 지점과 JOIN한 정보 단일 조회
+	public AdminDto getAdminInfo(int admin_no) {
+		return sqlSession.selectOne("admin.getAdminInfo", admin_no);
 	}
 	
 }

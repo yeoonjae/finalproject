@@ -29,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delete" parameterType="int">
 		DELETE local WHERE local_no=#{local_no}
 	</delete>
+
 </mapper>
 
 

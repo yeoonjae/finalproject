@@ -1,6 +1,8 @@
 package com.kh.finalproject.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,13 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.finalproject.VO.MessageVO;
+import com.kh.finalproject.VO.PagingVO;
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.MessageDto;
 import com.kh.finalproject.entity.MessageManagerDto;
 import com.kh.finalproject.entity.MessageMemberDto;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class MessageServiceImpl implements MessageService{
 	
 	@Autowired
@@ -138,8 +144,7 @@ public class MessageServiceImpl implements MessageService{
 	
 	//수신함 메세지 삭제
 	public void deleteInbox(int message_manager_no) {
-		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
-			sqlSession.delete("message.managerDelete", message_manager_no);
+		sqlSession.delete("message.managerDelete", message_manager_no);
 	}
 
 	//수신함 메세지 삭제(회원)
@@ -147,5 +152,61 @@ public class MessageServiceImpl implements MessageService{
 		sqlSession.delete("message.memberDelete", message_member_no);
 		
 	}
-	
+
+	//메세지 수신함(회원 로그인) + 페이징
+	public List<MessageMemberDto> inboxMember(int member_no, PagingVO pagingVO) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("member_no", member_no);
+		map.put("start", pagingVO.getStart());
+		map.put("end", pagingVO.getEnd());
+		List<MessageMemberDto> list = sqlSession.selectList("message.inboxMember", map);
+		return list;
+	}
+
+	//(회원)페이징 처리를 위한 메세지 개수
+	public int countMessage(int member_no) {
+		return sqlSession.selectOne("message.countMessage",member_no);
+	}
+
+	//(지점 관리자)발신함 메세지 개수
+	public int outboxCountBranchManager(int admin_no) {
+		return sqlSession.selectOne("message.outboxCountBranchManager", admin_no);
+	}
+
+	//(지점관리자)발신함 + 페이징
+	public List<MessageMemberDto> outboxBranchManager(int admin_no, PagingVO pagingVO) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("admin_no", admin_no);
+		map.put("start", pagingVO.getStart());
+		map.put("end", pagingVO.getEnd());
+		return sqlSession.selectList("message.outboxBranchManager", map);
+	}
+
+	//(지점,본사관리자)수신함 메세지 개수
+	public int inboxCountManager(int admin_no) {
+		return sqlSession.selectOne("message.inboxCountManager", admin_no);
+	}
+
+	//(지점,본사관리자)수신함 + 페이징
+	public List<MessageManagerDto> inboxManager(int admin_no, PagingVO pagingVO) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("admin_no", admin_no);
+		map.put("start", pagingVO.getStart());
+		map.put("end", pagingVO.getEnd());
+		return sqlSession.selectList("message.inboxManager", map);
+	}
+
+	//(본사 관리자)발신함 메세지 개수
+	public int outboxCountTotalManager(int admin_no) {
+		return sqlSession.selectOne("message.outboxCountTotalManager", admin_no);
+	}
+
+	//(본사 관리자)발신함 + 페이징
+	public List<MessageMemberDto> outboxTotalManager(int admin_no, PagingVO pagingVO) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("admin_no", admin_no);
+		map.put("start", pagingVO.getStart());
+		map.put("end", pagingVO.getEnd());
+		return sqlSession.selectList("message.outboxTotalManager", map);
+	}
 }

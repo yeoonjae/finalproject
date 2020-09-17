@@ -28,22 +28,24 @@
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
     <script>
         $(function(){
-        	
+        	// 수정버튼 클릭 시
+        	// input창에 데이터 입력되도록
             $(".btn-edit").click(function(){
                 $(".member_name").val($(this).data("name"));
                 $(".member_email").val($(this).data("email"));
                 $(".member_no").val($(this).data("no"));
                 
                 $(".select-result").text("");
-                $(".btn-regist").attr("disabled", false);
+                $(".btn-regist").attr("disabled", false); // 등록 버튼 활성화
                 
         	});
             
+        	// 등록버튼 클릭 시
             $(".btn-regist").click(function(e){
             	var name = $(".membr_name").val();
             	var email = $(".member_email").val();
             	
-            	if(!name || !email){
+            	if(!name || !email){ // 비어있는 input창이 있을 경우
             		return;
             	}
             	
@@ -54,14 +56,17 @@
             	}
             });
             
+        	// 정렬 선택 시 form 전송
             $("#order").change(function(){
             	document.querySelector(".list-form").submit();
             });
         });
+        
+        // 다른 페이지에서 넘어올 경우 (파라미터가 있는 경우)
         $(window).on("load", function(){
         	if($(".membr_name").val()) {
-        		$(".select-result").removeClass("on");
-        		$(".btn-regist").attr("disabled", false);
+        		$(".select-result").removeClass("on");	// 회원 선택하라는 span 숨김
+        		$(".btn-regist").attr("disabled", false); // 등록버튼 활성화
         	}
         });
     </script>
@@ -75,7 +80,7 @@
             <li class="breadcrumb-item active">적립 및 차감</li>
         </ol>
         <div class="row">
-            <div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
+            <div class="offset-sm-4 col-sm-4 offset-md-4 col-md-4">
             	<div class="form-group">
                 	<label>회원명</label> <span class="select-result on">수정할 회원을 아래 목록에서 선택해주세요</span>
                     <input type="text" name="member_name" class="form-control member_name" disabled>
@@ -116,7 +121,7 @@
             </div>
             <div class="card-body offset-sm-1 col-sm-10 offset-md-1 col-md-10">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-hover" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>
@@ -145,16 +150,17 @@
                                     <td>${memberDto.member_email}</td>
                                     <td>${memberDto.member_point}</td>
                                     <td>
-                                        <button class="btn btn-primary btn-edit" data-name="${memberDto.member_name}" 
+                                        <button class="btn btn-sm btn-primary btn-edit" data-name="${memberDto.member_name}" 
                                         data-email="${memberDto.member_email}" data-no="${memberDto.member_no}">선택</button>
                                         <a href="his_list?member_no=${memberDto.member_no}">
-                                            <button class="btn btn-primary del">내역조회</button>
+                                            <button class="btn btn-sm btn-secondary del">내역조회</button>
                                         </a>
                                     </td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
+                    <br><br>
                 </div>
             </div>
             <div class="card-footer small text-muted">
