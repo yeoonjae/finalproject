@@ -155,18 +155,20 @@
 				</div>
 				<div class="form-group">
 				회원 이름:
-				<input type="text" class="form-control" name="member_name" id="name"value="${memberDto.member_name}"placeholder="2~7자의 한글을 입력">
+				<input type="text" class="form-control intext" name="member_name" 
+				id="name"value="${memberDto.member_name}" 
+				placeholder="2~7자의 한글을 입력" oninput="checkName();">
 				<span class="correct-message">올바른 이름 형식입니다</span>
 				<span class="incorrect-message">이름은 한글 2~7자로 구성하세요</span>
 				</div>
 				<div class="form-group">
 				회원 비밀번호 :
-				<input type="password" class="form-control" id="pw"name="member_pw">
+				<input type="password" class="form-control intext" id="pw"name="member_pw" oninput="checkPw();">
 				<span class="correct-message">올바른 비밀번호 형식입니다</span>
 				<span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로8~16자 내외로 구성하세요</span>
 				</div>
 				<div class="form-group">
-				<input type="password" class="form-control"id="checkPw">
+				<input type="password" class="form-control intext"id="checkPw" oninput="checkCheckPw();">
 				<span class="correct-message">비밀번호가 일치합니다.</span> 
 				<span class="incorrect-message">비밀번호가 불일치합니다.</span>
 				</div>
