@@ -117,6 +117,7 @@ public class MemberAccountController {
 	// 회원 삭제
 	@GetMapping("/delete")
 	public String delete(@RequestParam int member_no, HttpSession session) {
+		session.removeAttribute("memberinfo");
 		memberDao.delete(member_no);
 		if (session.getAttribute("admininfo") != null) {
 			return "member/account/list";
