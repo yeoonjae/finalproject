@@ -13,9 +13,12 @@ public class NoticeDaoImpl implements NoticeDao {
 	@Autowired
 	private SqlSession sqlSession;
 	@Override
-	public void write(NoticeDto noticeDto) {
+	public int write(NoticeDto noticeDto) {
 		// TODO Auto-generated method stub
+		int notice_no =sqlSession.selectOne("notice.getSeq");
+		noticeDto.setNotice_no(notice_no);
 		sqlSession.insert("notice.write", noticeDto);
+		return notice_no;
 	}
 
 	@Override

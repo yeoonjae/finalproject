@@ -224,7 +224,7 @@
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">공지 관리 메뉴</h6>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/notice/write">공지 등록</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/write/list">공지 목록</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/notice/list">공지 목록</a>
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Other Pages:</h6>
             <a class="dropdown-item" href="404.jsp">404 Page</a>

@@ -6,7 +6,7 @@ import com.kh.finalproject.entity.NoticeDto;
 
 public interface NoticeDao {
 
-	void write(NoticeDto noticeDto);
+	int write(NoticeDto noticeDto);
 
 	List<NoticeDto> list();
 
