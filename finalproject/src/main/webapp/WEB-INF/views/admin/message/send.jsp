@@ -176,16 +176,18 @@
 	    		$(".member-list").show();
 	    		var member_no = $(".member-list").val();
         		var table = $(".receive-list-table");
+        		var tag;
         		axios({
         			url:"${pageContext.request.contextPath}/test/message/memberInfo?member_no="+member_no,
         			method:"get"
         		}).then(function(response){
-        			var tag =  "<tr class='name-tr'><td class='no'>"+response.data.member_no+
+        			tag =  "<tr class='name-tr'><td class='no'>"+response.data.member_no+
         			"</td><td>"+response.data.branch_name+
         			"</td><td>회원</td><td class='name'>"+response.data.member_name+
         			"</td><td><button class='btn btn-outline-secondary remove-bnt' type='button'>삭제</button></td></tr>";
         			table.append(tag);
         			table.show();
+        			//지우기 버튼을 누를 시 지워짐
 			    	$(".remove-bnt").on("click",(function(){
 			    		$(this).parents("tr").remove();
 			    	}))
@@ -219,77 +221,11 @@
 	    		 });
 	    	});
 	     })
-     
-		$(".outbox-tr").click(function(){
-	    	$("#outbox-modal").modal('show');
-	    	
-	    	//모달
-	    	var title = $(this).parents(".table").next().children().children().children().children(".outbox-title");
-	    	var content = $(this).parents(".table").next().children().children().children().children(".outbox-content");
-	    	var date = $(this).parents(".table").next().children().children().children().children(".outbox-date");
-	    	var del = $(this).parents(".table").next().children().children().children().children().children(".outbox-delete");
-	    	console.log(del);
-	    	
-	    	//테이블
-	    	var inputContent = $(this).children().find(".outbox-content-input").val();//쪽지 내용
-	    	var titleTd = $(this).children(".outbox-title-td").text();//쪽지 제목
-	    	var dateTd = $(this).children(".outbox-date-td").text();//보낸 날짜
-	    	var deleteInput = $(this).children().find(".outbox-no-input").val();
-	    	
-	    	//모달에 쪽지내용 넣기
-	    	title.text(titleTd);
-	    	content.text(inputContent);
-	    	date.text(dateTd);
-	    	del.val(deleteInput);
-	    	
-	    	$(".close-btn").click(function(){
-	 		   location.reload();
-	 	   })
-	    });
-	    
-	    $(".inbox-tr").click(function(){
-	    	$("#inbox-modal").modal('show');
-	    	
-	    	
-	    	//모달
-	    	var title = $(this).parents(".table").next().children().children().children().children(".inbox-title");
-	    	var content = $(this).parents(".table").next().children().children().children().children(".inbox-content");
-	    	var date = $(this).parents(".table").next().children().children().children().children(".inbox-date");
-	    	var del = $(this).parents(".table").next().children().children().children().children().children(".inbox-delete");
-	    	
-	    	//테이블
-	    	var inputContent = $(this).children().find(".inbox-content-input").val();//쪽지 내용
-	    	var titleTd = $(this).children(".inbox-title-td").text();//쪽지 제목
-	    	var dateTd = $(this).children(".inbox-date-td").text();//보낸 날짜
-	    	var deleteInput = $(this).children().find(".inbox-no-input").val();
-	    	
-	    	//모달에 쪽지내용 넣기
-	    	title.text(titleTd);
-	    	content.text(inputContent);
-	    	date.text(dateTd);
-	    	del.val(deleteInput);
-	    	
-	    	axios({
-				url:"${pageContext.request.contextPath}/test/message/update?message_manager_no="+deleteInput,
-				method:"get"
-			})
-			.then(function(response){
-				
-			})  
-	    	
-	    	$(".close-btn").click(function(){
-	 		   location.reload();
-	 	   })
-	    	
-	    	var admin_no = $(".admin_no").val();
-	    	
-	    });
-	    
 	});
 </script>
 
 <div id="content-wrapper" style="padding-top: 60px;">
-	<div class="container-fluid">
+	<div class="container-fluid" style="margin-bottom: 60px;">
 		<div class="row">
 			<div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
 			<c:choose>  
@@ -315,16 +251,6 @@
 				</ul>
 		        </c:when>
         	</c:choose>   
-<!-- 				<ul class="nav nav-tabs"> -->
-<!-- 					<li class="nav-item"> -->
-<%-- 						<a class="nav-link inbox-tab" href="${pageContext.request.contextPath}/admin/message/inbox">받은 쪽지 보기</a> --%>
-<!-- 					</li> -->
-<!-- 					<li class="nav-item"> -->
-<%-- 						<a class="nav-link outbox-tab" href="${pageContext.request.contextPath}/admin/message/outbox">보낸 쪽지</a> --%>
-<!-- 					</li> -->
-<!-- 					<li class="nav-item"> -->
-<!-- 					<a class="nav-link active send-mail-tab" data-toggle="tab" href="#send-mail">쪽지 보내기</a></li> -->
-<!-- 				</ul> -->
 				<div id="myTabContent" class="tab-content">
 					<div class="tab-pane fade show active send-form send-mail-tab" id="send-mail">
 						<br>
@@ -418,10 +344,10 @@
 									</div>
 								</div>
 							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 <jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>

@@ -26,6 +26,12 @@
 		width: 280px;
 		float: right;
 	}
+	.head_title {
+		padding-bottom: 30px;
+	}
+	.main_service{
+		padding-top: 80px;
+	}
 </style>
 <script>
 	function selChange() {

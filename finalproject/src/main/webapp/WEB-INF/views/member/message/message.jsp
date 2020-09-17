@@ -25,6 +25,10 @@
 		.head_title{
 			padding-bottom: 0px;		
 		}
+		.main_service{
+			height: 800px;
+			padding-top: 120px;
+		}
 	</style>
 	<script>
 	function selChange() {
@@ -100,7 +104,7 @@
 		<div class="container">
 			<div class="row">
 			<div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
-				<div class="main_service roomy-100" style="height: 800px;">					
+				<div class="main_service roomy-100">					
                    <div class="head_title text-center">
                       <h2>쪽지함</h2>
                       <div class="separator_auto" style="width: 180px;"></div>

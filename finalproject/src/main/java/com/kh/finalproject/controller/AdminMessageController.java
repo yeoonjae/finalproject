@@ -31,13 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AdminMessageController {
 	
 	@Autowired
-	private MessageDao messageDao;
-	
-	@Autowired
 	private MessageService messageService;
-	
-	@Autowired
-	private AdminDao adminDao;
 	
 	//메세지 창
 	@GetMapping("/send")

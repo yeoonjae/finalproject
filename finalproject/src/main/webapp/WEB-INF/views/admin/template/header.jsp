@@ -27,7 +27,6 @@
 	<script>
 	  
 	  $(function(){
-
 		  axios({
 				url:"${pageContext.request.contextPath}/test/message/count",
 				method:"get"
@@ -45,7 +44,7 @@
 	</script>
 	
     <title>관리자 메인페이지</title>
-    
+
   </head>
 
   <body id="page-top">
