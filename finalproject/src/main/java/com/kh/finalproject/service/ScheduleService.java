@@ -8,4 +8,6 @@ public interface ScheduleService {
 	void delete();
 	// 시작일이 지난 대기중인 요청 거절로 변경
 	void changeState();
+	// 쪽지 자동 삭제
+	void messageAutoDelete();
 }

@@ -2,6 +2,7 @@ package com.kh.finalproject.service;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -73,6 +74,15 @@ public class ScheduleServiceImpl implements ScheduleService{
 			couponReqDao.changeState(coupon_req_no);
 		}
 		
+	}
+
+	@Autowired
+	private SqlSession sqlSession;
+	
+	//매일 자정마다 연결테이블에 없는 메세지들 삭제
+	@Scheduled(cron = "0 0 0 * * *")//매일 자정마다
+	public void messageAutoDelete() {
+		sqlSession.delete("message.messageAutoDelete");
 	}
 
 }

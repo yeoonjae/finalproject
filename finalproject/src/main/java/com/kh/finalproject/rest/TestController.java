@@ -1,5 +1,7 @@
 package com.kh.finalproject.rest;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +10,10 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +26,7 @@ import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PointDto;
 import com.kh.finalproject.entity.PointHisDto;
+import com.kh.finalproject.service.BranchService;
 import com.kh.finalproject.repository.CouponDao;
 import com.kh.finalproject.service.MemberService;
 
@@ -39,6 +45,9 @@ public class TestController {
 	
 	@Autowired
 	private HttpSession session;
+	
+	@Autowired
+	private BranchService branchService;
 	
 	// 마일리지 유형 중복검사
 	@GetMapping("/point/regist")
@@ -207,7 +216,7 @@ public class TestController {
 	@GetMapping("/message/member")
 	public List<MemberDto> memberBranchList(@RequestParam int admin_no){
 		int branch_no = sqlSession.selectOne("branch.getBranch", admin_no);
-		return sqlSession.selectList("member.getBranchList", 47);
+		return sqlSession.selectList("member.getBranchList", branch_no);
 	}
 	
 	//회원번호로 정보+지점정보까지 읽어오기
@@ -225,9 +234,7 @@ public class TestController {
 	//쪽지 조회수(회원)
 	@GetMapping("/message/memberUpdate")
 	public void updateReadMember(@RequestParam int message_member_no) {
-		System.out.println(message_member_no);
 		sqlSession.update("message.updateMemberRead", message_member_no);
-		System.out.println("되는건가");
 	}
 	
 	//쪽지 span
@@ -246,4 +253,5 @@ public class TestController {
 		int member_no = memberDto.getMember_no();
 		return sqlSession.selectOne("message.memberReadCount", member_no);
 	}
+	
 }

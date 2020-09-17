@@ -1039,6 +1039,15 @@ Home Section style
     z-index: 1;
 }
 
+.main_home_3{
+    overflow: hidden;
+    padding-top: 300px;
+    padding-bottom: 230px;
+    position: relative;
+    z-index: 1;
+    height: 250px;
+}
+
 .home_text h1{
     font-family: 'Raleway', sans-serif;
     font-size:4.286rem;
