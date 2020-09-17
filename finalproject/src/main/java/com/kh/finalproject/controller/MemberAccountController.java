@@ -96,6 +96,10 @@ public class MemberAccountController {
 	public String edit(@RequestParam int member_no, Model model) {
 		MemberDto memberDto = memberDao.get(member_no);
 		model.addAttribute("memberDto", memberDto);
+		List<BranchDto> branchDto = branchDao.getList();
+		model.addAttribute("branchDto", branchDto);
+		List<LocalDto> localDto = localDao.getList();
+		model.addAttribute("localDto",localDto);
 		return "member/account/edit";
 	}
 

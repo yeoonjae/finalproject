@@ -112,13 +112,6 @@
         		})
 		});
 	});
-	function checkBranch(){
-		var check = document.querySelector(".branch-option").value;
-		if(check){
-			return true;
-		}
-		false;
-	}
 
     function checkName() {
         var regex = /[가-힣]{2,7}/g;
@@ -220,9 +213,8 @@
             function checkForm1() {
                 console.log("이름" + checkName());
                 console.log("비밀번호" + checkPwd());
-                console.log("이메일 " + checkCheckEmail());
-                var Y_N =$(function(){$(".local-list").on("change",function(){})};
-                if (!checkName() || !checkCheckEmail() || !checkPwd() || Y_N ||
+           
+                if (!checkName() || !checkCheckEmail() || !checkPwd()||
                     !checkCheckPw()) {
                     return false;
                 } else {
@@ -252,7 +244,8 @@
                 </div>
                 <div class="form-group">
                     회원 이름: <input type="text" class="form-control intext" id="name" oninput="checkName();"
-                        name="member_name" placeholder="2~7자의 한글로 쓰세요"> <span class="correct-message">올바른 이름
+                        name="member_name" placeholder="2~7자의 한글로 쓰세요"> 
+                        <span class="correct-message">올바른 이름
                         형식입니다</span> <span class="incorrect-message">이름은 한글 2~7자로 구성하세요</span>
                 </div>
                 <div class="form-group">
@@ -275,7 +268,7 @@
                     	</c:forEach>
                     </select>
                     <!-- 지점선택 -->
-                    <select class="branch-list custom-select" name="branch_no">
+                    <select class="branch-list custom-select" name="branch_no" required>
                         <option value="">지점 검색</option>
                     </select>
 <!--                     <select  name="branch_no">					 -->

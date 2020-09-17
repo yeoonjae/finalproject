@@ -36,30 +36,6 @@
         display: none;
     }
 
-    .unoverlap-message {
-        display: none;
-    }
-
-    .overlap-message {
-        display: none;
-    }
-
-    .email-input.unoverlap~.unoverlap-message {
-        color: blue;
-        font-size: 16;
-        display: block;
-        font-size: 13px;
-        margin: 0.3rem;
-    }
-
-    .email-input.overlap~.overlap-message {
-        color: red;
-        font-size: 16;
-        display: block;
-        font-size: 13px;
-        margin: 0.3rem;
-    }
-
     .intext.correct~.correct-message {
         color: blue;
         font-size: 16;
@@ -76,22 +52,93 @@
         margin: 0.3rem;
     }
 
-    .inemail.correct~.correct-message {
-        color: blue;
-        font-size: 16;
-        display: block;
-        font-size: 13px;
-        margin: 0.3rem;
+</style>
+<script>
+	$(function(){
+		$(".local-list").on("change",function(){
+			var local = $(".local-list");
+			var branch = $(".branch-list");
+      		var local_no = $(".local-list").val();
+			console.log(local_no);
+        		axios({
+        			url:"${pageContext.request.contextPath}/test/message/branchList?local_no="+local_no,
+        			method : "get"
+        		})
+        		.then(function(response){
+        			$(".branch-option").remove();
+        			$.each(response.data,function(i){
+        				$("<option>").attr("value",response.data[i].branch_no)
+        				.attr("class","branch-option")
+        				.text(response.data[i].branch_name)
+        				.appendTo(branch);
+        			})
+        			
+        		})
+		});
+	});
+
+    function checkName() {
+        var regex = /[가-힣]{2,7}/g;
+        var nameTag = document.getElementById("name");
+
+        var isName = regex.test(nameTag.value);
+        nameTag.classList.remove("correct");
+        nameTag.classList.remove("incorrect");
+
+        if (!isName) {
+            nameTag.classList.add("incorrect");
+            return false;
+        } else {
+            nameTag.classList.add("correct");
+            return true;
+        }
     }
 
-    .inemail.incorrect~.incorrect-message {
-        color: red;
-        font-size: 16;
-        display: block;
-        font-size: 13px;
-        margin: 0.3rem;
+
+    //isValid의 결과에 따라서 입력창에 correct / incorrect 클래스를 추가
+    //비밀번호를 검사하는 함수 : 반드시 true 또는 false를 반환해야 checkForm에서 사용이 가능하다
+    function checkPwd() {
+
+        var regex = /[0-9a-zA-Z]{8,20}/g;
+        var pwTag = document.getElementById("pw");
+        var isPw = regex.test(pwTag.value);
+        pwTag.classList.remove("correct");
+        pwTag.classList.remove("incorrect");
+        console.log(isPw);
+        if (!isPw) {
+            pwTag.classList.add("incorrect");
+            return false;
+        } else {
+            pwTag.classList.add("correct");
+            return true;
+        }
     }
-</style>
+    function checkCheckPw() {
+        var pwTag = document.getElementById("pw");
+        var checkPwTag = document.getElementById("checkPw");
+        checkPwTag.classList.remove("correct");
+        checkPwTag.classList.remove("incorrect");
+        if (pwTag.value === checkPwTag.value) {
+            checkPwTag.classList.add("correct");
+        } else {
+            checkPwTag.classList.add("incorrect");
+        }
+        return pwTag.value === checkPwTag.value;
+    }
+
+    
+            function checkForm1() {
+                console.log("이름" + checkName());
+                console.log("비밀번호" + checkPwd());
+           
+                if (!checkName() || !checkPwd()||
+                    !checkCheckPw()) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+</script>
 <div id="content-wrapper">
 	<div class="container-fluid">
 		<ol class="breadcrumb">
@@ -108,12 +155,34 @@
 				</div>
 				<div class="form-group">
 				회원 이름:
-				<input type="text" class="form-control" name="member_name" value="${memberDto.member_name}">
+				<input type="text" class="form-control" name="member_name" id="name"value="${memberDto.member_name}"placeholder="2~7자의 한글을 입력">
+				<span class="correct-message">올바른 이름 형식입니다</span>
+				<span class="incorrect-message">이름은 한글 2~7자로 구성하세요</span>
 				</div>
 				<div class="form-group">
 				회원 비밀번호 :
-				<input type="text" class="form-control" name="member_pw">
+				<input type="password" class="form-control" id="pw"name="member_pw">
+				<span class="correct-message">올바른 비밀번호 형식입니다</span>
+				<span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로8~16자 내외로 구성하세요</span>
 				</div>
+				<div class="form-group">
+				<input type="password" class="form-control"id="checkPw">
+				<span class="correct-message">비밀번호가 일치합니다.</span> 
+				<span class="incorrect-message">비밀번호가 불일치합니다.</span>
+				</div>
+				<div class="form-group">
+                    <!-- 지역검색 -->
+                    <select class="local-list custom-select" name="local_no">
+	                   	<option value="${memberDto.local_no}">${memberDto.local_name}</option>                    	 
+                    	<c:forEach var ="localDto" items="${localDto}">
+                    		<option value="${localDto.local_no}">${localDto.local_name}</option>
+                    	</c:forEach>
+                    </select>
+                    <!-- 지점선택 -->
+                    <select class="branch-list custom-select" name="branch_no" required>
+                        <option value="">지점 검색</option>
+                    </select>
+                </div>
 				<div class="form-group">
 				<input type="submit" value="수정" required>
 				</div>
