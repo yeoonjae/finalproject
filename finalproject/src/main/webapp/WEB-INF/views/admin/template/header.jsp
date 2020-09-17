@@ -169,6 +169,21 @@
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/branch_regist">지점등록</a>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/list">지점별 관리</a>
           </div>
+        </li>
+                
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>배치 관리</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <h6 class="dropdown-header">배치도 관리</h6>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/">배치도 등록</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/">상세보기</a>
+            <h6 class="dropdown-header">좌석 관리</h6>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/regist">좌석 등록</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/content">상세보기</a>
+          </div>
         </li>        
         
          <li class="nav-item dropdown">

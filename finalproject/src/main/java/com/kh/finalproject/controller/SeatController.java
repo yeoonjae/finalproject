@@ -1,6 +1,8 @@
 package com.kh.finalproject.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,10 +35,12 @@ public class SeatController {
 	}
 	
 	@PostMapping("/regist")
-	public String regist(@RequestParam String[] seat, HttpSession session) {
+	public String regist(@RequestParam String[] seat, @RequestParam String entrance_location, HttpSession session) {
 		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
 		int branch_no = adminDto.getBranch_no();
-		seatService.regist(seat, branch_no);
+		// 좌석정보 등록
+		seatService.regist(seat, branch_no, entrance_location);
+		
 		return "admin/seat/regist";
 	}
 	
@@ -46,10 +50,12 @@ public class SeatController {
 		
 		int row = seatDao.getRow(branch_no);
 		int col = seatDao.getCol(branch_no);
+		String entrance = seatDao.getEntrance(branch_no);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("rowsize", row);
 		model.addAttribute("colsize", col);
+		model.addAttribute("entrance", entrance);
 		
 		return "admin/seat/content";
 	}

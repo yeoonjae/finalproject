@@ -1,5 +1,8 @@
 package com.kh.finalproject.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +16,7 @@ public class SeatServiceImpl implements SeatService {
 	private SeatDao seatDao;
 	
 	@Override
-	public void regist(String[] seat, int branch_no) {
+	public void regist(String[] seat, int branch_no, String entrance_location) {
 //		System.out.println(seat.length);
 		for(int i=0; i<seat.length; i++) {
 			// 좌석번호 가져오기
@@ -49,8 +52,12 @@ public class SeatServiceImpl implements SeatService {
 									.build();
 			// db에 좌석 등록
 			seatDao.regist(seatDto);
-			
 		}
+		// 출입구 위치 등록
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("entrance_location", entrance_location);
+		map.put("branch_no", branch_no);
+		seatDao.regist(map);
 	}
 
 }

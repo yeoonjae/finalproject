@@ -53,6 +53,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			) T 
 		WHERE RankNo = 1
 	</select>
+	
+	<insert id="entrance" parameterType="map">
+		INSERT INTO entrance VALUES(
+			entrance_seq.nextval,
+			#{branch_no},
+			#{entrance_location}
+		)
+	</insert>
+	
+	<select id="getEntrance" parameterType="int" resultType="String">
+		SELECT entrance_location FROM entrance WHERE branch_no = #{branch_no}
+	</select>
 </mapper>
 
 

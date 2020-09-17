@@ -17,6 +17,15 @@
         .cinema-seat.disabled{
             background-image: url("http://www.sysout.co.kr/file/image/284");
         }
+        .btn-wrap {
+        	text-align: center;
+        }
+        .btn-edit {
+        	margin-right: 5px;
+        }
+        .btn-list {
+        	margin-left: 5px;
+        }
     </style>
    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@latest/cinema/hacademy-cinema.css">
     <script src="https://cdn.jsdelivr.net/gh/hiphop5782/js@latest/cinema/hacademy-cinema.js"></script>
@@ -27,8 +36,17 @@
 <!--     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
     <script>
    	    window.onload = function(){
-   	       var cinema = new Hacademy.Reservation(".cinema-wrap");
    	    };
+   	    $(function(){
+   	       	if($('.entrance').val()=='leftTop'){
+   	       		$('.cinema-screen').css("width", '30%').css('margin', '10px').css('height', '30px').css('padding', '0');    	    	   	       		
+   	       	} else if($('.entrance').val()=='centerTop'){
+   	       		$('.cinema-screen').css("width", '30%').css('margin-top', '10px').css('height', '30px').css('padding', '0');    	    	   	    	
+    	    } else {
+   	       		$('.cinema-screen').css("width", '30%').css('margin', '10px').css('height', '30px').css('margin-left', '68%').css('padding', '0');    	    	
+    	    }
+   	    	var cinema = new Hacademy.Reservation(".cinema-wrap");
+   	    })
     </script>
 </head>
 <body>
@@ -48,19 +66,21 @@
                     </div>
                 </div>
                 <br>
+                <input type="hidden" name="entrance" value="${entrance}" class="entrance">
                 <div class="cinema-wrap" data-name="seat">
-<!--                 	<div class="cinema-screen">출입구</div> -->
+                	<div class="cinema-screen">출입구</div>
                     <div class="cinema-seat-area" data-rowsize="${rowsize}" data-colsize="${colsize}" data-seatno="visible" data-fill="manual">
                     	<c:forEach items="${list}" var="seatDto">
                     		<div class="cinema-seat" data-row="${seatDto.seat_row}" data-col="${seatDto.seat_col}" data-state="${seatDto.seat_type}"></div>
                     	</c:forEach>
                     </div>
                 </div>
-                <br>
+                <br><br>
                 <div class="btn-wrap">
-                    <button class="btn btn-sm btn-outline-secondary btn-edit">수정</button>
-                    <button class="btn btn-sm btn-outline-secondary btn-list">목록</button>
+                    <button class="btn btn-sm btn-primary btn-edit">수정</button>
+                    <button class="btn btn-sm btn-secondary btn-list">목록</button>
                 </div>
+                <br><br>
             </div>
         </div>
     </div>
