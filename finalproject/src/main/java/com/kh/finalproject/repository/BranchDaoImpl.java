@@ -117,12 +117,10 @@ public class BranchDaoImpl implements BranchDao{
 	public void delete(int branch_no) {
 		sqlSession.delete("branch.delete", branch_no);
 	}
-
 	@Override
 	public int getNo3(int admin_no) {
 		return sqlSession.selectOne("branch.getNo3", admin_no);
 	}
-
 	//지점별 회원 조회
 	public List<MemberDto> getMemberList(int branch_no) {
 		return sqlSession.selectList("branch.memberList", branch_no);

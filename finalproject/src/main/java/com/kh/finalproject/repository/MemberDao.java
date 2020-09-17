@@ -28,12 +28,16 @@ public interface MemberDao {
 	
 	void delete(int member_no);
 	
-	void changePw(String pw);
 	int edit(MemberDto memberDto);
 	void join(MemberDto memberDto);
 	boolean login(String member_email, String member_pw);
 	int getNo(String member_email);
 	void updateLoginTime(int member_no);
 	int getSeq();
-	String getId(String member_name);
+	List<String> getId(String member_name);
+
+	void changePw(int no, String member_pw);
+
+	Object overlap(String member_email);
+
 }

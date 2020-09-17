@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper는 구문을 만들 수 있는 영역 일반적으로 테이블당 1개씩의 mapper를 둔다 namespace : 영역을 외부에서 
+	부르기 위한 별칭 -->
+<mapper namespace="notice">
+	<select id="getSeq" resultType="int">
+		select notice_seq.nextval from dual
+	</select>
+	<insert id="write" parameterType="noticeDto">
+		insert into notice(
+			notice_no,
+			notice_title,
+			notice_content,
+			notice_time
+		)
+		values(
+		#{notice_no},
+		#{notice_title},
+		#{notice_content},
+		sysdate
+		)
+	</insert>
+	<!-- 공지 정보 -->
+	<select id="content" parameterType="int" resultType="noticeDto">
+		select * from notice where notice_no =#{notice_no}
+	</select>
+	<select id="contentOnly" parameterType="int" resultType="string">
+		select notice_content from notice where notice_no=#{notice_no}
+	</select>
+	<!-- 공지 정보 수정 -->
+	<update id="edit" parameterType="noticeDto">
+		update notice set notice_title=#{notice_title}, notice_content=#{notice_content}, notice_time=sysdate where notice_no=#{notice_no}
+	</update>
+	
+	<!-- 공지 목록 -->
+	<select id="list" resultType="noticeDto">
+		select * from notice order by notice_time asc
+	</select>
+	
+	<!-- 관리자 탈퇴 -->
+	<delete id="delete" parameterType="int">
+		delete notice where notice_no=#{notice_no}
+	</delete>
+</mapper>
