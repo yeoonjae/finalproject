@@ -35,7 +35,7 @@
 						<tbody>
 							<c:forEach var="list" items="${list}">
 								<tr>
-									<td>${list.notice_title}</td>
+									<td class="notice-title" value="${list.notice_no}">${list.notice_title}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
