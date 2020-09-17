@@ -107,10 +107,10 @@ public class MemberAccountController {
 	public String edit(RedirectAttributes attr, @ModelAttribute MemberDto memberDto, HttpSession session) {
 		memberDao.edit(memberDto);
 		int member_no = memberDto.getMember_no();
-		attr.addAttribute("member_no", member_no);
 		if(session.getAttribute("admininfo") != null){
-			return "member/account/list";
+			return "redirect:list";
 		}
+		attr.addAttribute("member_no", member_no);
 		return "redirect:info";
 	}
 

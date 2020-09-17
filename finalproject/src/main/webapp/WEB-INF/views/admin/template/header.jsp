@@ -152,8 +152,6 @@
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">회원 정보</h6>
             <a class="dropdown-item" href="${pageContext.request.contextPath}/member/account/list">전체 회원 보기</a>
-            <a class="dropdown-item" href="#">회원 등록하기</a>
-            <a class="dropdown-item" href="#">비밀번호 찾기</a>
             <div class="dropdown-divider"></div>
           </div>
         </li>

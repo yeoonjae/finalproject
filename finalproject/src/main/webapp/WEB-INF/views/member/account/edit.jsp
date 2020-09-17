@@ -54,28 +54,31 @@
 
 </style>
 <script>
-	$(function(){
-		$(".local-list").on("change",function(){
-			var local = $(".local-list");
-			var branch = $(".branch-list");
-      		var local_no = $(".local-list").val();
-			console.log(local_no);
-        		axios({
-        			url:"${pageContext.request.contextPath}/test/message/branchList?local_no="+local_no,
-        			method : "get"
-        		})
-        		.then(function(response){
-        			$(".branch-option").remove();
-        			$.each(response.data,function(i){
-        				$("<option>").attr("value",response.data[i].branch_no)
-        				.attr("class","branch-option")
-        				.text(response.data[i].branch_name)
-        				.appendTo(branch);
-        			})
-        			
-        		})
-		});
+$(function(){
+	$(".local-list").on("change",function(){
+		$(".local-option").remove();
+		$(".branch-option").remove();
+		var local = $(".local-list");
+		var branch = $(".branch-list");
+  		var local_no = $(".local-list").val();
+		var local_no = $(this).val();
+		console.log(local_no);
+    		axios({
+    			url:"${pageContext.request.contextPath}/test/message/branchList?local_no="+local_no,
+    			method : "get"
+    		})
+    		.then(function(response){
+    			$(".branch-option").remove();
+    			$.each(response.data,function(i){
+    				$("<option>").attr("value",response.data[i].branch_no)
+    				.attr("class","branch-option")
+    				.text(response.data[i].branch_name)
+    				.appendTo(branch);
+    			})
+    			
+    		})
 	});
+});
 
     function checkName() {
         var regex = /[가-힣]{2,7}/g;
@@ -145,7 +148,7 @@
 			<li class="breadcrumb-item">회원 정보 수정</li>
 		</ol>
 		<div class="container-form offset-sm-3 col-sm-6 offset-md-3 col-md-6">
-			<form action="${pageContext.request.contextPath}/member/account/edit" method="post">
+			<form action="${pageContext.request.contextPath}/member/account/edit" method="post" onsubmit="return checkForm1();">
 				<div class="form-group">
 				회원번호 : ${memberDto.member_no} 
 				<input type="hidden" name="member_no" value="${memberDto.member_no}">
@@ -157,33 +160,38 @@
 				회원 이름:
 				<input type="text" class="form-control intext" name="member_name" 
 				id="name"value="${memberDto.member_name}" 
-				placeholder="2~7자의 한글을 입력" oninput="checkName();">
+				placeholder="2~7자의 한글을 입력" onblur="checkName();">
 				<span class="correct-message">올바른 이름 형식입니다</span>
 				<span class="incorrect-message">이름은 한글 2~7자로 구성하세요</span>
 				</div>
 				<div class="form-group">
 				회원 비밀번호 :
-				<input type="password" class="form-control intext" id="pw"name="member_pw" oninput="checkPw();">
+				<input type="password" class="form-control intext" id="pw" name="member_pw" onblur="checkPwd();">
 				<span class="correct-message">올바른 비밀번호 형식입니다</span>
 				<span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로8~16자 내외로 구성하세요</span>
 				</div>
 				<div class="form-group">
-				<input type="password" class="form-control intext"id="checkPw" oninput="checkCheckPw();">
+				<input type="password" class="form-control intext" id="checkPw" onblur="checkCheckPw();">
 				<span class="correct-message">비밀번호가 일치합니다.</span> 
 				<span class="incorrect-message">비밀번호가 불일치합니다.</span>
 				</div>
-				<div class="form-group">
+				 <div class="form-group">
                     <!-- 지역검색 -->
                     <select class="local-list custom-select" name="local_no">
-	                   	<option value="${memberDto.local_no}">${memberDto.local_name}</option>                    	 
+	                   	<option value="${memberDto.local_no}"class="local-option">${memberDto.local_name}</option>                    	 
                     	<c:forEach var ="localDto" items="${localDto}">
                     		<option value="${localDto.local_no}">${localDto.local_name}</option>
                     	</c:forEach>
                     </select>
                     <!-- 지점선택 -->
                     <select class="branch-list custom-select" name="branch_no" required>
-                        <option value="">지점 검색</option>
+                        <option value="${memberDto.branch_no}" class="branch-option">${memberDto.branch_name}</option>
                     </select>
+<!--                     <select  name="branch_no">					 -->
+<%-- 					<c:forEach var="branchDto" items="${branchDto}"> --%>
+<%-- 						<option class="form-control" value="${branchDto.local_no}">${branchDto.local_name}</option> --%>
+<%-- 					</c:forEach> --%>
+<!-- 					</select> -->
                 </div>
 				<div class="form-group">
 				<input type="submit" value="수정" required>
