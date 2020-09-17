@@ -23,6 +23,9 @@ import com.kh.finalproject.repository.AdminDao;
 import com.kh.finalproject.repository.MessageDao;
 import com.kh.finalproject.service.MessageService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/admin/message")
 public class AdminMessageController {
@@ -53,27 +56,40 @@ public class AdminMessageController {
 	//관리자 수신함 삭제
 	@PostMapping("/message_delete_inbox")
 	public String deleteInbox(
-			@RequestParam int nowPage,
-			@RequestParam int cntPerPage,
+			@RequestParam(value="nowPage", required=false)String nowPage,
+			@RequestParam(value="cntPerPage", required=false)String cntPerPage,
 			@RequestParam int message_manager_no,
 			RedirectAttributes attr) {
+		System.out.println("delete_inbox controller들어옴");
 		messageService.deleteInbox(message_manager_no);
-		attr.addAttribute("nowPage", nowPage);
-		attr.addAttribute("cntPerPage", cntPerPage);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "5";
+		}
 		return "redirect:inbox";
 	}
 	
 	//관리자 발신함 삭제
 	@PostMapping("/message_delete_outbox")
 	public String deleteOutbox(
-			@RequestParam int nowPage,
-			@RequestParam int cntPerPage,
+			@RequestParam(value="nowPage", required=false)String nowPage,
+			@RequestParam(value="cntPerPage", required=false)String cntPerPage,
 			@RequestParam int message_manager_no,
 			RedirectAttributes attr
 		) {
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "5";
+		}
 		messageService.deleteOutbox(message_manager_no);
-		attr.addAttribute("nowPage", nowPage);
-		attr.addAttribute("cntPerPage", cntPerPage);
 		return "redirect:outbox";
 	}
 	
@@ -89,7 +105,18 @@ public class AdminMessageController {
 		String admin_auth = adminDto2.getAdmin_auth();
 		model.addAttribute("paging", vo);
 		if(admin_auth.equals("본사")) {//본사일때
-			List<MessageManagerDto> outbox = messageDao.outboxManager(admin_no);
+			int total = messageService.outboxCountTotalManager(admin_no);
+			if (nowPage == null && cntPerPage == null) {
+				nowPage = "1";
+				cntPerPage = "5";
+			} else if (nowPage == null) {
+				nowPage = "1";
+			} else if (cntPerPage == null) { 
+				cntPerPage = "5";
+			}
+			vo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			model.addAttribute("paging", vo);
+			List<MessageMemberDto> outbox = messageService.outboxTotalManager(admin_no,vo);
 			model.addAttribute("outbox", outbox);
 		}else {//지점장일때
 			int total = messageService.outboxCountBranchManager(admin_no);
@@ -118,7 +145,9 @@ public class AdminMessageController {
 			, @RequestParam(value="cntPerPage", required=false)String cntPerPage
 			) {
 		AdminDto adminDto2 = (AdminDto)session.getAttribute("admininfo");
+		System.out.println("adminDto2 = "+adminDto2);
 		int admin_no = adminDto2.getAdmin_no();
+		System.out.println("no : "+admin_no);
 		int total = messageService.inboxCountManager(admin_no);
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";

@@ -292,6 +292,17 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
+			<c:choose>  
+		        <c:when test="${admininfo.admin_auth eq '본사'}">
+			     <ul class="nav nav-tabs">
+					<li class="nav-item">
+						<a class="nav-link outbox-tab" href="${pageContext.request.contextPath}/admin/message/outbox">보낸 쪽지</a>
+					</li>
+					<li class="nav-item">
+					<a class="nav-link active send-mail-tab" data-toggle="tab" href="#send-mail">쪽지 보내기</a></li>
+				</ul> 	 	
+		        </c:when>
+				<c:when test="${admininfo.admin_auth eq '지점'}">
 				<ul class="nav nav-tabs">
 					<li class="nav-item">
 						<a class="nav-link inbox-tab" href="${pageContext.request.contextPath}/admin/message/inbox">받은 쪽지 보기</a>
@@ -302,61 +313,19 @@
 					<li class="nav-item">
 					<a class="nav-link active send-mail-tab" data-toggle="tab" href="#send-mail">쪽지 보내기</a></li>
 				</ul>
+		        </c:when>
+        	</c:choose>   
+<!-- 				<ul class="nav nav-tabs"> -->
+<!-- 					<li class="nav-item"> -->
+<%-- 						<a class="nav-link inbox-tab" href="${pageContext.request.contextPath}/admin/message/inbox">받은 쪽지 보기</a> --%>
+<!-- 					</li> -->
+<!-- 					<li class="nav-item"> -->
+<%-- 						<a class="nav-link outbox-tab" href="${pageContext.request.contextPath}/admin/message/outbox">보낸 쪽지</a> --%>
+<!-- 					</li> -->
+<!-- 					<li class="nav-item"> -->
+<!-- 					<a class="nav-link active send-mail-tab" data-toggle="tab" href="#send-mail">쪽지 보내기</a></li> -->
+<!-- 				</ul> -->
 				<div id="myTabContent" class="tab-content">
-					<div class="tab-pane fade inbox-tab" id="home">
-						<br>
-						<p>
-						<!-- 수신함 -->
-						<table class="table">
-							<thead>
-								<tr>
-									<th style="width:50%;">제목</th>
-									<th>보낸사람</th>
-									<th>날짜</th>
-								</tr>
-							</thead>
-							<tbody>
-							<c:forEach var="inbox" items="${inbox}">
-								<tr class="inbox-tr">
-									<c:choose>
-										<c:when test="${inbox.message_manager_read eq 0}">
-											<td class="inbox-title-td" style="font-weight:bold;">${inbox.message_title}</td>
-										</c:when>
-										<c:otherwise>
-											<td class="inbox-title-td" style="color:gray;">${inbox.message_title}</td>
-										</c:otherwise>
-									</c:choose>
-									<td class="inbox-name_td">${inbox.admin_name}</td>
-									<td class="inbox-date-td">${inbox.message_manager_date}
-										<input type="hidden" class="inbox-content-input" value="${inbox.message_content}">
-										<input type="hidden" class="inbox-no-input" value="${inbox.message_manager_no}">
-									</td>
-								</tr>
-							</c:forEach>
-							</tbody>
-						</table>
-						<!-- 수신함 모달 -->
-						<div class="modal" id="inbox-modal">
-							<div class="modal-dialog">
-							       <div class="modal-content">
-							            <div class="modal-header">
-							                <h5 class="modal-title inbox-title"></h5>
-							                <h6 class="modal-title inbox-date"></h6>
-							            </div>
-							            <div class="modal-body">
-							                <h6 class="modal-title inbox-content"></h6>  
-							            </div>
-							            <div class="modal-footer">
-							                <form action="message_delete_inbox" method="post">
-								                <input type="hidden" class="inbox-delete" name="message_manager_no">
-								                <input type="submit" class="btn btn-outline-danger" value="삭제">
-							            	</form>
-							                <button type="button" class="btn btn-outline-danger close-btn" data-dismiss="modal">닫기</button>
-							            </div>
-							       </div>
-							 </div>
-						</div>
-					</div>
 					<div class="tab-pane fade show active send-form send-mail-tab" id="send-mail">
 						<br>
 							<!-- 쪽지보내기 -->
@@ -386,69 +355,69 @@
 								</fieldset>
 							</form>
 								<!-- 쪽지 보내는 사람 모달 -->
-								<div class="modal modal-main" id="send-modal"  aria-hidden="true" style="display: none; z-index: 1050;">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title">쪽지 보내기</h5>
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<div class="form-group">
-											        <select class="custom-select who" required="required">
-											        <c:choose>
-											        	<c:when test="${admininfo.admin_auth eq '본사'}">
-												          <option selected="">받는 사람 선택</option>
-												          <option value="2">전체 지점장</option>
-												          <option value="3">지점장 검색</option>
-											        	</c:when>
-											        	<c:when test="${admininfo.admin_auth eq '지점'}">
-											        	  <option selected="">받는 사람 선택</option>
-												          <option value="1">해당 지점 전체 회원</option>
-												          <option value="4">해당 지점 회원 검색</option>
-											        	</c:when>
-											        </c:choose>
-											        </select>
-											        <!-- 지역검색 -->
-											        <select class="local-list custom-select" name="loacl_no">
-											        	<option value="">지역 검색</option>
-											        </select>
-											        <!-- 지점선택 -->
-											        <select class="branch-list custom-select" name="branch_no">
-											        	<option value="">지점 검색</option>
-											        </select>
-											        <!-- 회원 선택 -->
-											        <select class="member-list custom-select" name="member_no">
-											        	<option value="">회원 검색</option>
-											        </select>
-											        <hr>
-											        <!-- 선택한 목록 테이블 -->
-											        <table class="table receive-list-table" id="mytable">
-											        	<thead>
-											        		<tr>
-											        			<th colspan="5">받는사람 목록</th>
-											        		</tr>
-											        		<tr>
-											        			<th>번호</th>
-											        			<th>지점</th>
-											        			<th>분류</th>
-											        			<th>이름</th>
-											        			<th>삭제</th>
-											        		</tr>
-											        	</thead>
-											        	<tbody>
-											        	</tbody>
-											        </table>
-											    </div>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-outline-secondary" id="save" data-dismiss="modal">확인</button>
-											</div>
+							<div class="modal modal-main" id="send-modal"  aria-hidden="true" style="display: none; z-index: 1050;">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">쪽지 보내기</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<div class="form-group">
+										        <select class="custom-select who" required="required">
+										        <c:choose>
+										        	<c:when test="${admininfo.admin_auth eq '본사'}">
+											          <option selected="">받는 사람 선택</option>
+											          <option value="2">전체 지점장</option>
+											          <option value="3">지점장 검색</option>
+										        	</c:when>
+										        	<c:when test="${admininfo.admin_auth eq '지점'}">
+										        	  <option selected="">받는 사람 선택</option>
+											          <option value="1">해당 지점 전체 회원</option>
+											          <option value="4">해당 지점 회원 검색</option>
+										        	</c:when>
+										        </c:choose>
+										        </select>
+										        <!-- 지역검색 -->
+										        <select class="local-list custom-select" name="loacl_no">
+										        	<option value="">지역 검색</option>
+										        </select>
+										        <!-- 지점선택 -->
+										        <select class="branch-list custom-select" name="branch_no">
+										        	<option value="">지점 검색</option>
+										        </select>
+										        <!-- 회원 선택 -->
+										        <select class="member-list custom-select" name="member_no">
+										        	<option value="">회원 검색</option>
+										        </select>
+										        <hr>
+										        <!-- 선택한 목록 테이블 -->
+										        <table class="table receive-list-table" id="mytable">
+										        	<thead>
+										        		<tr>
+										        			<th colspan="5">받는사람 목록</th>
+										        		</tr>
+										        		<tr>
+										        			<th>번호</th>
+										        			<th>지점</th>
+										        			<th>분류</th>
+										        			<th>이름</th>
+										        			<th>삭제</th>
+										        		</tr>
+										        	</thead>
+										        	<tbody>
+										        	</tbody>
+										        </table>
+										    </div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-outline-secondary" id="save" data-dismiss="modal">확인</button>
 										</div>
 									</div>
 								</div>
+							</div>
 					</div>
 				</div>
 			</div>

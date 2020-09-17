@@ -18,7 +18,10 @@ import com.kh.finalproject.entity.MessageDto;
 import com.kh.finalproject.entity.MessageManagerDto;
 import com.kh.finalproject.entity.MessageMemberDto;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class MessageServiceImpl implements MessageService{
 	
 	@Autowired
@@ -141,8 +144,7 @@ public class MessageServiceImpl implements MessageService{
 	
 	//수신함 메세지 삭제
 	public void deleteInbox(int message_manager_no) {
-		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
-			sqlSession.delete("message.managerDelete", message_manager_no);
+		sqlSession.delete("message.managerDelete", message_manager_no);
 	}
 
 	//수신함 메세지 삭제(회원)
@@ -192,5 +194,19 @@ public class MessageServiceImpl implements MessageService{
 		map.put("start", pagingVO.getStart());
 		map.put("end", pagingVO.getEnd());
 		return sqlSession.selectList("message.inboxManager", map);
+	}
+
+	//(본사 관리자)발신함 메세지 개수
+	public int outboxCountTotalManager(int admin_no) {
+		return sqlSession.selectOne("message.outboxCountTotalManager", admin_no);
+	}
+
+	//(본사 관리자)발신함 + 페이징
+	public List<MessageMemberDto> outboxTotalManager(int admin_no, PagingVO pagingVO) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("admin_no", admin_no);
+		map.put("start", pagingVO.getStart());
+		map.put("end", pagingVO.getEnd());
+		return sqlSession.selectList("message.outboxTotalManager", map);
 	}
 }

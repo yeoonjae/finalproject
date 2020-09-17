@@ -175,7 +175,7 @@
 							 </div>
 						</div>
 						<!-- 페이지네이션 -->
-						<div style="text-align: center;">	
+						<div style="text-align: center; margin-bottom:50px;">	
 						<c:if test="${paging.startPage != 1 }">
 								<a href="${pageContext.request.contextPath}/admin/message/inbox?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&laquo;</a>
 						</c:if>

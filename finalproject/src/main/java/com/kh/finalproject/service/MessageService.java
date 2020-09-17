@@ -39,4 +39,11 @@ public interface MessageService {
 	
 	//(지점,본사관리자)수신함 + 페이징
 	List<MessageManagerDto> inboxManager(int admin_no,PagingVO pagingVO);
+	
+	//(본사 관리자)발신함 메세지 개수
+	int outboxCountTotalManager(int admin_no);
+	
+	//(본사 관리자)발신함 + 페이징
+	List<MessageMemberDto> outboxTotalManager(int admin_no, PagingVO pagingVO);
+	
 }

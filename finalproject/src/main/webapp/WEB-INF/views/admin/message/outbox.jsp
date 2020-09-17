@@ -99,16 +99,29 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
-				<ul class="nav nav-tabs">
-					<li class="nav-item">
-						<a class="nav-link inbox-tab" href="${pageContext.request.contextPath}/admin/message/inbox">받은 쪽지 보기</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link active outbox-tab" data-toggle="tab" href="${pageContext.request.contextPath}/admin/message/outbox">보낸 쪽지</a>
-					</li>
-					<li class="nav-item">
-					<a class="nav-link send-mail-tab" href="${pageContext.request.contextPath}/admin/message/send">쪽지 보내기</a></li>
-				</ul>
+				<c:choose>  
+			        <c:when test="${admininfo.admin_auth eq '본사'}">
+				     <ul class="nav nav-tabs">
+						<li class="nav-item">
+							<a class="nav-link active outbox-tab" href="${pageContext.request.contextPath}/admin/message/outbox">보낸 쪽지</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link send-mail-tab" href="${pageContext.request.contextPath}/admin/message/send">쪽지 보내기</a></li>
+					</ul> 	 	
+			        </c:when>
+					<c:when test="${admininfo.admin_auth eq '지점'}">
+					<ul class="nav nav-tabs">
+						<li class="nav-item">
+							<a class="nav-link inbox-tab" href="${pageContext.request.contextPath}/admin/message/inbox">받은 쪽지 보기</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active outbox-tab" href="${pageContext.request.contextPath}/admin/message/outbox">보낸 쪽지</a>
+						</li>
+						<li class="nav-item">
+						<a class="nav-link send-mail-tab"href="${pageContext.request.contextPath}/admin/message/send">쪽지 보내기</a></li>
+					</ul>
+			        </c:when>
+        		</c:choose> 
 				<div class="tab-content">
 					<div class="outbox-tab">
 					 <div class="cnt" >
@@ -214,7 +227,7 @@
 							 </div>
 						</div>
 						<!-- 페이지네이션 -->
-						<div style="text-align: center;">	
+						<div style="text-align: center;margin-bottom:50px;">	
 						<c:if test="${paging.startPage != 1 }">
 								<a href="${pageContext.request.contextPath}/admin/message/outbox?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&laquo;</a>
 						</c:if>

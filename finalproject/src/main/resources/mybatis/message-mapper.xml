@@ -83,13 +83,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)T)WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
-	<!-- (본사 관리자) 발신함 -->
-	<select id="outboxAdmin" parameterType="int" resultType="messageManagerDto">
+	<!-- (본사 관리자) 발신함 + 페이징-->
+	<select id="outboxTotalManager" parameterType="map" resultType="messageManagerDto">
+			SELECT * FROM (SELECT rownum rn,T.*FROM (
 			SELECT a.admin_name ,mm.*,m.MESSAGE_TITLE ,m.MESSAGE_CONTENT FROM MESSAGE_MANAGER mm	
-			left OUTER JOIN Message m ON m.MESSAGE_NO = mm.MESSAGE_NO
-			LEFT OUTER JOIN admin a ON mm.ADMIN_NO2 = a.ADMIN_NO 
-			WHERE mm.ADMIN_NO =#{admin_no} AND mm.MESSAGE_MANAGER_TYPE ='발신' 
-			ORDER BY mm.MESSAGE_MANAGER_DATE DESC
+					left OUTER JOIN Message m ON m.MESSAGE_NO = mm.MESSAGE_NO
+					LEFT OUTER JOIN admin a ON mm.ADMIN_NO2 = a.ADMIN_NO 
+					WHERE mm.ADMIN_NO =#{admin_no} AND mm.MESSAGE_MANAGER_TYPE ='발신' 
+					ORDER BY mm.MESSAGE_MANAGER_DATE DESC
+			)T)WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	
 	<!-- (관리자) 연결테이블 메세지 삭제 -->
@@ -163,4 +165,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			ORDER BY mm.MESSAGE_MEMBER_READ ASC ,mm.MESSAGE_MEMBER_DATE DESC)T)
 	</select>
 	
+	<!-- (본사) 페이징을 위한 회원 발신함 메세지 개수 -->
+	<select id="outboxCountTotalManager" parameterType="int" resultType="int">
+		SELECT count(*) FROM MESSAGE_MANAGER mm	
+			left OUTER JOIN Message m ON m.MESSAGE_NO = mm.MESSAGE_NO
+			LEFT OUTER JOIN admin a ON mm.ADMIN_NO2 = a.ADMIN_NO 
+			WHERE mm.ADMIN_NO =#{admin_no} AND mm.MESSAGE_MANAGER_TYPE ='발신' 
+			ORDER BY mm.MESSAGE_MANAGER_DATE DESC
+	</select>
 </mapper>

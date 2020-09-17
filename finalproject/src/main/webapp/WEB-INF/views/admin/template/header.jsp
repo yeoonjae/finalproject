@@ -69,18 +69,28 @@
       <!-- Navbar -->
       <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow mx-1">
-          <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="badge badge-danger readCount"></span>
-            <i class="fas fa-envelope fa-fw"></i>
-          </a>
-          
-          <!-- 메세지 부분 -->
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/inbox">쪽지함</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send">쪽지보내기</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
+        <!-- 메세지 부분 -->
+         <c:choose>  
+	         <c:when test="${admininfo.admin_auth eq '본사'}">
+		         <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		            <span class="badge badge-danger readCount"></span>
+		            <i class="fas fa-envelope fa-fw"></i>
+		         </a>
+		         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
+		            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send">쪽지보내기</a>
+		         </div>    	 	
+	        </c:when>
+			<c:when test="${admininfo.admin_auth eq '지점'}">
+				<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		            <span class="badge badge-danger readCount"></span>
+		            <i class="fas fa-envelope fa-fw"></i>
+		         </a>
+	             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
+		            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/inbox">쪽지함</a>
+		            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/message/send">쪽지보내기</a>
+		         </div>
+	        </c:when>
+        </c:choose>       
         </li>
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
