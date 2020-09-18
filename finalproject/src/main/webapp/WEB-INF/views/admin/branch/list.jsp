@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
       <div id="content-wrapper">
 
@@ -44,7 +45,20 @@
                   <tbody>
                   <c:forEach var="branch" items="${branch}">
                   	<tr>
-                  		<td>${branch.branch_name}</td>
+                  		<td>
+                  			<c:choose>
+                  				<c:when test="${not empty branch.expired_date}">
+                  				<fmt:parseDate value="${branch.expired_date}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
+                  					${branch.branch_name}<br>
+                  					<span style="color: red; font-size: 13px;">
+                  						<fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/> 삭제예정
+                  					</span>
+                  				</c:when>
+                  				<c:otherwise>
+                  					${branch.branch_name}
+                  				</c:otherwise>
+                  			</c:choose>
+                  		</td>
                   		<td>${branch.local_name}</td>
                   		<td>${branch.admin_name}</td>
                   		<td>

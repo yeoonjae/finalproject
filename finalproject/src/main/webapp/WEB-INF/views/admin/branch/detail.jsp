@@ -64,6 +64,16 @@
 				effect : 'slide', // 기본값
 			});
 		};	
+		$(function(){
+			$(".delete-branch-bnt").click(function(){
+				if(confirm("삭제하시겠습니까?")){
+					alert("지점이 30일 뒤에 삭제됩니다. 공지사항을 적어주세요.");
+					location.href="${pageContext.request.contextPath}/admin/branch/delete?branch_no="+${branchDto.branch_no}
+				}else{
+					this.preventDefault();
+				}
+			})
+		});
 	</script>
 
 	<div class="container-fluid">
@@ -145,12 +155,20 @@
 								</a>
 								</c:when>
 							</c:choose>
-							<a href="delete?branch_no=${branchDto.branch_no}">
-								<button class="btn col-sm-2 btn-outline-secondary">지점삭제</button>
-							</a>
-							<a href="list">
-								<button class="btn col-sm-2 btn-outline-secondary">목록보기</button>
-							</a>
+							<c:choose>
+								<c:when test="${not empty branchDto.expired_date}">
+								<a href="list">
+									<button class="btn col-sm-2 btn-outline-secondary">목록보기</button>
+								</a>
+									<div><h6 style="color: red; padding: 20px;">${branchDto.expired_date} 지점 삭제 예정</h6></div>									
+								</c:when>
+								<c:otherwise>
+									<button class="btn col-sm-2 btn-outline-secondary delete-branch-bnt">지점삭제</button>
+									<a href="list">
+										<button class="btn col-sm-2 btn-outline-secondary">목록보기</button>
+									</a>
+								</c:otherwise>
+							</c:choose>
 						</th>
 					</tr>
 				</tbody>
@@ -159,11 +177,11 @@
 	</div>
 </div>
 <script>
-var canvas = new fabric.Canvas('c');
-canvas.loadFromJSON('${branchDto.branch_layout}');
-for(var i=0;i<${branchDto.branch_layout}.objects.length;i++){
-	canvas.item(i).selectable = false;	
-}
-console.log(${branchDto.branch_layout}.objects);
+	var canvas = new fabric.Canvas('c');
+	canvas.loadFromJSON('${branchDto.branch_layout}');
+	for(var i=0;i<${branchDto.branch_layout}.objects.length;i++){
+		canvas.item(i).selectable = false;	
+	}
+	console.log(${branchDto.branch_layout}.objects);
 </script>
 <jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>

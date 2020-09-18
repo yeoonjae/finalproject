@@ -30,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		      LEFT OUTER JOIN review_like rl ON r.review_no = rl.review_no
 		      LEFT OUTER JOIN review_hate rh ON r.review_no = rh.review_no
 		      LEFT OUTER JOIN member m ON r.member_no = m.member_no WHERE r.branch_no=#{branch_no}
+		      ORDER BY r.REVIEW_DATE DESC
 		     )T)WHERE RN BETWEEN #{start} AND #{end}
 	</select>
 	

@@ -68,7 +68,7 @@
 			border-bottom: 0;
 		}
 		label,p {
-			font-size: 10px;
+			font-size: 12px;
 			margin-right: 25px;
 		}
 		.content-td{
@@ -83,10 +83,10 @@
 	</style>
 	<script>
 	//페이징 처리
-	function selChange() {
-		var sel = document.getElementById('cntPerPage').value;
-		location.href="message?nowPage=${paging.nowPage}&cntPerPage="+sel;
-	}
+		function selChange() {
+			var sel = document.getElementById('cntPerPage').value;
+			location.href="list?nowPage=${paging.nowPage}&cntPerPage="+sel;
+		}
 		$(function(){
 			//글쓰기 버튼 클릭 시 모달 뜨게끔
 			$(".review-write").click(function(){
@@ -135,10 +135,8 @@
 			$(".delete-btn").click(function(){
 				var review_no = $(this).parents(".content-tag").children(".no-tag").val();
 				if(confirm('삭제하시겠습니까?')){
-					console.log("삭제 하겠음");
 					location.href = "${pageContext.request.contextPath}/member/review/delete?review_no="+review_no;
 				}else{
-					console.log("삭제안하겠음");
 					event.preventDefault();
 				}
 			});
@@ -158,6 +156,7 @@
 		            		method : "get"
 		            	}).then(function(){
 		            		alert("참여완료");
+		            		location.reload();
 		            	})
 					}else{
 						alert("이미 참여했습니다.");
@@ -180,6 +179,7 @@
 		            		method : "get"
 		            	}).then(function(){
 		            		alert("참여완료");
+		            		location.reload();
 		            	})
 					}else{
 						alert("이미 참여했습니다.");
@@ -262,12 +262,12 @@
 												<button class="btn btn-danger btn-sm delete-btn">삭제</button>
 											</c:when>
 											<c:otherwise>
-												<button class="button-noline smile-btn">
-													<img id = "smile" src="${pageContext.request.contextPath}/resources/m/images/smileimg.png" width="24px" height="20px">
+												<button class="button-noline smile-btn" id = "smile">
+													<img src="${pageContext.request.contextPath}/resources/m/images/smileimg.png" width="24px" height="20px">
 												</button>
 												<label for="smile">공감</label>
-												<button class="button-noline hate-btn">
-													<img id="sad" src="${pageContext.request.contextPath}/resources/m/images/noagree.png" width="24px" height="20px">
+												<button class="button-noline hate-btn" id="sad">
+													<img src="${pageContext.request.contextPath}/resources/m/images/noagree.png" width="24px" height="20px">
 												</button>
 												<label for="sad">비공감</label>
 											</c:otherwise>
@@ -287,6 +287,25 @@
 							</tr>
 						</tfoot>
 					</table>
+					<!-- 페이지네이션 -->
+						<div style="display: block; text-align: center;">	
+						<c:if test="${paging.startPage != 1 }">
+								<a class="page-link" href="${pageContext.request.contextPath}/member/review/list?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&laquo;</a>
+						</c:if>
+						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+							<c:choose>
+								<c:when test="${p == paging.nowPage }">
+										<b class="page-link">${p }</b>
+								</c:when>
+								<c:when test="${p != paging.nowPage }">
+										<a class="page-link" href="${pageContext.request.contextPath}/member/review/list?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p }</a>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${paging.endPage != paging.lastPage}">
+								<a class="page-link" href="${pageContext.request.contextPath}/member/review/list?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&raquo;</a>
+						</c:if>
+						</div>
 				</div>
 			</div>
 			<!-- 리뷰작성 모달 -->
