@@ -19,8 +19,8 @@
 	crossorigin="anonymous"></script>
 
 <%-- <script src="${pageContext.request.contextPath}/resources/qr/jquery.min.js"></script> --%>
-<script src="${pageContext.request.contextPath}/resources/qr/qrcode.js"></script>
 
+<script src="${pageContext.request.contextPath}/resources/qr/qrcode.js"></script>
 <script>
 	$(function(){
 	
@@ -63,6 +63,42 @@
 		$('#myModal').on('shown.bs.modal', function() {
 			$('#myInput').focus()
 		});
+		
+		$(".type1").click(function(){
+			var type_no = $(this).data().no;
+			var chat_type = $(this).val();
+			console.log(type_no);
+			
+			var str = '<div class="box my"><div class="innerBox"><div class="content">'
+ 				+chat_type+
+ 	           	'</div></div></div>'
+ 	           	
+			$(".chatList").append(str);
+ 	           	
+			axios({
+				url:"${pageContext.request.contextPath}/member/search?type_no="+type_no,
+				method:"get"
+			}).then(function(response){
+				//console.log(response.data);
+				
+				
+				var str2=
+					'<div class="box"><div class="imgBox">'
+					+'<img class="chatimg" src="${pageContext.request.contextPath}/resources/m/images/pp.png"></div>'
+					+'<div class="innerBox"><div class="name">공도리봇</div>'
+					+'<div class="content">'
+					+'<c:forEach items="${list}" var="chatDto">'
+					+	'<input type="button" class="btn btn-size type1" value=${chatDto.chat_q} data-chat_no=${chatDto.chat_no}>'
+					+'</c:forEach>'
+					+'</div><br></div></div>'
+
+				$(".chatList").append(str2);
+
+			});
+			
+		});
+		
+		
 });
 </script>
 <style>
