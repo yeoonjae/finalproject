@@ -20,6 +20,7 @@
 	crossorigin="anonymous"></script>
 <script>
    	    $(function(){
+   	    	
    	    	$.urlParam = function(name) {
         	    var results = new RegExp('[\?&]' + name + '=([^&#]*)')
         	                      .exec(window.location.href);
@@ -51,13 +52,13 @@
    	    		var branch_no = $.urlParam('branch_no');
    	    		var member_no = $('.member_no').val();
    	    		
-   	    		if(usedCol && usedRow) {
+   	    		if(usedCol && usedRow && !$(this).hasClass('empty')) {
     				alert("이미 이용중인 좌석이 있습니다");
     				location.reload();
    	    			return;
    	    		}
    	    		
-   	    		if(row && col && !$(this).hasClass('disabled')){
+   	    		if(row && col && !$(this).hasClass('disabled') && !$(this).hasClass('empty')){
 	   	    		if(confirm(row+"-"+col+"번 좌석을 선택 하시겠습니까?")){
 	   	    			if($('.charge').val()==0){
 	   	    				alert("충전시간이 없습니다. 이용권을 먼저 결제 해주세요.")
@@ -117,6 +118,11 @@
 		text-align: center;
 		background-color: #F1F1F1;
 	}
+	.btn-wrap {
+		margin-left: 15%;
+		margin-right: 15%;
+		text-align: center;		
+	}
 	.star {
 		color: red;
 	}
@@ -172,6 +178,7 @@
 				                </div>
 			                </form>
 						</div>
+						<br><br>
 						<div class="btn-wrap">
 							<button class="btn btn-primary">퇴실하기</button>
 						</div>

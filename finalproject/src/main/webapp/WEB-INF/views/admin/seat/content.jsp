@@ -8,14 +8,14 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
-        .cinema-seat:not(.empty){
-            background-image: url("${pageContext.request.contextPath}/resources/m/images/normal.png");
+        .cinema-wrap > .cinema-seat-area > .cinema-seat:not(.empty){
+            background-image: url("${pageContext.request.contextPath}/resources/m/images/normal.png") !important;
         }
-        .cinema-seat.active{
-            background-image: url("${pageContext.request.contextPath}/resources/m/images/active.jpg");
+        .cinema-wrap > .cinema-seat-area > .cinema-seat.active:not(.empty){
+            background-image: url("${pageContext.request.contextPath}/resources/m/images/active.png") !important;
         }
-        .cinema-seat.disabled{
-            background-image: url("${pageContext.request.contextPath}/resources/m/images/disabled.jpg");
+        .cinema-wrap > .cinema-seat-area > .cinema-seat.disabled:not(.empty){
+            background-image: url("${pageContext.request.contextPath}/resources/m/images/disabled.png") !important;
         }
         .btn-wrap {
         	text-align: center;
