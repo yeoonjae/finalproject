@@ -195,7 +195,7 @@
 									</td>
 								</tr>
 								<tr class="review-content hidden">
-									<td class="content-tag">
+									<td class="content-tag" style="background-color: #DDD;">
 										<input type="hidden" class="title-tag" value="${list.review_title}">
 										<input type="hidden" class="no-tag" value="${list.review_no}">
 										<div class="content-div">${list.review_content}</div>
