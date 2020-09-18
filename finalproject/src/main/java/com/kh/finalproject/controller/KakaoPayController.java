@@ -68,6 +68,10 @@ public class KakaoPayController {
 		startVO.setPartner_order_id(partner_order_id);
 		startVO.setPartner_user_id(partner_user_id);
 
+		// 결제 요청 전 확인 
+		boolean isCorrect = kakaoPayService.isCorrect(use_point2,member_no);
+		
+		if(isCorrect) {
 		// 결제 요청
 		KakaoPayResultVO resultVO = kakaoPayService.prepare(startVO);
 		
@@ -85,8 +89,11 @@ public class KakaoPayController {
 		session.setAttribute("reward", reward); // 적립 마일리지
 		session.setAttribute("coupon_discount2", coupon_discount2); // 쿠폰 할인 금액 
 		session.setAttribute("coupon_no", coupon_no); // 쿠폰 번호 
-		
-		return "redirect:" + resultVO.getNext_redirect_pc_url();
+			return "redirect:" + resultVO.getNext_redirect_pc_url();
+		} 
+		else {
+			return "";
+		}
 	}
 	
 	

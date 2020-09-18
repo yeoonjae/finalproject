@@ -35,6 +35,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.finalproject.entity.PayPointDto" alias="payPointDto"/>
 		<typeAlias type="com.kh.finalproject.entity.CertDto" alias="certDto"/>
 		<typeAlias type="com.kh.finalproject.entity.MemberCouponDto" alias="memberCouponDto"/> 
+		<typeAlias type="com.kh.finalproject.entity.ChatDto" alias="chatDto"/>
 	</typeAliases>
 </configuration>
 

@@ -167,9 +167,16 @@ public class PayDaoImpl implements PayDao{
 		sqlSession.delete("pay.deleteCoupon",map);
 	}
 
+	// 결제 취소 후 쿠폰 재발급 
 	@Override
 	public void addCoupon(PayInfoDto payInfoDto) {
 		sqlSession.insert("pay.addCoupon",payInfoDto);
+	}
+
+	@Override
+	public int getPoint(int member_no) {
+		sqlSession.selectOne("pay.getPoint",member_no);
+		return 0;
 	}
 	
 

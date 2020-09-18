@@ -61,7 +61,7 @@
 						</a>
 
 						<a href="${pageContext.request.contextPath}/member/pay/pay_detail">
-							<input type="button" value="홈으로 가기" class="btn btn-primary btn-lg"> 
+							<input type="button" value="홈으로 가기" class="btn btn-primary btn-lg">
 						</a>				
 					</div>	
 									

@@ -3,6 +3,7 @@ package com.kh.finalproject.service;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -15,9 +16,13 @@ import com.kh.finalproject.pay.KakaoPayFinishVO;
 import com.kh.finalproject.pay.KakaoPayHistoryVO;
 import com.kh.finalproject.pay.KakaoPayResultVO;
 import com.kh.finalproject.pay.KakaoPayStartVO;
+import com.kh.finalproject.repository.PayDao;
 
 @Service
 public class KakaoPayServiceImpl implements KakaoPayService {
+	@Autowired
+	private PayDao payDao; 
+	
 	// 가맹점 코드: 상수로 설정
 	public static final String CID = "TC0ONETIME";
 	//
@@ -148,5 +153,13 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 		KakaoPayDeleteVO deleteVO = template.postForObject(uri, entity, KakaoPayDeleteVO.class);	
 		
 		return deleteVO;
+	}
+
+	// 사용 마일리지 < 보유 마일리지 인 경우에만 결제 진행
+	@Override
+	public boolean isCorrect(int use_point,int member_no) {
+		int member_point = payDao.getPoint(member_no);
+		if(use_point <= member_point) return true;
+		else return false;
 	}
 }

@@ -23,4 +23,7 @@ public interface KakaoPayService {
 		KakaoPayHistoryVO history(String tid) throws URISyntaxException;
 		// 결제 취소 메소드
 		KakaoPayDeleteVO delete(String tid, int cancel_amount) throws URISyntaxException;
+		
+		// 결제 정보 최종 확인 메소드 
+		boolean isCorrect(int use_point,int member_no);
 }

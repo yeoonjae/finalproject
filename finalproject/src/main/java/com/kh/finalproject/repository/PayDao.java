@@ -20,6 +20,9 @@ public interface PayDao {
 	//회원 번호로 회원 이메일 조회 
 	String getId(int member_no);
 	
+	//회원 번호로 회원 포인트 조회 
+	int getPoint(int member_no);
+	
 	// 카카오페이 주문번호 시퀀스 생성 
 	int getOrderSeq();
 	

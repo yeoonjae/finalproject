@@ -36,6 +36,10 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/m/css/responsive.css" />
 
         <script src="${pageContext.request.contextPath}/resources/m/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+   	<!-- 챗봇 모달 창 띄우기 -->
+
+   
+   
     </head>
 
     <body data-spy="scroll" data-target=".navbar-collapse">
@@ -61,6 +65,7 @@
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
+                        	<li class="chat"><a href=""><i class="fa fa-comments" aria-hidden="true" id="chat"></i></a></li>
                          	<li class="search"><a href="#"><i class="fa fa-user-circle-o "></i></a></li>
 <!--                             <li class="search"><a href="#"><i class="fa fa-search"></i></a></li> -->
                             <li class="side-menu"><a href="#"><i class="fa fa-bars"></i></a></li>
@@ -87,8 +92,7 @@
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
               
                             <li><a href="${pageContext.request.contextPath}/member/pay/pay_main">상품 충전</a></li>                    
-                            <li><a href="#service">개인석</a></li>                    
-                            <li><a href="#portfolio">스터디룸</a></li>                    
+                            <li><a href="#service">개인석</a></li>                                     
                             <li><a href="#pricing">리뷰</a></li>  
                             <li><a href="${pageContext.request.contextPath}/member/account/logout">로그아웃</a></li>   
                                                

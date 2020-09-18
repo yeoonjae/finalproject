@@ -34,6 +34,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE member_no=#{member_no}
 	</select>
 	
+		<!-- 회원 이메일 가져오기 -->
+	<select id="getPoint" resultType="int">
+		SELECT member_point
+		FROM member 
+		WHERE member_no=#{member_no}
+	</select>
+	
 <!-- 	<select id=getMemberNo resultType="int" > -->
 <!-- 		SELECT member_no -->
 <!-- 		FROM member -->
