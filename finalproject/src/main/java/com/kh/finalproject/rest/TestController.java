@@ -22,6 +22,8 @@ import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PayInfoDto;
 import com.kh.finalproject.entity.PointDto;
 import com.kh.finalproject.entity.PointHisDto;
+import com.kh.finalproject.entity.ReviewHateDto;
+import com.kh.finalproject.entity.ReviewLikeDto;
 import com.kh.finalproject.repository.CouponDao;
 import com.kh.finalproject.service.BranchService;
 import com.kh.finalproject.service.MemberService;
@@ -256,12 +258,41 @@ public class TestController {
 		return sqlSession.selectList("pay.getPayInfo", member_no);
 	}
 	
-	//리뷰 좋아요 update
-	@GetMapping("/review/like_update")
-	public void like_update(int review_no) {
+	//리뷰 좋아요 regist
+	@GetMapping("/review/like_regist")
+	public void likeRegist(int review_no) {
 		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
 		int member_no = memberDto.getMember_no();
+		ReviewLikeDto reviewLikeDto = ReviewLikeDto.builder()
+											.review_no(review_no)
+											.member_no(member_no)
+											.build();
+		sqlSession.insert("review.likeRegist", reviewLikeDto);
 	}
 	
-	//리뷰 싫어요 update
+	//리뷰 싫어요 regist
+	@GetMapping("/review/hate_regist")
+	public void hateRegist(int review_no) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+		ReviewHateDto reviewHateDto = ReviewHateDto.builder()
+											.review_no(review_no)
+											.member_no(member_no)
+											.build();
+		sqlSession.insert("review.hateRegist", reviewHateDto);
+	}
+	
+	//해당 리뷰에 회원이 좋아요/싫어요를 누른적이 있는지 확인하는 메소드
+	@GetMapping("review/check_overlap")
+	public int check_overlap(int review_no) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+		Map<String, Object> map = new HashMap<>();
+		map.put("review_no", review_no);
+		map.put("member_no", member_no);
+		int like = sqlSession.selectOne("review.isAlreadyLike",map);
+		int hate = sqlSession.selectOne("review.isAlreadyHate",map);
+		int total = like+hate;
+		return total;
+	}
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.finalproject.VO.PagingVO;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.ReviewDto;
 import com.kh.finalproject.repository.ReviewDao;
@@ -31,9 +32,24 @@ public class ReviewController {
 	
 	//리뷰 리스트
 	@GetMapping("/list")
-	public String list(Model model,HttpSession session) {
+	public String list(Model model,HttpSession session,PagingVO vo
+			, @RequestParam(value="nowPage", required=false)String nowPage
+			, @RequestParam(value="cntPerPage", required=false)String cntPerPage
+			) {
 		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
-		model.addAttribute("list", reviewDao.getList(memberDto.getBranch_no()));
+		int branch_no = memberDto.getBranch_no();
+		int total = reviewDao.countReview(branch_no);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "5";
+		}
+		vo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		model.addAttribute("list", reviewDao.getList(branch_no,vo));
+		model.addAttribute("paging", vo);
 		return "member/review/list";
 	}
 	

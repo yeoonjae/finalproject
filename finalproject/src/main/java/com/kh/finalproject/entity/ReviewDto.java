@@ -18,7 +18,8 @@ public class ReviewDto {
 	//회원 이름 추가
 	private String member_name;
 	
-	public String only_date() {
-		return review_date.substring(0, 10);
-	}
+	//좋아요 싫어요 추가
+	private int like_count;
+	private int hate_count;
+	
 }

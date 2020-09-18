@@ -9,9 +9,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.finalproject.VO.PagingVO;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.ReviewDto;
 
@@ -32,9 +31,13 @@ public class ReviewDaoImpl implements ReviewDao{
 		sqlSession.insert("review.regist", reviewDto);
 	}
 
-	//리뷰 리스트
-	public List<ReviewDto> getList(int branch_no) {
-		return sqlSession.selectList("review.getListBranchReview", branch_no);
+	//리뷰 리스트 + 페이징
+	public List<ReviewDto> getList(int branch_no,PagingVO pagingVO) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("branch_no", branch_no);
+		map.put("start", pagingVO.getStart());
+		map.put("end", pagingVO.getEnd());
+		return sqlSession.selectList("review.getListBranchReview", map);
 	}
 
 	//리뷰 수정
@@ -49,6 +52,13 @@ public class ReviewDaoImpl implements ReviewDao{
 	//리뷰 삭제
 	public void delete(int review_no) {
 		sqlSession.delete("review.delete", review_no);
+	}
+
+	//페이징 처리를 위한 게시글 개수
+	public int countReview(int branch_no) {
+		int a = sqlSession.selectOne("review.getCount", branch_no);
+		System.out.println("a : "+a);
+		return sqlSession.selectOne("review.getCount", branch_no);
 	}
 	
 	

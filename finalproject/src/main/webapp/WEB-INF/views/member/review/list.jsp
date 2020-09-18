@@ -67,7 +67,7 @@
 			text-align: center;
 			border-bottom: 0;
 		}
-		span,label{
+		label,p {
 			font-size: 10px;
 			margin-right: 25px;
 		}
@@ -82,6 +82,11 @@
 		}
 	</style>
 	<script>
+	//페이징 처리
+	function selChange() {
+		var sel = document.getElementById('cntPerPage').value;
+		location.href="message?nowPage=${paging.nowPage}&cntPerPage="+sel;
+	}
 		$(function(){
 			//글쓰기 버튼 클릭 시 모달 뜨게끔
 			$(".review-write").click(function(){
@@ -138,14 +143,49 @@
 				}
 			});
 			
-			//웃는 버튼 누를 시 좋아요 올라감
+			//공감 버튼 누를 시 좋아요 올라감
 			$(".smile-btn").click(function(){
-				console.log("눌림");
+				var review_no = $(this).parents(".content-tag").children(".no-tag").val();
+				//회원이 누른적이 있는지 조회하는 비동기
 				axios({
-            		url:"${pageContext.request.contextPath}/test/review/like_update",
+            		url:"${pageContext.request.contextPath}/test/review/check_overlap?review_no="+review_no,
             		method : "get"
             	}).then(function(response){
+            		console.log(response.data);
+					if(response.data == 0){
+						axios({
+		            		url:"${pageContext.request.contextPath}/test/review/like_regist?review_no="+review_no,
+		            		method : "get"
+		            	}).then(function(){
+		            		alert("참여완료");
+		            	})
+					}else{
+						alert("이미 참여했습니다.");
+					}            		
             	})
+			});
+			
+			//비공감 버튼 누를 시 좋아요 올라감
+			$(".hate-btn").click(function(){
+				var review_no = $(this).parents(".content-tag").children(".no-tag").val();
+				//회원이 누른적이 있는지 조회하는 비동기
+				axios({
+            		url:"${pageContext.request.contextPath}/test/review/check_overlap?review_no="+review_no,
+            		method : "get"
+            	}).then(function(response){
+            		console.log(response.data);
+					if(response.data == 0){
+						axios({
+		            		url:"${pageContext.request.contextPath}/test/review/hate_regist?review_no="+review_no,
+		            		method : "get"
+		            	}).then(function(){
+		            		alert("참여완료");
+		            	})
+					}else{
+						alert("이미 참여했습니다.");
+					}            		
+            	})
+				
 			});
 			
 			//수정 폼 전송 이벤트(강사추가)
@@ -178,7 +218,20 @@
 				<div class="head_title text-center">
 						<h2>리뷰</h2>
 						<div class="separator_auto" style="width: 180px;"></div>
-					</div>				
+					</div>	
+					<div class="">
+						<select id="cntPerPage" name="sel" onchange="selChange()" class="form-control">
+							<option value="5"
+								<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
+							<option value="10"
+								<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
+							<option value="15"
+								<c:if test="${paging.cntPerPage == 15}">selected</c:if>>15줄 보기</option>
+							<option value="20"
+								<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄 보기</option>
+						</select>
+						<br><br><br>
+					</div> <!-- 옵션선택 끝 -->			
 					<table class="table table-review">
 						<tbody class="body">
 							<c:forEach var="list" items="${list}">
@@ -186,11 +239,14 @@
 									<td>
 										<input type="hidden" class="member_no" value="${list.member_no}">
 										<div style="font-weight: bold; text-align: left;">${list.review_title}</div><br>
-										<span style="float: left;">
+										<span style="float: left; margin-right: 25px;">
 										<fmt:parseDate value="${list.review_date}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>
 										<fmt:formatDate value="${dateFmt}" pattern="yyyy-MM-dd"/>
 										 (${list.member_name})</span>
-										 <span style="float: right;">공감(1) 비공감(5)</span>
+										 <p class="viewAgreeCount" style="float: right;">
+										 	공감(${list.like_count}) 비공감(${list.hate_count})
+										 </p>
+										 <input type="hidden" class="for-count-review-no" value="${list.review_no}">
 										 <input type="hidden" class="date-tag" value="${list.review_date}">
 									</td>
 								</tr>
@@ -210,7 +266,7 @@
 													<img id = "smile" src="${pageContext.request.contextPath}/resources/m/images/smileimg.png" width="24px" height="20px">
 												</button>
 												<label for="smile">공감</label>
-												<button class="button-noline sad-btn">
+												<button class="button-noline hate-btn">
 													<img id="sad" src="${pageContext.request.contextPath}/resources/m/images/noagree.png" width="24px" height="20px">
 												</button>
 												<label for="sad">비공감</label>
