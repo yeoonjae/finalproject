@@ -39,6 +39,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.finalproject.entity.PayPointDto" alias="payPointDto"/>
 		<typeAlias type="com.kh.finalproject.entity.CertDto" alias="certDto"/>
 		<typeAlias type="com.kh.finalproject.entity.ReviewDto" alias="reviewDto"/>
+		<typeAlias type="com.kh.finalproject.entity.ReviewLikeDto" alias="reviewLikeDto"/>
+		<typeAlias type="com.kh.finalproject.entity.ReviewHateDto" alias="reviewHateDto"/>
 		<typeAlias type="com.kh.finalproject.VO.PagingVO" alias="pagingVO"/>
 	</typeAliases>
 </configuration>

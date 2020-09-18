@@ -36,4 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delete" parameterType="int">
 		DELETE review WHERE review_no=#{review_no}
 	</delete>
+	
+	<!-- 리뷰 좋아요 등록 -->
+	<insert id="likeRegist" parameterType=""></insert>
 </mapper>
