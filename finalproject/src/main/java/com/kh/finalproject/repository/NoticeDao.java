@@ -2,6 +2,7 @@ package com.kh.finalproject.repository;
 
 import java.util.List;
 
+import com.kh.finalproject.VO.NoticePageVo;
 import com.kh.finalproject.entity.NoticeDto;
 
 public interface NoticeDao {
@@ -15,5 +16,10 @@ public interface NoticeDao {
 	void edit(NoticeDto noticeDto);
 
 	void delete(int notice_no);
+
+	int countNotice();
+
+	List<NoticeDto> selectNotice(NoticePageVo vo);
+
 
 }

@@ -41,5 +41,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.finalproject.entity.NoticeDto" alias="noticeDto"/>
 		<typeAlias type="com.kh.finalproject.entity.ReviewDto" alias="reviewDto"/>
 		<typeAlias type="com.kh.finalproject.VO.PagingVO" alias="pagingVO"/>
+		<typeAlias type="com.kh.finalproject.VO.NoticePageVo" alias="noticePageVo"/>
 	</typeAliases>
 </configuration>

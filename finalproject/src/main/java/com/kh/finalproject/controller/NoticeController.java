@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalproject.VO.NoticePageVo;
 import com.kh.finalproject.entity.NoticeDto;
 import com.kh.finalproject.repository.NoticeDao;
 
@@ -62,4 +63,5 @@ public class NoticeController {
 		noticeDao.delete(notice_no);
 		return "redirect:list";
 	}
+
 }

@@ -4,7 +4,6 @@ package com.kh.finalproject.VO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 
 @Data
@@ -45,6 +44,10 @@ public class NoticePageVo {
 			setEnd(nowPage * cntPerPage);
 			setStart(getEnd() - cntPerPage + 1);
 		}
-
-	
+		@Override
+		public String toString() {
+			return "PagingVO [nowPage=" + nowPage + ", startPage=" + startPage + ", endPage=" + endPage + ", total=" + total
+					+ ", cntPerPage=" + cntPerPage + ", lastPage=" + lastPage + ", start=" + start + ", end=" + end
+					+ ", cntPage=" + cntPage + "]";
+		}
 }

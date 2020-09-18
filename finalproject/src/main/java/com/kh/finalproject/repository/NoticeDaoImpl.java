@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.finalproject.VO.NoticePageVo;
 import com.kh.finalproject.entity.NoticeDto;
 
 @Repository
@@ -44,6 +45,18 @@ public class NoticeDaoImpl implements NoticeDao {
 	public void delete(int notice_no) {
 		// TODO Auto-generated method stub
 		sqlSession.delete("notice.delete", notice_no);
+	}
+
+	@Override
+	public int countNotice() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("notice.countNotice");
+	}
+
+	@Override
+	public List<NoticeDto> selectNotice(NoticePageVo vo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("notice.selectNotice", vo);
 	}
 	
 }
