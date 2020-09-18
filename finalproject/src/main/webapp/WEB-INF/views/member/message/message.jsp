@@ -17,11 +17,53 @@
 		.btn{
 			radius:15%;
 		}
+		.form-control{
+			width: 160px;
+			float: right;
+			height: 30px;
+		}
+		.head_title{
+			padding-bottom: 0px;		
+		}
+		.main_service{
+			height: 800px;
+			padding-top: 120px;
+		}
 	</style>
 	<script>
+	function selChange() {
+		var sel = document.getElementById('cntPerPage').value;
+		location.href="message?nowPage=${paging.nowPage}&cntPerPage="+sel;
+	}
 		$(function(){
+			//parameter받아오는 코드
+			var getUrlParameter = function getUrlParameter(sParam) {
+			    var sPageURL = window.location.search.substring(1),
+			        sURLVariables = sPageURL.split('&'),
+			        sParameterName,
+			        i;
+
+			    for (i = 0; i < sURLVariables.length; i++) {
+			        sParameterName = sURLVariables[i].split('=');
+
+			        if (sParameterName[0] === sParam) {
+			            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+			        }
+			    }
+			};
+			
+			//현재페이지와 몇개씩 나오는지 받는 페이징 파라미터
+			var nowPage = getUrlParameter('nowPage');
+			var cntPerPage = getUrlParameter('cntPerPage');
+			
+			//해당 메세지를 클릭 시 모달로 메세지 내용 보여주기
 		    $(".inbox-tr").click(function(){
 		    	$("#inbox-modal").modal('show');
+		    	
+		    	//삭제를 해도 해당 페이지가 뜨게끔 파라미터 첨부
+				console.log("nowPage : "+nowPage+"cntPerPage : "+cntPerPage);
+		    	$(".nowPage").attr("value",nowPage);
+		    	$(".cntPerPage").attr("value",cntPerPage);
 		    	
 		    	//모달
 		    	var title = $(this).parents(".table").next().children().children().children().children(".inbox-title");
@@ -35,7 +77,6 @@
 		    	var dateTd = $(this).children(".inbox-date-td").text();//보낸 날짜
 		    	var messageMemberNo = $(this).children().find(".inbox-no-input").val();
 		    	
-		    	console.log(messageMemberNo);
 		    	//모달에 쪽지내용 넣기
 		    	title.text(titleTd);
 		    	content.text(inputContent);
@@ -47,21 +88,40 @@
 					method:"get"
 				})
 				.then(function(response){
-					
 				})  
 		    	
+				//모달 닫기 버튼 누를 시 현재 페이지 리로드(조회한거 표시)
 		    	$(".close-btn").click(function(){
-		 		   location.reload();
+		    		location.reload();
 		 	   })
 		    	
 		    });
 		});		
+	
 	</script>
 	<!--  여기서부터 섹션이 나뉨 -->
       <section id="" class="">
 		<div class="container">
 			<div class="row">
-				<div class="main_service roomy-100" style="height: 800px;">					
+			<div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+				<div class="main_service roomy-100">					
+                   <div class="head_title text-center">
+                      <h2>쪽지함</h2>
+                      <div class="separator_auto" style="width: 180px;"></div>
+                   </div>
+                   <div class="">
+						<select id="cntPerPage" name="sel" onchange="selChange()" class="form-control">
+							<option value="5"
+								<c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
+							<option value="10"
+								<c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
+							<option value="15"
+								<c:if test="${paging.cntPerPage == 15}">selected</c:if>>15줄 보기</option>
+							<option value="20"
+								<c:if test="${paging.cntPerPage == 20}">selected</c:if>>20줄 보기</option>
+						</select>
+						<br><br><br>
+					</div> <!-- 옵션선택 끝 -->
 						<table class="table">
 							<thead>
 								<tr>
@@ -90,30 +150,52 @@
 								</c:forEach>
 							</tbody>
 						</table>
-					<!-- 수신함 모달 -->
-					<div class="modal" id="inbox-modal">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h5 class="modal-title inbox-title"></h5>
-									<h6 class="modal-title inbox-date" style="float: right;"></h6>
-								</div>
-								<div class="modal-body">
-									<h6 class="modal-title inbox-content"></h6>  
-								</div>
-								<div class="modal-footer">
-									<form action="message_member_delete_inbox" method="post">
-										<input type="hidden" class="inbox-delete" name="message_member_no">
-										<input type="submit" class="btn btn-outline-danger" value="삭제">
-										<button type="button" class="btn btn-outline-danger close-btn" data-dismiss="modal">닫기</button>
-									</form>
+						<!-- 수신함 모달 -->
+						<div class="modal" id="inbox-modal">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title inbox-title"></h5>
+										<h6 class="modal-title inbox-date" style="float: right;"></h6>
+									</div>
+									<div class="modal-body">
+										<h6 class="modal-title inbox-content"></h6>  
+									</div>
+									<div class="modal-footer">
+										<form action="message_member_delete_inbox" method="post">
+											<input type="hidden" class="inbox-delete" name="message_member_no">
+											<input type="submit" class="btn btn-outline-danger" value="삭제">
+											<input type="hidden" name="nowPage" class="nowPage">
+											<input type="hidden" name="cntPerPage" class="cntPerPage">
+											<button type="button" class="btn btn-outline-danger close-btn" data-dismiss="modal">닫기</button>
+										</form>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+						<!-- 페이지네이션 -->
+						<div style="display: block; text-align: center;">	
+						<c:if test="${paging.startPage != 1 }">
+								<a class="page-link" href="${pageContext.request.contextPath}/member/message/message?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&laquo;</a>
+						</c:if>
+						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+							<c:choose>
+								<c:when test="${p == paging.nowPage }">
+										<b class="page-link">${p }</b>
+								</c:when>
+								<c:when test="${p != paging.nowPage }">
+										<a class="page-link" href="${pageContext.request.contextPath}/member/message/message?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p }</a>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						<c:if test="${paging.endPage != paging.lastPage}">
+								<a class="page-link" href="${pageContext.request.contextPath}/member/message/message?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&raquo;</a>
+						</c:if>
+						</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	</section>
 
 <jsp:include page="/WEB-INF/views/member/template/footer.jsp"></jsp:include>

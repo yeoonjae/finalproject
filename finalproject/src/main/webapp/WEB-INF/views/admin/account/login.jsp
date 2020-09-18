@@ -26,10 +26,6 @@
 	integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" 
 	crossorigin="anonymous">
 	</script>
-	
-	<script>
-		
-	</script>
   </head>
 
   <body class="bg-dark">
@@ -54,14 +50,6 @@
               </div>
             </div>
             <div class="form-group">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" value="remember-me">
-                	아이디 기억하기
-                </label>
-              </div>
-            </div>
-            <div class="form-group">
             <c:if test="${not empty param.error}">
             	<div class="form-label-group">
             		<font color="FF0000">입력하신 로그인 정보가 맞지 않습니다.</font>
@@ -71,8 +59,6 @@
             </div>
           </form>
           <div class="text-center">
-          	<br>
-            <a class="d-block small" href="forgot-password.html">비밀번호 찾기</a>
           </div>
         </div>
       </div>

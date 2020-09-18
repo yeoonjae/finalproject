@@ -21,6 +21,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT branch_img_seq.nextval FROM dual
 	</select>
 	
+	<!-- 지점별 이미지 목록 -->
+	<select id="getBranchImg" parameterType="int" resultType="branchImgDto">
+		SELECT * FROM branch_img WHERE branch_no=#{branch_no}
+	</select>
+	
+	<!-- 이미지 다운로드 -->
+	<select id="getImg" parameterType="int" resultType="branchImgDto">
+		SELECT * FROM branch_img WHERE branch_img_no=#{branch_img_no}
+	</select>
+	
+	<!-- 이미지 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE branch_img WHERE branch_img_no=#{branch_img_no}
+	</delete>
 </mapper>
 
 

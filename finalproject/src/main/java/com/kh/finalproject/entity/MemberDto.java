@@ -22,4 +22,5 @@ public class MemberDto {
 	// 지점명, 지역명 추가
 	private String branch_name;
 	private String local_name;
+	private String local_no;
 }
