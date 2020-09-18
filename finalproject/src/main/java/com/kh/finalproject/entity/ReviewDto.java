@@ -13,7 +13,12 @@ public class ReviewDto {
 	private String review_title;
 	private String review_content;
 	private String review_date;
+	private int branch_no;
 	
 	//회원 이름 추가
 	private String member_name;
+	
+	public String only_date() {
+		return review_date.substring(0, 10);
+	}
 }

@@ -1,7 +1,5 @@
 package com.kh.finalproject.rest;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,10 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,10 +19,11 @@ import com.kh.finalproject.entity.CouponDto;
 import com.kh.finalproject.entity.CouponReqDto;
 import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.entity.MemberDto;
+import com.kh.finalproject.entity.PayInfoDto;
 import com.kh.finalproject.entity.PointDto;
 import com.kh.finalproject.entity.PointHisDto;
-import com.kh.finalproject.service.BranchService;
 import com.kh.finalproject.repository.CouponDao;
+import com.kh.finalproject.service.BranchService;
 import com.kh.finalproject.service.MemberService;
 
 @RestController
@@ -254,4 +250,18 @@ public class TestController {
 		return sqlSession.selectOne("message.memberReadCount", member_no);
 	}
 	
+	//리뷰 적기 전에 이용권 결제한 내역 있는지 확인
+	@GetMapping("/review/license_check")
+	public List<PayInfoDto> license_check(@RequestParam int member_no){
+		return sqlSession.selectList("pay.getPayInfo", member_no);
+	}
+	
+	//리뷰 좋아요 update
+	@GetMapping("/review/like_update")
+	public void like_update(int review_no) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+	}
+	
+	//리뷰 싫어요 update
 }

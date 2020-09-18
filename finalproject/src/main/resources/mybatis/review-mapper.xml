@@ -8,12 +8,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 리뷰 등록 -->
 	<insert id="regist" parameterType="reviewDto">
 		INSERT INTO review VALUES(
-			review_seq.nextval(),
+			review_seq.nextval,
 			#{member_no},
 			#{review_title},
 			#{review_content},
-			#{review_date}	
+			sysdate,
+			#{branch_no}
 		)
 	</insert>
 	
+	<!-- 지점별 리뷰 목록 -->
+	<select id="getListBranchReview" parameterType="int" resultType="reviewDto">
+		SELECT r.*,m.MEMBER_NAME FROM review r LEFT OUTER JOIN MEMBER m on r.MEMBER_NO = m.MEMBER_NO
+		WHERE r.branch_no=#{branch_no}
+	</select>
+	
+	<!-- 리뷰 수정 -->
+	<update id="edit" parameterType="map">
+		UPDATE review 
+		SET 
+		REVIEW_TITLE =#{review_title},
+		REVIEW_CONTENT=#{review_content} 
+		WHERE review_no=#{review_no}
+	</update>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE review WHERE review_no=#{review_no}
+	</delete>
 </mapper>
