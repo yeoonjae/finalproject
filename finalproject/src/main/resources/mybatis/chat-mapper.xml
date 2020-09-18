@@ -40,5 +40,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE type_no=#{type_no}
 	</select>
 	
+	<select id="getList4" resultType="chatDto" parameterType="int">
+		SELECT *  FROM chat 
+		WHERE chat_no=#{chat_no}
+	</select>
 
 </mapper>

@@ -33,4 +33,9 @@ public class ChatDaoImpl implements ChatDao{
 		return sqlSession.selectList("chat.getList3",type_no);
 	}
 
+	@Override
+	public List<ChatDto> getDetailList(int chat_no) {
+		return sqlSession.selectList("chat.getList4",chat_no);
+	}
+
 }

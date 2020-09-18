@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.finalproject.entity.ChatDto;
 import com.kh.finalproject.repository.ChatDao;
@@ -33,10 +34,21 @@ public class MemberController {
 	
 	// 해당 유형의 질문 검색 
 	@GetMapping("/search")
-	public String search(Model model,@RequestParam int type_no) {
+	@ResponseBody
+	public List<ChatDto> search(Model model,@RequestParam int type_no) {
 		List<ChatDto> list = chatDao.getList(type_no);
-		model.addAttribute("list", list);
-		return "member/user_index";
+//		model.addAttribute("list", list);
+//		return "member/user_index";
+		return list;
+	}
+	
+	@GetMapping("/getDetail")
+	@ResponseBody
+	public List<ChatDto> getDetail(Model model,@RequestParam int chat_no) {
+		List<ChatDto> list2= chatDao.getDetailList(chat_no);
+//		model.addAttribute("list", list);
+//		return "member/user_index";
+		return list2;
 	}
 
 }

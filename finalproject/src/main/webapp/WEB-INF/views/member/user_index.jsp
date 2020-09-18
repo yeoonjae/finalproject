@@ -64,7 +64,14 @@
 			$('#myInput').focus()
 		});
 		
-		$(".type1").click(function(){
+		//챗봇 유형 선택
+		$(".type1").click(chatbot);
+		$(".type2").click(chatbot);
+		$(".type3").click(chatbot);
+		$(".type4").click(chatbot);
+		$(".type5").click(chatbot);
+		
+		function chatbot(){
 			var type_no = $(this).data().no;
 			var chat_type = $(this).val();
 			console.log(type_no);
@@ -78,27 +85,103 @@
 			axios({
 				url:"${pageContext.request.contextPath}/member/search?type_no="+type_no,
 				method:"get"
-			}).then(function(response){
-				//console.log(response.data);
-				
-				
-				var str2=
-					'<div class="box"><div class="imgBox">'
-					+'<img class="chatimg" src="${pageContext.request.contextPath}/resources/m/images/pp.png"></div>'
-					+'<div class="innerBox"><div class="name">공도리봇</div>'
-					+'<div class="content">'
-					+'<c:forEach items="${list}" var="chatDto">'
-					+	'<input type="button" class="btn btn-size type1" value=${chatDto.chat_q} data-chat_no=${chatDto.chat_no}>'
-					+'</c:forEach>'
-					+'</div><br></div></div>'
+			})
+			.then(function(response){
+				//console.log(response.data);		
 
-				$(".chatList").append(str2);
+				var box = document.createElement("div");
+				box.classList.add("box");
 
-			});
+				var imgBox = document.createElement("div");
+				imgBox.classList.add("imgBox");
+				
+				var img = document.createElement('img');
+				img.classList.add("chatimg");
+				img.src = "${pageContext.request.contextPath}/resources/m/images/pp.png"; 
+				box.appendChild(imgBox);
+				imgBox.appendChild(img);
+				
+				var innerBox = document.createElement("div");
+				innerBox.classList.add("innerBox");
+				box.appendChild(innerBox);
+				
+				var name = document.createElement("div");
+				name.classList.add("name");
+				name = document.createTextNode('공도리봇');
+				innerBox.appendChild(name);
+				
+				var content = document.createElement("div");
+				content.classList.add("content");
+				innerBox.appendChild(content);
+				
+				//서버에서 준 목록을 버튼으로 만들어서 출력
+				for(var i=0; i < response.data.length; i++){
+					
+					var input = document.createElement("input");
+					input.setAttribute("type","button");
+					input.setAttribute("value",response.data[i].chat_q);
+					input.setAttribute("class","btn btn-size");
+					input.setAttribute("data-chat_no",response.data[i].chat_no);
+					input.addEventListener("click",function(){
+						
+						var chat_no = $(this).data().chat_no;
+						var chat_q = $(this).val();
+						//console.log(chat_q);
+						var str = '<div class="box my"><div class="innerBox"><div class="content">'+chat_q+'</div></div></div>'			 	           	
+						$(".chatList").append(str);
+			 	        
+						axios({
+							url:"${pageContext.request.contextPath}/member/getDetail?chat_no="+chat_no,
+							method:"get"
+						}).then(function(response){
+							console.log(response.data[0].chat_a);
+							var chat_a = response.data[0].chat_a;
+
+							var box = document.createElement("div");
+							box.classList.add("box");
+
+							var imgBox = document.createElement("div");
+							imgBox.classList.add("imgBox");
+							
+							var img = document.createElement('img');
+							img.classList.add("chatimg");
+							img.src = "${pageContext.request.contextPath}/resources/m/images/pp.png"; 
+							box.appendChild(imgBox);
+							imgBox.appendChild(img);
+							
+							var innerBox = document.createElement("div");
+							innerBox.classList.add("innerBox");
+							box.appendChild(innerBox);
+							
+							var name = document.createElement("div");
+							name.classList.add("name");
+							name = document.createTextNode('공도리봇');
+							innerBox.appendChild(name);
+							
+							var content = document.createElement("div");
+							content.classList.add("content");
+							innerBox.appendChild(content);
+							content.textContent= chat_a;
+							
+							var chatList = document.querySelector(".chatList");
+							chatList.appendChild(box);
+							
+							var root = "${pageContext.request.contextPath}";
+
+					});
+
+				});
+				content.appendChild(input);
+				
+				var chatList = document.querySelector(".chatList");
+				chatList.appendChild(box);
+				
+				var root = "${pageContext.request.contextPath}";
+
+			}
 			
 		});
-		
-		
+		}
 });
 </script>
 <style>
@@ -110,7 +193,6 @@
 .modal-backdrop {
 	z-index:-1;
 }
-
 
 .start{
 	background-color:#d1cab0; 
@@ -168,7 +250,7 @@
 /* 	width:200px; */
 }
 .box .innerBox{
-     flex-grow: 0.1;  
+     flex-grow: 0.3;  
 }
 .btn-size{
 	width: 100%;
@@ -228,15 +310,18 @@
 										<div class="innerBox">
 											<div class="name">공도리봇</div>
 											<div class="content">
-												안녕하세요 공도리입니당 ^_^<br>
-												저희 공도리에 대해 문의사항이 있으시면 <br>
-												공돌이봇을 이용해 주시기 바랍니다! <br><br>
-												원하시는 유형을 선택하시면<br>
-												해당 유형의 답변을 확인하실 수 있답니당♡<br><br> 										
+												😊공도리에 오신걸 환영합니다😊<br><br>
+												저희 공도리에 대하여 문의사항이 있으시다면 <br>
+												공도리봇을 이용해 주세요 ❕ ❗ <br><br>
+												아래에서 원하시는 유형을 선택하시면<br>
+												해당 유형의 답변을 확인하실 수 있답니당🧡<br><br>
+												다들 공도리와 함께 열공하고 <br>
+												놀면서 돈벌어요🧡💛💚💙💜 <br><br>										
 												<input type="button" class="btn btn-size type1" value="결제 및 환불 관련" data-no="1">
 												<input type="button" class="btn btn-size type2" value="예약 관련" data-no="2">
 												<input type="button" class="btn btn-size type3" value="이용 관련" data-no="3">
-												<input type="button" class="btn btn-size type4" value="쿠폰 및 마일리지" data-no="4">
+												<input type="button" class="btn btn-size type4" value="쿠폰 관련" data-no="4">
+												<input type="button" class="btn btn-size type4" value="마일리지 관련" data-no="5">
 											</div>
 											<br>
 										</div>
@@ -245,17 +330,17 @@
 									<div class="chatList">
 										
 									</div>
+									
 									<!-- 나 -->
 <!-- 								    <div class="box my"> -->
 <!-- 								        <div class="innerBox"> -->
 <!-- 								            <div class="content"> -->
 <!-- 								                결제 및 환불 관련  -->
 <!-- 								            </div> -->
-<!-- 								        </div>								        -->
+<!-- 								        </div>		 						        -->
 <!-- 								    </div> -->
-								    
-								    
-								    
+
+								    		    
 								</div>
 							</div>
 							<div class="modal-footer">
