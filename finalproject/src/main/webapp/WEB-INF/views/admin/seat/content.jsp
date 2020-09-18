@@ -9,13 +9,13 @@
     <title>Document</title>
     <style>
         .cinema-seat:not(.empty){
-            background-image: url("http://www.sysout.co.kr/file/image/285");
+            background-image: url("${pageContext.request.contextPath}/resources/m/images/normal.png");
         }
         .cinema-seat.active{
-            background-image: url("http://www.sysout.co.kr/file/image/283");
+            background-image: url("${pageContext.request.contextPath}/resources/m/images/active.jpg");
         }
         .cinema-seat.disabled{
-            background-image: url("http://www.sysout.co.kr/file/image/284");
+            background-image: url("${pageContext.request.contextPath}/resources/m/images/disabled.jpg");
         }
         .btn-wrap {
         	text-align: center;

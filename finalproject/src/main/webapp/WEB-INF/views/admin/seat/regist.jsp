@@ -104,6 +104,12 @@
             });
             
             $('.btn-regist').click(function(e){
+            	
+            	if($('.cinema-seat').hasClass('active')) {
+            		alert("선택된 좌석이 있으면 등록하실 수 없습니다");
+            		return;
+            	}
+            	
             	if(confirm("좌석을 등록 하시겠습니까?")){
             		$("form").submit();
             	} else {
@@ -189,7 +195,7 @@
                         <div class="cinema-seat-area" data-rowsize="7" data-colsize="7" data-mode="manager" data-seatno="visible" data-fill="auto">
                         </div>
                     </div>
-                    <input type="hidden" name="entrance_location" class="entrance">
+                    <input type="hidden" name="entrance_location" class="entrance" value="centerTop">
                 </form>
                 <br>
                 </div>

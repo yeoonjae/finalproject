@@ -17,11 +17,14 @@ import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.CouponDto;
 import com.kh.finalproject.entity.CouponReqDto;
+import com.kh.finalproject.entity.LicenseHisDto;
 import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PointDto;
 import com.kh.finalproject.entity.PointHisDto;
+import com.kh.finalproject.entity.SeatDto;
 import com.kh.finalproject.repository.CouponDao;
+import com.kh.finalproject.repository.LicenseHisDao;
 import com.kh.finalproject.service.MemberService;
 
 @RestController
@@ -30,6 +33,8 @@ public class TestController {
 	@Autowired
 	private SqlSession sqlSession;
 
+	@Autowired
+	private LicenseHisDao licenseHisDao;
 	
 	@Autowired
 	private MemberService memberService;
@@ -160,6 +165,30 @@ public class TestController {
 	@GetMapping("/coupon/req/delete")
 	public void delete(@RequestParam int coupon_req_no) {
 		sqlSession.delete("couponReq.delete", coupon_req_no);
+	}
+	
+	@GetMapping("/seat/check")
+	public boolean checkSeat(@RequestParam int branch_no, @RequestParam int row, @RequestParam int col, @RequestParam int member_no) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("branch_no", branch_no);
+		map.put("seat_row", row);
+		map.put("seat_col", col);
+		SeatDto seatDto = sqlSession.selectOne("seat.check", map);
+		int check = seatDto.getSeat_state();
+		int seat_no = seatDto.getSeat_no();
+		if(check==1) { // 이용 가능일 경우
+			// 이용 내역 테이블에 정보 업데이트
+			LicenseHisDto licenseHisDto = LicenseHisDto.builder()
+											.seat_no(seat_no)
+											.member_no(member_no)
+												.build();
+			licenseHisDao.regist(licenseHisDto);
+			// 이용 불가로 변경
+			sqlSession.update("seat.used", seat_no);
+			return true;
+		} else { // 이용 불가일 경우
+			return false;
+		}
 	}
 	
 	//지역 내 지점 확인

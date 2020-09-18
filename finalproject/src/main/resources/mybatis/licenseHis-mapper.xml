@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	mapper는 구문을 만들 수 있는 영역
+	일반적으로 테이블당 1개씩의 mapper를 둔다
+	
+	- namespace : 영역을 외부에서 부르기 위한 별칭(일반적으로 테이블 이름으로 사용)
+ -->
+<mapper namespace="licenseHis">
+	
+	<insert id="regist" parameterType="licenseHisDto">
+		INSERT INTO license_his(
+			license_his_no,
+			member_no,
+			seat_no,
+			license_his_start
+		) VALUES (
+			license_his_seq.nextval,
+			#{member_no},
+			#{seat_no},
+			sysdate
+		)
+	</insert>
+	
+	<select id="getUsed" parameterType="int" resultType="licenseHisDto">
+		SELECT lh.*, s.SEAT_ROW, s.SEAT_COL FROM LICENSE_HIS lh 
+			INNER JOIN SEAT s ON lh.SEAT_NO = s.SEAT_NO
+				WHERE lh.member_no = #{member_no} 
+				AND lh.license_his_start IS NOT NULL 
+				AND lh.license_his_finish IS NULL
+	</select>
+	
+</mapper>
+
+
+
+

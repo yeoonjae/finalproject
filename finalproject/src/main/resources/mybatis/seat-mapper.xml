@@ -65,6 +65,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getEntrance" parameterType="int" resultType="String">
 		SELECT entrance_location FROM entrance WHERE branch_no = #{branch_no}
 	</select>
+	
+	<!-- 좌석 이용 가능 여부 확인 -->
+	<select id="check" parameterType="map" resultType="seatDto">
+		SELECT * FROM seat WHERE branch_no = #{branch_no} and seat_row = #{seat_row} and seat_col = #{seat_col}
+	</select>
+	
+	<!-- 좌석 이용 가능으로 수정 -->
+	<update id="notUsed" parameterType="int">
+		UPDATE seat SET seat_state = 1, seat_type = 'normal' WHERE seat_no = #{seat_no}
+	</update>
+	
+	<!-- 좌석 이용 불가로 수정 -->
+	<update id="used" parameterType="int">
+		UPDATE seat SET seat_state = 2, seat_type = 'disabled' WHERE seat_no = #{seat_no}
+	</update>
 </mapper>
 
 
