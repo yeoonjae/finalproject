@@ -37,6 +37,7 @@ public class MemberNoticeController {
 			 @RequestParam(value="nowPage", required=false)String nowPage,
 			 @RequestParam(value="cntPerPage", required=false)String cntPerPage) {
 		int total = noticeDao.countNotice();
+		List<NoticeDto> list = noticeDao.list();
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "5";
@@ -46,6 +47,7 @@ public class MemberNoticeController {
 			cntPerPage = "5";
 		}
 		vo = new NoticePageVo(total, Integer.parseInt(nowPage),Integer.parseInt(cntPerPage));
+		model.addAttribute("list", list);
 		model.addAttribute("paging", vo);
 		model.addAttribute("viewAll", noticeDao.selectNotice(vo));
 		return "member/notice/noticePaging";
