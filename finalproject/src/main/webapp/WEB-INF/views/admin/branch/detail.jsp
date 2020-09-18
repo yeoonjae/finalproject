@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/swiper/css/swiper.min.css">
 	<style>
@@ -22,7 +23,6 @@
 
 	</style>
 <div id="content-wrapper">
-
 <script src="https://code.jquery.com/jquery-latest.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fabric@3.6.3/dist/fabric.js"></script>
     <script src="${pageContext.request.contextPath}/resources/swiper/js/swiper.min.js"></script>
@@ -33,6 +33,14 @@
 			// var mySwiper = new swiper('선택자', 옵션)
 			var mySwiper = new Swiper('.swiper-container', {
 				// Optional parameters
+				slidesPerView : 5, // 동시에 보여줄 슬라이드 갯수
+				spaceBetween : 30, // 슬라이드간 간격
+				slidesPerGroup : 1, // 그룹으로 묶을 수, slidesPerView 와 같은 값을 지정하는게 좋음
+			
+				// 그룹수가 맞지 않을 경우 빈칸으로 메우기
+				// 3개가 나와야 되는데 1개만 있다면 2개는 빈칸으로 채워서 3개를 만듬
+				loopFillGroupWithBlank : true,
+
 				// swiper에 적용할 옵션들을 작성
 				direction : 'horizontal', // 표시방식(수직 : vartical / 수평 : horizontal)
 				loop : true, // 순환모드 여부(마지막과 처음이 이어지는 것)
@@ -51,17 +59,17 @@
 					prevEl : '.swiper-button-prev',
 				},
 				// 스크롤바 옵션
-				//scrollbar: {
-				//    el: '.swiper-scrollbar',
-				//},
+				scrollbar: {
+				   el: '.swiper-scrollbar',
+				},
 				// 커서 모양을 손모양으로 변경
-				grabCursor : true,
+// 				grabCursor : true,
 				// 슬라이드 전환효과
 				// effect: 'coverflow',
 				// effect: 'cube',
 				// effect: 'fade'
 				// effect: 'flip',
-				effect : 'slide', // 기본값
+// 				effect : 'slide', /ㅋ/ 기본값
 			});
 		};	
 		$(function(){
@@ -128,11 +136,13 @@
 						 	<div class="swiper-container">
 					        <div class="swiper-wrapper">
 					            <c:forEach var="img" items="${branchImg}">
+					        	<div class="swiper-slide">
 									<img src="${pageContext.request.contextPath}/admin/branch/imgdownload/${img.branch_img_no}" style="height: 100px; width: 140px;padding-left: 5px;">
+								</div>
 								</c:forEach>
 					        </div>
 					        <div class="swiper-pagination"></div>
-					        <div class="swiper-button-prev"></div>
+ 					        <div class="swiper-button-prev"></div>
 					        <div class="swiper-button-next"></div>
 					      </div>
 						</td>
