@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	mapper는 구문을 만들 수 있는 영역
+	일반적으로 테이블당 1개씩의 mapper를 둔다
+	
+	- namespace : 영역을 외부에서 부르기 위한 별칭(일반적으로 테이블 이름으로 사용)
+ -->
+<mapper namespace="couponReq">
+	<!-- 쿠폰 요청 등록 -->
+	<insert id="regist" parameterType="couponReqDto">
+		INSERT INTO coupon_req(
+			coupon_req_no,
+			branch_no,
+			coupon_req_name,
+			coupon_req_discount,
+			coupon_req_start,
+			coupon_req_finish
+		) VALUES (
+			coupon_req_seq.nextval,
+			#{branch_no},
+			#{coupon_req_name},
+			#{coupon_req_discount},
+			#{coupon_req_start},
+			#{coupon_req_finish}
+		)
+	</insert>
+	
+	<!-- 쿠폰 요청 목록(지점) -->
+	<select id="getList" parameterType="map" resultType="couponReqDto">
+		SELECT * FROM coupon_req WHERE branch_no = #{branch_no}
+		<if test="order != 'all'">
+			AND coupon_req_state = #{order}
+		</if>
+		ORDER BY coupon_req_date DESC
+	</select>
+	
+	<!-- 쿠폰 요청 목록(본사) -->
+	<select id="getList2" parameterType="map" resultType="couponReqDto">
+		SELECT c.*, b.ADMIN_NO, b.BRANCH_NAME FROM COUPON_REQ c 
+		LEFT OUTER JOIN BRANCH b 
+		ON c.BRANCH_NO = b.BRANCH_NO 
+		WHERE 1=1 
+		<if test="branch_no == 0">
+			AND c.coupon_req_state = '대기'
+		</if>
+		<if test="branch_no != 0">
+			AND c.branch_no = #{branch_no}
+		</if>
+		<if test="branch_no != 0 and order != 'all'">
+			AND c.coupon_req_state = #{order}
+		</if>
+		ORDER BY coupon_req_date DESC
+	</select>
+	
+	<!-- 지점 요청 대기 목록 -->
+	<select id="waitList" parameterType="int" resultType="couponReqDto">
+		SELECT * FROM coupon_req WHERE branch_no = #{branch_no} AND coupon_req_state = '대기'
+	</select>
+	
+	<!-- 쿠폰 요청 승인 -->
+	<update id="approval" parameterType="int">
+		UPDATE coupon_req SET 
+			coupon_req_state = '승인', 
+			coupon_req_resp = sysdate 
+		WHERE coupon_req_no = #{coupon_req_no}
+	</update>
+	
+	<!-- 쿠폰 요청 거절 -->
+	<update id="refuse" parameterType="map">
+		UPDATE coupon_req SET 
+			coupon_req_state = '거절', 
+			coupon_req_resp = sysdate, 
+			coupon_req_detail = #{coupon_req_detail} 
+		WHERE coupon_req_no = #{coupon_req_no}
+	</update>
+	
+	<!-- 쿠폰 요청 정보 가져오기 (단일조회) -->
+	<select id="get" parameterType="int" resultType="couponReqDto">
+		SELECT c.*, b.ADMIN_NO, b.BRANCH_NAME FROM COUPON_REQ c 
+		LEFT OUTER JOIN BRANCH b 
+		ON c.BRANCH_NO = b.BRANCH_NO 
+		WHERE c.coupon_req_no = #{coupon_req_no}
+	</select>
+	
+	<!-- 쿠폰 요청 수정 -->
+	<update id="edit" parameterType="couponReqDto">
+		UPDATE coupon_req SET 
+			coupon_req_name = #{coupon_req_name}, 
+			coupon_req_discount = #{coupon_req_discount}, 
+			coupon_req_start = #{coupon_req_start}, 
+			coupon_req_finish = #{coupon_req_finish}
+		WHERE coupon_req_no = #{coupon_req_no}
+	</update>
+	
+	<!-- 쿠폰 요청 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM coupon_req WHERE coupon_req_no = #{coupon_req_no}
+	</delete>
+	
+	<!-- 스케줄러 -->
+	<!-- 시작일이 내일인 대기중인 쿠폰요청 조회 -->
+	<select id="changeStateList" resultType="int">
+		SELECT coupon_req_no FROM coupon_req
+		WHERE to_char(COUPON_REQ_START, 'yyyy-mm-dd') = to_char(sysdate+1, 'yyyy-mm-dd')
+		AND COUPON_REQ_STATE = '대기'
+	</select>
+</mapper>
+
+
+
+

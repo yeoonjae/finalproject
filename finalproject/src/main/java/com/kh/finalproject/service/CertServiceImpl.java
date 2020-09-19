@@ -40,7 +40,7 @@ public class CertServiceImpl implements CertService{
 	@Override
 	@Scheduled(cron = "* * * * * *")
 	public void clear() {
-		log.debug("Clear Service 실행!");
+//		log.debug("Clear Service 실행!");
 		certDao.clearAll();
 	}
 

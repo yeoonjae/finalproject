@@ -96,6 +96,10 @@ public class MemberAccountController {
 	public String edit(@RequestParam int member_no, Model model) {
 		MemberDto memberDto = memberDao.get(member_no);
 		model.addAttribute("memberDto", memberDto);
+		List<BranchDto> branchDto = branchDao.getList();
+		model.addAttribute("branchDto", branchDto);
+		List<LocalDto> localDto = localDao.getList();
+		model.addAttribute("localDto",localDto);
 		return "member/account/edit";
 	}
 
@@ -103,16 +107,17 @@ public class MemberAccountController {
 	public String edit(RedirectAttributes attr, @ModelAttribute MemberDto memberDto, HttpSession session) {
 		memberDao.edit(memberDto);
 		int member_no = memberDto.getMember_no();
-		attr.addAttribute("member_no", member_no);
 		if(session.getAttribute("admininfo") != null){
-			return "member/account/list";
+			return "redirect:list";
 		}
+		attr.addAttribute("member_no", member_no);
 		return "redirect:info";
 	}
 
 	// 회원 삭제
 	@GetMapping("/delete")
 	public String delete(@RequestParam int member_no, HttpSession session) {
+		session.removeAttribute("memberinfo");
 		memberDao.delete(member_no);
 		if (session.getAttribute("admininfo") != null) {
 			return "member/account/list";

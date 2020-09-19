@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review">
+	
+	<!-- 리뷰 등록 -->
+	<insert id="regist" parameterType="reviewDto">
+		INSERT INTO review VALUES(
+			review_seq.nextval(),
+			#{member_no},
+			#{review_title},
+			#{review_content},
+			#{review_date}	
+		)
+	</insert>
+	
+</mapper>
