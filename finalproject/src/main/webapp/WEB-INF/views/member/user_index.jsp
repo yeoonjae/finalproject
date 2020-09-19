@@ -356,7 +356,7 @@ table{
                <div> 
                   <table class="bold"> 
                      <tr>
-                        <td class="num">30/40</td>
+                        <td class="num">${useCount} / ${allCount}</td>
                         <td class="num">0/1</td>
                         <td class="num">30/40</td>
                      </tr>

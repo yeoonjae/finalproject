@@ -63,4 +63,22 @@ public class SeatDaoImpl implements SeatDao{
 		sqlSession.update("seat.used", seat_no);
 	}
 
+	// 좌석 등록여부 조회
+	@Override
+	public int checkRegist(int branch_no) {
+		return sqlSession.selectOne("seat.checkRegist", branch_no);
+	}
+
+	// 이용 가능한 좌석 개수 조회
+	@Override
+	public int getUseCount(int branch_no) {
+		return sqlSession.selectOne("seat.getUseCount", branch_no);
+	}
+
+	// 전체 좌석 개수 조회
+	@Override
+	public int getAllCount(int branch_no) {
+		return sqlSession.selectOne("seat.getAllCount", branch_no);
+	}
+
 }

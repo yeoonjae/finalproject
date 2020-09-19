@@ -23,4 +23,10 @@ public interface SeatDao {
 	void notUsed(int seat_no);
 	// 좌석 이용 불가로 수정
 	void used(int seat_no);
+	// 좌석 등록여부 조회
+	int checkRegist(int branch_no);
+	// 이용가능한 좌석 개수 조회
+	int getUseCount(int branch_no);
+	// 전체 좌석 개수 조회
+	int getAllCount(int branch_no);
 }

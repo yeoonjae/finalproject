@@ -81,6 +81,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE seat SET seat_state = 2, seat_type = 'disabled' WHERE seat_no = #{seat_no}
 	</update>
 	
+	<!-- 좌석 등록여부 조회 -->
+	<select id="checkRegist" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM seat WHERE branch_no = #{branch_no}
+	</select>
+	
+	<!-- 이용 가능한 좌석 개수 조회 -->
+	<select id="getUseCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM seat WHERE branch_no = #{branch_no} AND seat_type = 'normal'
+	</select>
+	
+	<select id="getAllCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM seat WHERE branch_no = #{branch_no} AND seat_type <![CDATA[<>]]> 'space'
+	</select>
+	
 </mapper>
 
 
