@@ -73,7 +73,8 @@ public class AccountController {
 		public String list(
 				Model model, 
 				@RequestParam(required = false, defaultValue = "admin_no") String col,
-				@RequestParam(required = false, defaultValue = "asc") String order) {
+				@RequestParam(required = false, defaultValue = "asc") String order
+				) {
 			List<AdminDto> list = adminDao.getList(col, order);
 			model.addAttribute("list", list);
 			return "admin/account/list";

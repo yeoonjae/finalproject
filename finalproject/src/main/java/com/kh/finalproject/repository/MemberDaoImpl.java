@@ -126,4 +126,5 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.selectOne("member.overlap", member_email);
 		
 	}
+
 }

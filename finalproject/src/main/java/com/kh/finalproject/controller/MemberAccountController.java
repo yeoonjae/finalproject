@@ -77,8 +77,8 @@ public class MemberAccountController {
 	}
 	// 회원 정보 리스트
 	@GetMapping("/list")
-	public String list(Model model) {
-		List<MemberDto> list = memberDao.getList();
+	public String list(Model model, @RequestParam (required = false)int branch_no) {
+		List<MemberDto> list = memberDao.getList(branch_no);
 		model.addAttribute("list", list);
 		return "member/account/list";
 	}
