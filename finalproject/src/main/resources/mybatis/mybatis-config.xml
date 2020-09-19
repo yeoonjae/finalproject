@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</settings>
 	
 	<!-- typeAliases : 클래스에 부여하는 별칭 -->
-	<typeAliases>
+	<typeAliases> 
 		<typeAlias type="com.kh.finalproject.entity.BranchDto" alias="branchDto"/>
 		<typeAlias type="com.kh.finalproject.entity.LocalDto" alias="localDto"/>
 		<typeAlias type="com.kh.finalproject.entity.AdminDto" alias="adminDto"/>
@@ -38,6 +38,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.finalproject.entity.PayInfoDto" alias="payInfoDto"/>
 		<typeAlias type="com.kh.finalproject.entity.PayPointDto" alias="payPointDto"/>
 		<typeAlias type="com.kh.finalproject.entity.CertDto" alias="certDto"/>
+		<typeAlias type="com.kh.finalproject.entity.MemberCouponDto" alias="memberCouponDto"/> 
+		<typeAlias type="com.kh.finalproject.entity.ChatDto" alias="chatDto"/>
 		<typeAlias type="com.kh.finalproject.entity.NoticeDto" alias="noticeDto"/>
 		<typeAlias type="com.kh.finalproject.entity.ReviewDto" alias="reviewDto"/>
 		<typeAlias type="com.kh.finalproject.entity.ReviewLikeDto" alias="reviewLikeDto"/>
