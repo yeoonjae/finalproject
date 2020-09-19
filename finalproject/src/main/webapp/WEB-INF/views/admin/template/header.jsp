@@ -183,8 +183,8 @@
                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/">상세보기</a>
                <div class="dropdown-divider"></div>
                <h6 class="dropdown-header">좌석 관리</h6>
-               <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/regist">좌석 등록</a>
-               <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/content">상세보기</a>
+               <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/branch/regist">좌석 등록</a>
+               <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/branch/content">상세보기</a>
              </c:when>
              </c:choose>
           </div>
