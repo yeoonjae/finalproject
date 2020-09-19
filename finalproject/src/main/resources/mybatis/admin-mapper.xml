@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 관리자 단일조회 -->
 	<select id="get" parameterType="int" resultType="adminDto">
-		select * from admin where admin_no=#{admin_no}
+		SELECT a.*, b.BRANCH_NO, b.BRANCH_NAME FROM admin a LEFT OUTER JOIN BRANCH b ON a.ADMIN_NO = b.ADMIN_NO WHERE a.ADMIN_NO = #{admin_no}
 	</select>
 	
 	<!-- 관리자번호 조회 -->
@@ -71,7 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 관리자 지점과 JOIN한 조회 -->
 	<select id="getAdminInfo" parameterType="int" resultType="adminDto">
-		SELECT a.*,b.BRANCH_NAME FROM admin a LEFT OUTER JOIN branch b ON a.ADMIN_NO = b.ADMIN_NO WHERE b.admin_no=#{admin_no}
+		SELECT a.*,b.BRANCH_NAME, b.BRANCH_NO FROM admin a LEFT OUTER JOIN branch b ON a.ADMIN_NO = b.ADMIN_NO WHERE b.admin_no=#{admin_no}
 	</select>
 	
 	<!-- 모든 '지점' 관리자 조회 -->

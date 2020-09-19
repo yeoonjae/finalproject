@@ -9,11 +9,14 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.finalproject.VO.BranchImgVO;
+import com.kh.finalproject.VO.Criteria;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.BranchImgDto;
+import com.kh.finalproject.entity.MemberDto;
 
 @Repository
 public class BranchDaoImpl implements BranchDao{
@@ -42,7 +45,7 @@ public class BranchDaoImpl implements BranchDao{
 				sqlSession.insert("branchImg.regist", branchImgDto);
 				
 				//하드디스크에 저장
-				File target = new File("D:/upload",f.getOriginalFilename());
+				File target = new File("D:/upload",Integer.toString(img_no));
 				f.transferTo(target);
 			}
 		}
@@ -55,6 +58,12 @@ public class BranchDaoImpl implements BranchDao{
 		return list;
 	}
 
+	//페이징+list
+	public List<BranchDto> getList(Criteria cri) {
+		return sqlSession.selectList("branch.getList",cri);
+	}
+
+	
 	//배치도 등록
 	public void layout_regist(String branch_layout, int branch_no) {
 		Map<Object, Object> map = new HashMap<>();
@@ -70,13 +79,69 @@ public class BranchDaoImpl implements BranchDao{
 	}
 
 	//지점 수정
-	public void edit(BranchDto branchDto) {
+	public void edit(BranchDto branchDto,List<MultipartFile> file) throws IllegalStateException, IOException {
 		sqlSession.update("branch.edit", branchDto);
+		//사진등록
+		if(file.size() > 0 && !file.get(0).isEmpty()) {
+			for(MultipartFile f : file) {
+				//DB에 저장
+				int img_no = sqlSession.selectOne("branchImg.getSeq");
+				BranchImgDto branchImgDto = new BranchImgDto();
+				branchImgDto.setBranch_img_no(img_no);
+				branchImgDto.setBranch_img_name(Integer.toString(img_no));
+				branchImgDto.setBranch_img_size(f.getSize());
+				branchImgDto.setBranch_img_type(f.getContentType());
+				branchImgDto.setBranch_no(branchDto.getBranch_no());
+				sqlSession.insert("branchImg.regist", branchImgDto);
+				
+				//하드디스크에 저장
+				File target = new File("D:/upload",Integer.toString(img_no));
+				f.transferTo(target);
+			}
+		}
+	}
+	
+	// 지점 번호 조회
+	@Override
+	public List<Integer> getNo() {
+		return sqlSession.selectList("branch.getNo");
+	}
+	
+	// 지역별 지점번호 조회
+	@Override
+	public List<Integer> getNo2(int local_no) {
+		return sqlSession.selectList("branch.getNo2", local_no);
 	}
 
 	//지점 삭제 메소드
 	public void delete(int branch_no) {
-		sqlSession.delete("branch.delete", branch_no);
+		sqlSession.update("branch.expiredUpdate", branch_no);
 	}
+	public int getNo3(int admin_no) {
+		return sqlSession.selectOne("branch.getNo3", admin_no);
+	}
+	//지점별 회원 조회
+	public List<MemberDto> getMemberList(int branch_no) {
+		return sqlSession.selectList("branch.memberList", branch_no);
+	}
+
+	//지점 이미지 삭제
+	public void deleteImg(@RequestParam int branch_img_no) {
+		sqlSession.delete("branchImg.delete", branch_img_no);
+		System.out.println("Test Controller 삭제완료");
+	}
+
+	//지점 리스트(이미지 같이)
+	public List<BranchDto> getListWithImg() {
+		return sqlSession.selectList("branch.getListWithImg");
+	}
+
+	//지점 이미지와 같이 단일조회
+	public List<BranchDto> getWithImg(int branch_no) {
+		return sqlSession.selectList("branch.getWithImg", branch_no);
+	}
+
+	
+	
 
 }

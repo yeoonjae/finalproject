@@ -1,28 +1,37 @@
 package com.kh.finalproject.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalproject.VO.Criteria;
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.BranchImgDto;
 import com.kh.finalproject.entity.LocalDto;
+import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.repository.AdminDao;
 import com.kh.finalproject.repository.BranchDao;
 import com.kh.finalproject.repository.LocalDao;
+import com.kh.finalproject.service.BranchService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/admin/branch")
 public class BranchController {
@@ -35,6 +44,9 @@ public class BranchController {
 	
 	@Autowired
 	private LocalDao localDao;
+	
+	@Autowired
+	private BranchService branchService;
 	
 	
 	@GetMapping("/branch_regist")
@@ -78,18 +90,39 @@ public class BranchController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int branch_no, Model model,RedirectAttributes attr) {
 		BranchDto branchDto = branchDao.get(branch_no);
+		
+		// 여기서 이제 브런치이미지디티오 리스트를 받아서 모델로 뿌려주는거야 
+		List<BranchImgDto> list = branchService.getBranchImg(branch_no);
+		model.addAttribute("branchImg", list);
 		model.addAttribute("branchDto", branchDto);
 		attr.addAttribute("branch_no", branch_no);
 		return "admin/branch/detail";
 	}
 	
+	//지점 이미지 다운로드
+	@GetMapping("/imgdownload/{img_no}")
+	@ResponseBody
+	public ResponseEntity<ByteArrayResource> getImg(@PathVariable int img_no) throws Exception {
+		ResponseEntity<ByteArrayResource> entity = branchService.getImg(img_no);
+		return entity;
+	}
+	
+	//브랜치번호로 이미지 하나만 꺼내오기
+	@GetMapping("/imagedownload_one/{branch_no}")
+	@ResponseBody
+	public ResponseEntity<ByteArrayResource> getImgOne(@PathVariable int branch_no) throws Exception {
+		ResponseEntity<ByteArrayResource> entity = branchService.getImgOne(branch_no);
+		return entity;
+	}
+	
+	
 	//지점 수정
 	@GetMapping("/edit")
 	public String edit(@RequestParam int branch_no,Model model,RedirectAttributes attr) {
 		List<LocalDto> local = localDao.getList();
+		List<BranchImgDto> list = branchService.getBranchImg(branch_no);
+		model.addAttribute("branchImg", list);
 		BranchDto branchDto = branchDao.get(branch_no);
-		List<AdminDto> list = adminDao.getList();
-		model.addAttribute("admin", list);
 		model.addAttribute("local", local);
 		model.addAttribute("branchDto", branchDto);
 		return "admin/branch/edit";
@@ -97,8 +130,8 @@ public class BranchController {
 	
 	//지점 수정
 	@PostMapping("/edit")
-	public String edit(RedirectAttributes attr,@ModelAttribute BranchDto branchDto) {
-		branchDao.edit(branchDto);
+	public String edit(RedirectAttributes attr,@ModelAttribute BranchDto branchDto,@RequestParam List<MultipartFile> file) throws IllegalStateException, IOException {
+		branchDao.edit(branchDto, file);
 		attr.addAttribute("branch_no", branchDto.getBranch_no());
 		return "redirect:detail";
 	}
@@ -109,5 +142,20 @@ public class BranchController {
 		branchDao.delete(branch_no);
 		return "redirect:list";
 	}
+	
+	//지점별 회원 현황
+	@GetMapping("/member_list")
+	public String memberList(@RequestParam int branch_no,Model model) {
+		List<MemberDto> list = branchDao.getMemberList(branch_no);
+		model.addAttribute("list", list);
+		return "admin/branch/member_list";
+	}
+	
+	//지점 이미지 삭제
+	@GetMapping("/deleteImg")
+	public void deleteImg(@RequestParam int branch_img_no) {
+		branchDao.deleteImg(branch_img_no);
+	}
+	
 	
 }

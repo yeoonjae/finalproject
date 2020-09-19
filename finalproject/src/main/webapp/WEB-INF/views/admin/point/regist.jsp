@@ -17,12 +17,37 @@
 		.table {
 			text-align: center;
 		}
+		.type.navy {
+			color: navy;
+			font-weight: 600;
+		}
+		.type.red {
+			color: red;
+			font-weight: 600;
+		}
+		.btn-wrap {
+			text-align: center;
+		}
+		.target {
+			width: 150px;
+		}
+		
 	</style>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
  <script>
         $(function(){
+        	// 유형에 따라 글자 색상 설정
+        	$.each($(".type"), function(i){
+				var td = $(this).text();
+				if(td=="적립"){
+					$(this).addClass("navy");
+				} else {					
+					$(this).addClass("red");
+				}
+			});
+        	
         	var result;
         	
         	// 상세내용 입력 시
@@ -110,6 +135,7 @@
             });
         });
 </script>
+</head>
 	<div id="content-wrapper">
 		<div class="container-fluid">
 			<!-- Breadcrumbs-->
@@ -121,14 +147,23 @@
          	</ol>
 
 			<div class="row">
-				<div class="offset-sm-3 col-sm-6 offset-md-3 col-md-6">
+				<div class="offset-sm-4 col-sm-4 offset-md-4 col-md-4">
 					<form action="regist" method="post" class="form">
 						<!-- 마일리지 유형 선택 -->
 						<div class="form-group">
-							<label>유형선택</label> <select name="point_type" class="form-control">
-								<option>적립</option>
-								<option>차감</option>
-							</select>
+							<div class="row">
+								<div class="col-5">
+									<label>유형</label> <select name="point_type" class="form-control target">
+										<option>적립</option>
+										<option>차감</option>
+									</select>
+								</div>
+								<!-- 마일리지 점수 입력 -->
+								<div class="col-7">
+									<label>마일리지</label> <input type="text" name="point_score"
+										placeholder="마일리지를 입력하세요" class="form-control point_score" required>
+								</div>
+							</div>
 						</div>
 						<!-- 마일리지 상세내용 작성 -->
 						<div class="form-group">
@@ -137,12 +172,10 @@
 							<div class="valid-feedback">사용 가능한 유형입니다</div>
 							<div class="invalid-feedback">동일한 유형이 존재합니다</div>
 						</div>
-						<!-- 마일리지 점수 입력 -->
-						<div class="form-group">
-							<label>마일리지</label> <input type="text" name="point_score"
-								placeholder="마일리지를 입력하세요" class="form-control point_score" required>
-						</div>
-						<button class="btn btn-primary btn-block btn-regist">등록</button>
+						<br>
+						<div class="btn-wrap">
+							<button class="btn btn-primary btn-block btn-regist">등 록</button>		                    
+	                    </div>
 					</form>
 				</div>
 			</div>
@@ -152,7 +185,7 @@
 				<div class="card-header">
 					<i class="fas fa-table"></i> 마일리지 유형 목록
 				</div>
-				<div class="card-body offset-sm-1 col-sm-10 offset-md-1 col-md-10">
+				<div class="card-body offset-md-2 col-md-8 offset-sm-2 col-sm-8">
 					<div class="table-responsive">
 						<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
 							<thead>
@@ -175,15 +208,16 @@
 							<tbody>
 								<c:forEach items="${list}" var="pointDto">
 									<tr>
-										<td>${pointDto.point_type}</td>
+										<td class="type">${pointDto.point_type}</td>
 										<td>${pointDto.point_detail}</td>
 										<td>${pointDto.point_score}</td>
 										<td>
 											<a href="edit?point_no=${pointDto.point_no}">
-												<button class="btn btn-primary">수정</button>
+												<button class="btn btn-sm btn-primary">수정</button>
 											</a>
+											&nbsp;&nbsp;
 											<a class="link" href="delete/${pointDto.point_no}">
-												<button class="btn btn-primary del">삭제</button>
+												<button class="btn btn-sm btn-danger del">삭제</button>
 											</a>
 										</td>
 									</tr>

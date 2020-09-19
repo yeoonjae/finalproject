@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,10 +54,17 @@ public class AccountController {
 			return "admin/account/edit";
 		}
 		@PostMapping("/edit")
-		public String edit(@RequestParam int admin_no, @ModelAttribute AdminDto adminDto, Model model) {
+		public String edit(@RequestParam("admin_no") int admin_no, 
+				@ModelAttribute AdminDto adminDto,
+				Model model,  HttpSession session, ModelMap modelMap) {
 			adminDao.edit(adminDto);
 			AdminDto get = adminDao.get(adminDto.getAdmin_no());
 			model.addAttribute("adminDto", get);
+			AdminDto admin_auth = (AdminDto) session.getAttribute("admininfo");
+			if(admin_auth.getAdmin_auth().equals("본사")) {
+				return "admin/accunot/list";
+			}
+			modelMap.addAttribute("admin_no", admin_no);
 			return "admin/account/info";
 		}
 		

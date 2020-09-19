@@ -87,7 +87,7 @@
               
                             <li><a href="#about">소개글</a></li>                    
                             <li><a href="#service">공지사항</a></li>                    
-                            <li><a href="#portfolio">지점 스토리</a></li>                    
+                            <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>                  
                             <li><a href="#pricing">가맹 문의</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/account/join">회원가입</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/account/login">로그인</a></li>                      
@@ -145,10 +145,10 @@
                                 2016. All Rights Reserved     
                             </p>
                              <p>
-                             	KH 공도리  |  공동이사 : 정연재 김진영 김혜정 오한민  |  사업자 등록번호 : 100-41004-10
-								<br>주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩(구관) 19F, 20F (T: 1544-9970 / F: 02-2163-8560)
-								<br>COPYRIGHT KH 공도리 ALL RIGHTS RESERVED.
-							</p>
+                                KH 공도리  |  공동이사 : 정연재 김진영 김혜정 오한민  |  사업자 등록번호 : 100-41004-10
+                        <br>주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩(구관) 19F, 20F (T: 1544-9970 / F: 02-2163-8560)
+                        <br>COPYRIGHT KH 공도리 ALL RIGHTS RESERVED.
+                     </p>
 
                         </div>
                     </div>

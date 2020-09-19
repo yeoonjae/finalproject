@@ -12,16 +12,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
+import com.kh.finalproject.entity.CouponDto;
+import com.kh.finalproject.entity.CouponReqDto;
 import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PayInfoDto;
 import com.kh.finalproject.entity.PointDto;
 import com.kh.finalproject.entity.PointHisDto;
+import com.kh.finalproject.entity.ReviewHateDto;
+import com.kh.finalproject.entity.ReviewLikeDto;
+import com.kh.finalproject.repository.CouponDao;
+import com.kh.finalproject.service.BranchService;
 import com.kh.finalproject.service.MemberService;
 
 @RestController
@@ -33,6 +38,15 @@ public class TestController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private CouponDao couponDao;
+	
+	@Autowired
+	private HttpSession session;
+	
+	@Autowired
+	private BranchService branchService;
 	
 	// 마일리지 유형 중복검사
 	@GetMapping("/point/regist")
@@ -134,6 +148,73 @@ public class TestController {
 		return sqlSession.selectOne("local.get", local_name);
 	}
 	
+	@GetMapping("/coupon/branchList")
+	public List<BranchDto> getBranchList(@RequestParam int group_no) {
+		return sqlSession.selectList("coupon.getBranchList", group_no);
+	}
+	
+	@GetMapping("/coupon/edit")
+	public void edit(@RequestParam int group_no, @RequestParam String coupon_name,
+			@RequestParam int coupon_discount, @RequestParam String coupon_start, @RequestParam String coupon_finish) {
+		CouponDto couponDto = CouponDto.builder()
+										.group_no(group_no)
+										.coupon_name(coupon_name)
+										.coupon_discount(coupon_discount)
+										.coupon_start(coupon_start)
+										.coupon_finish(coupon_finish)
+									.build();
+		sqlSession.update("coupon.edit", couponDto);
+	}
+	
+	@GetMapping("/coupon/delete")
+	public void delete(@RequestParam int branch_no, @RequestParam int group_no) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("branch_no", branch_no);
+		param.put("group_no", group_no);
+		sqlSession.delete("coupon.branchDelete", param);
+	}
+	
+	// 쿠폰 요청 승인
+	@GetMapping("/coupon/req/approval")
+	public void approval(@RequestParam int coupon_req_no) {
+		// 요청 테이블 승인으로 수정
+		sqlSession.update("couponReq.approval", coupon_req_no);
+		
+		// 그룹번호 시퀀스 가져오기
+		int group_no = couponDao.getGroupSeq();
+		
+		// 쿠폰 요청 정보 가져와서 쿠폰 dto에 설정
+		CouponReqDto reqDto = sqlSession.selectOne("couponReq.get", coupon_req_no);
+		CouponDto couponDto = CouponDto.builder()
+								.branch_no(reqDto.getBranch_no())
+								.admin_no(reqDto.getAdmin_no())
+								.coupon_name(reqDto.getCoupon_req_name())
+								.coupon_discount(reqDto.getCoupon_req_discount())
+								.coupon_start(reqDto.getCoupon_req_start())
+								.coupon_finish(reqDto.getCoupon_req_finish())
+								.group_no(group_no)
+								.build();
+		// 쿠폰 테이블에 등록하기
+		sqlSession.insert("coupon.registB", couponDto);
+		
+	}
+	
+	// 쿠폰 요청 거절
+	@GetMapping("/coupon/req/refuse")
+	public void refuse(@RequestParam int coupon_req_no, String coupon_req_detail) {
+		// 요청 테이블 거절로 수정
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("coupon_req_no", coupon_req_no);
+		param.put("coupon_req_detail", coupon_req_detail);
+		sqlSession.update("couponReq.refuse", param);
+	}
+	
+	// 쿠폰 요청 삭제
+	@GetMapping("/coupon/req/delete")
+	public void delete(@RequestParam int coupon_req_no) {
+		sqlSession.delete("couponReq.delete", coupon_req_no);
+	}
+	
 	//지역 내 지점 확인
 	@GetMapping("/branch/local_check")
 	public boolean check(@RequestParam int local_no) {
@@ -175,4 +256,95 @@ public class TestController {
 		return sqlSession.selectList("admin.getBranchAdmin");
 	}
 	
+	//관리자번호로 지점 --> 지점에 속한 회원들 읽어오기
+	@GetMapping("/message/member")
+	public List<MemberDto> memberBranchList(@RequestParam int admin_no){
+		int branch_no = sqlSession.selectOne("branch.getBranch", admin_no);
+		return sqlSession.selectList("member.getBranchList", branch_no);
+	}
+	
+	//회원번호로 정보+지점정보까지 읽어오기
+	@GetMapping("/message/memberInfo")
+	public MemberDto memberBranchInfo(@RequestParam int member_no) {
+		return sqlSession.selectOne("member.get", member_no);
+	}
+	
+	//쪽지 조회수(지점장)
+	@GetMapping("/message/update")
+	public void updateRead(@RequestParam int message_manager_no) {
+		sqlSession.update("message.updateManagerRead", message_manager_no);
+	}
+	
+	//쪽지 조회수(회원)
+	@GetMapping("/message/memberUpdate")
+	public void updateReadMember(@RequestParam int message_member_no) {
+		sqlSession.update("message.updateMemberRead", message_member_no);
+	}
+	
+	//쪽지 span
+	@GetMapping("/message/count")
+	public int count() {
+		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
+		int admin_no = adminDto.getAdmin_no();
+		int a = sqlSession.selectOne("message.managerReadCount", admin_no);
+		return a;
+	}
+	
+	//회원 안읽은 쪽지 개수
+	@GetMapping("/message/count_member")
+	public int countMember() {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+		return sqlSession.selectOne("message.memberReadCount", member_no);
+	}
+	
+	//리뷰 적기 전에 이용권 결제한 내역 있는지 확인
+	@GetMapping("/review/license_check")
+	public List<PayInfoDto> license_check(@RequestParam int member_no){
+		return sqlSession.selectList("pay.getPayInfo", member_no);
+	}
+	
+	//리뷰 좋아요 regist
+	@GetMapping("/review/like_regist")
+	public void likeRegist(int review_no) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+		ReviewLikeDto reviewLikeDto = ReviewLikeDto.builder()
+											.review_no(review_no)
+											.member_no(member_no)
+											.build();
+		sqlSession.insert("review.likeRegist", reviewLikeDto);
+	}
+	
+	//리뷰 싫어요 regist
+	@GetMapping("/review/hate_regist")
+	public void hateRegist(int review_no) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+		ReviewHateDto reviewHateDto = ReviewHateDto.builder()
+											.review_no(review_no)
+											.member_no(member_no)
+											.build();
+		sqlSession.insert("review.hateRegist", reviewHateDto);
+	}
+	
+	//해당 리뷰에 회원이 좋아요/싫어요를 누른적이 있는지 확인하는 메소드
+	@GetMapping("review/check_overlap")
+	public int check_overlap(int review_no) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+		Map<String, Object> map = new HashMap<>();
+		map.put("review_no", review_no);
+		map.put("member_no", member_no);
+		int like = sqlSession.selectOne("review.isAlreadyLike",map);
+		int hate = sqlSession.selectOne("review.isAlreadyHate",map);
+		int total = like+hate;
+		return total;
+	}
+
+	@GetMapping("/notice/content")
+	public String content(@RequestParam int notice_no) {
+		return sqlSession.selectOne("notice.contentOnly", notice_no);
+	}
+
 }

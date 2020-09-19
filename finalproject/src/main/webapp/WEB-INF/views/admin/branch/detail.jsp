@@ -1,11 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
-<div id="content-wrapper">
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fabric@3.6.3/dist/fabric.js"></script>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/swiper/css/swiper.min.css">
 	<style>
 		.table{
 			text-align: center;
@@ -18,8 +16,74 @@
    		#c{
             background-color: grey;
         }
+        .swiper-container {
+            width: 674px;
+            justify-content: center;
+     	}
 
 	</style>
+<div id="content-wrapper">
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fabric@3.6.3/dist/fabric.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/swiper/js/swiper.min.js"></script>
+	<script>
+		// 창의 로딩이 완료되었을 때 실행할 코드를 예약
+		window.onload = function() {
+			//swiper 관련 코드를 이곳에 작성
+			// var mySwiper = new swiper('선택자', 옵션)
+			var mySwiper = new Swiper('.swiper-container', {
+				// Optional parameters
+				slidesPerView : 5, // 동시에 보여줄 슬라이드 갯수
+				spaceBetween : 30, // 슬라이드간 간격
+				slidesPerGroup : 1, // 그룹으로 묶을 수, slidesPerView 와 같은 값을 지정하는게 좋음
+			
+				// 그룹수가 맞지 않을 경우 빈칸으로 메우기
+				// 3개가 나와야 되는데 1개만 있다면 2개는 빈칸으로 채워서 3개를 만듬
+				loopFillGroupWithBlank : true,
+
+				// swiper에 적용할 옵션들을 작성
+				direction : 'horizontal', // 표시방식(수직 : vartical / 수평 : horizontal)
+				loop : true, // 순환모드 여부(마지막과 처음이 이어지는 것)
+				// 자동재생 옵션그룹
+				autoplay : {
+					delay : 3000, // 자동재생 시간(1000 = 1초)
+				},
+				// 페이지 네비게이터 옵션그룹
+				pagination : {
+					el : '.swiper-pagination', // 적용대상의 선택자
+					type : 'bullets', // 네비게이터 모양(bullets, fraction, progressbar)
+				},
+				// 이전/다음 이동버튼 설정그룹
+				navigation : {
+					nextEl : '.swiper-button-next',
+					prevEl : '.swiper-button-prev',
+				},
+				// 스크롤바 옵션
+				scrollbar: {
+				   el: '.swiper-scrollbar',
+				},
+				// 커서 모양을 손모양으로 변경
+// 				grabCursor : true,
+				// 슬라이드 전환효과
+				// effect: 'coverflow',
+				// effect: 'cube',
+				// effect: 'fade'
+				// effect: 'flip',
+// 				effect : 'slide', /ㅋ/ 기본값
+			});
+		};	
+		$(function(){
+			$(".delete-branch-bnt").click(function(){
+				if(confirm("삭제하시겠습니까?")){
+					alert("지점이 30일 뒤에 삭제됩니다. 공지사항을 적어주세요.");
+					location.href="${pageContext.request.contextPath}/admin/branch/delete?branch_no="+${branchDto.branch_no}
+				}else{
+					this.preventDefault();
+				}
+			})
+		});
+	</script>
+
 	<div class="container-fluid">
 			<!-- Breadcrumbs-->
 			<ol class="breadcrumb">
@@ -27,6 +91,7 @@
 				<li class="breadcrumb-item active">상세보기</li>
 			</ol>
 			<div class="table-wrapper container-form offset-sm-3">
+			<h2>${list}</h2>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -39,12 +104,16 @@
 						<td>${branchDto.branch_no}</td>
 					</tr>
 					<tr>
-						<th scope="row">지역</th>
-						<td>${branchDto.local_name}</td>
-					</tr>
-					<tr>
 						<th scope="row">지점 관리자</th>
 						<td>${branchDto.admin_name}</td>
+					</tr>
+					<tr>
+						<th scope="row">주소</th>
+						<td>[${branchDto.branch_post}]${branchDto.branch_basic_addr}</td>
+					</tr>
+					<tr>
+						<th scope="row">전화번호</th>
+						<td>${branchDto.branch_phone}</td>
 					</tr>
 					<tr>
 						<th scope="row">평수</th>
@@ -61,6 +130,22 @@
 					<tr>
 						<th scope="row">사물함 수</th>
 						<td>${branchDto.branch_locker_cnt} 개</td>
+					</tr>
+					<tr>
+						<td scope="row" colspan="2">
+						 	<div class="swiper-container">
+					        <div class="swiper-wrapper">
+					            <c:forEach var="img" items="${branchImg}">
+					        	<div class="swiper-slide">
+									<img src="${pageContext.request.contextPath}/admin/branch/imgdownload/${img.branch_img_no}" style="height: 100px; width: 140px;padding-left: 5px;">
+								</div>
+								</c:forEach>
+					        </div>
+					        <div class="swiper-pagination"></div>
+ 					        <div class="swiper-button-prev"></div>
+					        <div class="swiper-button-next"></div>
+					      </div>
+						</td>
 					</tr>
 					<tr>
 						<th scope="row" colspan="2">배치도</th>
@@ -80,9 +165,20 @@
 								</a>
 								</c:when>
 							</c:choose>
-							<a href="delete?branch_no=${branchDto.branch_no}">
-								<button class="btn col-sm-2 btn-outline-secondary">지점삭제</button>
-							</a>
+							<c:choose>
+								<c:when test="${not empty branchDto.expired_date}">
+								<a href="list">
+									<button class="btn col-sm-2 btn-outline-secondary">목록보기</button>
+								</a>
+									<div><h6 style="color: red; padding: 20px;">${branchDto.expired_date} 지점 삭제 예정</h6></div>									
+								</c:when>
+								<c:otherwise>
+									<button class="btn col-sm-2 btn-outline-secondary delete-branch-bnt">지점삭제</button>
+									<a href="list">
+										<button class="btn col-sm-2 btn-outline-secondary">목록보기</button>
+									</a>
+								</c:otherwise>
+							</c:choose>
 						</th>
 					</tr>
 				</tbody>
@@ -91,12 +187,11 @@
 	</div>
 </div>
 <script>
-        var canvas = new fabric.Canvas('c');
-        canvas.loadFromJSON('${branchDto.branch_layout}');
-        for(var i=0;i<${branchDto.branch_layout}.objects.length;i++){
-        	canvas.item(i).selectable = false;	
-        }
-        console.log(${branchDto.branch_layout}.objects);
-        
+	var canvas = new fabric.Canvas('c');
+	canvas.loadFromJSON('${branchDto.branch_layout}');
+	for(var i=0;i<${branchDto.branch_layout}.objects.length;i++){
+		canvas.item(i).selectable = false;	
+	}
+	console.log(${branchDto.branch_layout}.objects);
 </script>
 <jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>
