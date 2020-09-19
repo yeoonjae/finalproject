@@ -85,4 +85,10 @@ public class ScheduleServiceImpl implements ScheduleService{
 		sqlSession.delete("message.messageAutoDelete");
 	}
 
+	// 만료날짜가 현재를 지난 지점 삭제 (매일 자정마다)
+	@Scheduled(cron = "0 0 0 * * *")
+	public void branchDelete() {
+		sqlSession.delete("branch.delete");
+	}
+
 }

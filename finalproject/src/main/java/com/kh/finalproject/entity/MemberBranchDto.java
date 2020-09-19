@@ -13,4 +13,5 @@ public class MemberBranchDto {
 	private int branch_no;
 	private int member_point;
 	private String branch_name;
+	
 }

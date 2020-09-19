@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="payHis">
+
+
+	<!-- 결제 내역 조회 -->
+	<select id="getPayInfo" resultType="payInfoDto" parameterType="map">
+		SELECT p.*, pp.*,l.*,TO_CHAR(p.PAY_HIS_DATE ,'YYYY-MM-DD')AS PAY_HIS_DATE2
+		FROM pay_his p
+			LEFT OUTER JOIN license l
+				ON p.LICENSE_NO = l.LICENSE_NO
+			LEFT OUTER JOIN MEMBER m
+				ON p.MEMBER_NO = m.MEMBER_NO
+			LEFT OUTER JOIN pay_point pp
+				ON p.tid_no = pp.tid_no
+		WHERE m.member_no=#{member_no}
+		<if test="start != finish">
+			AND p.PAY_HIS_DATE
+			BETWEEN TO_DATE('${start} 00:00:00',
+			'yyyy-mm-dd hh24:mi:ss')
+			AND TO_DATE('${finish} 23:59:59', 'yyyy-mm-dd
+			hh24:mi:ss')
+		</if>
+		<if test="start == finish">
+			AND TO_CHAR(p.PAY_HIS_DATE, 'yyyy-mm-dd') = #{start}
+		</if>
+		ORDER BY p.PAY_HIS_DATE DESC
+
+	</select>
+
+	<select id="getDate" parameterType="int" resultType="String">
+		SELECT to_char(
+		<if test="date == 7">
+			sysdate-#{date},
+		</if>
+		<if test="date != 7">
+			add_months(sysdate,-#{date}),
+		</if>
+		'yyyy-mm-dd') FROM dual
+	</select>
+
+	<select id="sysdate" resultType="String">
+		SELECT
+		to_char(sysdate,'yyyy-mm-dd') FROM dual
+	</select>
+
+
+</mapper>

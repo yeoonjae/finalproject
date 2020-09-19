@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="chat">
+	
+	<insert id="regist" parameterType="chatDto">
+ 		INSERT INTO chat(
+			chat_no,
+			chat_q,
+			chat_a, 
+			chat_type
+		) VALUES(
+			chat_seq.nextval,
+			#{chat_q},
+			#{chat_a},
+			#{chat_type}
+		)
+	</insert>
+	
+	<select id="get" parameterType="int" resultType="chatDto">
+		SELECT * FROM chat WHERE chat_no = #{chat_no}
+	</select>
+	
+	<select id="getList" resultType="chatDto">
+		SELECT * FROM chat ORDER BY chat_no DESC
+	</select>
+	
+	<select id="getList2" resultType="chatDto" parameterType="String">
+		SELECT * FROM chat 
+		<if test="chat_type != 'all'">
+			WHERE instr(chat_type, #{chat_type}) > 0
+		</if>
+		ORDER BY chat_no DESC
+	</select>
+	
+	<select id="getList3" resultType="chatDto" parameterType="int">
+		SELECT * FROM chat 
+		WHERE type_no=#{type_no}
+	</select>
+	
+	<select id="getList4" resultType="chatDto" parameterType="int">
+		SELECT *  FROM chat 
+		WHERE chat_no=#{chat_no}
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE chat WHERE chat_no=#{chat_no}
+	</delete>
+
+</mapper>

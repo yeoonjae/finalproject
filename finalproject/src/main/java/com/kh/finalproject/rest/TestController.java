@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,14 +22,18 @@ import com.kh.finalproject.entity.InoutDto;
 import com.kh.finalproject.entity.LicenseHisDto;
 import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.entity.MemberDto;
+import com.kh.finalproject.entity.PayInfoDto;
 import com.kh.finalproject.entity.PointDto;
 import com.kh.finalproject.entity.PointHisDto;
 import com.kh.finalproject.entity.SeatDto;
+import com.kh.finalproject.entity.ReviewHateDto;
+import com.kh.finalproject.entity.ReviewLikeDto;
 import com.kh.finalproject.repository.CouponDao;
 import com.kh.finalproject.repository.InoutDao;
 import com.kh.finalproject.repository.LicenseHisDao;
 import com.kh.finalproject.repository.MemberDao;
 import com.kh.finalproject.repository.SeatDao;
+import com.kh.finalproject.service.BranchService;
 import com.kh.finalproject.service.MemberService;
 
 @RestController
@@ -102,6 +107,36 @@ public class TestController {
 	@GetMapping("/member/list")
 	public MemberDto getMemberList(@RequestParam int member_no) {
 		return sqlSession.selectOne("member.get", member_no);
+	}
+	
+	//////////////////////
+	// 기간 조회
+	
+		@GetMapping("/paydate")
+		public Map<String, Object> getPayDate(@RequestParam int date) {
+			String start = sqlSession.selectOne("payHis.getDate", date);
+			String finish = sqlSession.selectOne("payHis.sysdate");
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("start", start);
+			map.put("finish", finish);
+			
+			return map;
+		}
+		
+		
+	@GetMapping("/pay/list")
+	public List<PayInfoDto> getPayInfo(@RequestParam String start, @RequestParam String finish,Model model,HttpSession session) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("memberinfo"); 
+		int member_no = memberDto.getMember_no();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("member_no", member_no);
+		map.put("start", start);
+		map.put("finish", finish);
+
+		return sqlSession.selectList("PayHis.getPayInfo", map);
 	}
 	
 	@GetMapping("/branch/branch_name")
@@ -365,6 +400,50 @@ public class TestController {
 		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
 		int member_no = memberDto.getMember_no();
 		return sqlSession.selectOne("message.memberReadCount", member_no);
+	}
+	
+	//리뷰 적기 전에 이용권 결제한 내역 있는지 확인
+	@GetMapping("/review/license_check")
+	public List<PayInfoDto> license_check(@RequestParam int member_no){
+		return sqlSession.selectList("pay.getPayInfo", member_no);
+	}
+	
+	//리뷰 좋아요 regist
+	@GetMapping("/review/like_regist")
+	public void likeRegist(int review_no) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+		ReviewLikeDto reviewLikeDto = ReviewLikeDto.builder()
+											.review_no(review_no)
+											.member_no(member_no)
+											.build();
+		sqlSession.insert("review.likeRegist", reviewLikeDto);
+	}
+	
+	//리뷰 싫어요 regist
+	@GetMapping("/review/hate_regist")
+	public void hateRegist(int review_no) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+		ReviewHateDto reviewHateDto = ReviewHateDto.builder()
+											.review_no(review_no)
+											.member_no(member_no)
+											.build();
+		sqlSession.insert("review.hateRegist", reviewHateDto);
+	}
+	
+	//해당 리뷰에 회원이 좋아요/싫어요를 누른적이 있는지 확인하는 메소드
+	@GetMapping("review/check_overlap")
+	public int check_overlap(int review_no) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+		Map<String, Object> map = new HashMap<>();
+		map.put("review_no", review_no);
+		map.put("member_no", member_no);
+		int like = sqlSession.selectOne("review.isAlreadyLike",map);
+		int hate = sqlSession.selectOne("review.isAlreadyHate",map);
+		int total = like+hate;
+		return total;
 	}
 
 	@GetMapping("/notice/content")

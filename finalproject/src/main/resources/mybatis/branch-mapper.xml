@@ -21,7 +21,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{branch_detail_addr},
 			#{branch_basic_addr},
 			#{branch_post},
-			#{branch_phone})
+			#{branch_phone}
+			,null
+			)
 	</insert>
 	
 	<!-- 시퀀스 생성 -->
@@ -94,9 +96,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM branch WHERE branch_name=#{branch_name}
 	</select>
 	
-	<!-- 지점삭제 -->
-	<delete id="delete" parameterType="int">
-		DELETE branch WHERE branch_no=#{branch_no}
+	<!-- 지점 삭제 -->
+	<delete id="delete">
+		DELETE branch WHERE expired_date <![CDATA[ < ]]> sysdate
 	</delete>
 	
 	<!-- 지점 이미지와 함꼐 지점단일조회 -->
@@ -129,6 +131,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getBranchName" parameterType="int" resultType="String">
 		select branch_name from branch where branch_no = #{branch_no}
 	</select>
+	<!-- 지점삭제 누를 시 expired_date update -->
+	<update id="expiredUpdate" parameterType="int">
+		UPDATE branch SET expired_date = sysdate+30 WHERE branch_no=#{branch_no}
+	</update>
 </mapper>
 
 
