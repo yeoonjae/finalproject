@@ -17,6 +17,8 @@ public class ReviewDto {
 	
 	//회원 이름 추가
 	private String member_name;
+	private String branch_name;
+	private String local_name;
 	
 	//좋아요 싫어요 추가
 	private int like_count;

@@ -60,6 +60,11 @@ public class ReviewDaoImpl implements ReviewDao{
 		System.out.println("a : "+a);
 		return sqlSession.selectOne("review.getCount", branch_no);
 	}
+
+	//(관리자) 전체 리뷰
+	public List<ReviewDto> getAdminList() {
+		return sqlSession.selectList("review.getList");
+	}
 	
 	
 

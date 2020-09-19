@@ -33,15 +33,6 @@
                       <th>관리메뉴</th>
                     </tr>
                   </thead>
-                  <tfoot>
-                    <tr>
-                      <th>지점명</th>
-                      <th>지역</th>
-                      <th>지점 관리자</th>
-                      <th>배치도 등록 유무</th>
-                      <th>관리메뉴</th>
-                    </tr>
-                  </tfoot>
                   <tbody>
                   <c:forEach var="branch" items="${branch}">
                   	<tr>

@@ -22,4 +22,6 @@ public interface ReviewDao {
 	//페이징 처리를 위한 게시글 개수
 	int countReview(int branch_no);
 	
+	//(관리자)전체리뷰 뽑기
+	List<ReviewDto> getAdminList();
 }
