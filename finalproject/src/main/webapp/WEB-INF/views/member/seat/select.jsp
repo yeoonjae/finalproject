@@ -20,17 +20,6 @@
 	crossorigin="anonymous"></script>
 <script>
    	    $(function(){
-   	    	
-   	    	$.urlParam = function(name) {
-        	    var results = new RegExp('[\?&]' + name + '=([^&#]*)')
-        	                      .exec(window.location.href);
-        	    if (results == null) {
-        	         return 0;
-        	    }
-        	    return results[1] || 0;
-        	}
-   	    	
-    		var branch_no = $.urlParam('branch_no');
   	    	
    	       	if($('.entrance').val()=='leftTop'){
    	       		$('.cinema-screen').css("width", '30%').css('margin', '10px').css('margin-bottom', '0px').css('height', '30px').css('padding', '0');    	    	   	       		
@@ -63,24 +52,32 @@
    	    		// 사용가능한 좌석 선택 시
    	    		if(row && col && !$(this).hasClass('disabled') && !$(this).hasClass('empty')){
 	   	    		if(confirm(row+"-"+col+"번 좌석을 선택 하시겠습니까?")){
-	   	    			// 충전시간이 없을 경우
-	   	    			if($('.charge').val()==0){
-	   	    				alert("충전시간이 없습니다. 이용권을 먼저 결제 해주세요.")
-	   	    				location.href = "${pageContext.request.contextPath}/member/pay/pay_main?member_no="+$('.member_no').val();
-	   	    			} else { // 충전시간이 있을 경우 좌석 다시한 번 조회
-		   	    			axios({
-		   	    				url:"${pageContext.request.contextPath}/test/seat/check?branch_no="+branch_no+"&row="+row+"&col="+col+"&member_no="+member_no,
-		   	    				method:"get"
-		   	    			}).then(function(response){
-		   	    				if(response.data) { // 이용 가능일 경우
-		   	    					alert("좌석 선택이 완료되었습니다");
-		   	    					location.reload();
-		   	    				} else {
-		   	    					alert("이미 이용중인 좌석입니다");	   	    					
-		   	    					location.reload();
-		   	    				}
-		   	    			});  				
-	   	    			}
+	   	    			// 충전시간이 있는지 조회
+	   	    			axios({
+	   	    				url:"${pageContext.request.contextPath}/test/member/getCharge",
+	   	    				method:"get"
+	   	    			}).then(function(response){
+	   	    				if(response.data) {
+	   	    					// 충전시간이 있을 경우 좌석 다시 한 번 조회
+			   	    			axios({
+			   	    				url:"${pageContext.request.contextPath}/test/seat/check?row="+row+"&col="+col,
+			   	    				method:"get"
+			   	    			}).then(function(response){
+			   	    				if(response.data) { // 이용 가능일 경우
+			   	    					alert("좌석 선택이 완료되었습니다");
+			   	    					location.reload();
+			   	    				} else {
+			   	    					alert("이미 이용중인 좌석입니다");	   	    					
+			   	    					location.reload();
+			   	    				}
+			   	    			});  				
+	   	    					
+	   	    				} else {
+		   	    				alert("충전시간이 없습니다. 이용권을 먼저 결제 해주세요.")
+		   	    				location.href = "${pageContext.request.contextPath}/member/pay/pay_main";	   	    					
+	   	    				}
+	   	    			});
+	   	    			
 	   	    		} else { // 선택 취소할 경우
 	   	    			location.reload();
 	   	    		}
@@ -92,15 +89,15 @@
    	    	$('.btn-finish').click(function(){
    	    		if(confirm("퇴실 하시겠습니까?")){
    	    			axios({
-   	    				url:"${pageContext.request.contextPath}/test/seat/out?member_no="+$('.member_no').val()+"&branch_no="+branch_no,
+   	    				url:"${pageContext.request.contextPath}/test/seat/out",
    	    				method:"get"
    	    			}).then(function(response){
-   	    				if(response.data==0){ // 잔여 시간이 있을 경우
+   	    				if(response.data){ // 잔여 시간이 있을 경우
 	   	    				alert("퇴실이 완료되었습니다");
 		   	    			location.reload();   	    					
    	    				} else { // 잔여시간이 없는 경우
 	   	    				alert("충전 시간이 부족하여 요금 결제 페이지로 이동합니다");
-   	    					location.href = "${pageContext.request.contextPath}/member/pay/pay_serve?license_his_no="+response.data;
+   	    					location.href = "${pageContext.request.contextPath}/member/pay/pay_serve";
    	    				}
    	    			});
    	    		} else {
@@ -184,7 +181,6 @@
 		                </div>
 						<div class="row cinema">
 				            <input type="hidden" name="entrance" value="${entrance}" class="entrance">
-				            <input type="hidden" name="charge" value="${memberDto.member_charge}" class="charge">
 				            <input type="hidden" name="member_no" value="${memberDto.member_no}" class="member_no">
 				            <input type="hidden" name="usedCol" value="${used.usedCol}" class="usedCol">
 				            <input type="hidden" name="usedRow" value="${used.usedRow}" class="usedRow">

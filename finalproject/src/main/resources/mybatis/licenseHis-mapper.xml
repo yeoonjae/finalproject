@@ -52,13 +52,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 추가 결제 관련 정보 -->
+	<!-- 회원의 가장 최근 이용 내역 조회 -->
 	<select id="payInfo" parameterType="int" resultType="payServeDto">
-		select m.member_no, m.member_point,
-				b.branch_no, b.branch_name, l.license_his_pay 
-		from member m inner join license_his l on m.member_no = l.member_no
-		inner join branch b on m.branch_no = b.branch_no WHERE license_his_no = #{license_his_no}
+		SELECT * FROM (
+			SELECT  m.MEMBER_NO, m.MEMBER_POINT, b.branch_no, b.BRANCH_NAME, l.LICENSE_HIS_NO, l.LICENSE_HIS_PAY, ROW_NUMBER() 
+				OVER (PARTITION BY l.member_no ORDER BY l.license_his_finish DESC) AS RankNo 
+			FROM license_his l INNER JOIN MEMBER m ON l.MEMBER_NO = m.member_no 
+			INNER JOIN BRANCH b ON m.BRANCH_NO = b.BRANCH_NO WHERE m.member_no = #{member_no}
+		) T WHERE RankNo = 1
 	</select>
-	
 </mapper>
 
 
