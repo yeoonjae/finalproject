@@ -11,5 +11,8 @@ public class BranchDeleteListDto {
 	private int admin_no;
 	private String branch_name;
 	private String start_delete_date;
-	private String finich_delete_date;
+	private String finish_delete_date;
+	private String delete_status;
+	
+	private String admin_name;
 }

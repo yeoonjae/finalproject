@@ -142,7 +142,7 @@
 					</tr>
 					<tr>
 						<th scope="row" colspan="2">
-							<a href="edit?branch_no=${branchDto.branch_no}">
+							<a href="branch_edit">
 								<button class="btn col-sm-2 btn-outline-secondary">수정</button>
 							</a>
 							<c:choose>
@@ -152,19 +152,9 @@
 								</a>
 								</c:when>
 							</c:choose>
-							<c:choose>
-								<c:when test="${not empty branchDto.expired_date}">
-								<a href="list">
-									<button class="btn col-sm-2 btn-outline-secondary">목록보기</button>
-								</a>
+							<c:if test="${not empty branchDto.expired_date}">
 									<div><h6 style="color: red; padding: 20px;">${branchDto.expired_date} 지점 삭제 예정</h6></div>									
-								</c:when>
-								<c:otherwise>
-									<a href="list">
-										<button class="btn col-sm-2 btn-outline-secondary">목록보기</button>
-									</a>
-								</c:otherwise>
-							</c:choose>
+							</c:if>
 						</th>
 					</tr>
 				</tbody>

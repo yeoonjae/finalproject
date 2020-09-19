@@ -70,4 +70,10 @@ public class ReviewController {
 		reviewDao.delete(review_no);
 		return "redirect:list";
 	}
+	
+	//리뷰 상세보기
+	@GetMapping("/detail")
+	public String detail(@RequestParam(required = false,defaultValue = "0")int review_no) {
+		return "admin/review/detail";
+	}
 }

@@ -172,10 +172,14 @@
 									<div><h6 style="color: red; padding: 20px;">${branchDto.expired_date} 지점 삭제 예정</h6></div>									
 								</c:when>
 								<c:otherwise>
-									<button class="btn col-sm-2 btn-outline-secondary delete-branch-bnt">지점삭제</button>
-									<a href="list">
-										<button class="btn col-sm-2 btn-outline-secondary">목록보기</button>
-									</a>
+									<c:choose>
+										<c:when test="${admininfo.admin_auth eq '본사'}">
+											<button class="btn col-sm-2 btn-outline-secondary delete-branch-bnt">지점삭제</button>
+											<a href="list">
+												<button class="btn col-sm-2 btn-outline-secondary">목록보기</button>
+											</a>
+										</c:when>
+									</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</th>

@@ -154,4 +154,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE delete_branch_list SET delete_status ='삭제완료' WHERE finish_delete_date <![CDATA[ < ]]> sysdate
 	</update>
 	
+	<select id="getDeleteList" resultType="branchDeleteListDto">
+		SELECT d.*,a.admin_name,a.ADMIN_NO FROM delete_branch_list d 
+		LEFT OUTER JOIN admin a ON d.admin_no = a.ADMIN_no
+	</select>
 </mapper>

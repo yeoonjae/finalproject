@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.VO.Criteria;
+import com.kh.finalproject.entity.BranchDeleteListDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.BranchImgDto;
 import com.kh.finalproject.entity.MemberDto;
@@ -45,5 +46,8 @@ public interface BranchDao {
 	
 	//지점 단일조회(이미지 같이)
 	List<BranchDto> getWithImg(int branch_no);
+	
+	//지점 삭제 목록
+	List<BranchDeleteListDto> getDeleteList();
 
 }

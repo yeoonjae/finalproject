@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.VO.Criteria;
 import com.kh.finalproject.entity.AdminDto;
+import com.kh.finalproject.entity.BranchDeleteListDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.BranchImgDto;
 import com.kh.finalproject.entity.MemberDto;
@@ -156,6 +157,11 @@ public class BranchDaoImpl implements BranchDao{
 	//지점 이미지와 같이 단일조회
 	public List<BranchDto> getWithImg(int branch_no) {
 		return sqlSession.selectList("branch.getWithImg", branch_no);
+	}
+
+	//지점 삭제 
+	public List<BranchDeleteListDto> getDeleteList() {
+		return sqlSession.selectList("branch.getDeleteList");
 	}
 
 	

@@ -172,6 +172,7 @@
 	          	<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/local_regist">지역등록</a>
 	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/branch_regist">지점등록</a>
 	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/list">지점별 관리</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/delete_list">지점 삭제 목록</a>
           	</c:when>
           	<c:when test="${admininfo.admin_auth eq '지점'}">
           		<h6 class="dropdown-header">지점 관리</h6>
@@ -188,6 +189,17 @@
           	</c:choose>
           </div>
         </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span>리뷰 관리</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+          	<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/review/list">리뷰목록</a>
+          </div>
+        </li>
+        
         <c:choose>
 	        <c:when test="${admininfo.admin_auth eq '본사'}">
 	         <li class="nav-item dropdown">
