@@ -120,10 +120,23 @@ public class MemberDaoImpl implements MemberDao{
 		sqlSession.update("member.changePw", map);
 
 	}
+	
 	//중복 검사
 	@Override
 	public Object overlap(String member_email) {
 		return sqlSession.selectOne("member.overlap", member_email);
+		
+	}
+
+	// 충전시간 조회
+	@Override
+	public int getCharge(int member_no) {
+		return sqlSession.selectOne("member.getCharge", member_no);
+	}
+
+	@Override
+	public void changeCharge(Map<String, Object> param) {
+		sqlSession.update("member.changeCharge", param);
 		
 	}
 }

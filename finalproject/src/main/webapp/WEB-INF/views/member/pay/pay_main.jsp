@@ -70,7 +70,7 @@
 		});
 
 		// 마일리지 값 입력
-		$(".use_point").on("input", function() {
+		c
 			// 상품이 선택되어 있지 않은 경우 경고창 띄우기 
 			if (isChecked() == false) {
 				alert("상품을 선택하세요.");

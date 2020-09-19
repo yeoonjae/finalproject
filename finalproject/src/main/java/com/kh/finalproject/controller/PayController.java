@@ -16,7 +16,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.kh.finalproject.entity.LicenseDto;
 import com.kh.finalproject.entity.MemberBranchDto;
 import com.kh.finalproject.entity.PayInfoDto;
+import com.kh.finalproject.entity.PayServeDto;
 import com.kh.finalproject.repository.LicenseDao;
+import com.kh.finalproject.repository.LicenseHisDao;
 import com.kh.finalproject.repository.PayDao;
 
 @Controller
@@ -25,6 +27,9 @@ public class PayController {
 	
 	@Autowired
 	private LicenseDao licenseDao;
+	
+	@Autowired
+	private LicenseHisDao licenseHisDao;
 	
 	@Autowired
 	private PayDao payDao;
@@ -54,5 +59,15 @@ public class PayController {
 		model.addAttribute("list", list);
 		
 		return "member/pay/pay_detail";
+	}
+	
+	@GetMapping("/pay_serve")
+	public String getPayList(@RequestParam int license_his_no, Model model) {
+		// 필요한 정보 전달
+		PayServeDto payServeDto = licenseHisDao.getPayInfo(license_his_no);
+		int overTime = licenseHisDao.useTime(license_his_no);
+		model.addAttribute("payServeDto", payServeDto);
+		model.addAttribute("overTime", overTime);
+		return "member/pay/pay_serve";
 	}
 }

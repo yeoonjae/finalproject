@@ -34,14 +34,16 @@ public class MemberSeatController {
 	private LicenseHisDao licenseHisDao;
 	
 	@GetMapping("/select")
-	public String select(@RequestParam int branch_no, Model model, HttpSession session) {
+	public String select(Model model, HttpSession session) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int branch_no = memberDto.getBranch_no();
+		
 		List<SeatDto> list = seatDao.getList(branch_no);
 		
 		int row = seatDao.getRow(branch_no);
 		int col = seatDao.getCol(branch_no);
 		String entrance = seatDao.getEntrance(branch_no);
 		
-		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
 		int member_no = memberDto.getMember_no();
 		LicenseHisDto isUsed = licenseHisDao.getUsed(member_no);
 		

@@ -94,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM branch WHERE branch_name=#{branch_name}
 	</select>
 	
-	<!-- 지점 번호 받아서 지점 뽑기 -->
+	<!-- 지점삭제 -->
 	<delete id="delete" parameterType="int">
 		DELETE branch WHERE branch_no=#{branch_no}
 	</delete>
@@ -126,6 +126,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT count(*) FROM branch
 	</select>
 	
+	<select id="getBranchName" parameterType="int" resultType="String">
+		select branch_name from branch where branch_no = #{branch_no}
+	</select>
 </mapper>
 
 
