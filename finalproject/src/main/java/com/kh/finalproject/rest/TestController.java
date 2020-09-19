@@ -295,4 +295,10 @@ public class TestController {
 		int total = like+hate;
 		return total;
 	}
+
+	@GetMapping("/notice/content")
+	public String content(@RequestParam int notice_no) {
+		return sqlSession.selectOne("notice.contentOnly", notice_no);
+	}
+
 }

@@ -41,6 +41,10 @@
 							<td>${memberDto.member_name}</td>
 							</tr>
 							<tr>
+							<th>소속 지점</th>
+							<td>${memberDto.branch_name}</td>
+							</tr>
+							<tr>
 							<th>회원 마일리지</th>
 							<td>${memberDto.member_point}</td>
 							</tr>
@@ -58,9 +62,14 @@
 							</tr>
 					</tbody>
 				</table>
+				<c:if test="${not empty memberinfo}">
 				<div>
 					<a href="check?member_no=${memberDto.member_no}">회원 정보 수정</a>
 				</div>
+				<div>
+					<a href="check_delete?member_no=${memberDto.member_no}">회원 탈퇴</a>
+				</div>
+				</c:if>
 			</div>
 		</div>
 	</div>
