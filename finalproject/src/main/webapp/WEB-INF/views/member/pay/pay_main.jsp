@@ -22,6 +22,11 @@
 <script>
    $(function() {
 
+	  // 0원인 이용권 없애기
+	  $('.licenseTime').filter(function(){
+		return $(this).children('input').data('time')==0;
+	  }).parent().remove();
+	  
       $(".use_coupon").change(function(){
          if (isChecked() == false) {
             alert("상품을 선택하세요.");
