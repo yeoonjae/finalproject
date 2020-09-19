@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 	</settings>
 	
 	<!-- typeAliases : 클래스에 부여하는 별칭 -->
-	<typeAliases>
+	<typeAliases> 
 		<typeAlias type="com.kh.finalproject.entity.BranchDto" alias="branchDto"/>
 		<typeAlias type="com.kh.finalproject.entity.LocalDto" alias="localDto"/>
 		<typeAlias type="com.kh.finalproject.entity.AdminDto" alias="adminDto"/>
@@ -44,6 +44,6 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.finalproject.entity.ReviewDto" alias="reviewDto"/>
 		<typeAlias type="com.kh.finalproject.entity.ReviewLikeDto" alias="reviewLikeDto"/>
 		<typeAlias type="com.kh.finalproject.entity.ReviewHateDto" alias="reviewHateDto"/>
-		<typeAlias type="com.kh.finalproject.VO.PagingVO" alias="pagingVO"/>s
+		<typeAlias type="com.kh.finalproject.VO.PagingVO" alias="pagingVO"/>
 	</typeAliases>
 </configuration>
