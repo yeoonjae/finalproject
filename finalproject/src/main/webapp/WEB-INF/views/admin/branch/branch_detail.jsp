@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/swiper/css/swiper.min.css">
 	<style>
@@ -71,26 +70,15 @@
 // 				effect : 'slide', /ㅋ/ 기본값
 			});
 		};	
-		$(function(){
-			$(".delete-branch-bnt").click(function(){
-				if(confirm("정말 삭제하시겠습니까? 삭제 시 해당 지점과 관련된 사항들이 모두 삭제됩니다.")){
-					alert("지점이 30일 뒤에 삭제됩니다. 공지사항을 적어주세요.");
-					location.href="${pageContext.request.contextPath}/admin/branch/delete?branch_no="+${branchDto.branch_no}
-				}else{
-					this.preventDefault();
-				}
-			})
-		});
 	</script>
 <div id="content-wrapper">
-	<div class="container-fluid">
+<div class="container-fluid">
 			<!-- Breadcrumbs-->
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item"><a href="#">지점</a></li>
 				<li class="breadcrumb-item active">상세보기</li>
 			</ol>
 			<div class="table-wrapper container-form offset-sm-3">
-			<h2>${list}</h2>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -172,7 +160,6 @@
 									<div><h6 style="color: red; padding: 20px;">${branchDto.expired_date} 지점 삭제 예정</h6></div>									
 								</c:when>
 								<c:otherwise>
-									<button class="btn col-sm-2 btn-outline-secondary delete-branch-bnt">지점삭제</button>
 									<a href="list">
 										<button class="btn col-sm-2 btn-outline-secondary">목록보기</button>
 									</a>
@@ -193,4 +180,5 @@
 	}
 	console.log(${branchDto.branch_layout}.objects);
 </script>
+
 <jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>

@@ -90,5 +90,11 @@ public class ScheduleServiceImpl implements ScheduleService{
 	public void branchDelete() {
 		sqlSession.delete("branch.delete");
 	}
+	
+	//finish_date가 지난 것을 '삭제완료'로 변경
+	@Scheduled(cron = "0 0 0 * * *")
+	public void branchDeleteListUpdate() {
+		sqlSession.update("branch.updateStatus");
+	}
 
 }

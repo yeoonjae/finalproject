@@ -42,6 +42,7 @@ public interface BranchDao {
 	void deleteImg(int branch_img_no);
 	//지점 리스트 이미지와 같이
 	List<BranchDto> getListWithImg();
+	
 	//지점 단일조회(이미지 같이)
 	List<BranchDto> getWithImg(int branch_no);
 
