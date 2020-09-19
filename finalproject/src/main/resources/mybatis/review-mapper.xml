@@ -8,12 +8,106 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 리뷰 등록 -->
 	<insert id="regist" parameterType="reviewDto">
 		INSERT INTO review VALUES(
-			review_seq.nextval(),
+			review_seq.nextval,
 			#{member_no},
 			#{review_title},
 			#{review_content},
-			#{review_date}	
+			sysdate,
+			#{branch_no}
 		)
 	</insert>
 	
+	<!-- 지점별 리뷰 목록 -->
+	<select id="getListBranchReview" parameterType="map" resultType="reviewDto">
+		SELECT * FROM (SELECT rownum rn,T.*FROM (
+		SELECT DISTINCT 
+		   r.*,
+		   count(rl.review_like_no) over(PARTITION BY r.review_no, rh.review_hate_no) like_count,
+		   count(rh.review_hate_no) over(PARTITION BY r.review_no, rl.review_like_no) hate_count,
+		   m.member_name
+		FROM
+		   review r
+		      LEFT OUTER JOIN review_like rl ON r.review_no = rl.review_no
+		      LEFT OUTER JOIN review_hate rh ON r.review_no = rh.review_no
+		      LEFT OUTER JOIN member m ON r.member_no = m.member_no WHERE r.branch_no=#{branch_no}
+		      ORDER BY r.REVIEW_DATE DESC
+		     )T)WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
+	<!-- 리뷰 수정 -->
+	<update id="edit" parameterType="map">
+		UPDATE review 
+		SET 
+		REVIEW_TITLE =#{review_title},
+		REVIEW_CONTENT=#{review_content} 
+		WHERE review_no=#{review_no}
+	</update>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE review WHERE review_no=#{review_no}
+	</delete>
+	
+	<!-- 리뷰 좋아요 등록 -->
+	<insert id="likeRegist" parameterType="reviewLikeDto">
+		INSERT INTO review_like VALUES(
+			like_seq.nextval,
+			#{review_no},
+			#{member_no}
+		)
+	</insert>
+	
+	<!-- 리뷰 싫어요 등록 -->
+	<insert id="hateRegist" parameterType="reviewHateDto">
+		INSERT INTO review_hate VALUES(
+			hate_seq.nextval,
+			#{review_no},
+			#{member_no}
+		)
+	</insert>
+	
+	<!-- 해당 리뷰에 회원이 좋아요를 누른적이 있는지 조회 -->
+	<select id="isAlreadyLike" parameterType="map" resultType="int">
+		SELECT count(*) FROM review_like 
+		WHERE review_no=#{review_no} AND member_no=#{member_no}
+	</select>
+	
+	<!-- 해당 리뷰에 회원이 싫어요를 누른적이 있는지 조회 -->
+	<select id="isAlreadyHate" parameterType="map" resultType="int">
+		SELECT count(*) FROM review_hate 
+		WHERE review_no=#{review_no} AND member_no=#{member_no}
+	</select>
+	
+	<!-- 리뷰의 좋아요 개수 -->
+	<select id="likeCount" parameterType="int" resultType="int">
+		SELECT count(*) FROM REVIEW_LIKE rl WHERE REVIEW_NO =#{review_no}
+	</select>
+	
+	<!-- 리뷰의 싫어요 개수 -->
+	<select id="hateCount" parameterType="int" resultType="int">
+		SELECT count(*) FROM REVIEW_HATE rl WHERE REVIEW_NO =#{review_no}
+	</select>
+	
+	<!-- 페이징을 위한 게시글 개수 -->
+	<select id="getCount" parameterType="int" resultType="int">
+		SELECT count(*) FROM review WHERE branch_no=#{branch_no}
+	</select>
+	
+	<!-- 리뷰 목록 -->
+	<select id="getList" resultType="reviewDto">
+		SELECT r.*,l.LOCAL_NAME,m.MEMBER_NAME , b.BRANCH_NAME FROM REVIEW r 
+		LEFT OUTER JOIN MEMBER m ON r.MEMBER_NO = m.MEMBER_NO 
+		LEFT OUTER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO 
+		LEFT OUTER JOIN LOCAL l ON b.LOCAL_NO = l.LOCAL_NO 
+		ORDER BY REVIEW_DATE DESC
+	</select>
+	
+	<!-- 리뷰 목록 -->
+<!-- 	<select id="getList" resultType="reviewDto"> -->
+<!-- 		SELECT r.*,l.LOCAL_NAME,m.MEMBER_NAME , b.BRANCH_NAME FROM REVIEW r  -->
+<!-- 		LEFT OUTER JOIN MEMBER m ON r.MEMBER_NO = m.MEMBER_NO  -->
+<!-- 		LEFT OUTER JOIN branch b ON m.BRANCH_NO = b.BRANCH_NO  -->
+<!-- 		LEFT OUTER JOIN LOCAL l ON b.LOCAL_NO = l.LOCAL_NO  -->
+<!-- 		ORDER BY REVIEW_DATE DESC -->
+<!-- 	</select> -->
 </mapper>

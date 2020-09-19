@@ -52,6 +52,11 @@
  				})  
    			});
    		</script>
+   		<style>
+   			.badge{
+   				background-color: red;
+   			}
+   		</style>
     </head>
 
     <body data-spy="scroll" data-target=".navbar-collapse">
@@ -103,7 +108,7 @@
                             <li><a href="#about">상품 충전</a></li>                    
                             <li><a href="#service">개인석</a></li>                    
                             <li><a href="#portfolio">스터디룸</a></li>                    
-                            <li><a href="#pricing">리뷰</a></li>  
+                            <li><a href="${pageContext.request.contextPath}/member/review/list">리뷰</a></li>  
                             <li><a href="${pageContext.request.contextPath}/member/account/logout">로그아웃</a></li>   
                                                
                         </ul>

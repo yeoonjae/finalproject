@@ -115,9 +115,8 @@ public class BranchDaoImpl implements BranchDao{
 
 	//지점 삭제 메소드
 	public void delete(int branch_no) {
-		sqlSession.delete("branch.delete", branch_no);
+		sqlSession.update("branch.expiredUpdate", branch_no);
 	}
-	@Override
 	public int getNo3(int admin_no) {
 		return sqlSession.selectOne("branch.getNo3", admin_no);
 	}

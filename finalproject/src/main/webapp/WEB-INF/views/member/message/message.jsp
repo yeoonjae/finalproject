@@ -31,10 +31,12 @@
 		}
 	</style>
 	<script>
-	function selChange() {
-		var sel = document.getElementById('cntPerPage').value;
-		location.href="message?nowPage=${paging.nowPage}&cntPerPage="+sel;
-	}
+		//페이징 처리
+		function selChange() {
+			var sel = document.getElementById('cntPerPage').value;
+			location.href="message?nowPage=${paging.nowPage}&cntPerPage="+sel;
+		}
+		
 		$(function(){
 			//parameter받아오는 코드
 			var getUrlParameter = function getUrlParameter(sParam) {

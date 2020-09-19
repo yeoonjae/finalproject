@@ -13,7 +13,15 @@ public class ReviewDto {
 	private String review_title;
 	private String review_content;
 	private String review_date;
+	private int branch_no;
 	
 	//회원 이름 추가
 	private String member_name;
+	private String branch_name;
+	private String local_name;
+	
+	//좋아요 싫어요 추가
+	private int like_count;
+	private int hate_count;
+	
 }

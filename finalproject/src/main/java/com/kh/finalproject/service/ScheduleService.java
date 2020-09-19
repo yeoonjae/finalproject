@@ -10,4 +10,6 @@ public interface ScheduleService {
 	void changeState();
 	// 쪽지 자동 삭제
 	void messageAutoDelete();
+	// expired가 있는 지점 자동 삭제
+	void branchDelete();
 }
