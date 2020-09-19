@@ -85,13 +85,13 @@
                 
                 if(direction=='leftTop') {
                 	$("<div>").addClass('cinema-screen').text('출입구').css("width", '30%')
-	                .css('margin', '10px').css('height', '30px').css('padding', '0').appendTo(".cinema-wrap");
+	                .css('margin', '10px').css('margin-bottom', '0px').css('height', '30px').css('padding', '0').appendTo(".cinema-wrap");
                 } else if(direction=='centerTop') {
                 	$("<div>").addClass('cinema-screen').text('출입구').css("width", '30%')
 	                .css('margin-top', '10px').css('height', '30px').css('padding', '0').appendTo(".cinema-wrap");
                 } else {
 	                $("<div>").addClass('cinema-screen').text('출입구').css("width", '30%')
-	                .css('margin', '10px').css('height', '30px').css('margin-left', '68%')
+	                .css('margin', '10px').css('margin-bottom', '0px').css('height', '30px').css('margin-left', '68%')
 	                .css('padding', '0').appendTo(".cinema-wrap");
                 }
                 
@@ -104,7 +104,7 @@
             });
             
             $('.btn-regist').click(function(e){
-            	
+            	var branch_no = $(this).data("no");
             	if($('.cinema-seat').hasClass('active')) {
             		alert("선택된 좌석이 있으면 등록하실 수 없습니다");
             		return;
@@ -112,6 +112,8 @@
             	
             	if(confirm("좌석을 등록 하시겠습니까?")){
             		$("form").submit();
+            		//alert("등록이 완료되었습니다");
+            		//location.href = "${pageContext.request.contextPath}/admin/seat/content?branch_no="+branch_no;
             	} else {
             		e.preventDefault();
             	}
@@ -178,7 +180,7 @@
 				                			<button type="button" class="form-control btn-sm btn-outline-secondary btn-reset">초기화</button>
 				                		</div>
 				                		<div class="col-4 mt-2">
-				                			<button type="button" class="form-control btn-sm btn-primary btn-regist">등록</button>
+				                			<button type="button" class="form-control btn-sm btn-primary btn-regist" data-no="${branch_no}">등록</button>
 				                		</div>
 				                	</div>
 				                </div>
