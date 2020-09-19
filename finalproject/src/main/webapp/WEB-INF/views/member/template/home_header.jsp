@@ -38,13 +38,14 @@
 
         <script src="${pageContext.request.contextPath}/resources/m/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     </head>
-    
 
     <body data-spy="scroll" data-target=".navbar-collapse">
 
         <div class="culmn">
             <!--Home page style-->
-            <nav class="navbar navbar-default navbar-fixed no-background bootsnav">
+
+
+            <nav class="navbar navbar-default navbar-fixed white no-background bootsnav">
                 <!-- Start Top Search -->
                 <div class="top-search">
                     <div class="container">
@@ -61,7 +62,6 @@
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-<!--                          	<li class="search"><a href="#"> <i class="fa fa-shopping-bag"></i></a></li> -->
                             <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         </ul>
                     </div>        
@@ -72,8 +72,9 @@
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                             <i class="fa fa-bars"></i>
                         </button>
-                        <a class="navbar-brand" href="${pageContext.request.contextPath}/member/">
-                            <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-display m-top-10" alt="">
+                        <a class="navbar-brand" href="#brand">
+
+                            <img src="${pageContext.request.contextPath}/resources/m/images/logo.png" class="logo logo-display m-top-10" alt="">
                             <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-scrolled" alt="">
 
                         </a>
@@ -85,14 +86,15 @@
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
               
                             <li><a href="#about">소개글</a></li>                    
-                            <li><a href="${pageContext.request.contextPath}/member/notice/list">공지사항</a></li>              
-                            <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>                    
+                            <li><a href="#service">공지사항</a></li>                    
+                            <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>                
                             <li><a href="#pricing">가맹 문의</a></li>
-                            <li><a href="${pageContext.request.contextPath}/member/account/join">회원가입</a></li>                      
+                            <li><a href="${pageContext.request.contextPath}/member/account/join">회원가입</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/account/login">로그인</a></li>                      
+
                         </ul>
-                    </div>
+                    </div><!-- /.navbar-collapse -->
                 </div>  
- 
+
 
             </nav>
