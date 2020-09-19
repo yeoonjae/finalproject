@@ -19,7 +19,6 @@ public class SeatDaoImpl implements SeatDao{
 	@Override
 	public void regist(SeatDto seatDto) {
 		sqlSession.insert("seat.regist", seatDto);
-		
 	}
 
 	// 좌석 정보
@@ -50,6 +49,18 @@ public class SeatDaoImpl implements SeatDao{
 	@Override
 	public String getEntrance(int branch_no) {
 		return sqlSession.selectOne("seat.getEntrance", branch_no);
+	}
+
+	// 이용 가능으로 수정
+	@Override
+	public void notUsed(int seat_no) {
+		sqlSession.update("seat.notUsed", seat_no);
+	}
+
+	// 이용 불가로 수정
+	@Override
+	public void used(int seat_no) {
+		sqlSession.update("seat.used", seat_no);
 	}
 
 }

@@ -17,15 +17,18 @@ import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.CouponDto;
 import com.kh.finalproject.entity.CouponReqDto;
+import com.kh.finalproject.entity.InoutDto;
 import com.kh.finalproject.entity.LicenseHisDto;
 import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PointDto;
 import com.kh.finalproject.entity.PointHisDto;
 import com.kh.finalproject.entity.SeatDto;
-import com.kh.finalproject.service.BranchService;
 import com.kh.finalproject.repository.CouponDao;
+import com.kh.finalproject.repository.InoutDao;
 import com.kh.finalproject.repository.LicenseHisDao;
+import com.kh.finalproject.repository.MemberDao;
+import com.kh.finalproject.repository.SeatDao;
 import com.kh.finalproject.service.MemberService;
 
 @RestController
@@ -38,10 +41,19 @@ public class TestController {
 	private LicenseHisDao licenseHisDao;
 	
 	@Autowired
+	private InoutDao inoutDao;
+	
+	@Autowired
+	private MemberDao memberDao;
+	
+	@Autowired
 	private MemberService memberService;
 	
 	@Autowired
 	private CouponDao couponDao;
+	
+	@Autowired
+	private SeatDao seatDao;
 	
 	@Autowired
 	private HttpSession session;
@@ -184,13 +196,92 @@ public class TestController {
 											.seat_no(seat_no)
 											.member_no(member_no)
 												.build();
-			licenseHisDao.regist(licenseHisDto);
+			licenseHisDao.registStart(licenseHisDto);
+			
+			// 입퇴실 테이블에 입실 내역 추가
+			InoutDto inoutDto = InoutDto.builder()
+									.member_no(member_no)
+									.branch_no(branch_no)
+										.build();
+			inoutDao.registIn(inoutDto);
+			
 			// 이용 불가로 변경
-			sqlSession.update("seat.used", seat_no);
+			seatDao.used(seat_no);
 			return true;
 		} else { // 이용 불가일 경우
 			return false;
 		}
+	}
+	
+	@GetMapping("/seat/out")
+	public int out(@RequestParam int member_no, @RequestParam int branch_no) {
+		// 이용내역 정보 가져오기
+		LicenseHisDto licenseHisDto = licenseHisDao.getUsed(member_no);
+		int license_his_no = licenseHisDto.getLicense_his_no();
+		int seat_no = licenseHisDto.getSeat_no();
+		
+		// 이용내역 테이블 종료시간 업데이트
+		licenseHisDao.updateFinish(license_his_no);
+		
+		// 입퇴실 테이블 퇴실내역 업데이트
+		InoutDto inoutDto = InoutDto.builder()
+								.member_no(member_no)
+								.branch_no(branch_no)
+									.build();
+		inoutDao.registOut(inoutDto);
+		
+		// 좌석 이용가능으로 변경
+		seatDao.notUsed(seat_no);
+		
+		// 이용시간 계산 후 충전시간과 비교
+		int charge = memberDao.getCharge(member_no); // 충전시간
+		int useTime = licenseHisDao.useTime(license_his_no); // 이용시간
+		
+		// 충전시간이 남아있는 경우
+		if(charge > useTime) {
+			
+			int timeUnit = 10;
+			int minusTime = ((useTime+timeUnit-1)/timeUnit)*timeUnit; // 10분 기준으로 차감
+			System.out.println("차감 시간 : "+minusTime);
+			int member_charge = charge - minusTime; // 잔여시간 구하기
+			// 충전시간 업데이트
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("member_no", member_no);
+			param.put("member_charge", member_charge);
+			memberDao.changeCharge(param);
+			
+			return 0;
+			
+		// 충전시간이 부족하거나 이용시간과 같은 경우
+		} else {
+			int timeUnit = 30; // 30분
+			int overTime = (useTime - charge + timeUnit - 1) / timeUnit;
+			int halfCharge = 1000; // 기준 금액(30분에 1000원씩)
+			System.out.println("초과 시간 : "+overTime);
+			int price = overTime * halfCharge; // 결제 금액
+			System.out.println("금액 : "+price);
+			
+			// 충전시간 업데이트
+			Map<String, Object> param = new HashMap<String, Object>();
+			param.put("member_no", member_no);
+			param.put("member_charge", 0);
+			memberDao.changeCharge(param);
+			
+			// 결제금액이 있는경우 업데이트
+			if(price!=0) {
+				Map<String, Object> map = new HashMap<String, Object>();
+				map.put("license_his_pay", price);
+				map.put("license_his_no", license_his_no);
+				licenseHisDao.updatePay(map);
+				
+				return license_his_no;
+				
+			} else { // 결제 금액이 없는 경우
+				return 0;
+			}
+			
+		}
+		
 	}
 	
 	//지역 내 지점 확인

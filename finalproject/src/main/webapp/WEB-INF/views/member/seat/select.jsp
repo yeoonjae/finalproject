@@ -29,16 +29,19 @@
         	    }
         	    return results[1] || 0;
         	}
+   	    	
+    		var branch_no = $.urlParam('branch_no');
   	    	
    	       	if($('.entrance').val()=='leftTop'){
-   	       		$('.cinema-screen').css("width", '30%').css('margin', '10px').css('height', '30px').css('padding', '0');    	    	   	       		
+   	       		$('.cinema-screen').css("width", '30%').css('margin', '10px').css('margin-bottom', '0px').css('height', '30px').css('padding', '0');    	    	   	       		
    	       	} else if($('.entrance').val()=='centerTop'){
    	       		$('.cinema-screen').css("width", '30%').css('margin-top', '10px').css('height', '30px').css('padding', '0');    	    	   	    	
     	    } else {
-   	       		$('.cinema-screen').css("width", '30%').css('margin', '10px').css('height', '30px').css('margin-left', '68%').css('padding', '0');    	    	
+   	       		$('.cinema-screen').css("width", '30%').css('margin', '10px').css('margin-bottom', '0px').css('height', '30px').css('margin-left', '68%').css('padding', '0');    	    	
     	    }
    	    	var cinema = new Hacademy.Reservation(".cinema-wrap");
-
+			
+   	    	// 사용중인 좌석 조회
    	    	var usedCol = $('.usedCol').val();
    	    	var usedRow = $('.usedRow').val();
    	    	
@@ -49,21 +52,22 @@
    	    	$('.cinema-seat').click(function(){
    	    		var row = $(this).data('row');
    	    		var col = $(this).data('col');
-   	    		var branch_no = $.urlParam('branch_no');
    	    		var member_no = $('.member_no').val();
    	    		
-   	    		if(usedCol && usedRow && !$(this).hasClass('empty')) {
+   	    		if(usedCol && usedRow && !$(this).hasClass('empty') && !$(this).hasClass('disabled')) {
     				alert("이미 이용중인 좌석이 있습니다");
     				location.reload();
    	    			return;
    	    		}
    	    		
+   	    		// 사용가능한 좌석 선택 시
    	    		if(row && col && !$(this).hasClass('disabled') && !$(this).hasClass('empty')){
 	   	    		if(confirm(row+"-"+col+"번 좌석을 선택 하시겠습니까?")){
+	   	    			// 충전시간이 없을 경우
 	   	    			if($('.charge').val()==0){
 	   	    				alert("충전시간이 없습니다. 이용권을 먼저 결제 해주세요.")
 	   	    				location.href = "${pageContext.request.contextPath}/member/pay/pay_main?member_no="+$('.member_no').val();
-	   	    			} else {
+	   	    			} else { // 충전시간이 있을 경우 좌석 다시한 번 조회
 		   	    			axios({
 		   	    				url:"${pageContext.request.contextPath}/test/seat/check?branch_no="+branch_no+"&row="+row+"&col="+col+"&member_no="+member_no,
 		   	    				method:"get"
@@ -77,12 +81,30 @@
 		   	    				}
 		   	    			});  				
 	   	    			}
-	   	    		} else {
+	   	    		} else { // 선택 취소할 경우
 	   	    			location.reload();
 	   	    		}
    	    			
+   	    		}
+   	    	});
+   	    	
+   	    	// 퇴실하기 버튼 클릭하면
+   	    	$('.btn-finish').click(function(){
+   	    		if(confirm("퇴실 하시겠습니까?")){
+   	    			axios({
+   	    				url:"${pageContext.request.contextPath}/test/seat/out?member_no="+$('.member_no').val()+"&branch_no="+branch_no,
+   	    				method:"get"
+   	    			}).then(function(response){
+   	    				if(response.data==0){ // 잔여 시간이 있을 경우
+	   	    				alert("퇴실이 완료되었습니다");
+		   	    			location.reload();   	    					
+   	    				} else { // 잔여시간이 없는 경우
+	   	    				alert("충전 시간이 부족하여 요금 결제 페이지로 이동합니다");
+   	    					location.href = "${pageContext.request.contextPath}/member/pay/pay_serve?license_his_no="+response.data;
+   	    				}
+   	    			});
    	    		} else {
-   	    			console.log("좌석아님");
+   	    			location.reload();
    	    		}
    	    	});
    	    })
@@ -180,7 +202,7 @@
 						</div>
 						<br><br>
 						<div class="btn-wrap">
-							<button class="btn btn-primary">퇴실하기</button>
+							<button class="btn btn-primary btn-finish">퇴실하기</button>
 						</div>
 			        </div>
 			    </div>
