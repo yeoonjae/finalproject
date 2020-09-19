@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	mapper는 구문을 만들 수 있는 영역
+	일반적으로 테이블당 1개씩의 mapper를 둔다
+	
+	- namespace : 영역을 외부에서 부르기 위한 별칭(일반적으로 테이블 이름으로 사용)
+ -->
+<mapper namespace="inout">
+	
+	<insert id="registIn" parameterType="inoutDto">
+		INSERT INTO in_out (
+			in_out_no,
+			member_no,
+			branch_no,
+			in_out_type,
+			in_out_time
+		) VALUES (
+			in_out_seq.nextval,
+			#{member_no},
+			#{branch_no},
+			'입실',
+			sysdate
+		)
+	</insert>
+	<insert id="registOut" parameterType="inoutDto">
+		INSERT INTO in_out (
+			in_out_no,
+			member_no,
+			branch_no,
+			in_out_type,
+			in_out_time
+		) VALUES (
+			in_out_seq.nextval,
+			#{member_no},
+			#{branch_no},
+			'퇴실',
+			sysdate
+		)
+	</insert>
+	
+</mapper>
+
+
+
+
