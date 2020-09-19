@@ -25,12 +25,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
+	<update id="updateFinish" parameterType="int">
+		UPDATE license_his SET license_his_finish = sysdate WHERE license_his_no = #{license_his_no}
+	</update>
+	
+	<update id="updatePay" parameterType="map">
+		UPDATE license_his SET license_his_pay = #{license_his_pay} WHERE license_his_no = #{license_his_no} 
+	</update>
+	
 	<select id="getUsed" parameterType="int" resultType="licenseHisDto">
 		SELECT lh.*, s.SEAT_ROW, s.SEAT_COL FROM LICENSE_HIS lh 
 			INNER JOIN SEAT s ON lh.SEAT_NO = s.SEAT_NO
 				WHERE lh.member_no = #{member_no} 
 				AND lh.license_his_start IS NOT NULL 
 				AND lh.license_his_finish IS NULL
+	</select>
+	
+	<select id="useTime" parameterType="int" resultType="int">
+		SELECT 
+			CEIL(
+				ABS(
+					(LICENSE_HIS_FINISH - LICENSE_HIS_START)
+					) * 24 * 60 
+				) AS time
+			FROM LICENSE_HIS lh WHERE license_his_no = #{license_his_no}
+	</select>
+	
+	<!-- 추가 결제 관련 정보 -->
+	<select id="payInfo" parameterType="int" resultType="payServeDto">
+		select m.member_no, m.member_point,
+				b.branch_no, b.branch_name, l.license_his_pay 
+		from member m inner join license_his l on m.member_no = l.member_no
+		inner join branch b on m.branch_no = b.branch_no WHERE license_his_no = #{license_his_no}
 	</select>
 	
 </mapper>
