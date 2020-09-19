@@ -92,7 +92,7 @@
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                             <i class="fa fa-bars"></i>
                         </button>
-                        <a class="navbar-brand" href="#brand">
+                        <a class="navbar-brand" href="${pageContext.request.contextPath}/member/user/">
 
                             <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-display m-top-10" alt="">
                             <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-scrolled" alt="">
@@ -105,7 +105,7 @@
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
               
-                            <li><a href="#about">상품 충전</a></li>                    
+                            <li><a href="${pageContext.request.contextPath}/member/pay/pay_main">상품 충전</a></li>                    
                             <li><a href="#service">개인석</a></li>                    
                             <li><a href="#portfolio">스터디룸</a></li>                    
                             <li><a href="${pageContext.request.contextPath}/member/review/list">리뷰</a></li>  

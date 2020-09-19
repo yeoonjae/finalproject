@@ -125,25 +125,7 @@
 							<br>
 						</div> 
 						
-<!-- 						 날짜 선택 -->
-<!-- 						<div class="row">  -->
-<!--                  		   <div class="col-4 btn-group"> -->
-<!--                       		  <button class="btn btn-primary btn-date" type="button" data-date="7">1주일</button> -->
-<!--                      		  <button class="btn btn-primary btn-date" type="button" data-date="1">1개월</button> -->
-<!--                     		 	<button class="btn btn-primary btn-date" type="button" data-date="3">3개월</button> -->
-<!--                    			</div> -->
-<!--                    			<div class="col-4"> -->
-<!--                         		<input type="text" class="picker-start form-control start" name="start" placeholder="시작일을 선택해주세요"> -->
-<!--                     		</div> -->
-<!--                     		<div class="col-4"> -->
-<!--                        	 		<input type="text" class="picker-end form-control finish" name="finish" placeholder="종료일을 선택해주세요"> -->
-<!--                     		</div> -->
-<!--                     		<div class="col-4"> -->
-<!--                         		<button class="btn btn-primary btn-list">검색</button> -->
-<!--                     		</div> -->
-<!-- 						</div> -->
-				
-						
+
 						<!--  결제 내역 목록  -->
 						<div class="table-responsive">
 							<table class="table2 table-bordered table-hover" width="100%" cellspacing="0"> 

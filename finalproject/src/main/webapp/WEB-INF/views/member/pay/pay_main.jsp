@@ -287,7 +287,7 @@
 	
 </script>
 <style>
-@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css); 
 
 .container {
 	font-family: 'Noto Sans KR';
@@ -375,9 +375,9 @@
 	padding-right: 4%;  
 	padding-top:2%;
 	padding-bottom:1%;
-	position:fixed; 
-	right: 17%;  
-	top:13%; 
+/* 	position:fixed;  */
+/* 	right: 14%;   */
+/* 	top:13%;  */
 }
 
 .licenseContainer {
@@ -540,7 +540,6 @@
 									<input type="submit" value="구매하기" class="btn btn-primary">
 								</form>
 							</div>
-
 						</div>
 
 						
@@ -551,6 +550,9 @@
 									<c:forEach var="licenseDto" items="${list}">
 										<table class="licenseContainer">
 											<tr>
+												<c:if test="${licenseDto.license_time}==0">
+													return ;
+												</c:if>
 												<td class="licenseTime">
 												<input type="radio" class="license_type" name="license"
 													data-time="${licenseDto.license_time}"
@@ -561,6 +563,7 @@
 												<td class="licensePrice">
 												<span class="fontBold"><fmt:formatNumber value="${licenseDto.license_price}" pattern="#,###" />원</span>
 												</td>
+
 											</tr>
 										</table>
 									</c:forEach>
@@ -619,9 +622,7 @@
 						
 						<!--  쿠폰 선택  -->
 						<div>
-							<h4 class="bold">쿠폰선택
-							<span class="normal">(보유쿠폰  : <span class="red">2</span>장)</span> 
-							</h4>
+							<h4 class="bold">쿠폰선택</h4>
 							<br>
 								<div class="col-md-4"> 
 									<div class="about_accordion wow fadeIn">
