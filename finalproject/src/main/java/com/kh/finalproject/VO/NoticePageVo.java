@@ -4,9 +4,11 @@ package com.kh.finalproject.VO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class NoticePageVo {
@@ -14,8 +16,6 @@ public class NoticePageVo {
 		private int nowPage, startPage, endPage, total, cntPerPage, lastPage, start, end;
 		private int cntPage = 5;
 		
-		public NoticePageVo() {
-		}
 		public NoticePageVo(int total, int nowPage, int cntPerPage) {
 			setNowPage(nowPage);
 			setCntPerPage(cntPerPage);

@@ -20,12 +20,12 @@ import com.kh.finalproject.repository.NoticeDao;
 public class MemberNoticeController {
 	@Autowired
 	private NoticeDao noticeDao;
-	@GetMapping("/list")
-	public String list(Model model) {
-		List<NoticeDto> list = noticeDao.list();
-		model.addAttribute("list", list);
-		return "member/notice/list";
-	}
+//	@GetMapping("/list")
+//	public String list(Model model) {
+//		List<NoticeDto> list = noticeDao.list();
+//		model.addAttribute("list", list);
+//		return "member/notice/list";
+//	}
 	@GetMapping("/content")
 	public String content(@RequestParam int notice_no, Model model) {
 		NoticeDto noticeDto =noticeDao.content(notice_no);
@@ -46,9 +46,10 @@ public class MemberNoticeController {
 			cntPerPage = "5";
 		}
 		vo = new NoticePageVo(total, Integer.parseInt(nowPage),Integer.parseInt(cntPerPage));
+		System.out.println(vo);
 		model.addAttribute("paging", vo);
-		model.addAttribute("viewAll", noticeDao.selectNotice(vo));
-		return "member/notice/noticePaging";
+		List<NoticeDto> list =noticeDao.selectNotice(vo);
+		model.addAttribute("list", list);
+		return "member/notice/noticeList";
 	}
-	
 }

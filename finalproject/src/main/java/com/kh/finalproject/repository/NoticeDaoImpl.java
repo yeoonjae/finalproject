@@ -56,7 +56,10 @@ public class NoticeDaoImpl implements NoticeDao {
 	@Override
 	public List<NoticeDto> selectNotice(NoticePageVo vo) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("notice.selectNotice", vo);
+		Map<String, Object> map = new HashMap<>();
+		map.put("start", vo.getStart());
+		map.put("end", vo.getEnd());
+		return sqlSession.selectList("notice.selectNotice", map);
 	}
 	
 }

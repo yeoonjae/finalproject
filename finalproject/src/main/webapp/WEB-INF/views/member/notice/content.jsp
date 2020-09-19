@@ -53,7 +53,7 @@
 							</tbody>
 						</table>
 						<div class="btn">
-							<a href="list">목록</a>
+							<a href="noticeList">목록</a>
 						</div>
 				</div>
 			</div>
