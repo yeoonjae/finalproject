@@ -283,7 +283,7 @@
 }
 table{
    text-align:center;
-    width:90%;   
+    width:100%;  
 }
 
 .margin{
@@ -319,12 +319,6 @@ table{
 .left{
 	text-align:left;
 }
-
-.noline{
-         border: 0;
-         outline: 0;
-         background-color: rgba(47,138,241,0);
-}
 </style>
 
 <section>
@@ -341,10 +335,22 @@ table{
 
             <br>
             <br>
- 
+   
+             
+   
+            <!-- qr코드 생성 -->
+            <div class=" float_l margin width20">
+               <div>
+                  <button type="button" id="out" class="btn">외출</button>
+                  <button type="button" id="end" class="btn">퇴실</button>
+               </div> 
+               <br>
+               <div id="qrcode"></div>
+               <br>
+            </div> 
    
             <!--  지점 좌석 정보  -->
-            <div class="width40 float_l">
+            <div class="width30 float_l">
                <h6 class="name margin bold"> GONGDORI 혜정점 </h6>
                
                <div> 
@@ -366,29 +372,19 @@ table{
              
 
  <!--  지점 좌석 정보  -->
-            <div class="width30 float_l">
-               <h6 class="name margin bold"> 김혜정님의 잔여시간 <span><button class="btn">충전하기</button></span></h6> 
+            <div class="width40 float_l">
+               <h6 class="name margin bold"> 김혜정님의 잔여시간 </h6> 
 	          	<div class="use float_l">
 	          		이용중인 상품이 없습니다. 
 	          	</div>
 
             </div>        
    
-          <!-- qr코드 생성 -->
-            <div class=" float_l margin width20">
-               <div>
-                  <button type="button" id="out" class="btn">외출</button>
-                  <button type="button" id="end" class="btn">퇴실</button>
-               </div> 
-               <br>
-               <div id="qrcode"></div>
-               <br>
-            </div> 
 
             <!-- 챗봇 -->
             <div class="chatbox">
                <!-- Button trigger modal -->
-               <button class="noline" data-toggle="modal" data-target="#myModal">
+               <button type="button" data-toggle="modal" data-target="#myModal">
                 <img class="img" src="${pageContext.request.contextPath}/resources/m/images/pp.png"></button>
                <!-- Modal -->
                <div class="modal" id="myModal" tabindex="-1" role="dialog"
@@ -456,7 +452,7 @@ table{
       </div>
    </div>
 </section>
-<br><br><br><br>
+
 
 
 
