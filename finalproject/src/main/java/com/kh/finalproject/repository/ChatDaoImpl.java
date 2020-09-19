@@ -38,4 +38,10 @@ public class ChatDaoImpl implements ChatDao{
 		return sqlSession.selectList("chat.getList4",chat_no);
 	}
 
+	// 챗봇 데이터 삭제 
+	@Override
+	public void delete(int chat_no) {
+		sqlSession.delete("chat.delete",chat_no);
+	}
+
 }

@@ -679,6 +679,5 @@
 
 	</section> 
 	<!--End off Featured section-->	
-</main>
-
+</main>  
 <jsp:include page="/WEB-INF/views/member/template/footer.jsp"></jsp:include>

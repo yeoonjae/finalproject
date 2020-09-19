@@ -45,7 +45,7 @@
             <!--Home page style-->
 
 
-            <nav class="navbar navbar-default navbar-fixed no-background bootsnav">
+            <nav class="navbar navbar-default navbar-fixed white no-background bootsnav">
                 <!-- Start Top Search -->
                 <div class="top-search">
                     <div class="container">
@@ -62,7 +62,6 @@
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-<!--                          	<li class="search"><a href="#"> <i class="fa fa-shopping-bag"></i></a></li> -->
                             <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
                         </ul>
                     </div>        
@@ -75,7 +74,7 @@
                         </button>
                         <a class="navbar-brand" href="#brand">
 
-                            <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-display m-top-10" alt="">
+                            <img src="${pageContext.request.contextPath}/resources/m/images/logo.png" class="logo logo-display m-top-10" alt="">
                             <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-scrolled" alt="">
 
                         </a>
@@ -90,13 +89,13 @@
                             <li><a href="#service">공지사항</a></li>                    
                             <li><a href="#portfolio">지점 스토리</a></li>                    
                             <li><a href="#pricing">가맹 문의</a></li>
-                            <li><a href="${pageContext.request.contextPath}/member/account/join">회원가입</a></li>                      
+                            <li><a href="${pageContext.request.contextPath}/member/account/join">회원가입</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/account/login">로그인</a></li>                      
 <!--                             <li><a href="#blog">Blog</a></li>                     -->
 <!--                             <li><a href="#contact">Contact</a></li>   -->
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div>  
- 
+
 
             </nav>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,6 +43,7 @@ public class ChatController {
 		return "redirect:regist"; 
 	}
 	
+	// 정렬 방식 선택했을 때 목록
 	@PostMapping("/list1")
 	public String getList1(Model model, 
 								RedirectAttributes attr, 
@@ -54,6 +56,12 @@ public class ChatController {
 		return "redirect:regist";
 	}
 	
+	// 챗봇 데이터 삭제 
+	@GetMapping("/delete/{chat_no}")
+	public String delete(@PathVariable int chat_no) {
+		chatDao.delete(chat_no);
+		return "redirect:/admin/chat/regist";
+	}
 
 	
 }

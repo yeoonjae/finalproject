@@ -183,6 +183,22 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
+            <span>챗봇 관리</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <h6 class="dropdown-header">챗봇관리 메뉴</h6>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/chat/regist">챗봇 등록 및 내역조회</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/chat/regist"></a>
+            <div class="dropdown-divider"></div>
+            <h6 class="dropdown-header">Other Pages:</h6>
+            <a class="dropdown-item" href="404.jsp">404 Page</a>
+            <a class="dropdown-item" href="blank.jsp">Blank Page</a>
+          </div>
+        </li>
+        
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
             <span>쿠폰 관리</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">

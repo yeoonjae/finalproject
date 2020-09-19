@@ -44,5 +44,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT *  FROM chat 
 		WHERE chat_no=#{chat_no}
 	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE chat WHERE chat_no=#{chat_no}
+	</delete>
 
 </mapper>

@@ -14,4 +14,6 @@ public interface ChatDao {
 	List<ChatDto> getList(int type_no);
 	
 	List<ChatDto> getDetailList(int chat_no); 
+	
+	void delete(int chat_no);
 }

@@ -189,6 +189,9 @@
      box-sizing: border-box;
  }
 
+.qr{
+
+}
 
 .modal-backdrop {
 	z-index:-1;
@@ -230,13 +233,13 @@
 	padding-left:7%;
 	border-radius: 20px 20px 0px 20px;
 }
-.name{
-	font-size:13px;
-	font-weight:bold;
-	color:black;
-	padding: 1%;
+/* .name{ */
+/* 	font-size:13px; */
+/* 	font-weight:bold; */
+/* 	color:black; */
+/* /* 	padding: 1%; */ */
 
-}
+/* } */
 
 .box .my .imgBox{
     display: none;
@@ -256,12 +259,34 @@
 	width: 100%;
     margin-bottom: 5px;
 }
+.num{
+	padding-top:4%;   
+	font-size:16px;
+	width:20%;	  
+	color:black; 
+} 
+.name{
+	padding-left:2%; 
+	padding-bottom:1%;  
+	width:100%;  
+	font-size:17px;  
+	font-weight:bold;
+}
+table{
+	text-align:center;
+	width:27%; 
+}
+
+.margin{
+	margin-left:5%;
+}
 </style>
 
 <section>
 	<div class="container">
 		<div class="row">
 			<div class="roomy-100">
+			
 				<!--  user 메인 이미지  -->
 				<div>
 					<img
@@ -271,80 +296,99 @@
 
 				<br>
 				<br>
-
+	
+				<!--  지점 좌석 정보  -->
+				<div class="branchInfo">
+					<h6 class="name margin"> GONGDORI 혜정점 </h6>
+					<div> 
+						<table class="margin"> 
+							<tr>
+								<td class="num">30/40</td>
+								<td class="num">0/1</td>
+								<td class="num">30/40</td>
+							</tr>
+							<tr>
+								<td class="num">개인석</td>
+								<td class="num">스터디룸</td>
+								<td class="num">사물함</td>
+							</tr>
+						</table>
+					</div>
+				
+				</div>
+								
+				
 				<!-- qr코드 생성 -->
 				<div class="qr">
 					<div>
-						<button type="button" id="out" class="btn-primary">외출</button>
-						<button type="button" id="end" class="btn-primary">퇴실</button>
+						<button type="button" id="out" class="btn btn-primary">외출</button>
+						<button type="button" id="end" class="btn btn-primary">퇴실</button>
 					</div>
 					<br>
 					<div id="qrcode"></div>
-				</div>
+				</div> 
 
-				<!-- Button trigger modal -->
-				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">챗봇</button>
 
-				<!-- Modal -->
-				<div class="modal" id="myModal" tabindex="-1" role="dialog"
-					aria-labelledby="myModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-								<h4 class="modal-title" id="myModalLabel">공도리 챗봇</h4>
-							</div>
-							<!--  챗봇 시작하기 -->
-							<div class="modal-body">
-								<div class="start">
-								
-									<!-- 공도리봇 -->
-									<div class="box">
-										<!-- 이미지 박스 -->
-										<div class="imgBox">
-											<img class="chatimg" src="${pageContext.request.contextPath}/resources/m/images/pp.png">
-										</div>	
-										<!-- 내용 박스 -->
-										<div class="innerBox">
-											<div class="name">공도리봇</div>
-											<div class="content">
-												😊공도리에 오신걸 환영합니다😊<br><br>
-												저희 공도리에 대하여 문의사항이 있으시다면 <br>
-												공도리봇을 이용해 주세요 ❕ ❗ <br><br>
-												아래에서 원하시는 유형을 선택하시면<br>
-												해당 유형의 답변을 확인하실 수 있답니당🧡<br><br>
-												다들 공도리와 함께 열공하고 <br>
-												놀면서 돈벌어요🧡💛💚💙💜 <br><br>										
-												<input type="button" class="btn btn-size type1" value="결제 및 환불 관련" data-no="1">
-												<input type="button" class="btn btn-size type2" value="예약 관련" data-no="2">
-												<input type="button" class="btn btn-size type3" value="이용 관련" data-no="3">
-												<input type="button" class="btn btn-size type4" value="쿠폰 관련" data-no="4">
-												<input type="button" class="btn btn-size type4" value="마일리지 관련" data-no="5">
+				<!-- 챗봇 -->
+				<div class="chatbox">
+					<!-- Button trigger modal -->
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">챗봇</button>
+					<!-- Modal -->
+					<div class="modal" id="myModal" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel">공도리 챗봇</h4>
+									</div>
+									<!--  챗봇 시작하기 -->
+									<div class="modal-body">
+										<div class="start">							
+											<!-- 공도리봇 -->
+											<div class="box">
+												<!-- 이미지 박스 -->
+												<div class="imgBox">
+													<img class="chatimg" src="${pageContext.request.contextPath}/resources/m/images/pp.png">
+												</div>	
+												<!-- 내용 박스 -->
+												<div class="innerBox">
+													<div class="name">공도리봇</div>
+													<div class="content">
+														😊공도리에 오신걸 환영합니다😊<br><br>
+														저희 공도리에 대하여 문의사항이 있으시다면 <br>
+														공도리봇을 이용해 주세요 ❕ ❗ <br><br>
+														아래에서 원하시는 유형을 선택하시면<br>
+														해당 유형의 답변을 확인하실 수 있답니당🧡<br><br>
+														다들 공도리와 함께 열공하고 <br>
+														놀면서 돈벌어요🧡💛💚💙💜 <br><br>										
+														<input type="button" class="btn btn-size type1" value="결제 및 환불 관련" data-no="1">
+														<input type="button" class="btn btn-size type2" value="예약 관련" data-no="2">
+														<input type="button" class="btn btn-size type3" value="이용 관련" data-no="3">
+														<input type="button" class="btn btn-size type4" value="쿠폰 관련" data-no="4">
+														<input type="button" class="btn btn-size type4" value="마일리지 관련" data-no="5">
+													</div>
+													<br>
+												</div>
+											</div>	
+											<div class="chatList">											
 											</div>
-											<br>
+											<!-- 나 -->
+		<!-- 								    <div class="box my"> -->
+		<!-- 								        <div class="innerBox"> -->
+		<!-- 								            <div class="content"> -->
+		<!-- 								                결제 및 환불 관련  -->
+		<!-- 								            </div> -->
+		<!-- 								        </div>		 						        -->
+		<!-- 								    </div> -->
+  
 										</div>
 									</div>
-
-									<div class="chatList">
-										
-									</div>
-									
-									<!-- 나 -->
-<!-- 								    <div class="box my"> -->
-<!-- 								        <div class="innerBox"> -->
-<!-- 								            <div class="content"> -->
-<!-- 								                결제 및 환불 관련  -->
-<!-- 								            </div> -->
-<!-- 								        </div>		 						        -->
-<!-- 								    </div> -->
-
-								    		    
+									<div class="modal-footer">
+									<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 								</div>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
 							</div>
 						</div>
 					</div>
