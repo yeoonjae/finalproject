@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PayServeDto {
 
-	private int member_no, branch_no, license_his_pay, member_point; 
+	private int member_no, branch_no, license_his_no, license_his_pay, member_point; 
 	private String branch_name;
 }

@@ -324,10 +324,10 @@
                      <hr style="margin-bottom: 10px;">
 
                      <div align="right">
-                        <!--  카카오페이에 상품명, 총 금액 전송  -->
-                        <form action="prepare" method="post">
+                        <form action="serve_prepare" method="post">
                            <input type="hidden" name="sale_price" class="sale_price"> <!--  사용한 마일리지  -->
                            <input type="hidden" name="total_amount" class="total_amount"><!-- 총 결제금액 -->
+                           <input type="hidden" name="license_no" class="license_no" value="1">
                            <input type="submit" value="구매하기" class="btn btn-primary">
                         </form>
                      </div>
@@ -347,12 +347,12 @@
                               </tr>
                               <tr>
                                  <td>추가 시간</td>
-                                 <td class="info"><span>|</span> <span class="over-time bold">${overTime}</span>
+                                 <td class="info"><span>|</span> <span class="over-time bold">${overTime}분</span>
                                  </td>
                               </tr>
                               <tr>
                                  <td>추가 금액</td>
-                                 <td class="info"><span>|</span> <span class="over-price bold">${payServeDto.license_his_pay}</span>
+                                 <td class="info"><span>|</span> <span class="over-price bold">${payServeDto.license_his_pay}원</span>
                                  </td>
                               </tr>
                            </table>

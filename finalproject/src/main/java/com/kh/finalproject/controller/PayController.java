@@ -56,7 +56,7 @@ public class PayController {
 	}
 	
 	@RequestMapping("/pay_detail")
-	public String getPayIist(Model model,HttpSession session) {
+	public String getPayIist(Model model, HttpSession session) {
 		
 		MemberDto memberDto = (MemberDto) session.getAttribute("memberinfo"); 
 		int member_no = memberDto.getMember_no();
@@ -68,9 +68,13 @@ public class PayController {
 	}
 	
 	@GetMapping("/pay_serve")
-	public String getPayList(@RequestParam int license_his_no, Model model) {
+	public String getPayList(Model model, HttpSession session) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("memberinfo"); 
+		int member_no = memberDto.getMember_no();
+		
 		// 필요한 정보 전달
-		PayServeDto payServeDto = licenseHisDao.getPayInfo(license_his_no);
+		PayServeDto payServeDto = licenseHisDao.getPayInfo(member_no);
+		int license_his_no = payServeDto.getLicense_his_no();
 		int overTime = licenseHisDao.useTime(license_his_no);
 		model.addAttribute("payServeDto", payServeDto);
 		model.addAttribute("overTime", overTime);
