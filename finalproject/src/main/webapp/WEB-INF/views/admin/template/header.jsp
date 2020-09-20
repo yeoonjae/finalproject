@@ -144,7 +144,15 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">회원 정보</h6>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/member/account/list">전체 회원 보기</a>
+            <c:choose>
+            <c:when test="${admininfo.admin_auth eq '본사'}">
+              <a class="dropdown-item" href="${pageContext.request.contextPath}/member/account/list">전체 회원 보기</a>
+            </c:when>
+            <c:otherwise>
+              <a class="dropdown-item" href="${pageContext.request.contextPath}/member/account/list?branch_no=${admininfo.branch_no}">전체 회원 보기</a>
+            </c:otherwise>
+            </c:choose>
+
             <div class="dropdown-divider"></div>
           </div>
         </li>
