@@ -504,7 +504,7 @@
 				<div class="main_service roomy-100">
 					<div>
 						<!--  총 결제금액  -->
-<hr>
+						<hr>
 						<div class="result float_right">
 							<!-- 결제 내역 -->
 							<table class="resultContainer">
@@ -554,7 +554,6 @@
 								<div class="detail">결제 수단을 선택하신 후 구매하기 버튼을 클릭하세요.</div>
 								<div class="pay_way">
 									<input type="checkbox" checked> <Label>카카오페이</Label>&nbsp;&nbsp;&nbsp;
-
 									<input type="checkbox"> <Label>무통장입금</Label>
 								</div>
 							</div>
@@ -568,7 +567,7 @@
 									<input type="hidden" name="coupon_no" class="coupon_no"><!--  쿠폰 번호 (삭제 위함)  -->
 									<input type="hidden" name="use_point2" class="use_point2"> <!--  사용한 마일리지  -->
 									<input type="hidden" name="sale_price" class="sale_price"><!-- 할인 금액 -->
-									<input type="hidden" name="license_time" class="license_time"> <!-- 이용권 번호 -->
+									<input type="hidden" name="license_time" class="license_time"> <!-- 이용권 시간 -->
 									<input type="hidden" name="license_no" class="license_no"> <!-- 이용권 번호 -->
 									<input type="hidden" name="item_name" class="item_name"><!-- 상품명 -->
 									<input type="hidden" name="total_amount" class="total_amount"><!-- 총 결제금액 -->
