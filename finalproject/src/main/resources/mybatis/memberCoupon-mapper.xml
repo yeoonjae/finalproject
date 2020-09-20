@@ -33,6 +33,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT c.* FROM member_coupon m LEFT OUTER JOIN coupon c ON m.coupon_no = c.coupon_no
 	</select>
 	
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="countCoupon" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM member_coupon WHERE member_no = #{member_no}
+	</select>
+	
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id="selectCoupon" parameterType="map" resultType="memberCouponDto">
+		SELECT * 
+			FROM (
+				SELECT ROWNUM RN, A.* 
+					FROM (
+							SELECT c.* FROM member_coupon m 
+							LEFT OUTER JOIN coupon c ON m.coupon_no = c.coupon_no
+							WHERE m.member_no = #{member_no}
+							ORDER BY c.coupon_finish DESC
+							) A
+					)
+		WHERE RN BETWEEN #{start} AND #{end}
+	</select>
+	
 </mapper>
 
 
