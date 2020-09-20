@@ -8,26 +8,26 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <style>
-.table {
-	text-align: center;
-}
-
-.send-form {
-	width: 70%;
-	margin: auto;
-}
-.custom-select{
-	margin-top: 10px;
-}
-
-.outbox-tr:hover{
-	cursor: pointer;
-	background-color: lightgray;
-}
-.inbox-tr:hover{
-	cursor: pointer;
-	background-color: lightgray;
-}
+	.table {
+		text-align: center;
+	}
+	
+	.send-form {
+		width: 70%;
+		margin: auto;
+	}
+	.custom-select{
+		margin-top: 10px;
+	}
+	
+	.outbox-tr:hover{
+		cursor: pointer;
+		background-color: lightgray;
+	}
+	.inbox-tr:hover{
+		cursor: pointer;
+		background-color: lightgray;
+	}
 </style>
 <script>
 	$(function(){
