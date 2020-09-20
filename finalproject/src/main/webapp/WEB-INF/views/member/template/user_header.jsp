@@ -8,7 +8,7 @@
     <!--Designerd by: http://bootstrapthemes.co-->
     <head>
         <meta charset="utf-8">
-        <title>GONDORI MAIN PAGE</title>
+        <title>SPATIUM MAIN PAGE</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="favicon.ico">
@@ -125,7 +125,7 @@
                     <div class="widget">
                         <h6 class="title">Custom Pages</h6>
                         <ul class="link">
-                           <li><a href="#">공도리 홈</a></li>
+                           <li><a href="#">스파티움 홈</a></li>
                             <li><a href="#">소개글</a></li>
                             <li><a href="#">공지사항</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>
