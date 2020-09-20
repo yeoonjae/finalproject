@@ -149,7 +149,7 @@ public class BranchController {
 	@GetMapping("/delete")
 	public String edit(@RequestParam int branch_no) {
 		branchDao.delete(branch_no);
-		return "redirect:list";
+		return "admin/notice/write";
 	}
 	
 	//지점별 회원 현황

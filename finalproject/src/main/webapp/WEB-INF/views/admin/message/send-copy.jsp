@@ -1,5 +1,3 @@
-메세지 보내기
-
 <%@page import="com.kh.finalproject.entity.AdminDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -33,32 +31,6 @@
 </style>
 <script>
 	$(function(){
-		//parameter받아오는 코드
-		var getUrlParameter = function getUrlParameter(sParam) {
-		    var sPageURL = window.location.search.substring(1),
-		        sURLVariables = sPageURL.split('&'),
-		        sParameterName,
-		        i;
-
-		    for (i = 0; i < sURLVariables.length; i++) {
-		        sParameterName = sURLVariables[i].split('=');
-
-		        if (sParameterName[0] === sParam) {
-		            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-		        }
-		    }
-		};
-		var where = getUrlParameter('where');
-		if(where == 'inbox'){//쪽지함을 클릭해서 들어왔을 때
-			$(".send-mail-tab").removeClass('active').removeClass('show');
-			$(".outbox-tab").removeClass('active').removeClass('show');
-			$(".inbox-tab").addClass("active").addClass("show");
-		}else if(where == 'outbox'){
-			$(".send-mail-tab").removeClass('active').removeClass('show');
-			$(".inbox-tab").removeClass('active').removeClass('show');
-			$(".outbox-tab").addClass("active").addClass("show");
-		}
-		
 		
 		var local = $(".local-list");
 		var branch = $(".branch-list");
@@ -141,15 +113,13 @@
 	            			method:"get"
 	            		})
 	            		.then(function(response){
-	            			var no = response.data.admin_no;
-	            			if(table.find("td").text().indexOf(no) < 0){
-		            			var tag = "<tr class='name-tr'></td><td class='no'>"+response.data.admin_no+
-		            						"</td><td>"+response.data.branch_name+
-					            			"</td><td>"+response.data.admin_auth+
-					            			"</td><td class='name'>"+response.data.admin_name+
-					            			"</td><td><button class='btn btn-outline-secondary remove-bnt' type='button'>삭제</button></td></tr>";
-		            			table.append(tag);
-	            			}
+	            			console.log(response.data);
+	            			var tag = "<tr class='name-tr'></td><td class='no'>"+response.data.admin_no+
+	            						"</td><td>"+response.data.branch_name+
+				            			"</td><td>"+response.data.admin_auth+
+				            			"</td><td class='name'>"+response.data.admin_name+
+				            			"</td><td><button class='btn btn-outline-secondary remove-bnt' type='button'>삭제</button></td></tr>";
+	            			table.append(tag);
 	            			table.show();
 					    	$(".remove-bnt").on("click",(function(){
 					    		$(this).parents("tr").remove();

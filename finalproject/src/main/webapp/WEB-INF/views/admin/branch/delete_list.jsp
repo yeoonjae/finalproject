@@ -2,6 +2,17 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
+
+      <style>
+      	.status.red{
+      		color: red;
+      		font-weight: 700;
+      	}
+      	.status.blue{
+      		color: blue;
+       		font-weight: 700;
+      	}
+      </style>
       <div id="content-wrapper">
 
         <div class="container-fluid">
@@ -32,15 +43,31 @@
                     </tr>
                   </thead>
                   <tbody>
-                  	<c:forEach var="list" items="${list}">
-	                  	<tr>
-	                  		<td>${list.branch_name}</td>
-	                  		<td>${list.admin_name}</td>
-	                  		<td>${list.start_delete_date}</td>
-	                  		<td>${list.finish_delete_date}</td>
-	                  		<td>${list.delete_status }</td>
-	                  	</tr>
-                  	</c:forEach>
+                  	<c:choose>
+                  		<c:when test="${empty list}">
+                  			<tr class="delete-list">
+                  				<td colspan="5">삭제 목록이 없습니다.</td>
+                  			</tr>
+                  		</c:when>
+                  		<c:otherwise>
+	                  		<c:forEach var="list" items="${list}">
+		                  	<tr class="delete-list">
+		                  		<td>${list.branch_name}</td>
+		                  		<td>${list.admin_name}</td>
+		                  		<td>${list.start_delete_date}</td>
+		                  		<td>${list.finish_delete_date}</td>
+		                  		<c:choose>
+		                  			<c:when test="${list.delete_status eq '삭제예정'}">
+		                  				<td class="status red">${list.delete_status}</td>
+		                  			</c:when>
+		                  			<c:otherwise>
+		                  				<td class="status blue">${list.delete_status}</td>
+		                  			</c:otherwise>
+		                  		</c:choose>
+		                  	</tr>
+	                  		</c:forEach>
+                  		</c:otherwise>
+                  	</c:choose>
                   </tbody>
                 </table>
               </div>
