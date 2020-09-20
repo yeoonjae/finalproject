@@ -23,7 +23,7 @@ public class ReviewDaoImpl implements ReviewDao{
 	@Autowired
 	private HttpSession session;
 	
-	//리뷰 등록
+	//(회원) 리뷰 등록
 	public void regist(ReviewDto reviewDto) {
 		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
 		reviewDto.setMember_no(memberDto.getMember_no());
@@ -31,7 +31,7 @@ public class ReviewDaoImpl implements ReviewDao{
 		sqlSession.insert("review.regist", reviewDto);
 	}
 
-	//리뷰 리스트 + 페이징
+	//(회원) 리뷰 리스트 + 페이징
 	public List<ReviewDto> getList(int branch_no,PagingVO pagingVO) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("branch_no", branch_no);
@@ -40,7 +40,7 @@ public class ReviewDaoImpl implements ReviewDao{
 		return sqlSession.selectList("review.getListBranchReview", map);
 	}
 
-	//리뷰 수정
+	//(회원) 리뷰 수정
 	public void edit(String review_title,String review_content,int review_no) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("review_title", review_title);
@@ -49,15 +49,14 @@ public class ReviewDaoImpl implements ReviewDao{
 		sqlSession.update("review.edit", map);
 	}
 
-	//리뷰 삭제
+	//(회원) 리뷰 삭제
 	public void delete(int review_no) {
 		sqlSession.delete("review.delete", review_no);
 	}
 
-	//페이징 처리를 위한 게시글 개수
+	//(회원) 페이징 처리를 위한 게시글 개수
 	public int countReview(int branch_no) {
 		int a = sqlSession.selectOne("review.getCount", branch_no);
-		System.out.println("a : "+a);
 		return sqlSession.selectOne("review.getCount", branch_no);
 	}
 
@@ -65,7 +64,14 @@ public class ReviewDaoImpl implements ReviewDao{
 	public List<ReviewDto> getAdminList() {
 		return sqlSession.selectList("review.getList");
 	}
-	
-	
 
+	//관리자 번호로 지점번호뽑기
+	public int getBranchNo(int admin_no) {
+		return sqlSession.selectOne("branch.getNo3", admin_no);
+	}
+	
+	//(지점 관리자) 해당 지점 리뷰
+	public List<ReviewDto> getBranchList(int branch_no){
+		return sqlSession.selectList("review.getBranchList", branch_no);
+	}
 }

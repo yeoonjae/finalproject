@@ -70,4 +70,5 @@ public class ReviewController {
 		reviewDao.delete(review_no);
 		return "redirect:list";
 	}
+	
 }
