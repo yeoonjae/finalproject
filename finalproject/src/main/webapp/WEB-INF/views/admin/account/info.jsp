@@ -12,7 +12,7 @@
 						<tr>
 							<th>관리자 번호</th>
 							<th>관리자 아이디</th>
-							<th>관리자 비밀번호</th>
+							<th>담당 지점</th>
 							<th>관리자 이름</th>
 						</tr>
 					</thead>
@@ -20,7 +20,7 @@
 						<tr>
 							<td>${adminDto.admin_no}</td>
 							<td>${adminDto.admin_id}</td>
-							<td>${adminDto.admin_pw}</td>
+							<td>${adminDto.branch_name}</td>
 							<td>${adminDto.admin_name}</td>
 						</tr>
 					</tbody>
