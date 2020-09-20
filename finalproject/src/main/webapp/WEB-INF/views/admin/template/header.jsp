@@ -141,7 +141,8 @@
             <a class="dropdown-item" href="404.jsp">404 Page</a>
             <a class="dropdown-item" href="blank.jsp">Blank Page</a>
           </div>
-        </li>        
+        </li>   
+        <c:if test="${not empty admininfo}">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
@@ -309,4 +310,5 @@
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a>
         </li>
+        </c:if>
       </ul>

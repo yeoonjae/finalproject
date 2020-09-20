@@ -31,6 +31,27 @@
 </style>
 <script>
 	$(function(){
+		//파라미터 받아오는 코드		
+		var getUrlParameter = function getUrlParameter(sParam) {
+		    var sPageURL = window.location.search.substring(1),
+		        sURLVariables = sPageURL.split('&'),
+		        sParameterName,
+		        i;
+
+		    for (i = 0; i < sURLVariables.length; i++) {
+		        sParameterName = sURLVariables[i].split('=');
+
+		        if (sParameterName[0] === sParam) {
+		            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+		        }
+		   }
+		    
+		}
+		//ok라는 파라미터가 있다면 알림창 띄우기
+		if(getUrlParameter('send')){
+			alert("쪽지 전송 완료되었습니다.");
+		}
+		
 		var local = $(".local-list");
 		var branch = $(".branch-list");
 		var table = $(".receive-list-table");
@@ -279,7 +300,7 @@
 									<button type="submit" class="btn btn-outline-secondary btn-block">쪽지 보내기</button>
 								</fieldset>
 							</form>
-								<!-- 쪽지 보내는 사람 모달 -->
+							<!-- 쪽지 보내는 사람 모달 -->
 							<div class="modal modal-main" id="send-modal"  aria-hidden="true" style="display: none; z-index: 1050;">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">
