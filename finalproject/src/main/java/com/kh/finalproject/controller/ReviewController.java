@@ -71,9 +71,4 @@ public class ReviewController {
 		return "redirect:list";
 	}
 	
-	//리뷰 상세보기
-	@GetMapping("/detail")
-	public String detail(@RequestParam(required = false,defaultValue = "0")int review_no) {
-		return "admin/review/detail";
-	}
 }

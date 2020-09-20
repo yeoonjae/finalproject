@@ -254,7 +254,9 @@ public class TestController {
 	
 	//리뷰 적기 전에 이용권 결제한 내역 있는지 확인
 	@GetMapping("/review/license_check")
-	public List<PayInfoDto> license_check(@RequestParam int member_no){
+	public List<PayInfoDto> license_check(){
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
 		return sqlSession.selectList("pay.getPayInfo", member_no);
 	}
 	

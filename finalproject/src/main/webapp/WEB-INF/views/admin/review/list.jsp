@@ -3,9 +3,20 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/admin/template/header.jsp"></jsp:include>
 <style>
-	.sm-td{
-		width: 150px;
-	}
+		.sm-td{
+			width: 150px;
+		}
+	        /* modal position(center)*/
+        .modal {
+          text-align: center;
+          
+        }
+        .modal-dialog{
+        	margin-top: 15rem;
+        }
+        .hidden{
+        	display: none;
+        }
 </style>
 <script>
 
@@ -36,7 +47,28 @@
 			$(".nav-branch").removeClass("active");
 			$(".nav-all").addClass("active");
 		});
-	})
+		
+		//상세보기 버튼을 눌렀을 때 내용 보이게
+		$(".detail-btn").click(function(){
+			var reviewContent = $(this).parents("tr").next(".detail-tr");
+			if(reviewContent.hasClass("hidden")){
+				reviewContent.removeClass("hidden");
+			}else{
+				reviewContent.addClass("hidden");
+			}
+		})
+		
+		//삭제를 누를 시 삭제
+		$(".delete-btn").click(function(){
+			var review_no = $(this).prev().val();
+			if(confirm('삭제하시겠습니까?')){
+				location.href = "${pageContext.request.contextPath}/admin/review/delete?review_no="+review_no;
+			}else{
+				event.preventDefault();
+			}
+		});
+	});
+
 </script>
 <div id="content-wrapper">
 	<div class="container-fluid">
@@ -66,33 +98,39 @@
                 </ul>
 	        </c:if>
 	         <div id="myTabContent" class="tab-content">
-                        <div class="tab-pane fade show active" id="all">
-                            <br>
-			<table class="table table-bordered" id="dataTable" width="100%" id="dataTable" cellspacing="0" style="text-align: center;">
-				<thead>
-					<tr>
-						<th class="sm-td">지역</th>
-						<th class="sm-td">지점명</th>
-						<th>제목</th>
-						<th class="sm-td">관리메뉴</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="list" items="${list}">
-					<tr>
-						<td>${list.local_name}</td>
-						<td>${list.branch_name}</td>
-						<td>${list.review_title}</td>
-						<td>
-							<a href="detail?review_no=${list.review_no}">
-							<button class="btn btn-secondary btn-sm">상세보기</button>
-							</a>
-						</td>
-					</tr>
-					</c:forEach>
-				</tbody>
-			</table>
-			</div>
+                <div class="tab-pane fade show active" id="all">
+             	<br>
+					<table class="table table-bordered" id="dataTable" width="100%" id="dataTable" cellspacing="0" style="text-align: center;">
+						<thead>
+							<tr>
+								<th class="sm-td">지역</th>
+								<th class="sm-td">지점명</th>
+								<th>제목</th>
+								<th class="sm-td">관리메뉴</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="list" items="${list}">
+							<tr>
+								<td>${list.local_name}</td>
+								<td>${list.branch_name}</td>
+								<td>${list.review_title}</td>
+								<td>
+									<button class="btn btn-secondary btn-sm detail-btn">상세보기</button>
+								</td>
+							</tr>
+							<tr class="hidden detail-tr" style="background-color: #DDD; height: 45px;">
+								<td colspan="3">${list.review_content}
+								</td>
+								<td>
+									<input class="r-no" type="hidden" value="${list.review_no}">
+									<button class="btn btn-sm btn-outline-danger delete-btn">삭제</button>
+								</td>
+							</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>

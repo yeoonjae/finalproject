@@ -93,7 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT count(*) FROM review WHERE branch_no=#{branch_no}
 	</select>
 	
-	<!-- 리뷰 목록 -->
+	<!-- 리뷰 전체 목록 -->
 	<select id="getList" resultType="reviewDto">
 		SELECT r.*,l.LOCAL_NAME,m.MEMBER_NAME , b.BRANCH_NAME FROM REVIEW r 
 		LEFT OUTER JOIN MEMBER m ON r.MEMBER_NO = m.MEMBER_NO 
@@ -102,7 +102,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY REVIEW_DATE DESC
 	</select>
 	
-	<!-- 리뷰 목록 -->
+	<!-- 리뷰 지점별 목록 -->
 	<select id="getBranchList" resultType="reviewDto" parameterType="int">
 		SELECT r.*,l.LOCAL_NAME,m.MEMBER_NAME , b.BRANCH_NAME FROM REVIEW r 
 		LEFT OUTER JOIN MEMBER m ON r.MEMBER_NO = m.MEMBER_NO 

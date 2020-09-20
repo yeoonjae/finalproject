@@ -46,4 +46,11 @@ public class AdminReviewController {
 		}
 		return "admin/review/list";
 	}
+	
+	//리뷰 삭제
+	@GetMapping("/delete")
+	public String delete(@RequestParam int review_no) {
+		reviewDao.delete(review_no);
+		return "redirect:list";
+	}
 }
