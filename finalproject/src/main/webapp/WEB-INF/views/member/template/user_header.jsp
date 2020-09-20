@@ -107,7 +107,6 @@
               
                             <li><a href="#about">상품 충전</a></li>                    
                             <li><a href="#service">개인석</a></li>                    
-                            <li><a href="#portfolio">스터디룸</a></li>                    
                             <li><a href="${pageContext.request.contextPath}/member/review/list">리뷰</a></li>  
                             <li><a href="${pageContext.request.contextPath}/member/account/logout">로그아웃</a></li>   
                                                
@@ -125,7 +124,7 @@
 	                        <li><a href="#">공도리 홈</a></li>
                          	<li><a href="#">소개글</a></li>
                             <li><a href="#">공지사항</a></li>
-                            <li><a href="#">지점 스토리</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>
                             <li><a href="#">가맹 문의</a></li>
                         </ul>
                     </div>
@@ -135,8 +134,7 @@
                             <li><a href="${pageContext.request.contextPath}/member/account/info?member_no=${memberinfo.member_no}">마이페이지</a></li>
                             <li><a href="#">상품 충전</a></li>
                             <li><a href="#">좌석 예약</a></li>
-                            <li><a href="#">스터디룸 예약</a></li>
-                            <li><a href="#">리뷰</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/review/list">리뷰</a></li>
                             <li><a href="#">1:1문의</a></li>
                         </ul>
                     </div>
