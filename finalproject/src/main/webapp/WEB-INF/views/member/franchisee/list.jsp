@@ -58,7 +58,7 @@
                         <div class="main_service roomy-100">
                             <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
                                 <div class="head_title text-center">
-                                    <h2>공도리 스터디카페 지점 안내</h2>
+                                    <h2>SPATIUM 지점 안내</h2>
                                     <div class="separator_auto" style="width: 400px;"></div>
                                 </div>
                             </div>
