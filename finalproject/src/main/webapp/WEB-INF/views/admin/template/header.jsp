@@ -56,7 +56,7 @@
 	
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="${pageContext.request.contextPath}/admin/">GONGDORI</a>
+      <a class="navbar-brand mr-1" href="${pageContext.request.contextPath}/admin/">SPTIUM</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -101,10 +101,14 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">Settings</a>
-            <a class="dropdown-item" href="#">Activity Log</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          	<c:choose>
+          		<c:when test="${not empty admininfo}">
+		            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          		</c:when>
+          		<c:otherwise>
+          			<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/login">로그인</a>
+          		</c:otherwise>
+          	</c:choose>
           </div>
         </li>
       </ul>
@@ -116,7 +120,7 @@
       <!-- Sidebar -->
       <ul class="sidebar navbar-nav">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" href="${pageContext.request.contextPath}/admin/account/logout" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
             <span>관리자</span>
           </a>
