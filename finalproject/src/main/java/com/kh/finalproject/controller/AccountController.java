@@ -97,6 +97,7 @@ public class AccountController {
 				int no = adminDao.getNo(admin_id);
 				adminDao.updateLoginTime(no);
 				AdminDto find = adminDao.get(no);
+				session.removeAttribute("memberinfo");
 				session.setAttribute("admininfo", find);
 				return "admin/admin_index";
 			}else {
