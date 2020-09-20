@@ -78,8 +78,13 @@ public class MemberAccountController {
 	// 회원 정보 리스트
 	@GetMapping("/list")
 	public String list(Model model, @RequestParam (required = false)int branch_no) {
-		List<MemberDto> list = memberDao.getList(branch_no);
-		model.addAttribute("list", list);
+		if(branch_no==0) {
+			List<MemberDto> list = memberDao.getList();
+			model.addAttribute("list", list);
+		}else {
+			List<MemberDto> list = memberDao.getList(branch_no);			
+			model.addAttribute("list", list);
+		}
 		return "member/account/list";
 	}
 
@@ -120,7 +125,7 @@ public class MemberAccountController {
 		session.removeAttribute("memberinfo");
 		memberDao.delete(member_no);
 		if (session.getAttribute("admininfo") != null) {
-			return "member/account/list";
+			return "redirect:list";
 		} else {
 			return "member/account/delete_result";
 		}
@@ -138,7 +143,7 @@ public class MemberAccountController {
 			memberDao.updateLoginTime(member_no);
 			MemberDto find = memberDao.get(member_no);
 			session.setAttribute("memberinfo", find);
-			return "member/user";
+			return "redirect:/member/user";
 		}else {
 			return "redirect:login?error=error";
 		}

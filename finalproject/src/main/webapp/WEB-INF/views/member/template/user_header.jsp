@@ -71,8 +71,8 @@
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                            <li class="search">
-                               <a href="#">
+                            <li class="search" onclick="location.href='${pageContext.request.contextPath}/member/account/info?member_no=${memberinfo.member_no}'">
+                               <a href="${pageContext.request.contextPath}/member/account/info?member_no=${memberinfo.member_no}">
                                   <i class="fa fa-user-circle-o"></i>
                                </a>
                             </li>
@@ -124,7 +124,7 @@
                         <ul class="link">
                            <li><a href="#">공도리 홈</a></li>
                             <li><a href="#">소개글</a></li>
-                            <li><a href="#">공지사항</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/notice/noticeList">공지사항</a></li>
                             <li><a href="#">지점 스토리</a></li>
                             <li><a href="#">가맹 문의</a></li>
                         </ul>
@@ -132,6 +132,7 @@
                     <div class="widget">
                         <h6 class="title">Member Pages</h6>
                         <ul class="link">
+                        	
                             <li><a href="${pageContext.request.contextPath}/member/account/info?member_no=${memberinfo.member_no}">마이페이지</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/pay/pay_main">상품 충전</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/pay/pay_detail">결제내역조회</a></li>
@@ -141,6 +142,8 @@
                             <li><a href="#">1:1문의</a></li>
                         </ul>
                     </div>
+                    
+                    
                 </div>
                 <!-- End Side Menu -->
 

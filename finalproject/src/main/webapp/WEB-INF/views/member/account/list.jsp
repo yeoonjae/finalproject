@@ -7,16 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <script>
-$(function(){
-    $(".delete-branch-bnt").click(function(){
-       if(confirm("정말 삭제하시겠습니까? 삭제 시 해당 과 관련된 사항들이 모두 삭제됩니다.")){
-          alert("지점이 30일 뒤에 삭제됩니다. 공지사항을 적어주세요.");
-          location.href="${pageContext.request.contextPath}/member/account/list/delete?member_no="+${memberDto.member_no}
-       }else{
-          this.preventDefault();
-       }
-    })
- });
+
 </script>
 <div id="content-wrapper">
 	<div class="container-fluid">
@@ -54,7 +45,7 @@ $(function(){
 										|
 										<a href="edit?member_no=${memberDto.member_no}">수정</a>
 										|
-										<a href="delete?member_no=${memberDto.member_no}">삭제</a>
+										<a href="${pageContext.request.contextPath}/member/account/delete?member_no=${memberDto.member_no}">삭제</a>
 									</td>
 								</tr>
 							</c:forEach>
