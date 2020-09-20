@@ -138,7 +138,7 @@ public class MemberAccountController {
 			memberDao.updateLoginTime(member_no);
 			MemberDto find = memberDao.get(member_no);
 			session.setAttribute("memberinfo", find);
-			return "member/user_index";
+			return "member/user";
 		}else {
 			return "redirect:login?error=error";
 		}
