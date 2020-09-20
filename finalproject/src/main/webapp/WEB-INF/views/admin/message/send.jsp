@@ -1,5 +1,3 @@
-메세지 보내기
-
 <%@page import="com.kh.finalproject.entity.AdminDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -33,33 +31,6 @@
 </style>
 <script>
 	$(function(){
-		//parameter받아오는 코드
-		var getUrlParameter = function getUrlParameter(sParam) {
-		    var sPageURL = window.location.search.substring(1),
-		        sURLVariables = sPageURL.split('&'),
-		        sParameterName,
-		        i;
-
-		    for (i = 0; i < sURLVariables.length; i++) {
-		        sParameterName = sURLVariables[i].split('=');
-
-		        if (sParameterName[0] === sParam) {
-		            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-		        }
-		    }
-		};
-		var where = getUrlParameter('where');
-		if(where == 'inbox'){//쪽지함을 클릭해서 들어왔을 때
-			$(".send-mail-tab").removeClass('active').removeClass('show');
-			$(".outbox-tab").removeClass('active').removeClass('show');
-			$(".inbox-tab").addClass("active").addClass("show");
-		}else if(where == 'outbox'){
-			$(".send-mail-tab").removeClass('active').removeClass('show');
-			$(".inbox-tab").removeClass('active').removeClass('show');
-			$(".outbox-tab").addClass("active").addClass("show");
-		}
-		
-		
 		var local = $(".local-list");
 		var branch = $(".branch-list");
 		var table = $(".receive-list-table");
@@ -100,13 +71,14 @@
 			    		$(".who").prop("disabled",false);
 			    	}))
 	    	 }
+	    	 
 	    	if(select==3){//지점장 선택을 했을 경우
 	    		 //지역 비동기로 불러오기
 	    		 axios({
 	            		url:"${pageContext.request.contextPath}/test/message/localList",
 	            		method : "get"
 	            	}).then(function(response){
-            			$("select").remove(".local-option");
+            			$(".local-option").remove();
             			var local = $(".local-list");
 	            		$.each(response.data,function(i){
 	            			$("<option>").attr("value",response.data[i].local_no).attr("class","local-option").text(response.data[i].local_name).appendTo(local);
@@ -118,8 +90,6 @@
             		//지점 비동기로 불러와서 목록 출력
 	            	local.on("change",(function(){
 	            		var local_no = $(".local-list").val();
-	            		
-	            		
 	            		axios({
 	            			url:"${pageContext.request.contextPath}/test/message/branchList?local_no="+local_no,
 	            			method : "get"
@@ -131,7 +101,7 @@
 	            			})
 	            			branch.show();
 	            		})
-	            		}))
+	            	}))
 	            	//지점 선택을 완료하면 테이블 표시하면서 목록 추가
 	            	branch.change(function(){
 	            		var admin_no = $(".branch-list").val();
@@ -157,22 +127,22 @@
 	            		})
 	            	});
 	    	 }
+	    	
 	    	//회원 검색을 선택하면 --> 해당 지점 회원 이름 나옴
 	    	if(select==4){
 	    		var admin_no = $(".admin_no").val();
 	    		$(".member-list").show();
-// 	    		$(".who").prop("disabled",true);
+	    		$(".who").prop("disabled",true);
 	    		axios({
 	    			url:"${pageContext.request.contextPath}/test/message/member?admin_no="+admin_no,
         			method:"get"
 	    		})
 	    		.then(function(response){
-	    			console.log(response.data);
+	    			$(".member-option").remove();
 	    			$.each(response.data,function(i){
             			$("<option>").attr("value",response.data[i].member_no).attr("class","member-option").text(response.data[i].member_name).appendTo(member);
             		})
 	    		})
-	    		
 	    	}
 	    	
 	    	//회원선택을 완료하면
@@ -185,11 +155,14 @@
         			url:"${pageContext.request.contextPath}/test/message/memberInfo?member_no="+member_no,
         			method:"get"
         		}).then(function(response){
-        			tag =  "<tr class='name-tr'><td class='no'>"+response.data.member_no+
-        			"</td><td>"+response.data.branch_name+
-        			"</td><td>회원</td><td class='name'>"+response.data.member_name+
-        			"</td><td><button class='btn btn-outline-secondary remove-bnt' type='button'>삭제</button></td></tr>";
-        			table.append(tag);
+        			var no = response.data.member_no;
+        			if(table.find("td").text().indexOf(no) < 0){
+	        			tag =  "<tr class='name-tr'><td class='no'>"+response.data.member_no+
+	        			"</td><td>"+response.data.branch_name+
+	        			"</td><td>회원</td><td class='name'>"+response.data.member_name+
+	        			"</td><td><button class='btn btn-outline-secondary remove-bnt' type='button'>삭제</button></td></tr>";
+	        			table.append(tag);
+        			}
         			table.show();
         			//지우기 버튼을 누를 시 지워짐
 			    	$(".remove-bnt").on("click",(function(){
@@ -224,6 +197,28 @@
 	    		    }
 	    		 });
 	    	});
+	    	
+	    	//초기화 버튼을 누를 시 모달창 초기화면으로 되돌리기
+	    	$("#reset").click(function(){
+	    		//선택창 선택 가능하도록
+	    		$(".who").prop("disabled",false);
+	    		$(".who").val("");
+	    		//local선택창 기본값으로 돌리기
+	    		$(".receive-list-table").children("tbody").children("tr").remove();
+	    		//테이블 숨기기
+	    		table.hide();
+	    		//select창들 숨기기
+	    		local.hide();
+	    		branch.hide();
+	    		member.hide();
+	    		//지역,지점 기본값으로 돌리기
+	    		local.val("");
+	    		branch.val("");
+	    		//지역,지점 option들 지우기
+	    		$("select").remove(".local-option");
+	    		$("select").remove(".branch-option");
+	    	});
+	    	
 	     })
 	});
 </script>
@@ -299,12 +294,12 @@
 										        <select class="custom-select who" required="required">
 										        <c:choose>
 										        	<c:when test="${admininfo.admin_auth eq '본사'}">
-											          <option selected="">받는 사람 선택</option>
+											          <option value="" selected>받는 사람 선택</option>
 											          <option value="2">전체 지점장</option>
 											          <option value="3">지점장 검색</option>
 										        	</c:when>
 										        	<c:when test="${admininfo.admin_auth eq '지점'}">
-										        	  <option selected="">받는 사람 선택</option>
+										        	  <option value="" selected>받는 사람 선택</option>
 											          <option value="1">해당 지점 전체 회원</option>
 											          <option value="4">해당 지점 회원 검색</option>
 										        	</c:when>
@@ -343,6 +338,7 @@
 										    </div>
 										</div>
 										<div class="modal-footer">
+											<button style= "float:left;" type="button" class="btn btn-outline-secondary" id="reset">초기화</button>
 											<button type="button" class="btn btn-outline-secondary" id="save" data-dismiss="modal">확인</button>
 										</div>
 									</div>
