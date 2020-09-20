@@ -35,8 +35,8 @@
          // 큐알코드 생성
          var qrcode = new QRCode(document.getElementById("qrcode"), {
             text : "${sessionScope.memberinfo.member_no}",
-            width : 150, //가로
-            height : 150, //세로
+            width : 110, //가로
+            height : 110, //세로
             colorDark : "#000000", //qr에서 어두운 색 (보통 검은색) 
             colorLight : "#ffffff", //qr에서 밝은 색 (보통 하얀색) colorDark 보다 옅어야한다.
             correctLevel : QRCode.CorrectLevel.H
@@ -50,8 +50,8 @@
             // 큐알코드 생성
             var qrcode = new QRCode(document.getElementById("qrcode"), {
                text : "${sessionScope.memberinfo.member_no}",
-               width : 150, //가로
-               height : 150, //세로
+               width : 110, //가로 
+               height : 110, //세로
                colorDark : "#000000", //qr에서 어두운 색 (보통 검은색) 
                colorLight : "#ffffff", //qr에서 밝은 색 (보통 하얀색) colorDark 보다 옅어야한다.
                correctLevel : QRCode.CorrectLevel.H
@@ -189,9 +189,6 @@
      box-sizing: border-box;
  }
 
-.qr{
-
-}
 
 .modal-backdrop {
    z-index:-1;
@@ -206,6 +203,13 @@
    height:30px;
    border-radius: 50%;
 }
+
+.img{
+   width:50px;
+   height:50px;
+   border-radius: 50%;
+}
+
 .box{
     display: flex;
     flex-direction: row;
@@ -259,26 +263,67 @@
    width: 100%;
     margin-bottom: 5px;
 }
+
 .num{
-   padding-top:4%;   
+   padding-top:5%;   
    font-size:16px;
-   width:20%;     
-   color:black; 
+   width:30%;      
 } 
+
+.use{
+   padding-top:5%;   
+   padding-left:20%; 
+   font-size:16px;    
+} 
+
 .name{
-   padding-left:2%; 
-   padding-bottom:1%;  
+   padding-left:2%;
    width:100%;  
    font-size:17px;  
-   font-weight:bold;
 }
 table{
    text-align:center;
-   width:27%; 
+    width:90%;   
 }
 
 .margin{
-   margin-left:5%;
+   margin-left:7%;
+}
+
+.bold{
+	font-weight:bold;
+}
+
+.float_l{
+	 float:left; 
+}
+
+.width40{
+	width:35%;
+}
+
+.width30{
+	width:30%;
+}
+
+.width20{
+	width:20%;
+}
+.width25{
+	width:25%;
+}
+
+.width10{
+	width:10%;
+}
+.left{
+	text-align:left;
+}
+
+.noline{
+         border: 0;
+         outline: 0;
+         background-color: rgba(47,138,241,0);
 }
 </style>
 
@@ -296,12 +341,14 @@ table{
 
             <br>
             <br>
+ 
    
             <!--  지점 좌석 정보  -->
-            <div class="branchInfo">
-               <h6 class="name margin"> GONGDORI 혜정점 </h6>
+            <div class="width40 float_l">
+               <h6 class="name margin bold"> GONGDORI 혜정점 </h6>
+               
                <div> 
-                  <table class="margin"> 
+                  <table class="bold"> 
                      <tr>
                         <td class="num">30/40</td>
                         <td class="num">0/1</td>
@@ -313,26 +360,36 @@ table{
                         <td class="num">사물함</td>
                      </tr>
                   </table>
-               </div>
-            
+               </div>        
             </div>
-                        
             
-            <!-- qr코드 생성 -->
-            <div class="qr">
+             
+
+ <!--  지점 좌석 정보  -->
+            <div class="width30 float_l">
+               <h6 class="name margin bold"> 김혜정님의 잔여시간 <span><button class="btn">충전하기</button></span></h6> 
+	          	<div class="use float_l">
+	          		이용중인 상품이 없습니다. 
+	          	</div>
+
+            </div>        
+   
+          <!-- qr코드 생성 -->
+            <div class=" float_l margin width20">
                <div>
-                  <button type="button" id="out" class="btn btn-primary">외출</button>
-                  <button type="button" id="end" class="btn btn-primary">퇴실</button>
-               </div>
+                  <button type="button" id="out" class="btn">외출</button>
+                  <button type="button" id="end" class="btn">퇴실</button>
+               </div> 
                <br>
                <div id="qrcode"></div>
+               <br>
             </div> 
-
 
             <!-- 챗봇 -->
             <div class="chatbox">
                <!-- Button trigger modal -->
-               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">챗봇</button>
+               <button class="noline" data-toggle="modal" data-target="#myModal">
+                <img class="img" src="${pageContext.request.contextPath}/resources/m/images/pp.png"></button>
                <!-- Modal -->
                <div class="modal" id="myModal" tabindex="-1" role="dialog"
                   aria-labelledby="myModalLabel" aria-hidden="true">
@@ -357,7 +414,7 @@ table{
                                     <div class="innerBox">
                                        <div class="name">공도리봇</div>
                                        <div class="content">
-                                          😊공도리에 오신걸 환영합니다😊<br><br>
+                                          	😊공도리에 오신걸 환영합니다😊<br><br>
                                           저희 공도리에 대하여 문의사항이 있으시다면 <br>
                                           공도리봇을 이용해 주세요 ❕ ❗ <br><br>
                                           아래에서 원하시는 유형을 선택하시면<br>
@@ -399,7 +456,7 @@ table{
       </div>
    </div>
 </section>
-
+<br><br><br><br>
 
 
 

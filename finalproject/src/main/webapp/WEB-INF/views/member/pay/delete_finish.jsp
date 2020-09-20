@@ -17,9 +17,6 @@
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
 	crossorigin="anonymous"></script>
-	
-<%-- <script src="${pageContext.request.contextPath}/resources/qr/jquery.min.js"></script> --%>
-	
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
@@ -37,9 +34,14 @@
 		padding-top:150px;
 		padding-bottom:150px; 
 	}
+	.red{
+		color:red;
+	}
 </style>
 
-
+<script>
+	
+</script>
 <main>
 	<section>
 		<div class="container">
@@ -49,7 +51,7 @@
 						<img src="${pageContext.request.contextPath}/resources/m/images/check.jpg" width="100px" height="100px">
 					</div>
 					<div>
-						<span class="font40">고객님의 주문이 완료 되었습니다.</span><br>
+						<span class="font40">주문이 정상적으로 <span class="red">취소</span>되었습니다.</span><br>
 					</div>
 					<div>
 <!-- 						<span>주문 번호 : </span> -->
@@ -61,10 +63,9 @@
 						</a>
 
 						<a href="${pageContext.request.contextPath}/member/pay/pay_detail">
-							<input type="button" value="홈으로 가기" class="btn btn-primary btn-lg">
+							<input type="button" value="홈으로 가기" class="btn btn-primary btn-lg"> 
 						</a>				
-					</div>	
-									
+					</div>					
 				</div>
 			</div>
 		</div>

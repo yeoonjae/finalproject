@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,6 +92,51 @@ public class TestController {
 	public MemberDto getMemberList(@RequestParam int member_no) {
 		return sqlSession.selectOne("member.get", member_no);
 	}
+	
+	//////////////////////
+	// 기간 조회
+	
+		@GetMapping("/paydate")
+		public Map<String, Object> getPayDate(@RequestParam int date) {
+			String start = sqlSession.selectOne("payHis.getDate", date);
+			String finish = sqlSession.selectOne("payHis.sysdate");
+			
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("start", start);
+			map.put("finish", finish);
+			
+			return map;
+		}
+		
+		
+	@GetMapping("/pay/list")
+	public List<PayInfoDto> getPayInfo(@RequestParam String start, @RequestParam String finish,Model model,HttpSession session) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("memberinfo"); 
+		int member_no = memberDto.getMember_no();
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("member_no", member_no);
+		map.put("start", start);
+		map.put("finish", finish);
+
+		return sqlSession.selectList("PayHis.getPayInfo", map);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///////////////////////
 	
 	@GetMapping("/branch/branch_name")
 	public BranchDto branchName(@RequestParam String branch_name) {

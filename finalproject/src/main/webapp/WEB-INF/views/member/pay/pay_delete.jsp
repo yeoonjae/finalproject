@@ -70,9 +70,7 @@
 .blue {
 	color: #252399;
 }
-.brown{
-	color:#b59e79; 
-}
+
 .padding20 {
 	padding-left: 20px;
 }
@@ -86,8 +84,8 @@
 }
 .fontC{
 	font-family: '나눔바른고딕';
-	font-size: 20px;
-	margin-bottom:40px;
+	font-size: 25px; 
+	margin-bottom:30px;
 }
 .fontD {
 	font-family: '나눔바른고딕';
@@ -107,7 +105,7 @@
 .result {
 	box-sizing: border-box;
 	background-color: #f7f7f7;
-	width: 30%; 
+	width: 35%; 
 	padding: 5%;
 	margin-top: 30px; 
 	/*  		position:fixed;  */
@@ -122,15 +120,15 @@
 .resultType {
 	text-align: left;
 	width: 45%;
-	padding-bottom: 7%;
 	color: #999999;
-	font-size: 17px;
+	padding-bottom: 2%; 
+	font-size: 20px;
 }
 
 .resultPrice {
 	text-align: right;
 	width: 50%;
-	padding-bottom: 7%; 
+	padding-bottom: 2%; 
 	font-size: 20px;
 }
 .cancelPrice {
@@ -147,6 +145,12 @@
 	padding-bottom: 15%;
 	font-size: 20px;
 }
+.btn-xl{
+	padding:15px;
+	padding-left:20px;
+	padding-right:20px;  
+	font-size:15px;
+}
 </style>
 
 <main>
@@ -156,13 +160,10 @@
 				<div class="main_service roomy-100">
 					<div class="card-body offset-2 col-8">
 						<br>
-						
-						<!--  주문 상세 내역 -->
 						<div class="fontD bold">주문 상세 내역 조회</div>
 						<br>
 						<div class="table-responsive">
 							<table class="table2" width="100%" cellspacing="0">
-							<c:set var="status" value="${payInfoDto.pay_his_state}" />
 								<thead class="bold gray2">
 									<tr>
 										<td width="20%">상품금액</td>
@@ -171,47 +172,65 @@
 										<td width="10%">총 할인금액</td>
 										<td width="10%">적립금</td>
 										<td width="10%">결제 수단</td>
-										<c:choose>
-											<c:when test="${status eq '결제취소'}"> 
-												<td class="red lg" width="20%">총 취소금액</td>
-											</c:when>
-											<c:otherwise>
-												<td class="red lg" width="20%">총 결제금액</td>
-											</c:otherwise>
-										</c:choose>
+										<td class="lg" width="20%">총 결제금액</td>
 									</tr>
 								</thead>
-								<tbody class="gray"> 
+								<tbody class="gray">
 									<tr>
-										<td class="bold lg"><fmt:formatNumber value="${payInfoDto.license_price}" pattern="#,###" /></td>
-										<td>(-)${payInfoDto.pay_use_point}P</td>
-										<td>(-)<fmt:formatNumber value="${payInfoDto.coupon_discount}" pattern="#,###" /></td>
-										<td class="red">(-)<fmt:formatNumber value="${payInfoDto.pay_his_discount}" pattern="#,###" /></td>
-										<td class="blue">(+)${payInfoDto.reward}P</td>
+										<td class="bold lg"><fmt:formatNumber
+												value="${payInfoDto.license_price}" pattern="#,###" /></td>
+										<td>-${payInfoDto.pay_use_point}P</td>
+										<td>-${payInfoDto.coupon_discount}</td>
+										<td class="red">-<fmt:formatNumber
+												value="${payInfoDto.pay_his_discount}" pattern="#,###" /></td>
+										<td class="blue">+${payInfoDto.reward}P</td>
 										<td>${payInfoDto.pay_his_method}</td>
-										<c:choose>
-											<c:when test="${status eq '결제취소'}"> 
-												<td class="red bold lg">(-)<fmt:formatNumber value="${payInfoDto.pay_his_price}" pattern="#,###" /></td>
-											</c:when>
-											<c:otherwise>
-												<td class="red bold lg"><fmt:formatNumber value="${payInfoDto.pay_his_price}" pattern="#,###" /></td>
-											</c:otherwise>
-										</c:choose>
-										
-										</td>
+										<td class="bold lg"><fmt:formatNumber
+												value="${payInfoDto.pay_his_price}" pattern="#,###" /></td>
 									</tr>
 								</tbody>
 							</table>
 						</div>
 						<br> <br>
-	
-						<hr class="hr_bold">
-						<!--  주문 정보 출력  -->
+
+
+						<div class="result float_right">
+							<!-- 환불 내역 -->
+							<div class="bold fontC"> 환불 예정 금액</div>
+							<table class="resultContainer">
+								<tr>
+									<td class="resultType">상품 금액</td>
+									<td class="resultPrice">
+										<fmt:formatNumber value="${payInfoDto.license_price}" pattern="#,###" />
+									</td>
+								</tr>							
+								<tr>
+									<td class="resultType red">(-) 총 할인금액</td>
+									<td class="resultPrice">(-) <fmt:formatNumber value="${payInfoDto.pay_his_discount}" pattern="#,###" /></td>
+								</tr>
+								<tr>
+									<td class="cancel red bold">총 취소금액</td>
+									<td class="cancelPrice red bold lg">
+										 -<fmt:formatNumber value="${payInfoDto.pay_his_price}" pattern="#,###" />
+									</td> 
+								</tr>
+							</table>
+							<div align="right">
+								<!--  카카오페이에 상품명, 총 금액 전송  -->
+								<form action="delete" method="get">
+										<input type="submit" value="취소하기" class="btn btn-danger btn-xl">
+										<input type="hidden" name="tid" value="${payInfoDto.tid_no}">
+										<input type="hidden" name="cancel_amount" value="${payInfoDto.pay_his_price}">
+								</form>
+							</div>
+						</div>
+
+					<hr class="hr_bold">
 						<div>
 							<div class="font20 bold">주문 정보</div>
 							<br>
 							<div class="table-responsive">
-								<table class="table3 table-hover width50"cellspacing="0">
+								<table class="table3 table-hover" width="70%" cellspacing="0">
 									<thead class="width50">
 										<tr>
 											<th class="width50 padding20">주문번호</th>
@@ -228,6 +247,7 @@
 										<tr>
 											<th class="width50 padding20">주문상태</th> 
 											<td class="width50 left">
+											<c:set var="status" value="${payInfoDto.pay_his_state}" />
 												<c:choose>
 													<c:when test="${status eq '결제취소'}"> 
 														<span class="red bold">${payInfoDto.pay_his_state}</span>
@@ -243,26 +263,28 @@
 							<br>
 						</div>
 
-						<!-- 상품 정보 출력  -->
+
 						<div>
 							<div class="font20 bold">상품 정보</div> 
 							<br>
 							<div class="table-responsive">
-								<table class="table3  table-hover width50" cellspacing="0"> 
+								<table class="table3  table-hover" width="70%" cellspacing="0"> 
 									<thead class="width50">
+
 										<tr>
 											<th class="width50 padding20">상품명</th>
 											<td class="width50 left">${payInfoDto.license_time}시간</td>
 										</tr>
 										<tr>
 											<th class="width50 padding20">상품가격</th>
-											<td class="width50 left"><fmt:formatNumber value="${payInfoDto.license_price}" pattern="#,###" /></td>
+											<td class="width50 left"><fmt:formatNumber
+													value="${payInfoDto.license_price}" pattern="#,###" /></td>
 										</tr>
 								</table>
 							</div>
 						</div>
-						
 					</div>
+					
 				</div>
 			</div>
 		</div>

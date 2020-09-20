@@ -17,65 +17,170 @@
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
 	crossorigin="anonymous"></script>
-
+	
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
-	.container{
-		font-family: 'Noto Sans KR';
-	}
-	
-	.tContainer{
-		width:100%;
-		border:1px solid lightgray;
-		text-align:center;
-		height:auto;
-	}
-	
+.container {
+	font-family: 'Noto Sans KR'; 
+}
+.brown{
+	color:#b59e79; 
+}
+.red{
+	color:#ed4b42;
+}
+.blue{
+	color:#3962d4;
+}
+.bold{
+	font-weight:bold;
+}
+.roomy-300{
+		padding-top:150px;
+		padding-bottom:315px; 
+}
+
+.table2 {
+	text-align: center;
+    line-height: 3;
+    border-top: 1px solid #ddd;
+}
+ .gray2{
+	background-color:#f5f5f5;
+}
+.fontD {
+	font-family: '나눔바른고딕';
+	font-size: 40px;
+}
+.list-result{
+	display: none;
+	color: red;
+	font-size: medium;
+}
+.list-result.on {
+	display: inline-block;
+}
 </style>
 <script>
-	function AddComma(data_value) {
-		return Number(data_value).toLocaleString();
-	}
+	$(function(){
+		 
+		// 기간 버튼 선택 시
+    	$(".btn-date").click(function(){
+    		var date = $(this).data("date");
+    		axios({
+    			url:"${pageContext.request.contextPath}/test/paydate?date="+date,
+    			method:"get"
+    		}).then(function(response){
+    			$("input[name=start]").val(response.data.start);
+    			$("input[name=finish]").val(response.data.finish);
+    		});
+    	});	
+		
 
+    	window.onload = function(){
+            var options = {
+                //대상 지정
+                field: document.querySelector(".picker-start"),              
+                //두 번째 대상 지정
+                secondField: document.querySelector(".picker-end"),               
+                //날짜 표시 형식 지정
+                format: 'YYYY-MM-DD',              
+                //한 화면에 표시될 달의 개수
+                numberOfMonths: 1,              
+                //시작일 지정
+                // minDate:new Date(),//- 오늘부터 선택 가능
+                minDate:moment(new Date()).add(-90, 'days'),
+                //미래 날짜 선택불가
+                maxDate: moment().endOf('today'),               
+                //시작요일(1:월 ~ 7:일)
+                firstDay: 7,              
+                //선택 방향 제어
+                selectForward: true,               
+                //주말 제외
+                disableWeekends:false,      
+                //선택 후 이벤트 설정(start와 end는 momentjs의 객체)
+                onSelect:function(start, end) {
+                    if(!start || !end) return; //둘 중 하나라도 없으면 계산 중지
+                    var days = end.diff(start, 'days') + 1;
+                    console.log(days);
+                }
+            };
+            var picker = new Lightpick(options);		
+    	};
+    	
+    	
+	});
 </script>
 <main>
 	<section>
 		<div class="container">
 			<div class="row">
-				<div class="main_service roomy-100">
-				<h3> 결제 내역 조회 </h3>
-						<table class="tContainer">
-						<tr>
-							<td>주문번호</td>
-							<td>주문일</td>
-							<td>상품명</td>
-							<td>상품 금액</td>
-							<td>할인 금액</td>
-							<td>결제 금액</td>
-<!-- 							<td>적립 포인트</td> -->
-							<td>상태</td>
-						</tr>
-						<c:forEach var="payInfoDto" items="${list}">
-						<tr>
-							<td>${payInfoDto.tid_no}</td>
-							<td>${payInfoDto.pay_his_date.toLocaleString()}</td>
-							<td>${payInfoDto.license_time}시간 이용권</td>
-							<td>${payInfoDto.license_price}</td>
-							<td>${payInfoDto.pay_his_discount}</td>
-							<td>${payInfoDto.pay_his_price}</td>
-<%-- 							<td>${payHisDto.}</td> --%>
-							<td>${payInfoDto.pay_his_state}</td>
-						</tr>
-						</c:forEach>
-					</table>
+				<div class="main_service roomy-300">
+					<div class="card-body offset-2 col-8">
+						<div class="fontD bold brown">주문 내역 조회</div> 
+						<div>
+							<p>주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.<br>
+							<span class="brown">결제취소는 결제 완료시까지만</span> 가능합니다. </p>
+							<br>
+						</div> 
+						
 
+						<!--  결제 내역 목록  -->
+						<div class="table-responsive">
+							<table class="table2 table-bordered table-hover" width="100%" cellspacing="0"> 
+								<thead class="bold gray2">
+									<tr>
+										<td>No</td>
+										<td width="17%">주문번호</td>
+										<td>주문일</td>
+										<td>상품명</td>
+										<td>상품 금액</td>
+										<td>할인 금액</td>
+										<td>결제 금액</td>
+										<td>주문 상태</td>
+										<td width="10%"></td>
+									</tr>
+								</thead>
+										<c:forEach var="payInfoDto" items="${list}">
+										<tr>
+											<td>${payInfoDto.pay_his_no}</td>
+											<td>
+												<a href="${pageContext.request.contextPath}/member/pay/history?tid=${payInfoDto.tid_no}">${payInfoDto.tid_no}</a>
+											</td>
+											<td>${payInfoDto.pay_his_date2}</td>
+											<td>${payInfoDto.license_time}시간</td>
+											<td><fmt:formatNumber value="${payInfoDto.license_price}" pattern="#,###" /></td>
+											<td class="">(-)<fmt:formatNumber value="${payInfoDto.pay_his_discount}" pattern="#,###" /></td> 
+											<td class="bold"><fmt:formatNumber value="${payInfoDto.pay_his_price}" pattern="#,###" /></td>
+											<td>
+											<c:set var="status" value="${payInfoDto.pay_his_state}" />
+												<c:choose>
+													<c:when test="${status eq '결제취소'}"> 
+														<span class="red">${payInfoDto.pay_his_state}</span>
+													</c:when>
+													<c:otherwise>
+														<span class="blue">${payInfoDto.pay_his_state}</span>
+													</c:otherwise>
+												</c:choose>
+											</td>
+											<td>
+												<c:if test="${status eq '결제완료'}">
+												<a href="${pageContext.request.contextPath}/member/pay/pay_delete?tid=${payInfoDto.tid_no}">
+													<input type="submit" value="결제취소" class="btn"> 
+												</a>
+												</c:if>
+											</td>
+										</tr>
+										</c:forEach>
+								</tbody>
+							</table>
+						</div>
 
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 </main>
-
-
 <jsp:include page="/WEB-INF/views/member/template/footer.jsp"></jsp:include>

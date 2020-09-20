@@ -11,7 +11,11 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
-
+<style>
+	.center{
+		text-align:center;
+	}
+</style>
 <script>
 	$(function() {
 		 
@@ -129,17 +133,17 @@
 			<div class="card-header">
 				<i class="fas fa-table"></i> 이용권 목록
 			</div>
-			<div class="card-body">
-				<div class="table-responsive">
-					<table class="table table-bordered" id="dataTable" width="100%"	cellspacing="0">
+			<div align="center" class="card-body"> 
+				<div class="table-responsive"> 
+					<table class="table table-bordered" id="dataTable" width="70%"	cellspacing="0">
 					
 						<thead>
 							<tr>
 								<th width="20%">이용권 번호</th>
 								<th>시간</th>
-								<th>가격</th>
-								<th width="10%"></th>
-								<th width="10%"></th>
+								<th>가격</th> 
+								<th width="20%"></th>
+								<th width="20%"></th>
 							</tr>
 						</thead>
 						
@@ -148,8 +152,8 @@
 								<th width="20%">이용권 번호</th>
 								<th>시간</th>
 								<th>가격</th>
-								<th width="10%"></th>
-								<th width="10%"></th>
+								<th width="20%"></th>
+								<th width="20%"></th>
 							</tr>
 						</tfoot>
 						

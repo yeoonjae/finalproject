@@ -34,29 +34,29 @@
 
         <!--Theme Responsive css-->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/m/css/responsive.css" />
-		<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-	    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+       <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/m/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-   		<script>
-   			$(function(){
-	   			 axios({
-	 				url:"${pageContext.request.contextPath}/test/message/count_member",
-	 				method:"get"
-	 			})
-	 			.then(function(response){
-	 				if(response.data==0){
-	 	    			$(".readCount").hide();
-	 	    		}else{
-	 					$(".readCount").text(response.data);
-	 	    		}
- 				})  
-   			});
-   		</script>
-   		<style>
-   			.badge{
-   				background-color: red;
-   			}
-   		</style>
+         <script>
+            $(function(){
+                axios({
+                url:"${pageContext.request.contextPath}/test/message/count_member",
+                method:"get"
+             })
+             .then(function(response){
+                if(response.data==0){
+                    $(".readCount").hide();
+                 }else{
+                   $(".readCount").text(response.data);
+                 }
+             })  
+            });
+         </script>
+         <style>
+            .badge{
+               background-color: red;
+            }
+         </style>
     </head>
 
     <body data-spy="scroll" data-target=".navbar-collapse">
@@ -80,12 +80,11 @@
                               <a href="${pageContext.request.contextPath}/member/coupon/list">
                                   <i class="fa fa-ticket" aria-hidden="true"></i>
                               </a>
-                            </li>
                             <li class="search" onclick="location.href='${pageContext.request.contextPath}/member/message/message'">
-		                        <a href="${pageContext.request.contextPath}/member/message/message">
-		                            <i class="fa fa-envelope" aria-hidden="true"></i>
-		                            <span class="badge badge-danger readCount"></span>
-		                        </a>
+                              <a href="${pageContext.request.contextPath}/member/message/message">
+                                  <i class="fa fa-envelope" aria-hidden="true"></i>
+                                  <span class="badge badge-danger readCount"></span>
+                              </a>
                             </li>
                             <li class="side-menu"><a href="#"><i class="fa fa-bars"></i></a></li>
                         </ul>
@@ -97,7 +96,7 @@
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                             <i class="fa fa-bars"></i>
                         </button>
-                        <a class="navbar-brand" href="#brand">
+                        <a class="navbar-brand" href="${pageContext.request.contextPath}/member/user/">
 
                             <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-display m-top-10" alt="">
                             <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-scrolled" alt="">
@@ -126,8 +125,8 @@
                     <div class="widget">
                         <h6 class="title">Custom Pages</h6>
                         <ul class="link">
-	                        <li><a href="#">공도리 홈</a></li>
-                         	<li><a href="#">소개글</a></li>
+                           <li><a href="#">공도리 홈</a></li>
+                            <li><a href="#">소개글</a></li>
                             <li><a href="#">공지사항</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>
                             <li><a href="#">가맹 문의</a></li>

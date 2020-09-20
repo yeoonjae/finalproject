@@ -130,3 +130,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM member WHERE member_name=#{member_name}
 	</select>
 </mapper>
+

@@ -15,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.kh.finalproject.entity.LicenseDto;
 import com.kh.finalproject.entity.MemberBranchDto;
+import com.kh.finalproject.entity.MemberCouponDto;
+import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PayInfoDto;
 import com.kh.finalproject.repository.LicenseDao;
 import com.kh.finalproject.repository.PayDao;
@@ -31,8 +33,10 @@ public class PayController {
 
 	
 	@GetMapping("/pay_main")
-	public String getBranch(@RequestParam int member_no, Model model,RedirectAttributes attr) {
-
+	public String getBranch(Model model, HttpSession session) {
+		MemberDto memberDto = (MemberDto) session.getAttribute("memberinfo"); 
+		int member_no = memberDto.getMember_no();
+		
 		// 이용권 리스트 가져오기 
 		List<LicenseDto> list = licenseDao.getList();
 		model.addAttribute("list", list);
@@ -40,7 +44,9 @@ public class PayController {
 		// 회원 지점명 가져오기 
 		MemberBranchDto memberBranchDto = payDao.getBranch(member_no);
 		model.addAttribute("memberBranchDto",memberBranchDto);
-		attr.addAttribute("member_no", member_no);
+		
+		List<MemberCouponDto> list2 = payDao.coupon_getList(member_no);
+		model.addAttribute("list2", list2);	
 		
 		return "member/pay/pay_main";
 	}
@@ -48,11 +54,13 @@ public class PayController {
 	@RequestMapping("/pay_detail")
 	public String getPayIist(Model model,HttpSession session) {
 		
-		int member_no = (int) session.getAttribute("member_no");	
+		MemberDto memberDto = (MemberDto) session.getAttribute("memberinfo"); 
+		int member_no = memberDto.getMember_no();
 		
 		List<PayInfoDto> list = payDao.getPayInfo(member_no); 		
 		model.addAttribute("list", list);
 		
 		return "member/pay/pay_detail";
 	}
+	
 }

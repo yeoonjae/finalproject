@@ -11,4 +11,6 @@ public class PayPointDto {
 	private int member_no;
 	private int pay_use_point;
 	private int reward;
+	private int coupon_discount;
+	private int coupon_no;
 }

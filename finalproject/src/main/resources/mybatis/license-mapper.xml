@@ -11,11 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			license_no,
 			license_time,
 			license_price
-			) VALUES (
+		) VALUES (
 			license_seq.nextval,
 			#{license_time},
 			#{license_price}
-			)
+		)
 	</insert>
 	
 	<!--  이용권 목록 조회 -->
