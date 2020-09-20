@@ -185,6 +185,13 @@
 });
 </script>
 <style>
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css); 
+
+.container {
+	font-family: 'Noto Sans KR';
+}
+
  *{
      box-sizing: border-box;
  }
@@ -208,6 +215,7 @@
    width:50px;
    height:50px;
    border-radius: 50%;
+
 }
 
 .box{
@@ -257,7 +265,7 @@
 /*    width:200px; */
 }
 .box .innerBox{
-     flex-grow: 0.3;  
+     flex-grow: 0.1;  
 }
 .btn-size{
    width: 100%;

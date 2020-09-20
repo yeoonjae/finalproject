@@ -38,20 +38,23 @@
 // 			console.log(coupon_discount);
 			
 			// 최종 결제금액 설정 
-			var total_price = calcResult();			
-			$(".total_price").text(total_price); 
+			var total_price = calcResult();		
+			var total_price2 = total_price.toLocaleString();
+			$(".total_price").text(total_price2); 
 			// 최종 할인금액 설정
 			var sale_price = salePrice();			
+			
+			$(".total_amount").val(total_price);
 			//적립금 계산 
 			var reward = pointReward();
 			$(".reward").text(reward);
 			
 			//쿠폰 할인 금액 설정 + 카카오페이 전송 
 			var coupon_discount = calcCouponDiscount();
+			//var coupon_discount2 = coupon_discount.toLocaleString();
  			$(".coupon_total").text(coupon_discount); 
 			
 			// 카카오페이에 전송
-			$(".total_amount").val(total_price);
 			$(".sale_price").val(sale_price);
 			$(".reward").val(reward);
 			$(".coupon_no").val(coupon_no); // 쿠폰 번호 전송 
@@ -83,15 +86,18 @@
 			
 			// 최종 결제금액 설정 
 			var total_price = calcResult();
-			$(".total_price").text(total_price);
+ 			total_price2 = total_price.toLocaleString();
+			$(".total_price").text(total_price2);
 			// 최종 할인금액 설정
 			var sale_price = salePrice();			
+			
+			$(".total_amount").val(total_price);
+			
 			//적립금 계산 
 			var reward = pointReward();
 			$(".reward").text(reward);
 			
 			// 카카오페이에 전송
-			$(".total_amount").val(total_price);
 			$(".sale_price").val(sale_price);
 			$(".use_point2").val(point);
 			$(".reward").val(reward);
@@ -116,23 +122,29 @@
 				
 				
 				var totalPrice = calcResult(); //최종 결제 금액 계산값 읽어오기
+				var totalPrice2 = totalPrice.toLocaleString();
+				
 				var license_price = $("input[name=license]:checked").data("price");
 				var use_point = parseInt($(this).val()); // 입력 마일리지 값 읽어오기 
+				//var use_point2 = use_point.toLocaleString();
 				
 				var member_point = $(".use_all_point").data().point; //회원 보유 마일리지 값 
 				var member_point2 = parseInt(member_point).toLocaleString(); //소수점 찍기 				
 
 				$(".use_point").text(use_point); // 마일리지 할인 금액에 해당 값 설정 
-				$(".total_price").text(totalPrice);
+				$(".total_price").text(totalPrice2);
 
 				///// 입력 마일리지 > 회원 마일리지 일 경우 
 				if (use_point > parseInt(member_point)) { // 숫자로 변환 
 					var use_point=0;
 					$(".use_point").val("");
 					$(".use_point").text("");
+					
+					totalPrice = calcResult(); //최종 결제 금액 계산값 읽어오기
+					totalPrice2 = totalPrice.toLocaleString();
 
-					$(".total_price").text(license_price);
-					totalPrice = license_price;
+					$(".total_price").text(totalPrice2);
+
 					alert("사용 가능 마일리지는 " + member_point2 + "P 입니다.");
 				}
 				////// 입력 마일리지 > 총 가격 일 경우
@@ -141,8 +153,11 @@
 					$(".use_point").val("");
 					$(".use_point").text("");
 
-					$(".total_price").text(license_price);
-					totalPrice = license_price;
+					totalPrice = calcResult(); //최종 결제 금액 계산값 읽어오기
+					totalPrice2 = totalPrice.toLocaleString();
+
+					$(".total_price").text(totalPrice2);
+
 					alert("마일리지는 총 결제금액을 초과하여 사용할 수 없습니다.");
 				}
 				
@@ -151,19 +166,22 @@
 					$(".use_point").val("");
 					$(".use_point").text("");
 
-					$(".total_price").text(license_price);
-					totalPrice = license_price;
+					totalPrice = calcResult(); //최종 결제 금액 계산값 읽어오기
+					totalPrice2 = totalPrice.toLocaleString();
+
+					$(".total_price").text(totalPrice2); 
 				}
 
 				// 최종 할인금액 계산
 				var sale_price = salePrice();
 				
+				$(".total_amount").val(totalPrice);
+
 				//적립금 계산
 				var reward = pointReward();
 				$(".reward").text(reward);
 				
 				// 카카오페이에 최종 결제금액+최종 할인금액 전송
-				$(".total_amount").val(totalPrice);
 				$(".sale_price").val(sale_price);
 				$(".use_point2").val(use_point);
 				$(".reward").val(reward);
@@ -185,33 +203,37 @@
 				
 				// 총 결제금액 계산  
 				var total_price = calcResult();
+				var total_price2 = total_price.toLocaleString();
 				var point = $(this).data().point;
 				
 				// 적립금이 총 결제금액보다 많을 경우 
 				if (total_price < point) {				
 					$(".use_point").val(total_price);
-					$(".use_point").text(total_price);
+					$(".use_point").text(total_price2);
 
 					point = total_price;
-					total_price = total_price - point;
+					total_price = total_price - point;					
+					total_price2 = total_price.toLocaleString();
 				} 
 				else { 
 					$(".use_point").val(point);
 					$(".use_point").text(point);
 
 					total_price = calcResult();
+					total_price2 = total_price.toLocaleString();
 				}
-				$(".total_price").text(total_price);
+				$(".total_price").text(total_price2);
 				
 				// 최종 할인금액 계산
 				var sale_price = salePrice();
 				
+				$(".total_amount").val(total_price);
+
 				//적립금 계산 
 				var reward = pointReward();
 				$(".reward").text(reward);				
 
 				// 카카오페이에 최종 결제금액 전송
-				$(".total_amount").val(total_price);
 				$(".sale_price").val(sale_price);
 				$(".use_point2").val(point);
 				$(".reward").val(reward);
@@ -268,7 +290,7 @@
 
 	// 적립예정 포인트 계산 
 	function pointReward() {
-		var total_price = $(".total_price").text();
+		var total_price = $(".total_amount").val();
 		var reward = parseInt(parseInt(total_price) * 0.02);
 		return reward;
 	}
@@ -299,7 +321,7 @@
 }
 
 .red{
-	color:red; 
+	color:red;
 }
 .bold {
 	font-weight: bold;
@@ -326,7 +348,7 @@
 .padding3 {
 	padding-top: 3%;
 }
-
+ 
 .float_right {
 	float: right;
 }
@@ -370,11 +392,14 @@
 .result {
 	box-sizing: border-box;
 	background-color: #f7f7f7;
-	width: 28%;  
-	padding-left: 4%;
-	padding-right: 4%;  
-	padding-top:2%;
-	padding-bottom:1%;
+	width: 37%;  
+	padding:5%; 
+	margin-top:3%;
+	margin-right:3%;
+/* 	padding-left: 4%; */
+/* 	padding-right: 4%;   */
+/* 	padding-top:2%; */
+/* 	padding-bottom:1%; */
 /* 	position:fixed;  */
 /* 	right: 14%;   */
 /* 	top:13%;  */
@@ -383,7 +408,8 @@
 .licenseContainer {
 	width: 80%;
 	height: 10px;
-}
+	margin-left: 3%;
+} 
 
 .couponContainer{
 	width:100%;   
@@ -425,7 +451,9 @@
 .info {
 	padding-left: 15%;
 }
-
+.padding_l3{
+	padding-left:3%;
+}
 .resultContainer {
 	width: 100%;
 	background-color: #f7f7f7;
@@ -459,6 +487,13 @@
 .width50 {
 	width: 60%;
 }
+
+.font25{
+	font-size:25px;
+}
+.font30{
+	font-size:30px; 
+}
 </style>
 
 
@@ -469,8 +504,8 @@
 				<div class="main_service roomy-100">
 					<div>
 						<!--  총 결제금액  -->
+<hr>
 						<div class="result float_right">
-
 							<!-- 결제 내역 -->
 							<table class="resultContainer">
 								<tr>
@@ -495,7 +530,7 @@
 									<td class="resultType">최종 결제 금액</td>
 									<td class="resultPrice">
 									<span class="resultFont total_price">0</span> 
-									<span style="color: red">원</span></td>
+									<span class=" bold red">원</span></td>
 								</tr>
 							</table>
 							<hr>
@@ -577,7 +612,7 @@
 							<div class="subContainer">
 								<h4 class="bold">좌석 이용권 구매정보</h4>
 
-								<div class="padding5">
+								<div class="padding5 padding_l3">
 									<table class="infoContainer">
 										<tr>
 											<td>지점명</td>
