@@ -16,7 +16,7 @@ public class MemberInterceptor extends HandlerInterceptorAdapter {
 		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
 		int no=Integer.parseInt(request.getParameter("member_no"));
 		if(memberDto.getMember_no()!=no) {
-			response.sendRedirect(request.getContextPath()+"/admin/account/login");
+			response.sendRedirect(request.getContextPath()+"/member/account/login");
 			return false;
 		}else {
 			return true;
