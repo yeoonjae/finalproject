@@ -345,7 +345,7 @@ table{
    
             <!--  지점 좌석 정보  -->
             <div class="width40 float_l">
-               <h6 class="name margin bold"> GONGDORI 혜정점 </h6>
+               <h6 class="name margin bold"> SPATIUM 혜정점 </h6>
                
                <div> 
                   <table class="bold"> 
@@ -412,14 +412,14 @@ table{
                                     </div>   
                                     <!-- 내용 박스 -->
                                     <div class="innerBox">
-                                       <div class="name">공도리봇</div>
+                                       <div class="name">스파봇</div>
                                        <div class="content">
-                                          	😊공도리에 오신걸 환영합니다😊<br><br>
-                                          저희 공도리에 대하여 문의사항이 있으시다면 <br>
-                                          공도리봇을 이용해 주세요 ❕ ❗ <br><br>
+                                          	😊SPATIUM에 오신걸 환영합니다😊<br><br>
+                                          저희 SPATIUM에 대하여 문의사항이 있으시다면 <br>
+                                          스파봇을 이용해 주세요 ❕ ❗ <br><br>
                                           아래에서 원하시는 유형을 선택하시면<br>
                                           해당 유형의 답변을 확인하실 수 있답니당🧡<br><br>
-                                          다들 공도리와 함께 열공하고 <br>
+                                          다들 스파티움과 함께 열공하고 <br>
                                           놀면서 돈벌어요🧡💛💚💙💜 <br><br>                              
                                           <input type="button" class="btn btn-size type1" value="결제 및 환불 관련" data-no="1">
                                           <input type="button" class="btn btn-size type2" value="예약 관련" data-no="2">
