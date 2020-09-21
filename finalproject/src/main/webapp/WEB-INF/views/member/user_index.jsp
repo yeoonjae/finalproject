@@ -373,7 +373,7 @@ table{
             
              
 
- <!--  지점 좌석 정보  -->
+ 			<!--  지점 좌석 정보  -->
             <div class="width30 float_l">
                <h6 class="name margin bold"> 김혜정님의 잔여시간 <span><button class="btn">충전하기</button></span></h6> 
 	          	<div class="use float_l">
