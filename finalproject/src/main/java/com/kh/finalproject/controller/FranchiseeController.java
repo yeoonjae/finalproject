@@ -65,4 +65,5 @@ public class FranchiseeController {
 		return "/member/franchisee/question";
 	}
 	
+	
 }
