@@ -287,8 +287,9 @@
 						
 						<br><br>
 						
-						 <div class="right"> 
-							<button class="btn btn-primary">목록으로 돌아가기</button>
+						 <div class="right"> 							
+							<a href="${pageContext.request.contextPath}/member/pay/pay_detail">
+							<button class="btn btn-primary">목록으로 돌아가기</button></a>
 						 </div>
 
 					</div>

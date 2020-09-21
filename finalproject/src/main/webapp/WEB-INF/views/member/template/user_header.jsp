@@ -8,7 +8,7 @@
     <!--Designerd by: http://bootstrapthemes.co-->
     <head>
         <meta charset="utf-8">
-        <title>GONDORI MAIN PAGE</title>
+        <title>SPATIUM MAIN PAGE</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="favicon.ico">
@@ -76,6 +76,10 @@
                                   <i class="fa fa-user-circle-o"></i>
                                </a>
                             </li>
+                            <li class="search" onclick="location.href='${pageContext.request.contextPath}/member/coupon/list'">
+                              <a href="${pageContext.request.contextPath}/member/coupon/list">
+                                  <i class="fa fa-ticket" aria-hidden="true"></i>
+                              </a>
                             <li class="search" onclick="location.href='${pageContext.request.contextPath}/member/message/message'">
                               <a href="${pageContext.request.contextPath}/member/message/message">
                                   <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -106,8 +110,7 @@
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
               
                             <li><a href="${pageContext.request.contextPath}/member/pay/pay_main">상품 충전</a></li>                    
-                            <li><a href="#service">개인석</a></li>                    
-                            <li><a href="#portfolio">스터디룸</a></li>                    
+                            <li><a href="${pageContext.request.contextPath}/member/seat/select">개인석</a></li>                    
                             <li><a href="${pageContext.request.contextPath}/member/review/list">리뷰</a></li>  
                             <li><a href="${pageContext.request.contextPath}/member/account/logout">로그아웃</a></li>   
                                                
@@ -122,10 +125,10 @@
                     <div class="widget">
                         <h6 class="title">Custom Pages</h6>
                         <ul class="link">
-                           <li><a href="#">공도리 홈</a></li>
+                           <li><a href="#">스파티움 홈</a></li>
                             <li><a href="#">소개글</a></li>
                             <li><a href="#">공지사항</a></li>
-                            <li><a href="#">지점 스토리</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>
                             <li><a href="#">가맹 문의</a></li>
                         </ul>
                     </div>
@@ -134,11 +137,10 @@
                         <ul class="link">
                             <li><a href="${pageContext.request.contextPath}/member/account/info?member_no=${memberinfo.member_no}">마이페이지</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/pay/pay_main">상품 충전</a></li>
-                            <li><a href="${pageContext.request.contextPath}/member/pay/pay_detail">결제내역조회</a></li>
-                            <li><a href="#">좌석 예약</a></li>
-                            <li><a href="#">스터디룸 예약</a></li>
-                            <li><a href="#">리뷰</a></li>
-                            <li><a href="#">1:1문의</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/seat/select">좌석 예약</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/pay/pay_detail">결제내역</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/point/list">마일리지 내역</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/review/list">리뷰</a></li>
                         </ul>
                     </div>
                 </div>
