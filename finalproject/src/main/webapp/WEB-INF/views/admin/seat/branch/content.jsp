@@ -17,6 +17,15 @@
         .cinema-wrap > .cinema-seat-area > .cinema-seat.disabled:not(.empty){
             background-image: url("${pageContext.request.contextPath}/resources/m/images/disabled.png") !important;
         } */
+        .cinema-wrap > .cinema-seat-area > .cinema-seat:not(.empty){
+	        background-image: url("${pageContext.request.contextPath}/resources/m/images/seat-empty.png") !important;
+	    }
+	    .cinema-wrap > .cinema-seat-area > .cinema-seat.active:not(.empty){
+	        background-image: url("${pageContext.request.contextPath}/resources/m/images/seat-active.png") !important;
+	    }
+	    .cinema-wrap > .cinema-seat-area > .cinema-seat.disabled:not(.empty){
+	        background-image: url("${pageContext.request.contextPath}/resources/m/images/seat-disabled.png") !important;
+	    }
         .btn-wrap {
         	text-align: center;
         }
@@ -25,6 +34,13 @@
         }
         .btn-list {
         	margin-left: 5px;
+        }
+        .star {
+            color: red;
+        }
+        p {
+            font-size: smaller;
+            margin-left: 10px;
         }
     </style>
    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/hiphop5782/js@latest/cinema/hacademy-cinema.css">
@@ -54,9 +70,13 @@
         	    return results[1] || 0;
         	}
    	    	
-   	    	if($.urlParam('branch_no')!=1) {
-   	    		$('.btn-list').hide();
-   	    	}
+   	    	$('.btn-delete').click(function(){
+   	    		if(confirm("좌석을 정말 삭제하시겠습니까?")){
+   	    			location.href = "${pageContext.request.contextPath}/admin/seat/branch/delete";
+   	    		} else {
+   	    			return;
+   	    		}
+   	    	});
    	    })
     </script>
 </head>
@@ -77,6 +97,11 @@
 <!--                     </div> -->
 <!--                 </div> -->
                 <br>
+					<div class="notice-wrap">
+	                    <label>주의 사항</label>
+	                    <p><span class="star">*</span> 좌석 수정을 원하시면 <span style="font-weight: 700;"><span class="star">삭제</span> 후 재등록</span>을 해주세요</p>
+	                </div>
+                <br>
                 <input type="hidden" name="entrance" value="${entrance}" class="entrance">
                 <div class="cinema-wrap" data-name="seat">
                 	<div class="cinema-screen">출입구</div>
@@ -88,9 +113,7 @@
                 </div>
                 <br><br>
                 <div class="btn-wrap">
-                    <button class="btn btn-sm btn-primary btn-edit">수정</button>
                     <button class="btn btn-sm btn-danger btn-delete">삭제</button>
-                    <button class="btn btn-sm btn-secondary btn-list">목록</button>
                 </div>
                 <br><br>
             </div>

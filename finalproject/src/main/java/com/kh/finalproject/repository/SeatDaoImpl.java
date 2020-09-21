@@ -81,4 +81,11 @@ public class SeatDaoImpl implements SeatDao{
 		return sqlSession.selectOne("seat.getAllCount", branch_no);
 	}
 
+	@Override
+	public void delete(int branch_no) {
+		sqlSession.delete("seat.delete", branch_no);
+		sqlSession.delete("seat.entranceDelete", branch_no);
+		
+	}
+
 }

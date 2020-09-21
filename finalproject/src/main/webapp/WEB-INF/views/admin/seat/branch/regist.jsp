@@ -120,7 +120,7 @@
             			} else {
 		            		e.preventDefault();
 		            		alert("이미 등록된 좌석이 있습니다.");
-		            		location.href = "${pageContext.request.contextPath}/admin/seat/detail?branch_no="+branch_no;
+		            		location.href = "${pageContext.request.contextPath}/admin/seat/branch/content";
             			}
             		});
             		
@@ -208,6 +208,7 @@
                         </div>
                     </div>
                     <input type="hidden" name="entrance_location" class="entrance" value="centerTop">
+                    <input type="hidden" name="branch_no" class="branch_no" value="${branch_no}">
                 </form>
                 <br>
                 </div>

@@ -34,6 +34,11 @@
    	    	var usedCol = $('.usedCol').val();
    	    	var usedRow = $('.usedRow').val();
    	    	
+   	    	// 퇴실 버튼 나타내기
+   	    	if(usedCol && usedRow) {
+   	    		$(".btn-finish").show();
+   	    	}
+   	    	
    	    	$('.cinema-seat').filter(function(){
     			return $(this).data('row') == usedRow && $(this).data('col') == usedCol;
     		}).addClass('active').removeClass('disabled');
@@ -106,7 +111,17 @@
    	    	});
    	    })
 </script>
-<style>
+<style>    
+    .cinema-wrap > .cinema-seat-area > .cinema-seat:not(.empty){
+        background-image: url("${pageContext.request.contextPath}/resources/m/images/seat-empty.png") !important;
+    }
+    .cinema-wrap > .cinema-seat-area > .cinema-seat.active:not(.empty){
+        background-image: url("${pageContext.request.contextPath}/resources/m/images/seat-active.png") !important;
+    }
+    .cinema-wrap > .cinema-seat-area > .cinema-seat.disabled:not(.empty){
+        background-image: url("${pageContext.request.contextPath}/resources/m/images/seat-disabled.png") !important;
+    }
+        
 	.content-wrapper {
 		text-align: center;
 	}
@@ -198,7 +213,7 @@
 						</div>
 						<br><br>
 						<div class="btn-wrap">
-							<button class="btn btn-primary btn-finish">퇴실하기</button>
+							<button class="btn btn-primary btn-finish" hidden>퇴실하기</button>
 						</div>
 			        </div>
 			    </div>

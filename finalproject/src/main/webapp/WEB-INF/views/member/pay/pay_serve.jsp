@@ -287,7 +287,7 @@
                         <tr>
                            <td class="resultType">결제 금액</td>
                            <td class="resultPrice">
-                           <span class="resultFont price">0원</span>
+                           <span class="resultFont price">${payServeDto.license_his_pay}원</span>
                            </td>
                         </tr>
                         <tr>
@@ -305,7 +305,7 @@
                         <tr>
                            <td class="resultType">최종 결제 금액</td>
                            <td class="resultPrice">
-                           <span class="resultFont total_price">0</span> 
+                           <span class="resultFont total_price">${payServeDto.license_his_pay}</span> 
                            <span style="color: red">원</span></td>
                         </tr>
                      </table>
@@ -347,12 +347,12 @@
                               </tr>
                               <tr>
                                  <td>추가 시간</td>
-                                 <td class="info"><span>|</span> <span class="over-time bold">${overTime}분</span>
+                                 <td class="info"><span>|</span> <span class="over-time bold">${overTime}</span><span>분</span>
                                  </td>
                               </tr>
                               <tr>
                                  <td>추가 금액</td>
-                                 <td class="info"><span>|</span> <span class="over-price bold">${payServeDto.license_his_pay}원</span>
+                                 <td class="info"><span>|</span> <span class="over-price bold">${payServeDto.license_his_pay}</span><span>원</span>
                                  </td>
                               </tr>
                            </table>

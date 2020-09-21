@@ -95,6 +95,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) FROM seat WHERE branch_no = #{branch_no} AND seat_type <![CDATA[<>]]> 'space'
 	</select>
 	
+	<delete id="delete" parameterType="int">
+		DELETE FROM seat WHERE branch_no = #{branch_no}
+	</delete>
+	
+	<delete id="entranceDelete" parameterType="int">
+		DELETE FROM entrance WHERE branch_no = #{branch_no}
+	</delete>
+	
 </mapper>
 
 

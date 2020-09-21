@@ -48,6 +48,9 @@ public class LicenseHisServiceImpl implements LicenseHisService{
 		int check = seatDto.getSeat_state();
 		int seat_no = seatDto.getSeat_no();
 		if(check==1) { // 이용 가능일 경우
+			// 이용 불가로 변경
+			seatDao.used(seat_no);
+
 			// 이용 내역 테이블에 정보 업데이트
 			LicenseHisDto licenseHisDto = LicenseHisDto.builder()
 											.seat_no(seat_no)
@@ -61,8 +64,6 @@ public class LicenseHisServiceImpl implements LicenseHisService{
 									.branch_no(branch_no)
 										.build();
 			inoutDao.registIn(inoutDto);
-			// 이용 불가로 변경
-			seatDao.used(seat_no);
 			
 			return true;
 			
@@ -83,8 +84,12 @@ public class LicenseHisServiceImpl implements LicenseHisService{
 		int license_his_no = licenseHisDto.getLicense_his_no();
 		int seat_no = licenseHisDto.getSeat_no();
 		
+
 		// 이용내역 테이블 종료시간 업데이트
 		licenseHisDao.updateFinish(license_his_no);
+
+		// 좌석 이용가능으로 변경
+		seatDao.notUsed(seat_no);	
 		
 		// 입퇴실 테이블 퇴실내역 업데이트
 		InoutDto inoutDto = InoutDto.builder()
@@ -93,8 +98,6 @@ public class LicenseHisServiceImpl implements LicenseHisService{
 									.build();
 		inoutDao.registOut(inoutDto);
 		
-		// 좌석 이용가능으로 변경
-		seatDao.notUsed(seat_no);	
 		
 		// 이용시간 계산 후 충전시간과 비교
 		int charge = memberDao.getCharge(member_no); // 충전시간

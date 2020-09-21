@@ -219,6 +219,16 @@ public class TestController {
 		sqlSession.delete("couponReq.delete", coupon_req_no);
 	}
 	
+	// 등록 전 좌석 등록여부 검사
+	@GetMapping("/seat/regist/check")
+	public boolean checkRegist(@RequestParam int branch_no) {
+		int count = sqlSession.selectOne("seat.checkRegist", branch_no);
+		if(count!=0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 	@GetMapping("/seat/check")
 	public boolean checkSeat(@RequestParam int row, @RequestParam int col, HttpSession session) {
 		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");

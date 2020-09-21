@@ -150,12 +150,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			point_his_no,
 			member_no,
 			point_no,
-			point_his_score
+			point_his_score,
+			point_his_detail
 		) VALUES (
 			point_his_seq.nextval,
 			#{member_no},
 			32,
-			#{pay_use_point}
+			#{pay_use_point},
+			'이용권 구매로 인한 차감'
 		)
 	</insert>
 	
@@ -170,7 +172,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			point_his_seq.nextval,
 			#{member_no},
 			31,
-			#{reward}
+			#{reward},
+			'이용권 구매로 인한 적립'
 		)
 	</insert>
 

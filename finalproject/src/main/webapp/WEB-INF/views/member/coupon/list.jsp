@@ -132,20 +132,20 @@
 						<!-- 페이지네이션 -->
 						<div style="display: block; text-align: center;">	
 						<c:if test="${paging.startPage != 1 }">
-								<a class="page-link" href="${pageContext.request.contextPath}/member/message/message?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&laquo;</a>
+								<a class="page-link" href="${pageContext.request.contextPath}/member/coupon/list?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&laquo;</a>
 						</c:if>
 						<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
 							<c:choose>
 								<c:when test="${p == paging.nowPage }">
-										<b class="page-link">${p }</b>
+										<b class="page-link">${p}</b>
 								</c:when>
 								<c:when test="${p != paging.nowPage }">
-										<a class="page-link" href="${pageContext.request.contextPath}/member/message/message?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p }</a>
+										<a class="page-link" href="${pageContext.request.contextPath}/member/coupon/list?nowPage=${p}&cntPerPage=${paging.cntPerPage}">${p }</a>
 								</c:when>
 							</c:choose>
 						</c:forEach>
 						<c:if test="${paging.endPage != paging.lastPage}">
-								<a class="page-link" href="${pageContext.request.contextPath}/member/message/message?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&raquo;</a>
+								<a class="page-link" href="${pageContext.request.contextPath}/member/coupon/list?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&raquo;</a>
 						</c:if>
 						</div>
 				</div>

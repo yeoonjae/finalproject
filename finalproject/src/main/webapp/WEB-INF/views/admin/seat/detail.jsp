@@ -57,6 +57,14 @@
    	    	if($.urlParam('branch_no')!=1) {
    	    		$('.btn-list').hide();
    	    	}
+   	    	
+   	    	$('.btn-delete').click(function(){
+   	    		if(confirm("좌석을 정말 삭제하시겠습니까?")){
+   	    			location.href = "${pageContext.request.contextPath}/admin/seat/delete?branch_no="+$.urlParam('branch_no');
+   	    		} else {
+   	    			return;
+   	    		}
+   	    	});
    	    })
     </script>
 </head>
@@ -70,12 +78,6 @@
                 <li class="breadcrumb-item active">${branch_name}</li>
             </ol>
             <div class="offset-sm-2 col-sm-8 offset-md-2 col-md-8">
-<!--             	<div class="form-inline"> -->
-<!--                     <div class="form-wrap"> -->
-<!--                         <label class="justify-content-start">지점명</label> -->
-<!--                         <input type="text"class="form-control" name="row" value="주용 스터디 카페" disabled> -->
-<!--                     </div> -->
-<!--                 </div> -->
                 <br>
                 <input type="hidden" name="entrance" value="${entrance}" class="entrance">
                 <div class="cinema-wrap" data-name="seat">
@@ -88,9 +90,10 @@
                 </div>
                 <br><br>
                 <div class="btn-wrap">
-                    <button class="btn btn-sm btn-primary btn-edit">수정</button>
-                    <button class="btn btn-sm btn-danger btn-delete">삭제</button>
-                    <button class="btn btn-sm btn-secondary btn-list">목록</button>
+	                    <button class="btn btn-sm btn-danger btn-delete">삭제</button>
+                    <a href="${pageContext.request.contextPath}/admin/branch/list">
+	                    <button class="btn btn-sm btn-secondary btn-list">목록</button>
+                    </a>
                 </div>
                 <br><br>
             </div>

@@ -32,7 +32,8 @@ public class SeatController {
 	@Autowired
 	private BranchDao branchDao;
 	
-	@GetMapping("/regist")
+	// 지점에서 좌석 등록
+	@GetMapping("/branch/regist")
 	public String regist(HttpSession session, Model model) {
 		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
 		int branch_no = adminDto.getBranch_no();
@@ -40,18 +41,34 @@ public class SeatController {
 		return "admin/seat/regist";
 	}
 	
-	@PostMapping("/regist")
-	public String regist(@RequestParam String[] seat, @RequestParam String entrance_location, HttpSession session, RedirectAttributes attr) {
+	// 지점에서 좌석 등록
+	@PostMapping("/branch/regist")
+	public String regist(@RequestParam String[] seat, @RequestParam String entrance_location, HttpSession session) {
 		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
 		int branch_no = adminDto.getBranch_no();
 		// 좌석정보 등록
 		seatService.regist(seat, branch_no, entrance_location);
-		//return "admin/seat/regist";
-		attr.addAttribute("branch_no", branch_no);
 		return "redirect:content";
 	}
+
+	/*
+	 * // 본사에서 좌석 등록
+	 * 
+	 * @GetMapping("/regist") public String regist(Model model, @RequestParam int
+	 * branch_no) { model.addAttribute("branch_no", branch_no); return
+	 * "admin/seat/regist"; }
+	 * 
+	 * // 본사에서 좌석 등록
+	 * 
+	 * @PostMapping("/regist") public String regist(@RequestParam String[]
+	 * seat, @RequestParam int branch_no , @RequestParam String entrance_location,
+	 * RedirectAttributes attr) { // 좌석정보 등록 seatService.regist(seat, branch_no,
+	 * entrance_location); attr.addAttribute("branch_no", branch_no); return
+	 * "redirect:detail"; }
+	 */
 	
-	@GetMapping("/content")
+	// 지점 상세보기 페이지
+	@GetMapping("/branch/content")
 	public String content(Model model, HttpSession session) {
 		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
 		int branch_no = adminDto.getBranch_no();
@@ -70,9 +87,10 @@ public class SeatController {
 		model.addAttribute("entrance", entrance);
 		model.addAttribute("branch_name", branch_name);
 		
-		return "admin/seat/content";
+		return "admin/seat/branch/content";
 	}
 	
+	// 본사 상세보기 페이지
 	@GetMapping("/detail")
 	public String detail(@RequestParam int branch_no, Model model) {
 		String branch_name = branchDao.getName(branch_no);
@@ -90,6 +108,15 @@ public class SeatController {
 		model.addAttribute("branch_name", branch_name);
 		
 		return "admin/seat/detail";
+	}
+	
+	@GetMapping("/branch/delete")
+	public String delete(RedirectAttributes attr, HttpSession session) {
+		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
+		int branch_no = adminDto.getBranch_no();
+		seatDao.delete(branch_no);
+		attr.addAttribute("branch_no", branch_no);
+		return "redirect:regist";
 	}
 	
 }

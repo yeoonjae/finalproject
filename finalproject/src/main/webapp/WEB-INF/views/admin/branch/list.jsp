@@ -75,9 +75,6 @@
 			                  	</a>
                   			</c:when>
                   			<c:otherwise>
-                  				<a href="${pageContext.request.contextPath}/admin/seat/regist">
-	                  				<button class="btn btn-outline-secondary btn-sm">좌석등록</button>
-	                  			</a>
                   				<a href="${pageContext.request.contextPath}/admin/branch/member_list?branch_no=${branch.branch_no}">
 	                  				<button class="btn btn-outline-secondary btn-sm">회원보기</button>
 	                  			</a>

@@ -29,4 +29,6 @@ public interface SeatDao {
 	int getUseCount(int branch_no);
 	// 전체 좌석 개수 조회
 	int getAllCount(int branch_no);
+	// 좌석 삭제
+	void delete(int branch_no);
 }
