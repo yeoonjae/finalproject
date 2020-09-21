@@ -339,7 +339,6 @@ table{
    <div class="container">
       <div class="row">
          <div class="roomy-100">
-ㄴ
             <!--  user 메인 이미지  -->
             <div>
                <img

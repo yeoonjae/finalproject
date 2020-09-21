@@ -71,10 +71,10 @@ public class KakaoPayController {
 		// 결제 요청 전 확인 
 		boolean isCorrect = kakaoPayService.isCorrect(use_point2,member_no);
 		
-		if(!isCorrect) {
+		
 			// 결제 요청
 			KakaoPayResultVO resultVO = kakaoPayService.prepare(startVO);
-			
+			 
 			// 결제 승인 페이지에서 사용할 수 있도록 session 데이터 추가
 			// - partner_order_id, partner_user_id, tid
 			session.setAttribute("partner_order_id", startVO.getPartner_order_id());
@@ -90,10 +90,7 @@ public class KakaoPayController {
 			session.setAttribute("coupon_discount2", coupon_discount2); // 쿠폰 할인 금액 
 			session.setAttribute("coupon_no", coupon_no); // 쿠폰 번호 
 			return "redirect:" + resultVO.getNext_redirect_pc_url();
-		} 
-		else {
-			return "";
-		}
+
 	}
 	
 	
