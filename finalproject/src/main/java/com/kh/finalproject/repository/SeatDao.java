@@ -19,4 +19,16 @@ public interface SeatDao {
 	int getCol(int branch_no);
 	// 출입구 위치 가져오기
 	String getEntrance(int branch_no);
+	// 좌석 이용 가능으로 수정
+	void notUsed(int seat_no);
+	// 좌석 이용 불가로 수정
+	void used(int seat_no);
+	// 좌석 등록여부 조회
+	int checkRegist(int branch_no);
+	// 이용가능한 좌석 개수 조회
+	int getUseCount(int branch_no);
+	// 전체 좌석 개수 조회
+	int getAllCount(int branch_no);
+	// 좌석 삭제
+	void delete(int branch_no);
 }

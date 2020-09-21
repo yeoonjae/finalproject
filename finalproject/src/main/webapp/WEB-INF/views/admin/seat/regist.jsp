@@ -8,15 +8,15 @@
     <meta charset="UTF-8">
     <title>좌석 등록</title>
     <style>
-        .cinema-seat:not(.empty){
-            background-image: url("http://www.sysout.co.kr/file/image/285");
-        }
-        .cinema-seat.active{
-            background-image: url("http://www.sysout.co.kr/file/image/283");
-        }
-        .cinema-seat.disabled{
-            background-image: url("http://www.sysout.co.kr/file/image/284");
-        }
+        .cinema-wrap > .cinema-seat-area > .cinema-seat:not(.empty){
+	        background-image: url("${pageContext.request.contextPath}/resources/m/images/seat-empty.png") !important;
+	    }
+	    .cinema-wrap > .cinema-seat-area > .cinema-seat.active:not(.empty){
+	        background-image: url("${pageContext.request.contextPath}/resources/m/images/seat-active.png") !important;
+	    }
+	    .cinema-wrap > .cinema-seat-area > .cinema-seat.disabled:not(.empty){
+	        background-image: url("${pageContext.request.contextPath}/resources/m/images/seat-disabled.png") !important;
+	    }
         .form-control {
             margin-top: 5px;
         }
@@ -85,13 +85,13 @@
                 
                 if(direction=='leftTop') {
                 	$("<div>").addClass('cinema-screen').text('출입구').css("width", '30%')
-	                .css('margin', '10px').css('height', '30px').css('padding', '0').appendTo(".cinema-wrap");
+	                .css('margin', '10px').css('margin-bottom', '0px').css('height', '30px').css('padding', '0').appendTo(".cinema-wrap");
                 } else if(direction=='centerTop') {
                 	$("<div>").addClass('cinema-screen').text('출입구').css("width", '30%')
 	                .css('margin-top', '10px').css('height', '30px').css('padding', '0').appendTo(".cinema-wrap");
                 } else {
 	                $("<div>").addClass('cinema-screen').text('출입구').css("width", '30%')
-	                .css('margin', '10px').css('height', '30px').css('margin-left', '68%')
+	                .css('margin', '10px').css('margin-bottom', '0px').css('height', '30px').css('margin-left', '68%')
 	                .css('padding', '0').appendTo(".cinema-wrap");
                 }
                 
@@ -104,8 +104,26 @@
             });
             
             $('.btn-regist').click(function(e){
+            	var branch_no = $(this).data("no");
+            	if($('.cinema-seat').hasClass('active')) {
+            		alert("선택된 좌석이 있으면 등록하실 수 없습니다");
+            		return;
+            	}
+            	
             	if(confirm("좌석을 등록 하시겠습니까?")){
-            		$("form").submit();
+            		axios({
+            			url:"${pageContext.request.contextPath}/test/seat/regist/check?branch_no="+branch_no,
+            			method:"get"
+            		}).then(function(response){
+            			if(response.data) {
+		            		$("form").submit();            				
+            			} else {
+		            		e.preventDefault();
+		            		alert("이미 등록된 좌석이 있습니다.");
+		            		location.href = "${pageContext.request.contextPath}/admin/seat/detail?branch_no="+branch_no;
+            			}
+            		});
+            		
             	} else {
             		e.preventDefault();
             	}
@@ -172,7 +190,7 @@
 				                			<button type="button" class="form-control btn-sm btn-outline-secondary btn-reset">초기화</button>
 				                		</div>
 				                		<div class="col-4 mt-2">
-				                			<button type="button" class="form-control btn-sm btn-primary btn-regist">등록</button>
+				                			<button type="button" class="form-control btn-sm btn-primary btn-regist" data-no="${branch_no}">등록</button>
 				                		</div>
 				                	</div>
 				                </div>
@@ -189,7 +207,7 @@
                         <div class="cinema-seat-area" data-rowsize="7" data-colsize="7" data-mode="manager" data-seatno="visible" data-fill="auto">
                         </div>
                     </div>
-                    <input type="hidden" name="entrance_location" class="entrance">
+                    <input type="hidden" name="entrance_location" class="entrance" value="centerTop">
                 </form>
                 <br>
                 </div>

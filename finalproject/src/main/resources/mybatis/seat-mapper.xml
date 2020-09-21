@@ -40,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getRow" parameterType="int" resultType="int">
 		SELECT T.seat_row FROM (
 			SELECT s.seat_row, ROW_NUMBER() OVER (
-				PARTITION BY s.branch_no ORDER BY s.seat_row DESC) AS RankNo FROM seat s
+				PARTITION BY s.branch_no ORDER BY s.seat_row DESC) AS RankNo FROM seat s WHERE s.BRANCH_NO = #{branch_no}
 			) T 
 		WHERE RankNo = 1
 	</select>
@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getCol" parameterType="int" resultType="int">
 		SELECT T.seat_col FROM (
 			SELECT s.seat_col, ROW_NUMBER() OVER (
-				PARTITION BY s.branch_no ORDER BY s.seat_col DESC) AS RankNo FROM seat s
+				PARTITION BY s.branch_no ORDER BY s.seat_col DESC) AS RankNo FROM seat s WHERE s.BRANCH_NO = #{branch_no}
 			) T 
 		WHERE RankNo = 1
 	</select>
@@ -65,6 +65,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getEntrance" parameterType="int" resultType="String">
 		SELECT entrance_location FROM entrance WHERE branch_no = #{branch_no}
 	</select>
+	
+	<!-- 좌석 이용 가능 여부 확인 -->
+	<select id="check" parameterType="map" resultType="seatDto">
+		SELECT * FROM seat WHERE branch_no = #{branch_no} and seat_row = #{seat_row} and seat_col = #{seat_col}
+	</select>
+	
+	<!-- 좌석 이용 가능으로 수정 -->
+	<update id="notUsed" parameterType="int">
+		UPDATE seat SET seat_state = 1, seat_type = 'normal' WHERE seat_no = #{seat_no}
+	</update>
+	
+	<!-- 좌석 이용 불가로 수정 -->
+	<update id="used" parameterType="int">
+		UPDATE seat SET seat_state = 2, seat_type = 'disabled' WHERE seat_no = #{seat_no}
+	</update>
+	
+	<!-- 좌석 등록여부 조회 -->
+	<select id="checkRegist" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM seat WHERE branch_no = #{branch_no}
+	</select>
+	
+	<!-- 이용 가능한 좌석 개수 조회 -->
+	<select id="getUseCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM seat WHERE branch_no = #{branch_no} AND seat_type = 'normal'
+	</select>
+	
+	<select id="getAllCount" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM seat WHERE branch_no = #{branch_no} AND seat_type <![CDATA[<>]]> 'space'
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM seat WHERE branch_no = #{branch_no}
+	</delete>
+	
+	<delete id="entranceDelete" parameterType="int">
+		DELETE FROM entrance WHERE branch_no = #{branch_no}
+	</delete>
+	
 </mapper>
 
 

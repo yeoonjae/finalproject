@@ -465,6 +465,4 @@ table{
 </section>
 <br><br><br><br>
 
-
-
 <jsp:include page="/WEB-INF/views/member/template/footer.jsp"></jsp:include>

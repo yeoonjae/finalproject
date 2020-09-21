@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -127,18 +128,18 @@
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
             <h6 class="dropdown-header">관리자 로그인 메뉴</h6>
          <c:choose>  
-         <c:when test="${admininfo.admin_auth eq '본사'}">
-                  <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/logout">로그아웃</a>
-               <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/regist">계정등록</a>
-               <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/list">계정 리스트</a>                
-        </c:when>
-      <c:when test="${admininfo.admin_auth eq '지점'}">
-                  <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/logout">로그아웃</a>
-                  <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/info?admin_no=${admininfo.admin_no}">계정정보/수정</a>
-        </c:when>
-      <c:otherwise>
-               <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/login">로그인</a>              
-      </c:otherwise>
+            <c:when test="${admininfo.admin_auth eq '본사'}">
+                     <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/logout">로그아웃</a>
+                  <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/regist">계정등록</a>
+                  <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/list">계정 리스트</a>                
+           </c:when>
+            <c:when test="${admininfo.admin_auth eq '지점'}">
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/logout">로그아웃</a>
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/info?admin_no=${admininfo.admin_no}">계정정보/수정</a>
+            </c:when>
+            <c:otherwise>
+                     <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/login">로그인</a>              
+            </c:otherwise>
         </c:choose>            
             <div class="dropdown-divider"></div>
             <h6 class="dropdown-header">Other Pages:</h6>
@@ -188,8 +189,14 @@
                <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/">상세보기</a>
                <div class="dropdown-divider"></div>
                <h6 class="dropdown-header">좌석 관리</h6>
-               <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/regist">좌석 등록</a>
-               <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/content">상세보기</a>
+               <c:choose>
+                  <c:when test="${seatCount eq 0}">
+                  	<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/branch/regist">좌석 등록</a>
+                  </c:when>
+                  <c:otherwise>
+                  	<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/branch/content">상세보기</a>
+                  </c:otherwise>
+               </c:choose>
              </c:when>
              </c:choose>
           </div>

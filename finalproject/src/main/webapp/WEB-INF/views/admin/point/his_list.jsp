@@ -56,6 +56,11 @@
     <script>
         $(function(){
         	
+        	if($(".his-list").find("td").length == 0){
+        		$(".his-list").html("");
+					$(".his-list").append("<tr>").append('<td colspan="4">검색 결과가 없습니다</td>');
+        	}
+        	
         	$.urlParam = function(name) {
         	    var results = new RegExp('[\?&]' + name + '=([^&#]*)')
         	                      .exec(window.location.href);
@@ -209,7 +214,7 @@
                 
                 //시작일 지정
                 // minDate:new Date(),//- 오늘부터 선택 가능
-                minDate:moment(new Date()).add(-90, 'days'),
+                minDate:moment(new Date()).add(-3, 'month'),
 
                 //미래 날짜 선택불가
                 maxDate: moment().endOf('today'),
@@ -222,13 +227,6 @@
                 
                 //주말 제외
                 disableWeekends:false,
-                
-                //날짜 제외
-                disableDates:[
-                    '2020-08-05',
-                    '2020-08-06',
-                    '2020-08-07'
-                ],
                 
                 //선택 후 이벤트 설정(start와 end는 momentjs의 객체)
                 onSelect:function(start, end) {
