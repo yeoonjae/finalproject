@@ -375,7 +375,7 @@ table{
 
  			<!--  지점 좌석 정보  -->
             <div class="width30 float_l">
-               <h6 class="name margin bold"> ${memberinfo.member_name}님의 잔여시간 <span><button class="btn">충전하기</button></span></h6>
+               <h6 class="name margin bold"> ${memberinfo.member_name}님의 잔여시간 <span><a href="${pageContext.request.contextPath}/member/pay/pay_main"><button class="btn">충전하기</button></a></span></h6>
 	          	<div class="use float_l">
                	<c:choose>
                		<c:when test="${memberinfo.member_charge != 0}">
