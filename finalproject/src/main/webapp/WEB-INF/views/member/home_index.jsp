@@ -8,7 +8,7 @@
     <!--Designerd by: http://bootstrapthemes.co-->
     <head>
         <meta charset="utf-8">
-        <title>GONDORI MAIN PAGE</title>
+        <title>SPATIUM MAIN PAGE</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="favicon.ico">
@@ -88,7 +88,7 @@
                             <li><a href="#about">소개글</a></li>                    
                             <li><a href="#service">공지사항</a></li>                    
                             <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>                  
-                            <li><a href="#pricing">가맹 문의</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/franchisee/question">가맹 문의</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/account/join">회원가입</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/account/login">로그인</a></li>                      
 <!--                             <li><a href="#blog">Blog</a></li>                     -->
@@ -109,12 +109,12 @@
                     <div class="row">
                         <div class="main_home">
                             <div class="home_text">
-                                <h1 class="text-white">GONGDORI STUDY CAFE <br /> WELCOME!</h1>
+                                <h1 class="text-white">SPATIUM STUDY CAFE <br /> WELCOME!</h1>
                             </div>
  
                             <div class="home_btns m-top-40">
 <!--                         <a href="" class="btn btn-primary m-top-20">GET STARTED</a> -->
-                                <a href="" class="btn btn-primary m-top-20">공도리 시작하기</a>
+                                <a href="" class="btn btn-primary m-top-20">SPATIUM START</a>
                             </div>
  
                         </div>
@@ -145,7 +145,7 @@
                                 2016. All Rights Reserved     
                             </p>
                              <p>
-                                KH 공도리  |  공동이사 : 정연재 김진영 김혜정 오한민  |  사업자 등록번호 : 100-41004-10
+                                SPATIUM  |  공동이사 : 정연재 김진영 김혜정 오한민  |  사업자 등록번호 : 100-41004-10
                         <br>주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩(구관) 19F, 20F (T: 1544-9970 / F: 02-2163-8560)
                         <br>COPYRIGHT KH 공도리 ALL RIGHTS RESERVED.
                      </p>

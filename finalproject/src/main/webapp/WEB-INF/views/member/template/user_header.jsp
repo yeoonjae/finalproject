@@ -8,7 +8,7 @@
     <!--Designerd by: http://bootstrapthemes.co-->
     <head>
         <meta charset="utf-8">
-        <title>GONDORI MAIN PAGE</title>
+        <title>SPATIUM MAIN PAGE</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="favicon.ico">
@@ -80,7 +80,6 @@
                               <a href="${pageContext.request.contextPath}/member/coupon/list">
                                   <i class="fa fa-ticket" aria-hidden="true"></i>
                               </a>
-                            </li>
                             <li class="search" onclick="location.href='${pageContext.request.contextPath}/member/message/message'">
                               <a href="${pageContext.request.contextPath}/member/message/message">
                                   <i class="fa fa-envelope" aria-hidden="true"></i>
@@ -97,7 +96,7 @@
                         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu">
                             <i class="fa fa-bars"></i>
                         </button>
-                        <a class="navbar-brand" href="#brand">
+                        <a class="navbar-brand" href="${pageContext.request.contextPath}/member/user/">
 
                             <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-display m-top-10" alt="">
                             <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-scrolled" alt="">
@@ -126,7 +125,7 @@
                     <div class="widget">
                         <h6 class="title">Custom Pages</h6>
                         <ul class="link">
-                           <li><a href="#">공도리 홈</a></li>
+                           <li><a href="#">스파티움 홈</a></li>
                             <li><a href="#">소개글</a></li>
                             <li><a href="#">공지사항</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>
@@ -139,7 +138,7 @@
                             <li><a href="${pageContext.request.contextPath}/member/account/info?member_no=${memberinfo.member_no}">마이페이지</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/pay/pay_main">상품 충전</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/seat/select">좌석 예약</a></li>
-                            <li><a href="${pageContext.request.contextPath}/member/pay/pay_detail">결제 내역</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/pay/pay_detail">결제내역</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/point/list">마일리지 내역</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/review/list">리뷰</a></li>
                         </ul>
