@@ -142,7 +142,7 @@
 											<td class="inbox-title-td" style="color:gray; text-align: left;">${inbox.message_title}</td>
 										</c:otherwise>
 									</c:choose>
-									<td class="inbox-name_td">${inbox.admin_name}</td>
+									<td class="inbox-name_td">본사</td>
 									<td class="inbox-date-td">${inbox.message_manager_date}
 										<input type="hidden" class="inbox-content-input" value="${inbox.message_content}">
 										<input type="hidden" class="inbox-no-input" value="${inbox.message_manager_no}">

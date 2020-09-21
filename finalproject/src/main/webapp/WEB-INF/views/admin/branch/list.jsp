@@ -102,6 +102,4 @@
 
         </div>
 
-
-
 <jsp:include page="/WEB-INF/views/admin/template/footer.jsp"></jsp:include>

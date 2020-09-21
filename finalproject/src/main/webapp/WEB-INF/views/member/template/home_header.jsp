@@ -8,7 +8,7 @@
     <!--Designerd by: http://bootstrapthemes.co-->
     <head>
         <meta charset="utf-8">
-        <title>GONDORI MAIN PAGE</title>
+        <title>SPATIUM MAIN PAGE</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href="favicon.ico">

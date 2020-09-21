@@ -71,12 +71,12 @@
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                            <li class="search">
-                               <a href="#">
-                                  <i class="fa fa-user-circle-o"></i>
-                               </a>
-                            </li>
-                            <li class="search" onclick="location.href='${pageContext.request.contextPath}/member/coupon/list'">
+                         	<li class="search">
+                         		<a href="#">
+	                         		<i class="fa fa-user-circle-o"></i>
+                         		</a>
+                         	</li>
+                         	<li class="search" onclick="location.href='${pageContext.request.contextPath}/member/coupon/list'">
                               <a href="${pageContext.request.contextPath}/member/coupon/list">
                                   <i class="fa fa-ticket" aria-hidden="true"></i>
                               </a>

@@ -109,13 +109,13 @@
                     <div class="row">
                         <div class="main_home">
                             <div class="home_text">
-                                <h1 class="text-white">GONGDORI STUDY CAFE <br /> WELCOME!</h1>
+                                <h1 class="text-white">SPATIUM STUDY CAFE <br /> WELCOME!</h1>
                             </div>
  
                             <div class="home_btns m-top-40">
-                                <a href="${pageContext.request.contextPath}/member/user" class="btn btn-primary m-top-20">공도리 시작하기</a>
-                           </div>
- 
+<!--                         <a href="" class="btn btn-primary m-top-20">GET STARTED</a> -->
+                                <a href="" class="btn btn-primary m-top-20">SPATIUM START</a>
+                            </div>
                         </div>
                     </div><!--End off row-->
                 </div><!--End off container -->
@@ -144,7 +144,7 @@
                                 2016. All Rights Reserved     
                             </p>
                              <p>
-                                KH 공도리  |  공동이사 : 정연재 김진영 김혜정 오한민  |  사업자 등록번호 : 100-41004-10
+                                SPATIUM  |  공동이사 : 정연재 김진영 김혜정 오한민  |  사업자 등록번호 : 100-41004-10
                         <br>주소 : 서울특별시 영등포구 선유동2로 57 이레빌딩(구관) 19F, 20F (T: 1544-9970 / F: 02-2163-8560)
                         <br>COPYRIGHT KH 공도리 ALL RIGHTS RESERVED.
                      </p>

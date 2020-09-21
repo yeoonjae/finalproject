@@ -3,6 +3,8 @@ package com.kh.finalproject.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.ResponseEntity;
@@ -90,8 +92,6 @@ public class BranchController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int branch_no, Model model,RedirectAttributes attr) {
 		BranchDto branchDto = branchDao.get(branch_no);
-		
-		// 여기서 이제 브런치이미지디티오 리스트를 받아서 모델로 뿌려주는거야 
 		List<BranchImgDto> list = branchService.getBranchImg(branch_no);
 		model.addAttribute("branchImg", list);
 		model.addAttribute("branchDto", branchDto);
@@ -130,17 +130,26 @@ public class BranchController {
 	
 	//지점 수정
 	@PostMapping("/edit")
-	public String edit(RedirectAttributes attr,@ModelAttribute BranchDto branchDto,@RequestParam List<MultipartFile> file) throws IllegalStateException, IOException {
+	public String edit(RedirectAttributes attr,
+			@ModelAttribute BranchDto branchDto,
+			@RequestParam List<MultipartFile> file,
+			HttpSession session) throws IllegalStateException, IOException {
+		//session에서 로그인된 관리자 정보 꺼내기
+		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
 		branchDao.edit(branchDto, file);
 		attr.addAttribute("branch_no", branchDto.getBranch_no());
-		return "redirect:detail";
+		if(adminDto.getAdmin_auth().equals("본사")) {
+			return "admin/branch/detail";
+		}else{
+			return "admin/branch/branch_detail";
+		}
 	}
 	
 	//지점 삭제(일단 삭제는 되지만 고려해봐야 할 사항이 많음)
 	@GetMapping("/delete")
 	public String edit(@RequestParam int branch_no) {
 		branchDao.delete(branch_no);
-		return "redirect:list";
+		return "admin/notice/write";
 	}
 	
 	//지점별 회원 현황
@@ -156,6 +165,46 @@ public class BranchController {
 	public void deleteImg(@RequestParam int branch_img_no) {
 		branchDao.deleteImg(branch_img_no);
 	}
+	
+	//지점 관리자 로그인 후 지점 상세보기
+	@GetMapping("/branch_detail")
+	public String branch_detail(HttpSession session,Model model) {
+		//session에서 로그인된 관리자 정보 꺼내기
+		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
+		int admin_no = adminDto.getAdmin_no();
+		//관리자 번호로 보유 지점 조회
+		int branch_no = branchDao.getNo3(admin_no);
+		//해당 페이지로 지점 정보 보내기
+		model.addAttribute("branchDto",branchDao.get(branch_no));
+		//지점 이미지 보내기
+		List<BranchImgDto> list = branchService.getBranchImg(branch_no);
+		model.addAttribute("branchImg", list);
+		return "admin/branch/branch_detail";
+	}
+	
+	//지점 관리자 로그인 후 지점 수정
+	@GetMapping("/branch_edit")
+	public String branch_edit(Model model,HttpSession session) {
+		//session에서 로그인된 관리자 정보 꺼내기
+		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
+		int admin_no = adminDto.getAdmin_no();
+		//관리자 번호로 보유 지점 조회
+		int branch_no = branchDao.getNo3(admin_no);
+		//해당 페이지로 지점 정보 보내기
+		model.addAttribute("branchDto",branchDao.get(branch_no));
+		//지점 이미지 보내기
+		List<BranchImgDto> list = branchService.getBranchImg(branch_no);
+		model.addAttribute("branchImg", list);
+		return "admin/branch/branch_edit";
+	}
+	
+	
+	@GetMapping("/delete_list")
+	public String delete_branch_list(Model model) {
+		model.addAttribute("list", branchDao.getDeleteList());
+		return "admin/branch/delete_list";
+	}
+	
 	
 	
 }
