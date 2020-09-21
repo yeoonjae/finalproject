@@ -21,7 +21,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{branch_detail_addr},
 			#{branch_basic_addr},
 			#{branch_post},
-			#{branch_phone})
+			#{branch_phone}
+			,null
+			)
 	</insert>
 	
 	<!-- 시퀀스 생성 -->
@@ -94,9 +96,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM branch WHERE branch_name=#{branch_name}
 	</select>
 	
-	<!-- 지점 번호 받아서 지점 뽑기 -->
-	<delete id="delete" parameterType="int">
-		DELETE branch WHERE branch_no=#{branch_no}
+	<!-- 지점 삭제 -->
+	<delete id="delete">
+		DELETE branch WHERE expired_date <![CDATA[ < ]]> sysdate
 	</delete>
 	
 	<!-- 지점 이미지와 함꼐 지점단일조회 -->
@@ -126,8 +128,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT count(*) FROM branch
 	</select>
 	
+	<!-- 지점삭제 누를 시 expired_date update -->
+	<update id="expiredUpdate" parameterType="int">
+		UPDATE branch SET expired_date = sysdate+30 WHERE branch_no=#{branch_no}
+	</update>
+	
+	<!-- 지점 삭제 누를 시 delete_branch_list에 등록 -->
+	<insert id="registDeleteList" parameterType="map">
+		INSERT INTO delete_branch_list values(
+			delete_branch_list_seq.nextval,
+			#{admin_no},
+			#{branch_name},
+			sysdate,
+			sysdate+30,
+			'삭제예정')
+	</insert>
+	
+	<!-- 지점번호로 지점 이름 뽑기 -->
+	<select id="getNameToNo" parameterType="int" resultType="String">
+		SELECT branch_name FROM branch WHERE branch_no=#{branch_no}
+	</select>
+	
+	<!-- 지점 삭제 완료 시 삭제목록 테이블에 '삭제완료'로 표시-->
+	<update id="updateStatus">
+		UPDATE delete_branch_list SET delete_status ='삭제완료' WHERE finish_delete_date <![CDATA[ < ]]> sysdate
+	</update>
+	
+	<select id="getDeleteList" resultType="branchDeleteListDto">
+		SELECT d.*,a.admin_name,a.ADMIN_NO FROM delete_branch_list d 
+		LEFT OUTER JOIN admin a ON d.admin_no = a.ADMIN_no
+	</select>
 </mapper>
-
-
-
-

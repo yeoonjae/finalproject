@@ -41,8 +41,9 @@ public class AdminMessageController {
 	
 	//쪽지 보내기
 	@PostMapping("/send")
-	public String regist(@ModelAttribute MessageVO messageVO,HttpSession session) {
+	public String regist(@ModelAttribute MessageVO messageVO,HttpSession session,RedirectAttributes attr) {
 		AdminDto adminDto = (AdminDto) session.getAttribute("admininfo");
+		attr.addAttribute("send","ok");
 		messageService.regist(messageVO,adminDto);
 		return "redirect:send";
 	}
@@ -54,7 +55,6 @@ public class AdminMessageController {
 			@RequestParam(value="cntPerPage", required=false)String cntPerPage,
 			@RequestParam int message_manager_no,
 			RedirectAttributes attr) {
-		System.out.println("delete_inbox controller들어옴");
 		messageService.deleteInbox(message_manager_no);
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";

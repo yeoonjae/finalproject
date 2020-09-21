@@ -32,6 +32,7 @@ public class MemberMessageController {
 			, @RequestParam(value="cntPerPage", required=false)String cntPerPage
 			) {
 		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		System.out.println("memberDto = "+memberDto);
 		int total = messageService.countMessage(memberDto.getMember_no());
 		if (nowPage == null && cntPerPage == null) {
 			nowPage = "1";
@@ -50,12 +51,18 @@ public class MemberMessageController {
 	@PostMapping("/message_member_delete_inbox")
 	public String inboxMember(
 			@RequestParam int message_member_no,
-			@RequestParam int nowPage,
-			@RequestParam int cntPerPage,
+			@RequestParam(value="nowPage", required=false)String nowPage,
+			@RequestParam(value="cntPerPage", required=false)String cntPerPage,
 			RedirectAttributes attr) {
 		messageService.deleteInboxMemeber(message_member_no);
-		attr.addAttribute("nowPage", nowPage);
-		attr.addAttribute("cntPerPage", cntPerPage);
+		if (nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+		} else if (nowPage == null) {
+			nowPage = "1";
+		} else if (cntPerPage == null) { 
+			cntPerPage = "5";
+		}
 		return "redirect:message";
 	}
 }

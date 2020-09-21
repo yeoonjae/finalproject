@@ -23,26 +23,31 @@
 
     <!-- Custom styles for this template-->
     <link href="${pageContext.request.contextPath}/resources/assets/css/sb-admin.css" rel="stylesheet">
-	
-	<script>
-	  
-	  $(function(){
-		  axios({
-				url:"${pageContext.request.contextPath}/test/message/count",
-				method:"get"
-			})
-			.then(function(response){
-				console.log(response.data);
-				if(response.data==0){
-	    			$(".readCount").hide();
-	    		}else{
-					$(".readCount").text(response.data);
-	    		}
-			})  
-	  })
-	  
-	</script>
-	
+   <style>
+      .dropdown-header{
+         font-weight: bold;
+         color: black;
+      }
+   </style>
+   <script>
+     
+     $(function(){
+        axios({
+            url:"${pageContext.request.contextPath}/test/message/count",
+            method:"get"
+         })
+         .then(function(response){
+            console.log(response.data);
+            if(response.data==0){
+                $(".readCount").hide();
+             }else{
+               $(".readCount").text(response.data);
+             }
+         })  
+     })
+     
+   </script>
+   
     <title>관리자 메인페이지</title>
 
   </head>
@@ -96,10 +101,14 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">Settings</a>
-            <a class="dropdown-item" href="#">Activity Log</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          	<c:choose>
+          		<c:when test="${not empty admininfo}">
+		            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+          		</c:when>
+          		<c:otherwise>
+          			<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/account/login">로그인</a>
+          		</c:otherwise>
+          	</c:choose>
           </div>
         </li>
       </ul>
@@ -136,7 +145,8 @@
             <a class="dropdown-item" href="404.jsp">404 Page</a>
             <a class="dropdown-item" href="blank.jsp">Blank Page</a>
           </div>
-        </li>        
+        </li>   
+        <c:if test="${not empty admininfo}">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
@@ -162,10 +172,27 @@
             <span>지점관리</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <h6 class="dropdown-header">지점 관리</h6>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/local_regist">지역등록</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/branch_regist">지점등록</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/list">지점별 관리</a>
+            <c:choose>
+          	<c:when test="${admininfo.admin_auth eq '본사'}">
+	            <h6 class="dropdown-header">지점 관리</h6>
+	          	<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/local_regist">지역등록</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/branch_regist">지점등록</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/list">지점별 관리</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/delete_list">지점 삭제 목록</a>
+          	</c:when>
+          	<c:when test="${admininfo.admin_auth eq '지점'}">
+          		<h6 class="dropdown-header">지점 관리</h6>
+          		<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/branch/branch_detail">상세보기</a>
+          		<div class="dropdown-divider"></div>
+	            <h6 class="dropdown-header">배치 관리</h6>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/">배치도 등록</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/">상세보기</a>
+	            <div class="dropdown-divider"></div>
+	            <h6 class="dropdown-header">좌석 관리</h6>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/regist">좌석 등록</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/content">상세보기</a>
+          	</c:when>
+          	</c:choose>
           </div>
         </li>
                 
@@ -175,16 +202,46 @@
             <span>배치 관리</span>
           </a>
           <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <h6 class="dropdown-header">배치도 관리</h6>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/">배치도 등록</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/">상세보기</a>
-            <h6 class="dropdown-header">좌석 관리</h6>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/regist">좌석 등록</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/content">상세보기</a>
+          	<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/review/list">리뷰목록</a>
           </div>
         </li>        
         
-         <li class="nav-item dropdown">
+        <c:choose>
+	        <c:when test="${admininfo.admin_auth eq '본사'}">
+	         <li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	            <i class="fas fa-fw fa-folder"></i>
+	            <span>이용권관리</span>
+	          </a>
+	          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+	            <h6 class="dropdown-header">이용권관리 메뉴</h6>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/license/license_regist">이용권 등록</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/license/license_list">이용권 수정/삭제</a>
+	            <div class="dropdown-divider"></div>
+	            <h6 class="dropdown-header">Other Pages:</h6>
+	            <a class="dropdown-item" href="404.jsp">404 Page</a>
+	            <a class="dropdown-item" href="blank.jsp">Blank Page</a>
+	          </div>
+	        </li>
+	        
+	        <li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	            <i class="fas fa-fw fa-folder"></i>
+	            <span>챗봇 관리</span>
+	          </a>
+	          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+	            <h6 class="dropdown-header">챗봇관리 메뉴</h6>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/chat/regist">챗봇 등록 및 내역조회</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/chat/regist"></a>
+	            <div class="dropdown-divider"></div>
+	            <h6 class="dropdown-header">Other Pages:</h6>
+	            <a class="dropdown-item" href="404.jsp">404 Page</a>
+	            <a class="dropdown-item" href="blank.jsp">Blank Page</a>
+	          </div>
+	        </li>
+	        </c:when>
+        </c:choose>
+        <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
             <span>이용권관리</span>
@@ -246,21 +303,25 @@
           </div>
         </li>
         
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>공지관리</span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <h6 class="dropdown-header">공지 관리 메뉴</h6>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/notice/write">공지 등록</a>
-            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/notice/list">공지 목록</a>
-            <div class="dropdown-divider"></div>
-            <h6 class="dropdown-header">Other Pages:</h6>
-            <a class="dropdown-item" href="404.jsp">404 Page</a>
-            <a class="dropdown-item" href="blank.jsp">Blank Page</a>
-          </div>
-        </li>
+        <c:choose>
+	        <c:when test="${admininfo.admin_auth eq '본사'}">
+	        <li class="nav-item dropdown">
+	          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	            <i class="fas fa-fw fa-folder"></i>
+	            <span>공지관리</span>
+	          </a>
+	          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+	            <h6 class="dropdown-header">공지 관리 메뉴</h6>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/notice/write">공지 등록</a>
+	            <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/notice/list">공지 목록</a>
+	            <div class="dropdown-divider"></div>
+	            <h6 class="dropdown-header">Other Pages:</h6>
+	            <a class="dropdown-item" href="404.jsp">404 Page</a>
+	            <a class="dropdown-item" href="blank.jsp">Blank Page</a>
+	          </div>
+	        </li>
+	        </c:when>
+        </c:choose>
         <li class="nav-item">
           <a class="nav-link" href="charts.jsp">
             <i class="fas fa-fw fa-chart-area"></i>
@@ -271,4 +332,5 @@
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a>
         </li>
+        </c:if>
       </ul>
