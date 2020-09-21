@@ -13,6 +13,10 @@ public interface KakaoPayService {
 		// 결제 요청 메소드 
 		KakaoPayResultVO prepare(KakaoPayStartVO startVO) throws URISyntaxException;
 	
+		// 추가 결제요청 메소드
+		KakaoPayResultVO serve_prepare(KakaoPayStartVO startVO) throws URISyntaxException;
+		
+		
 		// 결제 승인 메소드 	
 		KakaoPayFinishVO approve(
 				String partner_order_id, 

@@ -42,6 +42,17 @@ public class SeatServiceImpl implements SeatService {
 			String seat_type = seatInfo[2];
 			String seat_direction = seatInfo[3];
 			
+			System.out.println(seatInfo+", "+seat_row+", "+seat_col+", "+seat_type+", "+seat_direction);
+			
+			int seat_state;
+			if(seat_type.equals("normal")) {
+				seat_state = 1;
+				System.out.println(seat_state);
+			} else {
+				seat_state = 2;
+				System.out.println(seat_state);
+			}
+			
 			// dto에 정보 등록
 			SeatDto seatDto = SeatDto.builder()
 								.seat_col(seat_col)
@@ -49,6 +60,7 @@ public class SeatServiceImpl implements SeatService {
 								.seat_direction(seat_direction)
 								.seat_type(seat_type)
 								.branch_no(branch_no)
+								.seat_state(seat_state)
 									.build();
 			// db에 좌석 등록
 			seatDao.regist(seatDto);
