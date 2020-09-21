@@ -6,14 +6,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.finalproject.VO.Criteria;
+import com.kh.finalproject.entity.AdminDto;
+import com.kh.finalproject.entity.BranchDeleteListDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.BranchImgDto;
 import com.kh.finalproject.entity.MemberDto;
@@ -24,6 +27,8 @@ public class BranchDaoImpl implements BranchDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
+	@Autowired
+	private HttpSession session;
 	
 	//지점 등록 메소드
 	public int regist(BranchDto branchDto,List<MultipartFile> file) throws IllegalStateException, IOException {
@@ -115,11 +120,24 @@ public class BranchDaoImpl implements BranchDao{
 
 	//지점 삭제 메소드
 	public void delete(int branch_no) {
+		//삭제를 누를 시 expired_date 30일 뒤로 update
 		sqlSession.update("branch.expiredUpdate", branch_no);
+		//지점 삭제 목록 테이블에 insert하기
+		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
+		int admin_no = adminDto.getAdmin_no();
+		String branch_name=sqlSession.selectOne("branch.getNameToNo", branch_no);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("admin_no", admin_no);
+		map.put("branch_no", branch_no);
+		map.put("branch_name", branch_name);
+		sqlSession.insert("branch.registDeleteList", map);
 	}
+	
+	//지점장 번호로 지점번호 받아오기
 	public int getNo3(int admin_no) {
 		return sqlSession.selectOne("branch.getNo3", admin_no);
 	}
+	
 	//지점별 회원 조회
 	public List<MemberDto> getMemberList(int branch_no) {
 		return sqlSession.selectList("branch.memberList", branch_no);
@@ -144,6 +162,11 @@ public class BranchDaoImpl implements BranchDao{
 	// 지점명 조회
 	public String getName(int branch_no) {
 		return sqlSession.selectOne("branch.getBranchName", branch_no);
+	}
+
+	//지점 삭제 
+	public List<BranchDeleteListDto> getDeleteList() {
+		return sqlSession.selectList("branch.getDeleteList");
 	}
 
 	

@@ -24,4 +24,10 @@ public interface ReviewDao {
 	
 	//(관리자)전체리뷰 뽑기
 	List<ReviewDto> getAdminList();
+	
+	//관리자 번호로 지점번호 뽑기
+	int getBranchNo(int admin_no);
+	
+	//지점 관리자
+	List<ReviewDto> getBranchList(int branch_no);
 }

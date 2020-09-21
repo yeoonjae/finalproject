@@ -20,10 +20,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE m.member_no=#{member_no}
 		<if test="start != finish">
 			AND p.PAY_HIS_DATE
-			BETWEEN TO_DATE('${start} 00:00:00',
-			'yyyy-mm-dd hh24:mi:ss')
-			AND TO_DATE('${finish} 23:59:59', 'yyyy-mm-dd
-			hh24:mi:ss')
+			BETWEEN TO_DATE('${start} 00:00:00', 'yyyy-mm-dd hh24:mi:ss')
+			AND TO_DATE('${finish} 23:59:59', 'yyyy-mm-dd hh24:mi:ss')
 		</if>
 		<if test="start == finish">
 			AND TO_CHAR(p.PAY_HIS_DATE, 'yyyy-mm-dd') = #{start}

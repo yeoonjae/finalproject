@@ -116,7 +116,6 @@
 <!--                         <a href="" class="btn btn-primary m-top-20">GET STARTED</a> -->
                                 <a href="" class="btn btn-primary m-top-20">SPATIUM START</a>
                             </div>
- 
                         </div>
                     </div><!--End off row-->
                 </div><!--End off container -->
@@ -197,4 +196,4 @@
             <script src="${pageContext.request.contextPath}/resources/m/js/main.js"></script>
 
     </body>
-</html>
+</html> 

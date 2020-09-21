@@ -71,8 +71,8 @@
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                            <li class="search">
-                               <a href="#">
+                            <li class="search" onclick="location.href='${pageContext.request.contextPath}/member/account/info?member_no=${memberinfo.member_no}'">
+                               <a href="${pageContext.request.contextPath}/member/account/info?member_no=${memberinfo.member_no}">
                                   <i class="fa fa-user-circle-o"></i>
                                </a>
                             </li>

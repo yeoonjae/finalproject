@@ -91,9 +91,9 @@
 			//글쓰기 버튼 클릭 시 모달 뜨게끔
 			$(".review-write").click(function(){
 				//이용권 결제 내역이 있는지 확인
-				var member_no = $(".member_no").val();
+// 				var member_no = $(".member_no").val();
 				axios({
-            		url:"${pageContext.request.contextPath}/test/review/license_check?member_no="+member_no,
+            		url:"${pageContext.request.contextPath}/test/review/license_check",
             		method : "get"
             	}).then(function(response){
             		var data = response.data;
@@ -237,7 +237,7 @@
 							<c:forEach var="list" items="${list}">
 								<tr class="review-show">
 									<td>
-										<input type="hidden" class="member_no" value="${list.member_no}">
+<%-- 										<input type="hidden" class="member_no" value="${list.member_no}"> --%>
 										<div style="font-weight: bold; text-align: left;">${list.review_title}</div><br>
 										<span style="float: left; margin-right: 25px;">
 										<fmt:parseDate value="${list.review_date}" var="dateFmt" pattern="yyyy-MM-dd HH:mm:ss"/>

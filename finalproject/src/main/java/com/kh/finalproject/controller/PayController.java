@@ -1,7 +1,12 @@
 package com.kh.finalproject.controller;
 
+import java.util.Calendar;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,4 +85,49 @@ public class PayController {
 		model.addAttribute("overTime", overTime);
 		return "member/pay/pay_serve";
 	}
+	
+//	@GetMapping("/list")
+//	public String getList(Model model, HttpSession session){
+//		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+//		int member_no = memberDto.getMember_no();
+//
+//		Calendar cal = Calendar.getInstance();
+//        cal.setTime(new Date());
+//        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//        String finish = df.format(cal.getTime());
+//
+//        cal.add(Calendar.DATE, -7);
+//        String start = df.format(cal.getTime());
+//
+//		Map<String, Object> param = new HashMap<String, Object>();
+//		param.put("member_no", member_no);
+//		param.put("start", start);
+//		param.put("finish", finish);
+//		List<PayInfoDto> list = PayInfoDto.getList(param);
+//
+//		model.addAttribute("list", list);
+//		model.addAttribute("start", start);
+//		model.addAttribute("finish", finish);
+//
+//		return "member/point/list";
+//	}
+//
+//	@PostMapping("/list")
+//	public String getList(Model model, HttpSession session, @RequestParam String start, @RequestParam String finish) {
+//		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+//		int member_no = memberDto.getMember_no();
+//
+//		Map<String, Object> param = new HashMap<String, Object>();
+//		param.put("member_no", member_no);
+//		param.put("start", start);
+//		param.put("finish", finish);
+//		List<PayInfoDto> list = PayInfoDto.getList(param);
+//
+//		model.addAttribute("list", list);
+//		model.addAttribute("start", start);
+//		model.addAttribute("finish", finish);
+//
+//		return "member/point/list";
+//	}
+	
 }
