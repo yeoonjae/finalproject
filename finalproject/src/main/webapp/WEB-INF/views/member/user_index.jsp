@@ -353,7 +353,7 @@ table{
    			
             <!--  지점 좌석 정보  -->
             <div class="width40 float_l">
-               <h6 class="name margin bold"> SPATIUM 혜정점 </h6>
+               <h6 class="name margin bold"> ${memberinfo.branch_name} </h6>
                
                <div> 
                   <table class="bold"> 
