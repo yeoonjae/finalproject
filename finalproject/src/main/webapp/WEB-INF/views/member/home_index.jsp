@@ -91,8 +91,6 @@
                             <li><a href="${pageContext.request.contextPath}/member/franchisee/question">가맹 문의</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/account/join">회원가입</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/account/login">로그인</a></li>                      
-<!--                             <li><a href="#blog">Blog</a></li>                     -->
-<!--                             <li><a href="#contact">Contact</a></li>   -->
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div>  
