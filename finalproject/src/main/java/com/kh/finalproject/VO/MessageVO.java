@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class MessageVO {
-	private String sender_name;
-	private String[] receiver_name;
-	private String message_title;
-	private String message_content;
-	
+   private int sender_no;
+   private String[] receiver_name;
+   private String message_title;
+   private String message_content;
+   
 }
