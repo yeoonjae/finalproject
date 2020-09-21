@@ -358,7 +358,7 @@ table{
                <div> 
                   <table class="bold"> 
                      <tr>
-                        <td class="num">30/40</td>
+                        <td class="num">${useCount} / ${allCount}</td>
                         <td class="num">0/1</td>
                         <td class="num">30/40</td>
                      </tr>
@@ -375,9 +375,17 @@ table{
 
  			<!--  지점 좌석 정보  -->
             <div class="width30 float_l">
-               <h6 class="name margin bold"> 김혜정님의 잔여시간 <span><button class="btn">충전하기</button></span></h6> 
+               <h6 class="name margin bold"> ${memberinfo.member_name}님의 잔여시간 <span><button class="btn">충전하기</button></span></h6>
 	          	<div class="use float_l">
-	          		<span>이용중인 상품이 없습니다.</span> 
+               	<c:choose>
+               		<c:when test="${memberinfo.member_charge != 0}">
+               			<span>${memberinfo.member_charge}시간</span>
+               		</c:when>
+               		<c:otherwise>
+		          		<span>이용중인 상품이 없습니다.</span> 
+               		</c:otherwise>
+               	</c:choose>
+   
 	          	</div>
 
             </div>        
