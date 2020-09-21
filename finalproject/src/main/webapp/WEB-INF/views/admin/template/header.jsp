@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -191,10 +190,10 @@
                <h6 class="dropdown-header">좌석 관리</h6>
                <c:choose>
                   <c:when test="${seatCount eq 0}">
-                  	<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/branch/regist">좌석 등록</a>
+                     <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/branch/regist">좌석 등록</a>
                   </c:when>
                   <c:otherwise>
-                  	<a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/branch/content">상세보기</a>
+                     <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/seat/branch/content">상세보기</a>
                   </c:otherwise>
                </c:choose>
              </c:when>
@@ -328,15 +327,5 @@
            </li>
            </c:when>
         </c:choose>
-        <li class="nav-item">
-          <a class="nav-link" href="charts.jsp">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="tables.jsp">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
-        </li>
         </c:if>
       </ul>
