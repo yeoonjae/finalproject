@@ -3,8 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/member/template/user_header.jsp"></jsp:include>
-<script
-	src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/css/lightpick.css">
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script> -->
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <!-- <link rel="stylesheet" -->
 <!-- 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" -->
@@ -17,6 +23,8 @@
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
 	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
 	crossorigin="anonymous"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/moment.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/assets/js/lightpick.js"></script>
 	
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
@@ -61,6 +69,40 @@
 .list-result.on {
 	display: inline-block;
 }
+
+.btn-list, .btn-date {
+			vertical-align: middle;
+			text-align: center;
+			font-size: small;
+			width: 75px;
+			height: 35px;
+			padding: 0.5rem;
+		}
+		
+		.start, .finish {
+			width: 28%;
+			height: 35px;
+			display: inline-block;
+		}
+		.start, .finish {
+			margin-left: 10px;
+			margin-right: 10px;
+		}
+		.inline-wrap{
+			text-align: center;
+			display: inline-block;
+		}
+		.btn-list {
+			margin-left: 15px;
+		}
+		.detail-result{
+			color: silver;
+			font-size: x-small;
+			display: inline-block;
+		}
+
+
+
 </style>
 <script>
 	$(function(){
@@ -121,10 +163,25 @@
 						<div class="fontD bold brown">주문 내역 조회</div> 
 						<div>
 							<p>주문번호를 클릭하시면 해당 주문에 대한 상세내역을 확인하실 수 있습니다.<br>
-							<span class="brown">결제취소는 결제 완료시까지만</span> 가능합니다. </p>
+							<span class="brown">결제취소는 결제 완료시에만</span> 가능합니다. </p>
 							<br>
-						</div> 
+						</div>
 						
+						<div>
+		            	<form action="list" method="post">
+		                    <div class="inline-wrap">
+		                    	<div CLASS="btn-group">
+			                        <button class="btn btn-primary btn-date" type="button" data-date="7">1주일</button>
+			                        <button class="btn btn-primary btn-date" type="button" data-date="1">1개월</button>
+			                        <button class="btn btn-primary btn-date" type="button" data-date="3">3개월</button>
+		                    	</div>
+		                        <input type="text" class="picker-start form-control start" name="start" placeholder="시작일을 선택해주세요" value="${start}">
+		                        <input type="text" class="picker-end form-control finish" name="finish" placeholder="종료일을 선택해주세요" value="${finish}">
+		                    </div>
+		                   	<button class="btn btn-sm btn-primary btn-block btn-list">검색</button>
+		            	</form>
+		            	</div>
+						<br><hr><br> 
 
 						<!--  결제 내역 목록  -->
 						<div class="table-responsive">
@@ -165,6 +222,7 @@
 												</c:choose>
 											</td>
 											<td>
+											
 												<c:if test="${status eq '결제완료'}">
 												<a href="${pageContext.request.contextPath}/member/pay/pay_delete?tid=${payInfoDto.tid_no}">
 													<input type="submit" value="결제취소" class="btn"> 
@@ -172,6 +230,7 @@
 												</c:if>
 											</td>
 										</tr>
+										
 										</c:forEach>
 								</tbody>
 							</table>
