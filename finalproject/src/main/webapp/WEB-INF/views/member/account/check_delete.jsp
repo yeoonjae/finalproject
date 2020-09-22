@@ -2,6 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/member/template/user_header.jsp"></jsp:include>
 <div id="content-wrapper">
+	<br>
+	<br>
+	<br>
 	<div class="container-fluid">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item">비밀번호 확인</li>

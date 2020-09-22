@@ -220,7 +220,7 @@ public class MemberAccountController {
 			attr.addAttribute("member_no", no);
 			return "redirect:change_pw";
 		}
-		return "redirect:find_pw_check?error=error";
+		return "redirect:find_pw_check?error=error&member_email="+member_email;
 	}
 	//비번 바꾸기
 	@GetMapping("/change_pw")

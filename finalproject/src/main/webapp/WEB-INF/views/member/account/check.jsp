@@ -34,6 +34,9 @@
 
 </style>
 <div id="content-wrapper">
+<br>
+	<br>
+	<br>
 	<div class="container-fluid">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item">비밀번호 확인</li>

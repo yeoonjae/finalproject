@@ -11,6 +11,14 @@
 <jsp:include page="/WEB-INF/views/member/template/home_header.jsp"></jsp:include>	
 </c:otherwise>
 </c:choose>
+<style>
+
+nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.navbar-transparent.white .attr-nav>ul>li>a,
+	nav.navbar.bootsnav.navbar-transparent.white ul.nav>li>a, nav.navbar.bootsnav.no-background.white ul.nav>li>a
+	{
+	color: black !important;
+}
+</style>
 <div id="content-wrapper">
 	<div class="container-fluid">
 		<ol class="breadcrumb">

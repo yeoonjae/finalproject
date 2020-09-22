@@ -126,7 +126,7 @@
                         <h6 class="title">Custom Pages</h6>
                         <ul class="link">
                            <li><a href="${pageContext.request.contextPath}/member/">스파티움 홈</a></li>
-                            <li><a href="#">공지사항</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/notice/list">공지사항</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/franchisee/question">가맹 문의</a></li>
                         </ul>
