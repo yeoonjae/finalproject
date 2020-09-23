@@ -11,8 +11,26 @@
 <jsp:include page="/WEB-INF/views/member/template/home_header.jsp"></jsp:include>	
 </c:otherwise>
 </c:choose>
-<div id="content-wrapper">
+<style>
+
+nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.navbar-transparent.white .attr-nav>ul>li>a,
+	nav.navbar.bootsnav.navbar-transparent.white ul.nav>li>a, nav.navbar.bootsnav.no-background.white ul.nav>li>a
+	{
+	color: black !important;
+}
+
+nav.navbar.bootsnav.no-background {
+    background-color: lightgray;
+    border: none;
+}
+#content-wrapper{
+	margin-top:100px;
+}
+</style>
+<div id="content-wrapper" style="margin:100px">
 	<div class="container-fluid">
+	<br><br><br>
+	
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item">인증번호 확인</li>
 		</ol>
@@ -21,7 +39,6 @@
 				<div class="form-group">
 				인증번호 확인
 				<br>
-				member_email: ${member_email}
 				<input type="hidden" class="from-control" name="member_email" value="${member_email}">
 				<input type="text" class="form-control" name="secret"  maxlength="6">
 				</div>

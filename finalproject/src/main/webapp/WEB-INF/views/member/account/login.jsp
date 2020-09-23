@@ -36,59 +36,64 @@
         <div class="card-header">회원 로그인</div>
         <div class="card-body">
         <script>
-        $(document).ready(function(){
-        	 
-            // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
-            var key = getCookie("key");
-            $("#inputEmail").val(key); 
-             
-            if($("#inputEmail").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
-                $("#idSaveCheck").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
+        $(document).ready(function() {
+            var userInputId = getCookie("userInputId");
+            var setCookieYN = getCookie("setCookieYN");
+            
+            if(setCookieYN == 'Y') {
+                $("#idSaveCheck").prop("checked", true);
+            } else {
+                $("#idSaveCheck").prop("checked", false);
             }
-             
-            $("#idSaveCheck").change(function(){ // 체크박스에 변화가 있다면,
-                if($("#idSaveCheck").is(":checked")){ // ID 저장하기 체크했을 때,
-                    setCookie("key", $("#inputEmail").val(), 7); // 7일 동안 쿠키 보관
-                }else{ // ID 저장하기 체크 해제 시,
-                    deleteCookie("key");
+            
+            $("#inputEmail").val(userInputId); 
+            
+            //로그인 버튼 클릭
+            $('#loginbtn').click(function() {
+                if($("#idSaveCheck").is(":checked")){ 
+                    var userInputId = $("#inputEmail").val();
+                    setCookie("userInputId", userInputId, 60); 
+                    setCookie("setCookieYN", "Y", 60);
+                } else {
+                    deleteCookie("userInputId");
+                    deleteCookie("setCookieYN");
                 }
-            });
-             
-            // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
-            $("#inputEmail").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
-                if($("#idSaveCheck").is(":checked")){ // ID 저장하기를 체크한 상태라면,
-                    setCookie("key", $("#userId").val(), 7); // 7일 동안 쿠키 보관
-                }
+                
+                document.fform.submit();
             });
         });
-         
+
+        //쿠키값 Set
         function setCookie(cookieName, value, exdays){
             var exdate = new Date();
             exdate.setDate(exdate.getDate() + exdays);
-            var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+            var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + 
+            exdate.toGMTString());
             document.cookie = cookieName + "=" + cookieValue;
         }
-         
+
+        //쿠키값 Delete
         function deleteCookie(cookieName){
             var expireDate = new Date();
             expireDate.setDate(expireDate.getDate() - 1);
             document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
         }
-         
-        function getCookie(cookieName) {
-            cookieName = cookieName + '=';
-            var cookieData = document.cookie;
-            var start = cookieData.indexOf(cookieName);
-            var cookieValue = '';
-            if(start != -1){
-                start += cookieName.length;
-                var end = cookieData.indexOf(';', start);
-                if(end == -1)end = cookieData.length;
-                cookieValue = cookieData.substring(start, end);
-            }
-            return unescape(cookieValue);
-        }
 
+        //쿠키값 가져오기
+        function getCookie(cookie_name) {
+            var x, y;
+            var val = document.cookie.split(';');
+            
+            for (var i = 0; i < val.length; i++) {
+                x = val[i].substr(0, val[i].indexOf('='));
+                y = val[i].substr(val[i].indexOf('=') + 1);
+                x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
+                
+                if (x == cookie_name) {
+                  return unescape(y); // unescape로 디코딩 후 값 리턴
+                }
+            }
+        }
         </script>
         <!-- 관리자 로그인 부분  -->
           <form name="fform" action="${pageContext.request.contextPath}/member/account/login" method="post">

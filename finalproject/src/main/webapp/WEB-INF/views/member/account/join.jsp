@@ -11,12 +11,17 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
     integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
 </script>
-
-<br>
-<br>
-<br>
-<br>
-<br>
+<style>
+nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.navbar-transparent.white .attr-nav>ul>li>a,
+	nav.navbar.bootsnav.navbar-transparent.white ul.nav>li>a, nav.navbar.bootsnav.no-background.white ul.nav>li>a
+	{
+	color: black !important;
+}
+nav.navbar.bootsnav.no-background {
+    background-color: lightgray;
+    border: none;
+}
+</style>
 <style>
     .intext {
         width: 100%;
@@ -224,7 +229,7 @@
             }
 </script>
 
-<div id="content-wrapper">
+<div id="content-wrapper" style="margin-top:100px">
     <div class="container-fluid">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">회원가입</li>
