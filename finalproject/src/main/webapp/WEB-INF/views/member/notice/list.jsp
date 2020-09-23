@@ -15,6 +15,7 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
 	{
 	color: black !important;
 }
+
 </style>
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/resources/assets/css/lightpick.css">
@@ -154,7 +155,7 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
 						<div class="fontD bold brown" style="margin-bottom: 10px;">공지사항</div>
 					</div>
 					<div class="">
-						<select id="cntPerPage" name="sel" onchange="selChange()" class="form-control">
+						<select id="cntPerPage" name="sel" onchange="selChange()" class="form-control brown">
 							<option value="5" <c:if test="${paging.cntPerPage == 5}">selected</c:if>>5줄 보기</option>
 							<option value="10" <c:if test="${paging.cntPerPage == 10}">selected</c:if>>10줄 보기</option>
 							<option value="15" <c:if test="${paging.cntPerPage == 15}">selected</c:if>>15줄 보기</option>
@@ -162,7 +163,7 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
 						</select> <br> <br> <br>
 					</div>
 					<!-- 옵션선택 끝 -->
-					<table class="table table2" width="auto">
+					<table class="table table2 brown" width="auto">
 						<tbody>
 							<c:forEach var="list" items="${list}">
 								<tr>
@@ -201,7 +202,6 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
 					</div>
 				</div>
 			</div>
-		</div>
 		</div>
 	</section>
 </body>

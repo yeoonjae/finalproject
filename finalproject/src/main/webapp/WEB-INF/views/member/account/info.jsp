@@ -19,6 +19,7 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
 	color: black !important;
 }
 </style>
+
 <div class="container-fluid row-wrap">
 	<br>
 	<br>

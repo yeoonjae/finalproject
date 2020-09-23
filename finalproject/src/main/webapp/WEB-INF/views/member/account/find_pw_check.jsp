@@ -18,8 +18,16 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
 	{
 	color: black !important;
 }
+
+nav.navbar.bootsnav.no-background {
+    background-color: lightgray;
+    border: none;
+}
+#content-wrapper{
+	margin-top:100px;
+}
 </style>
-<div id="content-wrapper">
+<div id="content-wrapper" style="margin:100px">
 	<div class="container-fluid">
 	<br><br><br>
 	
@@ -31,7 +39,6 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
 				<div class="form-group">
 				인증번호 확인
 				<br>
-				member_email: ${member_email}
 				<input type="hidden" class="from-control" name="member_email" value="${member_email}">
 				<input type="text" class="form-control" name="secret"  maxlength="6">
 				</div>

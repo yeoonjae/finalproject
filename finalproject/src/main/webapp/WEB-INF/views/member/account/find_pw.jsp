@@ -96,6 +96,14 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
         font-size: 13px;
         margin: 0.3rem;
     }
+
+nav.navbar.bootsnav.no-background {
+    background-color: lightgray;
+    border: none;
+}
+#content-wrapper{
+	margin-top:100px;
+}
 </style>
 <script>
 function checkEmail() {

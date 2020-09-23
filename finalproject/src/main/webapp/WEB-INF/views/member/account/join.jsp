@@ -17,12 +17,11 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
 	{
 	color: black !important;
 }
+nav.navbar.bootsnav.no-background {
+    background-color: lightgray;
+    border: none;
+}
 </style>
-<br>
-<br>
-<br>
-<br>
-<br>
 <style>
     .intext {
         width: 100%;
@@ -230,7 +229,7 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
             }
 </script>
 
-<div id="content-wrapper">
+<div id="content-wrapper" style="margin-top:100px">
     <div class="container-fluid">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">회원가입</li>

@@ -35,7 +35,8 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
 	z-index: -1;
 }
 
-.form-control {
+.hanmin-control {
+	color: brown;
 	width: 160px;
 	float: right;
 	height: 30px;
@@ -121,7 +122,7 @@ label, p {
 					<tfoot>
 					</tfoot>
 				</table>
-				<div class="form-control"><a href="list">목록</a></div>
+				<div class="hanmin-control"><a href="list">목록</a></div>
 		</div>
 	</div>
 </div>

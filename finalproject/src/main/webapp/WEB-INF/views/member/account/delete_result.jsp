@@ -7,6 +7,14 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
 	{
 	color: black !important;
 }
+
+nav.navbar.bootsnav.no-background {
+    background-color: lightgray;
+    border: none;
+}
+#content-wrapper{
+	margin-top:100px;
+}
 </style>
 <div id="content-wrapper">
 	<div class="container-fluid">
