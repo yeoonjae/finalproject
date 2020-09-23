@@ -78,14 +78,12 @@ public class MemberAccountController {
 	@GetMapping("/list")
 	public String list(Model model, HttpSession session) {
 		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
-		System.out.println(adminDto.getAdmin_auth());
-		System.out.println(adminDto.getBranch_no());
-		if(adminDto.getAdmin_auth().equals("본점")){			
-			List<MemberDto> list = memberDao.getList();
-			model.addAttribute("list", list);
-		}else {
+		if(adminDto.getAdmin_auth().equals("지점")){			
 			int no = adminDto.getBranch_no();
 			List<MemberDto> list = memberDao.getList(no);
+			model.addAttribute("list", list);
+		}else {
+			List<MemberDto> list = memberDao.getList();
 			model.addAttribute("list", list);
 		}
 		return "member/account/list";
