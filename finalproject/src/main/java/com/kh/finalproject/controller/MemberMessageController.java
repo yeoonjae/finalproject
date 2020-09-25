@@ -26,6 +26,7 @@ public class MemberMessageController {
 	@Autowired
 	private MessageService messageService;
 	
+	//회원 메세지 수신함
 	@GetMapping("/message")
 	public String inbox(PagingVO vo,HttpSession session,Model model
 			, @RequestParam(value="nowPage", required=false)String nowPage
