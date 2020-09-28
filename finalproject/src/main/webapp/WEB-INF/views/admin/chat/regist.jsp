@@ -147,9 +147,7 @@
 									<td>${chatDto.chat_type}</td>
 									<td>${chatDto.chat_q}</td>
 									<td>${chatDto.chat_a}</td>
-									<td><a href="edit?chat_no=${chatDto.chat_no}">
-											<button class="btn btn-primary">수정</button></a> 
-											<a class="link" href="delete/${chatDto.chat_no}">
+									<td><a class="link" href="delete/${chatDto.chat_no}">
 											<button class="btn btn-primary del">삭제</button>
 									</a></td>
 								</tr>

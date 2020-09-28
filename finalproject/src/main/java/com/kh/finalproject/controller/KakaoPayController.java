@@ -71,7 +71,7 @@ public class KakaoPayController {
 		// 결제 요청 전 확인 
 		boolean isCorrect = kakaoPayService.isCorrect(use_point2,member_no);
 		
-		if(!isCorrect) {
+		
 			// 결제 요청
 			KakaoPayResultVO resultVO = kakaoPayService.prepare(startVO);
 			
@@ -90,12 +90,8 @@ public class KakaoPayController {
 			session.setAttribute("coupon_discount2", coupon_discount2); // 쿠폰 할인 금액 
 			session.setAttribute("coupon_no", coupon_no); // 쿠폰 번호 
 			return "redirect:" + resultVO.getNext_redirect_pc_url();
-		} 
-		else {
-			return "";
-		}
-	}
 	
+	}	
 	
 	// 결제 승인 
 	@GetMapping("/success")
@@ -270,6 +266,51 @@ public class KakaoPayController {
 		public String delete_finish() {
 			
 			return "member/pay/delete_finish";
+		}
+		
+		// 추가 결제 요청
+		@PostMapping("/serve_prepare")
+		public String serve_prepare(@RequestParam int license_no, // 이용권 번호 
+											@RequestParam int sale_price, //총 할인 금액
+											@ModelAttribute KakaoPayStartVO startVO, 
+											HttpSession session) throws URISyntaxException {
+			MemberDto memberDto = (MemberDto) session.getAttribute("memberinfo"); 
+			int member_no = memberDto.getMember_no();	
+			
+			String partner_user_id = payDao.getId(member_no); // 회원 번호로 id가져오기
+			String partner_order_id = Integer.toString(payDao.getOrderSeq()); // 시퀀스 번호 생성하여 부여 
+			
+			startVO.setPartner_order_id(partner_order_id);
+			startVO.setPartner_user_id(partner_user_id);
+			startVO.setItem_name("후불 이용 시간");
+
+			// 결제 요청 전 확인 
+			boolean isCorrect = kakaoPayService.isCorrect(sale_price,member_no);
+			
+			if(!isCorrect) {
+				// 결제 요청
+				KakaoPayResultVO resultVO = kakaoPayService.serve_prepare(startVO);
+				
+				// 결제 승인 페이지에서 사용할 수 있도록 session 데이터 추가
+				// - partner_order_id, partner_user_id, tid
+				session.setAttribute("partner_order_id", startVO.getPartner_order_id());
+				session.setAttribute("partner_user_id", startVO.getPartner_user_id());
+				session.setAttribute("tid", resultVO.getTid());
+		
+				
+				// 세션에 저장 (이용권 번호, 할인금액+ 마일리지 사용금액, 적립금)
+				session.setAttribute("license_time", 0);
+				session.setAttribute("license_no", license_no);
+				session.setAttribute("sale_price", sale_price);
+				session.setAttribute("use_point2", sale_price); // 사용 마일리지
+				session.setAttribute("reward", 0); // 적립 마일리지
+				session.setAttribute("coupon_discount2", 0); // 쿠폰 할인 금액 
+				session.setAttribute("coupon_no", 0); // 쿠폰 번호 
+				return "redirect:" + resultVO.getNext_redirect_pc_url();
+			} 
+			else {
+				return "";
+			}
 		}
 
 }

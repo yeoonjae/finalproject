@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.kh.finalproject.VO.Criteria;
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.BranchImgDto;
@@ -29,6 +28,7 @@ import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.repository.AdminDao;
 import com.kh.finalproject.repository.BranchDao;
 import com.kh.finalproject.repository.LocalDao;
+import com.kh.finalproject.repository.SeatDao;
 import com.kh.finalproject.service.BranchService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +46,9 @@ public class BranchController {
 	
 	@Autowired
 	private LocalDao localDao;
+	
+	@Autowired
+	private SeatDao seatDao;
 	
 	@Autowired
 	private BranchService branchService;

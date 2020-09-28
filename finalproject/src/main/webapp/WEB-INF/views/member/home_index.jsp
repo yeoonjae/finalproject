@@ -86,13 +86,11 @@
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
               
                             <li><a href="#about">소개글</a></li>                    
-                            <li><a href="${pageContext.request.contextPath}/member/notice/noticeList">공지사항</a></li>                    
+                            <li><a href="${pageContext.request.contextPath}/member/notice/list">공지사항</a></li>                    
                             <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>                  
-                            <li><a href="#pricing">가맹 문의</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/franchisee/question">가맹 문의</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/account/join">회원가입</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/account/login">로그인</a></li>                      
-<!--                             <li><a href="#blog">Blog</a></li>                     -->
-<!--                             <li><a href="#contact">Contact</a></li>   -->
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </div>  
@@ -116,7 +114,6 @@
 <!--                         <a href="" class="btn btn-primary m-top-20">GET STARTED</a> -->
                                 <a href="" class="btn btn-primary m-top-20">SPATIUM START</a>
                             </div>
- 
                         </div>
                     </div><!--End off row-->
                 </div><!--End off container -->
@@ -190,11 +187,10 @@
                                 $('.mapheight').css('height', '350');
                                 $('.maps_text h3').hide();
                             }
-
             </script>
 
             <script src="${pageContext.request.contextPath}/resources/m/js/plugins.js"></script>
             <script src="${pageContext.request.contextPath}/resources/m/js/main.js"></script>
 
     </body>
-</html>
+</html> 

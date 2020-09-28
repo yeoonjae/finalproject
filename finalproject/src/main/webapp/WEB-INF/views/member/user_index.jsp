@@ -28,7 +28,6 @@
          $('#myModal').on('shown.bs.modal', function () {
               $('#myInput').focus()
          });
-
       //외출 버튼 클릭 시 
       $('#out').click(function() {
          document.getElementById("qrcode").innerText = "";
@@ -43,7 +42,6 @@
          //qr코드 오류복원능력임 (L->M->Q->H)
          });
       });
-
          //퇴실 버튼 클릭 시 
          $('#end').click(function() {
             document.getElementById("qrcode").innerText = "";
@@ -58,7 +56,6 @@
             //qr코드 오류복원능력임 (L->M->Q->H)
             });   
       });
-
       // 챗봇 모달창 띄우기
       $('#myModal').on('shown.bs.modal', function() {
          $('#myInput').focus()
@@ -88,10 +85,8 @@
          })
          .then(function(response){
             //console.log(response.data);      
-
             var box = document.createElement("div");
             box.classList.add("box");
-
             var imgBox = document.createElement("div");
             imgBox.classList.add("imgBox");
             
@@ -136,10 +131,8 @@
                   }).then(function(response){
                      console.log(response.data[0].chat_a);
                      var chat_a = response.data[0].chat_a;
-
                      var box = document.createElement("div");
                      box.classList.add("box");
-
                      var imgBox = document.createElement("div");
                      imgBox.classList.add("imgBox");
                      
@@ -155,7 +148,7 @@
                      
                      var name = document.createElement("div");
                      name.classList.add("name");
-                     name = document.createTextNode('공도리봇');
+                     name = document.createTextNode('티움봇');
                      innerBox.appendChild(name);
                      
                      var content = document.createElement("div");
@@ -167,9 +160,7 @@
                      chatList.appendChild(box);
                      
                      var root = "${pageContext.request.contextPath}";
-
                });
-
             });
             content.appendChild(input);
             
@@ -177,7 +168,6 @@
             chatList.appendChild(box);
             
             var root = "${pageContext.request.contextPath}";
-
          }
          
       });
@@ -185,15 +175,16 @@
 });
 </script>
 <style>
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css); 
+.container {
+	font-family: 'Noto Sans KR';
+}
  *{
      box-sizing: border-box;
  }
-
-
 .modal-backdrop {
    z-index:-1;
 }
-
 .start{
    background-color:#d1cab0; 
    height:auto;
@@ -203,13 +194,11 @@
    height:30px;
    border-radius: 50%;
 }
-
 .img{
    width:50px;
    height:50px;
    border-radius: 50%;
 }
-
 .box{
     display: flex;
     flex-direction: row;
@@ -217,7 +206,6 @@
    background-color:#d1cab0; 
    padding: 3%;
 }
-
 .box.my{
      margin-left: auto;
      flex-direction: row-reverse;
@@ -242,40 +230,33 @@
 /*    font-weight:bold; */
 /*    color:black; */
 /* /*    padding: 1%; */ */
-
 /* } */
-
 .box .my .imgBox{
     display: none;
 }
-
 .box .imgBox {
     width:50px;
 }
-
 .box.my .innerBox{
 /*    width:200px; */
 }
 .box .innerBox{
-     flex-grow: 0.3;  
+     flex-grow: 0.1;  
 }
 .btn-size{
    width: 100%;
     margin-bottom: 5px;
 }
-
 .num{
    padding-top:5%;   
    font-size:16px;
    width:30%;      
 } 
-
 .use{
    padding-top:5%;   
    padding-left:20%; 
    font-size:16px;    
 } 
-
 .name{
    padding-left:2%;
    width:100%;  
@@ -285,41 +266,33 @@ table{
    text-align:center;
     width:90%;   
 }
-
 .margin{
    margin-left:7%;
 }
-
 .bold{
 	font-weight:bold;
 }
-
 .float_l{
 	 float:left; 
 }
-
 .width40{
 	width:35%;
 }
-
 .width30{
 	width:30%;
 }
-
 .width20{
 	width:20%;
 }
 .width25{
 	width:25%;
 }
-
 .width10{
 	width:10%;
 }
 .left{
 	text-align:left;
 }
-
 .noline{
          border: 0;
          outline: 0;
@@ -331,7 +304,6 @@ table{
    <div class="container">
       <div class="row">
          <div class="roomy-100">
-         
             <!--  user 메인 이미지  -->
             <div>
                <img
@@ -341,16 +313,16 @@ table{
 
             <br>
             <br>
- 
-   
+ 			
+   			
             <!--  지점 좌석 정보  -->
             <div class="width40 float_l">
-               <h6 class="name margin bold"> SPATIUM 혜정점 </h6>
+               <h6 class="name margin bold"> ${memberinfo.branch_name} </h6>
                
                <div> 
                   <table class="bold"> 
                      <tr>
-                        <td class="num">30/40</td>
+                        <td class="num">${useCount} / ${allCount}</td>
                         <td class="num">0/1</td>
                         <td class="num">30/40</td>
                      </tr>
@@ -365,11 +337,19 @@ table{
             
              
 
- <!--  지점 좌석 정보  -->
+ 			<!--  지점 좌석 정보  -->
             <div class="width30 float_l">
-               <h6 class="name margin bold"> 김혜정님의 잔여시간 <span><button class="btn">충전하기</button></span></h6> 
+               <h6 class="name margin bold"> ${memberinfo.member_name}님의 잔여시간 <span><a href="${pageContext.request.contextPath}/member/pay/pay_main"><button class="btn">충전하기</button></a></span></h6>
 	          	<div class="use float_l">
-	          		이용중인 상품이 없습니다. 
+               	<c:choose>
+               		<c:when test="${memberinfo.member_charge != 0}">
+               			<span>${memberinfo.member_charge}시간</span>
+               		</c:when>
+               		<c:otherwise>
+		          		<span>이용중인 상품이 없습니다.</span> 
+               		</c:otherwise>
+               	</c:choose>
+   
 	          	</div>
 
             </div>        
@@ -391,15 +371,14 @@ table{
                <button class="noline" data-toggle="modal" data-target="#myModal">
                 <img class="img" src="${pageContext.request.contextPath}/resources/m/images/pp.png"></button>
                <!-- Modal -->
-               <div class="modal" id="myModal" tabindex="-1" role="dialog"
-                  aria-labelledby="myModalLabel" aria-hidden="true">
+               <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                      <div class="modal-content">
                         <div class="modal-header">
                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                            </button>
-                           <h4 class="modal-title" id="myModalLabel">공도리 챗봇</h4>
+                           <h4 class="modal-title" id="myModalLabel">Spatium 챗봇</h4>
                            </div>
                            <!--  챗봇 시작하기 -->
                            <div class="modal-body">
@@ -408,15 +387,15 @@ table{
                                  <div class="box">
                                     <!-- 이미지 박스 -->
                                     <div class="imgBox">
-                                       <img class="chatimg" src="${pageContext.request.contextPath}/resources/m/images/pp.png">
+                                       <img class="chatimg" src="${pageContext.request.contextPath}/resources/m/images/pp.png"> 
                                     </div>   
                                     <!-- 내용 박스 -->
                                     <div class="innerBox">
-                                       <div class="name">스파봇</div>
+                                       <div class="name">티움봇</div>
                                        <div class="content">
-                                          	😊SPATIUM에 오신걸 환영합니다😊<br><br>
-                                          저희 SPATIUM에 대하여 문의사항이 있으시다면 <br>
-                                          스파봇을 이용해 주세요 ❕ ❗ <br><br>
+                                          	😊WELCOME TO SPATIUM😊<br><br>
+                                          저희 스파티움에 관한 문의사항이 있으시다면 <br>
+                                          티움봇을 이용해 주세요 ❕ ❗ <br><br>
                                           아래에서 원하시는 유형을 선택하시면<br>
                                           해당 유형의 답변을 확인하실 수 있답니당🧡<br><br>
                                           다들 스파티움과 함께 열공하고 <br>
@@ -431,7 +410,7 @@ table{
                                     </div>
                                  </div>   
                                  <div class="chatList">                                 
-                                 </div>
+                                </div>
                                  <!-- 나 -->
       <!--                             <div class="box my"> -->
       <!--                                 <div class="innerBox"> -->
@@ -441,7 +420,7 @@ table{
       <!--                                 </div>                                 -->
       <!--                             </div> -->
   
-                              </div>
+                            </div>
                            </div>
                            <div class="modal-footer">
                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -450,11 +429,12 @@ table{
                   </div>
                </div>
             </div>
-
-
+            
+            
          </div>
       </div>
    </div>
 </section>
 <br><br><br><br>
+
 <jsp:include page="/WEB-INF/views/member/template/footer.jsp"></jsp:include>

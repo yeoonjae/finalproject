@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	mapper는 구문을 만들 수 있는 영역
+	일반적으로 테이블당 1개씩의 mapper를 둔다
+	
+	- namespace : 영역을 외부에서 부르기 위한 별칭(일반적으로 테이블 이름으로 사용)
+ -->
+<mapper namespace="licenseHis">
+	
+	<insert id="regist" parameterType="licenseHisDto">
+		INSERT INTO license_his(
+			license_his_no,
+			member_no,
+			seat_no,
+			license_his_start
+		) VALUES (
+			license_his_seq.nextval,
+			#{member_no},
+			#{seat_no},
+			sysdate
+		)
+	</insert>
+	
+	<update id="updateFinish" parameterType="int">
+		UPDATE license_his SET license_his_finish = sysdate WHERE license_his_no = #{license_his_no}
+	</update>
+	
+	<update id="updatePay" parameterType="map">
+		UPDATE license_his SET license_his_pay = #{license_his_pay} WHERE license_his_no = #{license_his_no} 
+	</update>
+	
+	<select id="getUsed" parameterType="int" resultType="licenseHisDto">
+		SELECT lh.*, s.SEAT_ROW, s.SEAT_COL FROM LICENSE_HIS lh 
+			INNER JOIN SEAT s ON lh.SEAT_NO = s.SEAT_NO
+				WHERE lh.member_no = #{member_no} 
+				AND lh.license_his_start IS NOT NULL 
+				AND lh.license_his_finish IS NULL
+	</select>
+	
+	<select id="useTime" parameterType="int" resultType="int">
+		SELECT 
+			CEIL(
+				ABS(
+					(LICENSE_HIS_FINISH - LICENSE_HIS_START)
+					) * 24 * 60 
+				) AS time
+			FROM LICENSE_HIS lh WHERE license_his_no = #{license_his_no}
+	</select>
+	
+	<!-- 추가 결제 관련 정보 -->
+	<!-- 회원의 가장 최근 이용 내역 조회 -->
+	<select id="payInfo" parameterType="int" resultType="payServeDto">
+		SELECT * FROM (
+			SELECT  m.MEMBER_NO, m.MEMBER_POINT, b.branch_no, b.BRANCH_NAME, l.LICENSE_HIS_NO, l.LICENSE_HIS_PAY, ROW_NUMBER() 
+				OVER (PARTITION BY l.member_no ORDER BY l.license_his_finish DESC) AS RankNo 
+			FROM license_his l INNER JOIN MEMBER m ON l.MEMBER_NO = m.member_no 
+			INNER JOIN BRANCH b ON m.BRANCH_NO = b.BRANCH_NO WHERE m.member_no = #{member_no}
+		) T WHERE RankNo = 1
+	</select>
+</mapper>
+
+
+
+

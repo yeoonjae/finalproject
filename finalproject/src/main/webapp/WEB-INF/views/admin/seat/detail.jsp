@@ -8,15 +8,15 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
-        .cinema-seat:not(.empty){
-            background-image: url("http://www.sysout.co.kr/file/image/285");
+        /* .cinema-wrap > .cinema-seat-area > .cinema-seat:not(.empty){
+            background-image: url("${pageContext.request.contextPath}/resources/m/images/normal.png") !important;
         }
-        .cinema-seat.active{
-            background-image: url("http://www.sysout.co.kr/file/image/283");
+        .cinema-wrap > .cinema-seat-area > .cinema-seat.active:not(.empty){
+            background-image: url("${pageContext.request.contextPath}/resources/m/images/active.png") !important;
         }
-        .cinema-seat.disabled{
-            background-image: url("http://www.sysout.co.kr/file/image/284");
-        }
+        .cinema-wrap > .cinema-seat-area > .cinema-seat.disabled:not(.empty){
+            background-image: url("${pageContext.request.contextPath}/resources/m/images/disabled.png") !important;
+        } */
         .btn-wrap {
         	text-align: center;
         }
@@ -35,17 +35,36 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <!--     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script> -->
     <script>
-   	    window.onload = function(){
-   	    };
    	    $(function(){
    	       	if($('.entrance').val()=='leftTop'){
-   	       		$('.cinema-screen').css("width", '30%').css('margin', '10px').css('height', '30px').css('padding', '0');    	    	   	       		
+   	       		$('.cinema-screen').css("width", '30%').css('margin', '10px').css('height', '30px').css('padding', '0').css('margin-bottom', '0px');    	    	   	       		
    	       	} else if($('.entrance').val()=='centerTop'){
    	       		$('.cinema-screen').css("width", '30%').css('margin-top', '10px').css('height', '30px').css('padding', '0');    	    	   	    	
     	    } else {
-   	       		$('.cinema-screen').css("width", '30%').css('margin', '10px').css('height', '30px').css('margin-left', '68%').css('padding', '0');    	    	
+   	       		$('.cinema-screen').css("width", '30%').css('margin', '10px').css('height', '30px').css('margin-left', '68%').css('padding', '0').css('margin-bottom', '0px');    	    	
     	    }
    	    	var cinema = new Hacademy.Reservation(".cinema-wrap");
+   	    	
+   	    	$.urlParam = function(name) {
+        	    var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+        	                      .exec(window.location.href);
+        	    if (results == null) {
+        	         return 0;
+        	    }
+        	    return results[1] || 0;
+        	}
+   	    	
+   	    	if($.urlParam('branch_no')!=1) {
+   	    		$('.btn-list').hide();
+   	    	}
+   	    	
+   	    	$('.btn-delete').click(function(){
+   	    		if(confirm("좌석을 정말 삭제하시겠습니까?")){
+   	    			location.href = "${pageContext.request.contextPath}/admin/seat/delete?branch_no="+$.urlParam('branch_no');
+   	    		} else {
+   	    			return;
+   	    		}
+   	    	});
    	    })
     </script>
 </head>
@@ -56,29 +75,25 @@
                 <li class="breadcrumb-item">
                     <a href="#">좌석 관리</a>
                 </li>
-                <li class="breadcrumb-item active">상세보기</li>
+                <li class="breadcrumb-item active">${branch_name}</li>
             </ol>
             <div class="offset-sm-2 col-sm-8 offset-md-2 col-md-8">
-            	<div class="form-inline">
-                    <div class="form-wrap">
-                        <label class="justify-content-start">지점명</label>
-                        <input type="text"class="form-control" name="row" value="주용 스터디 카페" disabled>
-                    </div>
-                </div>
                 <br>
                 <input type="hidden" name="entrance" value="${entrance}" class="entrance">
                 <div class="cinema-wrap" data-name="seat">
                 	<div class="cinema-screen">출입구</div>
                     <div class="cinema-seat-area" data-rowsize="${rowsize}" data-colsize="${colsize}" data-seatno="visible" data-fill="manual">
                     	<c:forEach items="${list}" var="seatDto">
-                    		<div class="cinema-seat" data-row="${seatDto.seat_row}" data-col="${seatDto.seat_col}" data-state="${seatDto.seat_type}"></div>
+                    		<div class="cinema-seat" data-row="${seatDto.seat_row}" data-col="${seatDto.seat_col}" data-state="${seatDto.seat_type}" data-direction="${seatDto.seat_direction}"></div>
                     	</c:forEach>
                     </div>
                 </div>
                 <br><br>
                 <div class="btn-wrap">
-                    <button class="btn btn-sm btn-primary btn-edit">수정</button>
-                    <button class="btn btn-sm btn-secondary btn-list">목록</button>
+	                    <button class="btn btn-sm btn-danger btn-delete">삭제</button>
+                    <a href="${pageContext.request.contextPath}/admin/branch/list">
+	                    <button class="btn btn-sm btn-secondary btn-list">목록</button>
+                    </a>
                 </div>
                 <br><br>
             </div>

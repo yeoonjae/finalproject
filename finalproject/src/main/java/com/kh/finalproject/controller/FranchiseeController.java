@@ -60,4 +60,10 @@ public class FranchiseeController {
 		return "/member/franchisee/detail";
 	}
 	
+	@GetMapping("/question")
+	public String question() {
+		return "/member/franchisee/question";
+	}
+	
+	
 }

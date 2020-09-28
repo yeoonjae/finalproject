@@ -23,8 +23,14 @@ public interface MemberDao {
 	// 회원 마일리지 차감 
 	void minusPoint(PointHisDto pointHisDto);
 	
+	// 회원 시간 조회 
+	int getCharge(int member_no);
+	
 	// 회원 검색
 	List<MemberDto> search(Map<String, Object> param);
+	
+	// 충전시간 수정
+	void changeCharge(Map<String, Object> param);
 	
 	void delete(int member_no);
 	

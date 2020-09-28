@@ -18,6 +18,8 @@ import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.CouponDto;
 import com.kh.finalproject.entity.CouponReqDto;
+import com.kh.finalproject.entity.InoutDto;
+import com.kh.finalproject.entity.LicenseHisDto;
 import com.kh.finalproject.entity.LocalDto;
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PayInfoDto;
@@ -25,8 +27,13 @@ import com.kh.finalproject.entity.PointDto;
 import com.kh.finalproject.entity.PointHisDto;
 import com.kh.finalproject.entity.ReviewHateDto;
 import com.kh.finalproject.entity.ReviewLikeDto;
+import com.kh.finalproject.entity.SeatDto;
 import com.kh.finalproject.repository.CouponDao;
-import com.kh.finalproject.service.BranchService;
+import com.kh.finalproject.repository.InoutDao;
+import com.kh.finalproject.repository.LicenseHisDao;
+import com.kh.finalproject.repository.MemberDao;
+import com.kh.finalproject.repository.SeatDao;
+import com.kh.finalproject.service.LicenseHisService;
 import com.kh.finalproject.service.MemberService;
 
 @RestController
@@ -35,6 +42,17 @@ public class TestController {
 	@Autowired
 	private SqlSession sqlSession;
 
+	@Autowired
+	private LicenseHisDao licenseHisDao;
+	
+	@Autowired
+	private LicenseHisService licenseHisService;
+	
+	@Autowired
+	private InoutDao inoutDao;
+	
+	@Autowired
+	private MemberDao memberDao;
 	
 	@Autowired
 	private MemberService memberService;
@@ -43,10 +61,11 @@ public class TestController {
 	private CouponDao couponDao;
 	
 	@Autowired
-	private HttpSession session;
+	private SeatDao seatDao;
 	
 	@Autowired
-	private BranchService branchService;
+	private HttpSession session;
+	
 	
 	// 마일리지 유형 중복검사
 	@GetMapping("/point/regist")
@@ -123,21 +142,6 @@ public class TestController {
 		return sqlSession.selectList("PayHis.getPayInfo", map);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	///////////////////////
-	
 	@GetMapping("/branch/branch_name")
 	public BranchDto branchName(@RequestParam String branch_name) {
 		return sqlSession.selectOne("branch.getName", branch_name);
@@ -213,6 +217,41 @@ public class TestController {
 	@GetMapping("/coupon/req/delete")
 	public void delete(@RequestParam int coupon_req_no) {
 		sqlSession.delete("couponReq.delete", coupon_req_no);
+	}
+	
+	// 등록 전 좌석 등록여부 검사
+	@GetMapping("/seat/regist/check")
+	public boolean checkRegist(@RequestParam int branch_no) {
+		int count = sqlSession.selectOne("seat.checkRegist", branch_no);
+		if(count!=0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	@GetMapping("/seat/check")
+	public boolean checkSeat(@RequestParam int row, @RequestParam int col, HttpSession session) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		return licenseHisService.checkIn(row, col, memberDto);
+	}
+	
+	@GetMapping("/seat/out")
+	public boolean out(HttpSession session) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		return licenseHisService.checkOut(memberDto);
+	}
+	
+	// 충전시간 있는지 조회
+	@GetMapping("/member/getCharge")
+	public boolean getCharge(HttpSession session) {
+		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
+		int member_no = memberDto.getMember_no();
+		int charge = memberDao.getCharge(member_no);
+		if(charge!=0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	//지역 내 지점 확인

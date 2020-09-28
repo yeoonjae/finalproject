@@ -76,6 +76,13 @@
 .padding20 {
 	padding-left: 20px;
 }
+
+.padding3 {
+	padding-top: 3%;
+	padding-bottom: 3%;
+}
+
+
 /* .hr_bold{ */
 /* 	border:0; */
 /* 	height:2px; */
@@ -147,6 +154,22 @@
 	padding-bottom: 15%;
 	font-size: 20px;
 }
+
+.width100{
+	width:100%;
+}
+
+.width90{
+	width:90%;
+}
+
+.center{
+	text-align:center;
+}
+.right{
+	text-align:right;
+	padding-right:5%;
+}
 </style>
 
 <main>
@@ -207,11 +230,11 @@
 	
 						<hr class="hr_bold">
 						<!--  주문 정보 출력  -->
-						<div>
+						<div class="width50 float_left">
 							<div class="font20 bold">주문 정보</div>
 							<br>
 							<div class="table-responsive">
-								<table class="table3 table-hover width50"cellspacing="0">
+								<table class="table3 table-hover width90" cellspacing="0">
 									<thead class="width50">
 										<tr>
 											<th class="width50 padding20">주문번호</th>
@@ -245,10 +268,10 @@
 
 						<!-- 상품 정보 출력  -->
 						<div>
-							<div class="font20 bold">상품 정보</div> 
-							<br>
+							<div class="font20 bold width40">상품 정보</div> 
+							<br> 
 							<div class="table-responsive">
-								<table class="table3  table-hover width50" cellspacing="0"> 
+								<table class="table3  table-hover width90" cellspacing="0"> 
 									<thead class="width50">
 										<tr>
 											<th class="width50 padding20">상품명</th>
@@ -262,6 +285,13 @@
 							</div>
 						</div>
 						
+						<br><br>
+						
+						 <div class="right"> 							
+							<a href="${pageContext.request.contextPath}/member/pay/pay_detail">
+							<button class="btn btn-primary">목록으로 돌아가기</button></a>
+						 </div>
+
 					</div>
 				</div>
 			</div>

@@ -72,6 +72,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update member set member_pw = #{member_pw} where member_no=#{member_no}
 	</update>
 	<!-- 진영 코드  -->
+	<!-- 충전시간 구하기 -->
+	<select id="getCharge" resultType="int">
+		SELECT member_charge FROM member WHERE member_no = #{member_no}
+	</select>
+	
+	<!-- 충전시간 변경 -->
+	<update id="changeCharge" parameterType="map">
+		UPDATE MEMBER SET member_charge = #{member_charge} WHERE member_no = #{member_no}
+	</update>
+	
 		<!-- 회원목록(지점명+지역명) -->
 	<select id="getList" resultType="memberDto">
 		SELECT m.*, b.BRANCH_NAME, l.LOCAL_NAME, l.local_no FROM MEMBER m

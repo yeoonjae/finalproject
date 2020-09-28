@@ -19,6 +19,8 @@ public interface BranchDao {
 	
 	//지점 리스트
 	List<BranchDto> getList(Criteria cri);
+	//지점명 뽑기
+	String getName(int branch_no);
 	
 	
 	

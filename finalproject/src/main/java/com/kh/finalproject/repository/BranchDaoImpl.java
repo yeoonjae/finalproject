@@ -159,6 +159,11 @@ public class BranchDaoImpl implements BranchDao{
 		return sqlSession.selectList("branch.getWithImg", branch_no);
 	}
 
+	// 지점명 조회
+	public String getName(int branch_no) {
+		return sqlSession.selectOne("branch.getBranchName", branch_no);
+	}
+
 	//지점 삭제 
 	public List<BranchDeleteListDto> getDeleteList() {
 		return sqlSession.selectList("branch.getDeleteList");

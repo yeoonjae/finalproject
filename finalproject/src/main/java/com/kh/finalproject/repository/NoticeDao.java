@@ -2,7 +2,8 @@ package com.kh.finalproject.repository;
 
 import java.util.List;
 
-import com.kh.finalproject.VO.NoticePageVo;
+import com.kh.finalproject.VO.PagingVO;
+
 import com.kh.finalproject.entity.NoticeDto;
 
 public interface NoticeDao {
@@ -19,7 +20,5 @@ public interface NoticeDao {
 
 	int countNotice();
 
-	List<NoticeDto> selectNotice(NoticePageVo vo);
-
-
+	List<NoticeDto> selectNotice(PagingVO vo);
 }

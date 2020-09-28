@@ -8,7 +8,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.kh.finalproject.VO.NoticePageVo;
+
+import com.kh.finalproject.VO.PagingVO;
 import com.kh.finalproject.entity.NoticeDto;
 
 @Repository
@@ -50,11 +51,11 @@ public class NoticeDaoImpl implements NoticeDao {
 	@Override
 	public int countNotice() {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("notice.countNotice");
+		return 	sqlSession.selectOne("notice.countNotice");
 	}
 
 	@Override
-	public List<NoticeDto> selectNotice(NoticePageVo vo) {
+	public List<NoticeDto> selectNotice(PagingVO vo) {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<>();
 		map.put("start", vo.getStart());

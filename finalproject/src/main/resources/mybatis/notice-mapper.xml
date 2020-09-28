@@ -36,20 +36,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 공지 목록 -->
 	<select id="list" resultType="noticeDto">
-		select * from notice order by notice_time asc
+		select * from notice order by notice_time desc
 	</select>
 	
 	<!-- 공지 삭제 -->
 	<delete id="delete" parameterType="int">
 		delete notice where notice_no=#{notice_no}
 	</delete>
-	<!-- 게시글 개수 출력 -->
 	<select id="countNotice" resultType="int">
 		select count(*) from notice
 	</select>
-	<!-- 페이징 처리 후 게시글 조회 -->
-	<select id="selectNotice" resultType="noticeDto" parameterType="map">
-		select * from (select rownum rn, a.* from(select * from notice order by notice_time asc)A)
+	<select id="selectNotice" parameterType="map" resultType="NoticeDto">
+		select * from (select rownum rn, a.* from (select * from notice order by notice_no desc)a))
 		where rn between #{start} and #{end}
 	</select>
 </mapper>

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.repository.AdminDao;
+import com.kh.finalproject.repository.SeatDao;
 import com.kh.finalproject.service.EmailService;
 
 @Controller
@@ -25,6 +26,10 @@ public class AccountController {
 	private AdminDao adminDao;
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private SeatDao seatDao;
+	
 	//관리자 등록
 		@GetMapping("/regist")
 		public String regist(Model model) {
@@ -99,6 +104,12 @@ public class AccountController {
 				AdminDto find = adminDao.get(no);
 				session.removeAttribute("memberinfo");
 				session.setAttribute("admininfo", find);
+				
+				// 좌석 정보 등록
+				int branch_no = find.getBranch_no();
+				int count = seatDao.checkRegist(branch_no);
+				session.setAttribute("seatCount", count);
+				
 				return "admin/admin_index";
 			}else {
 				return "redirect:login?error=error";

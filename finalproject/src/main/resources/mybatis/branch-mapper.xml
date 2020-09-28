@@ -128,11 +128,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT count(*) FROM branch
 	</select>
 	
+	<select id="getBranchName" parameterType="int" resultType="String">
+		select branch_name from branch where branch_no = #{branch_no}
+	</select>
 	<!-- 지점삭제 누를 시 expired_date update -->
 	<update id="expiredUpdate" parameterType="int">
 		UPDATE branch SET expired_date = sysdate+30 WHERE branch_no=#{branch_no}
 	</update>
-	
+
 	<!-- 지점 삭제 누를 시 delete_branch_list에 등록 -->
 	<insert id="registDeleteList" parameterType="map">
 		INSERT INTO delete_branch_list values(
