@@ -108,6 +108,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE to_char(COUPON_REQ_START, 'yyyy-mm-dd') = to_char(sysdate+1, 'yyyy-mm-dd')
 		AND COUPON_REQ_STATE = '대기'
 	</select>
+	
+	<update id="changeState" parameterType="int">
+		UPDATE coupon_req SET coupon_req_state = '거절' WHERE coupon_req_no = #{coupon_req_no}
+	</update>
 </mapper>
 
 

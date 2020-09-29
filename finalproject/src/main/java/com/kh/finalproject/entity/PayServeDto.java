@@ -1,4 +1,4 @@
-package com.kh.finalproject;
+package com.kh.finalproject.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EntranceDto {
-	
-	private int entrance_no;
-	private int branch_no;
-	private String entrance_location;
+public class PayServeDto {
 
+	private int member_no, branch_no, license_his_no, license_his_pay, member_point; 
+	private String branch_name;
 }

@@ -90,5 +90,9 @@
 	</websocket:handlers>
 	-->
 	
+	<!-- swagger -->
+	<beans:bean id="swagger2Config" class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration"></beans:bean>
 	
+	<resources location="classpath:/META-INF/resources/" mapping="swagger-ui.html"></resources>
+	<resources location="classpath:/META-INF/resources/webjars/" mapping="/webjars/**"></resources>
 </beans:beans>

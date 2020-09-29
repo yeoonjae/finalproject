@@ -26,8 +26,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	private MemberCouponDao memberCouponDao;
 	
 	// 매일 자정마다 시작일이 오늘인 쿠폰을 회원쿠폰함에 등록
-//	@Scheduled(cron="0 0 0 * * *") // 매일 자정마다
-	@Scheduled(cron="0 40 19 * * *") // 매일 자정마다
+	@Scheduled(cron="0 0 0 * * *") // 매일 자정마다
 	@Override
 	public void regist() {
 		// 시작일이 오늘인 쿠폰 조회
@@ -47,8 +46,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	}
 
 	// 매일 23시 59분마다 종료일이 오늘인 쿠폰을 회원쿠폰함에서 삭제
-//	@Scheduled(cron="0 59 23 * * *") // 매일 23:59 마다
-	@Scheduled(cron="0 38 19 * * *") // 매일 23:59 마다
+	@Scheduled(cron="0 59 23 * * *") // 매일 23:59 마다
 	@Override
 	public void delete() {
 		// 종료일이 오늘인 쿠폰 조회

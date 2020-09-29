@@ -13,7 +13,13 @@
 	margin-top: 10px;
 	display:block;
 }
+nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.navbar-transparent.white .attr-nav>ul>li>a,
+	nav.navbar.bootsnav.navbar-transparent.white ul.nav>li>a, nav.navbar.bootsnav.no-background.white ul.nav>li>a
+	{
+	color: black !important;
+}
 </style>
+
 <div class="container-fluid row-wrap">
 	<br>
 	<br>
@@ -46,7 +52,12 @@
 							</tr>
 							<tr>
 							<th>회원 마일리지</th>
-							<td>${memberDto.member_point}</td>
+							<td>
+								${memberDto.member_point}점&nbsp;
+								<a href="${pageContext.request.contextPath}/member/point/list">
+								 <button class="btn btn-primary btn-list" style="width: 75px; height: 35px; font-size: small; padding: 0.5rem;">내역조회</button>
+								</a>
+							</td>
 							</tr>
 							<tr>
 							<th>회원 가입일자</th>

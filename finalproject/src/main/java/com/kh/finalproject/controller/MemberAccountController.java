@@ -2,9 +2,7 @@ package com.kh.finalproject.controller;
 
 import java.util.List;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.kh.finalproject.entity.AdminDto;
 import com.kh.finalproject.entity.BranchDto;
 import com.kh.finalproject.entity.CertDto;
 import com.kh.finalproject.entity.LocalDto;
@@ -77,9 +76,16 @@ public class MemberAccountController {
 	}
 	// 회원 정보 리스트
 	@GetMapping("/list")
-	public String list(Model model) {
-		List<MemberDto> list = memberDao.getList();
-		model.addAttribute("list", list);
+	public String list(Model model, HttpSession session) {
+		AdminDto adminDto = (AdminDto)session.getAttribute("admininfo");
+		if(adminDto.getAdmin_auth().equals("지점")){			
+			int no = adminDto.getBranch_no();
+			List<MemberDto> list = memberDao.getList(no);
+			model.addAttribute("list", list);
+		}else {
+			List<MemberDto> list = memberDao.getList();
+			model.addAttribute("list", list);
+		}
 		return "member/account/list";
 	}
 
@@ -220,7 +226,7 @@ public class MemberAccountController {
 			attr.addAttribute("member_no", no);
 			return "redirect:change_pw";
 		}
-		return "redirect:find_pw_check?error=error";
+		return "redirect:find_pw_check?error=error&member_email="+member_email;
 	}
 	//비번 바꾸기
 	@GetMapping("/change_pw")

@@ -162,4 +162,43 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 		if(use_point <= member_point) return true;
 		else return false;
 	}
+	
+	// 추가 결제 요청 메소드
+	// 결제 요청 메소드
+		@Override
+		public KakaoPayResultVO serve_prepare(KakaoPayStartVO startVO) throws URISyntaxException {
+			// 1. 도구 생성
+			RestTemplate template = new RestTemplate();
+
+			// 2. Header 생성
+			HttpHeaders headers = new HttpHeaders();
+			headers.add("Authorization", "KakaoAK d57c34e99d6acf363a578ead15befe0a");
+			headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+			// 3. Body 생성
+			MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>();
+			body.add("cid", CID);
+			body.add("partner_order_id", startVO.getPartner_order_id());
+			body.add("partner_user_id", startVO.getPartner_user_id());
+			body.add("item_name", startVO.getItem_name());
+			body.add("quantity", "1"); // 수량은 항상 1이므로 1로 설정
+			body.add("total_amount", String.valueOf(startVO.getTotal_amount()));
+			body.add("tax_free_amount", "0");
+			// 주의 : 주소는 반드시 API 에서 승인된 URL을 사용해야 한다.
+			body.add("approval_url", "http://localhost:8080/finalproject/member/pay/success");
+			body.add("cancel_url", "http://localhost:8080/finalproject/member/pay/cancel");
+			body.add("fail_url", "http://localhost:8080/finalproject/member/pay/fail");
+
+			// 4. Header 와 Body를 합성
+			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
+
+			// 5. 주소 정의
+			URI uri = new URI("https://kapi.kakao.com/v1/payment/ready");
+
+			// 6. 모든 준비가 완료되었으므로 template을 이용하여 요청을 전송 (카카오페이한테)
+			KakaoPayResultVO resultVO = template.postForObject(uri, entity, KakaoPayResultVO.class);
+
+			return resultVO;
+
+		}
 }

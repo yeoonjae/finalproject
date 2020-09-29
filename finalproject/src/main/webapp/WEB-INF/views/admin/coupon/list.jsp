@@ -131,7 +131,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">지점선택</a>
                             <div class="dropdown-menu" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 40px, 0px);" x-placement="bottom-start">
-                            <c:forEach items="${branchDto}" var="branchDto">
+                            <c:forEach items="${branchList}" var="branchDto">
 	                            <a class="dropdown-item branch-select" href="list?branch_no=${branchDto.branch_no}">${branchDto.branch_name}</a>
                             </c:forEach>
                             </div>

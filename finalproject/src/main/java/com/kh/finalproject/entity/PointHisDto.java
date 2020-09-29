@@ -19,4 +19,8 @@ public class PointHisDto {
 	// 추가항목
 	private String point_type;
 	private String point_detail;
+	
+	public String getPoint_his_date() {
+		return point_his_date.substring(0, 10);
+	}
 }

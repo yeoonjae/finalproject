@@ -71,12 +71,12 @@
                     <!-- Start Atribute Navigation -->
                     <div class="attr-nav">
                         <ul>
-                         	<li class="search">
-                         		<a href="#">
-	                         		<i class="fa fa-user-circle-o"></i>
-                         		</a>
-                         	</li>
-                         	<li class="search" onclick="location.href='${pageContext.request.contextPath}/member/coupon/list'">
+                            <li class="search" onclick="location.href='${pageContext.request.contextPath}/member/account/info?member_no=${memberinfo.member_no}'">
+                               <a href="${pageContext.request.contextPath}/member/account/info?member_no=${memberinfo.member_no}">
+                                  <i class="fa fa-user-circle-o"></i>
+                               </a>
+                            </li>
+                            <li class="search" onclick="location.href='${pageContext.request.contextPath}/member/coupon/list'">
                               <a href="${pageContext.request.contextPath}/member/coupon/list">
                                   <i class="fa fa-ticket" aria-hidden="true"></i>
                               </a>
@@ -125,11 +125,10 @@
                     <div class="widget">
                         <h6 class="title">Custom Pages</h6>
                         <ul class="link">
-                           <li><a href="#">스파티움 홈</a></li>
-                            <li><a href="#">소개글</a></li>
-                            <li><a href="#">공지사항</a></li>
+                           <li><a href="${pageContext.request.contextPath}/member/">스파티움 홈</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/notice/list">공지사항</a></li>
                             <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>
-                            <li><a href="#">가맹 문의</a></li>
+                            <li><a href="${pageContext.request.contextPath}/member/franchisee/question">가맹 문의</a></li>
                         </ul>
                     </div>
                     <div class="widget">
@@ -145,5 +144,4 @@
                     </div>
                 </div>
                 <!-- End Side Menu -->
-
             </nav>

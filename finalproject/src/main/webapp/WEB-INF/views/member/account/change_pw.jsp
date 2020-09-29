@@ -15,12 +15,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha512-VGxuOMLdTe8EmBucQ5vYNoYDTGijqUsStF6eM7P3vA/cM1pqOwSBv/uxw94PhhJJn795NlOeKBkECQZ1gIzp6A==" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<br>
-<br>
-<br>
-<br>
-<br>
 <style>
+nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.navbar-transparent.white .attr-nav>ul>li>a,
+	nav.navbar.bootsnav.navbar-transparent.white ul.nav>li>a, nav.navbar.bootsnav.no-background.white ul.nav>li>a
+	{
+	color: black !important;
+}
+
 .intext {
 	width: 100%;
 	padding-left: 0.5rem;
@@ -113,14 +114,14 @@
 				회원 이름: ${memberDto.member_name}
 				</div>
 				<div class="form-group">
-					회원 비밀번호 : <input type="password" class="form-control intext" id="pw" oninput="checkPwd();" 
+					회원 비밀번호 : <input type="password" class="form-control intext" id="pw" onblur="checkPwd();" 
 					name="member_pw" maxlength="16" placeholder="8~16자의 영문/숫자로 구성하세요">
 					 <span class="correct-message">올바른 비밀번호 형식입니다</span> 
 					 <span class="incorrect-message">비밀번호는 영문대/소문자와 숫자로 8~16자 내외로 구성하세요</span>
 				</div>
 				<div class="form-group">
 					비밀번호 확인: <input type="password" class="form-control intext" 
-					id="checkPw" oninput="checkCheckPw();" maxlength="16"> 
+					id="checkPw" onblur="checkCheckPw();" maxlength="16"> 
 					<span class="correct-message">비밀번호가 일치합니다.</span> 
 					<span class="incorrect-message">비밀번호가 불일치합니다.</span>
 				</div>

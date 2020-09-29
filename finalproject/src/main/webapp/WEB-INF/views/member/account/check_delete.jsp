@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/member/template/user_header.jsp"></jsp:include>
+<style>
+#content-wrapper{
+	margin-top:100px;
+}
+</style>
 <div id="content-wrapper">
 	<div class="container-fluid">
 		<ol class="breadcrumb">
