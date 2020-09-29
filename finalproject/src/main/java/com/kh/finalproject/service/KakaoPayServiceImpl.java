@@ -183,17 +183,14 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 		public KakaoPayResultVO serve_prepare(KakaoPayStartVO startVO) throws URISyntaxException {
 			String approval_url = ServletUriComponentsBuilder
 																				.fromCurrentContextPath()
-																				.port(8080)
 																				.path("/member/pay/success")
 																				.toUriString();
 			String cancel_url = ServletUriComponentsBuilder
 																				.fromCurrentContextPath()
-																				.port(8080)
 																				.path("/member/pay/cancel")
 																				.toUriString();
 			String fail_url = ServletUriComponentsBuilder
 																				.fromCurrentContextPath()
-																				.port(8080)
 																				.path("/member/pay/fail")
 																				.toUriString();
 			// 1. 도구 생성
