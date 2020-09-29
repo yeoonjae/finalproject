@@ -64,8 +64,8 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 		body.add("tax_free_amount", "0");
 		// 주의 : 주소는 반드시 API 에서 승인된 URL을 사용해야 한다.
 		body.add("approval_url",approval_url);
-		body.add("cancel_url", cancel_url);
-		body.add("fail_url", fail_url);
+		body.add("cancel_url",cancel_url);
+		body.add("fail_url",fail_url);
 
 		// 4. Header 와 Body를 합성
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
@@ -212,8 +212,8 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 			body.add("tax_free_amount", "0");
 			// 주의 : 주소는 반드시 API 에서 승인된 URL을 사용해야 한다.
 			body.add("approval_url",approval_url);
-			body.add("cancel_url", cancel_url);
-			body.add("fail_url", fail_url);
+			body.add("cancel_url",cancel_url);
+			body.add("fail_url",fail_url);
 
 			// 4. Header 와 Body를 합성
 			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
