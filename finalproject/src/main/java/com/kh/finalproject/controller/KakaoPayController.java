@@ -16,13 +16,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.kh.finalproject.entity.MemberDto;
 import com.kh.finalproject.entity.PayHisDto;
 import com.kh.finalproject.entity.PayInfoDto;
 import com.kh.finalproject.entity.PayPointDto;
-import com.kh.finalproject.pay.KakaoPayDeleteVO;
 import com.kh.finalproject.pay.KakaoPayFinishVO;
 import com.kh.finalproject.pay.KakaoPayHistoryVO;
 import com.kh.finalproject.pay.KakaoPayResultVO;
@@ -30,11 +27,10 @@ import com.kh.finalproject.pay.KakaoPayStartVO;
 import com.kh.finalproject.repository.PayDao;
 import com.kh.finalproject.service.KakaoPayService;
 
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/member/pay")
-@Slf4j
+
 public class KakaoPayController {
 
 	@Autowired
@@ -50,7 +46,7 @@ public class KakaoPayController {
 	}
 
 	@PostMapping("/prepare")
-	public String prepare(@RequestParam int license_time, //이용권 시간 
+	public String prepare (@RequestParam int license_time, //이용권 시간 
 										@RequestParam int license_no, // 이용권 번호 
 										@RequestParam int coupon_no, // 쿠폰 번호 
 										@RequestParam int coupon_discount2, //쿠폰 할인 금액 
@@ -59,6 +55,7 @@ public class KakaoPayController {
 										@RequestParam int reward, // 적립금
 										@ModelAttribute KakaoPayStartVO startVO, 
 										HttpSession session) throws URISyntaxException {
+		
 		MemberDto memberDto = (MemberDto) session.getAttribute("memberinfo"); 
 		int member_no = memberDto.getMember_no();	
 		
@@ -69,27 +66,28 @@ public class KakaoPayController {
 		startVO.setPartner_user_id(partner_user_id);
 
 		// 결제 요청 전 확인 
-		boolean isCorrect = kakaoPayService.isCorrect(use_point2,member_no);
+//		boolean isCorrect = kakaoPayService.isCorrect(use_point2,member_no);
 		
 		
-			// 결제 요청
-			KakaoPayResultVO resultVO = kakaoPayService.prepare(startVO);
-			 
-			// 결제 승인 페이지에서 사용할 수 있도록 session 데이터 추가
-			// - partner_order_id, partner_user_id, tid
-			session.setAttribute("partner_order_id", startVO.getPartner_order_id());
-			session.setAttribute("partner_user_id", startVO.getPartner_user_id());
-			session.setAttribute("tid", resultVO.getTid());
-	
-			// 세션에 저장 (이용권 번호, 할인금액+ 마일리지 사용금액, 적립금)
-			session.setAttribute("license_time", license_time);
-			session.setAttribute("license_no", license_no);
-			session.setAttribute("sale_price", sale_price);
-			session.setAttribute("use_point2", use_point2); // 사용 마일리지
-			session.setAttribute("reward", reward); // 적립 마일리지
-			session.setAttribute("coupon_discount2", coupon_discount2); // 쿠폰 할인 금액 
-			session.setAttribute("coupon_no", coupon_no); // 쿠폰 번호 
-			return "redirect:" + resultVO.getNext_redirect_pc_url();
+		// 결제 요청
+		KakaoPayResultVO resultVO = kakaoPayService.prepare(startVO);
+		 
+		// 결제 승인 페이지에서 사용할 수 있도록 session 데이터 추가
+		// - partner_order_id, partner_user_id, tid
+		session.setAttribute("partner_order_id", startVO.getPartner_order_id());
+		session.setAttribute("partner_user_id", startVO.getPartner_user_id());
+		session.setAttribute("tid", resultVO.getTid());
+
+		// 세션에 저장 (이용권 번호, 할인금액+ 마일리지 사용금액, 적립금)
+		session.setAttribute("license_time", license_time);
+		session.setAttribute("license_no", license_no);
+		session.setAttribute("sale_price", sale_price); 
+		session.setAttribute("use_point2", use_point2); // 사용 마일리지
+		session.setAttribute("reward", reward); // 적립 마일리지
+		session.setAttribute("coupon_discount2", coupon_discount2); // 쿠폰 할인 금액 
+		session.setAttribute("coupon_no", coupon_no); // 쿠폰 번호 
+		
+		return "redirect:" + resultVO.getNext_redirect_pc_url();
 	}
 
 	

@@ -25,7 +25,7 @@
 	crossorigin="anonymous"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/js/moment.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/js/lightpick.js"></script>
-	
+	 
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 

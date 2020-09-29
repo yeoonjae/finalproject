@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kh.finalproject.pay.KakaoPayDeleteVO;
 import com.kh.finalproject.pay.KakaoPayFinishVO;
@@ -31,9 +32,22 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 	// 결제 요청 메소드
 	@Override
 	public KakaoPayResultVO prepare(KakaoPayStartVO startVO) throws URISyntaxException {
+		
 		// 1. 도구 생성
 		RestTemplate template = new RestTemplate();
 
+		String approval_url = ServletUriComponentsBuilder
+																			.fromCurrentContextPath()
+																			.path("/member/pay/success")
+																			.toUriString();
+		String cancel_url = ServletUriComponentsBuilder
+																			.fromCurrentContextPath()
+																			.path("/member/pay/cancel")
+																			.toUriString();
+		String fail_url = ServletUriComponentsBuilder
+																			.fromCurrentContextPath()
+																			.path("/member/pay/fail")
+																			.toUriString();
 		// 2. Header 생성
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "KakaoAK d57c34e99d6acf363a578ead15befe0a");
@@ -49,9 +63,9 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 		body.add("total_amount", String.valueOf(startVO.getTotal_amount()));
 		body.add("tax_free_amount", "0");
 		// 주의 : 주소는 반드시 API 에서 승인된 URL을 사용해야 한다.
-		body.add("approval_url", "${pageContext.request.contextPath}/member/pay/success");
-		body.add("cancel_url", "${pageContext.request.contextPath}/member/pay/cancel");
-		body.add("fail_url", "${pageContext.request.contextPath}/member/pay/fail");
+		body.add("approval_url",approval_url);
+		body.add("cancel_url", cancel_url);
+		body.add("fail_url", fail_url);
 
 		// 4. Header 와 Body를 합성
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
@@ -167,6 +181,21 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 	// 결제 요청 메소드
 		@Override
 		public KakaoPayResultVO serve_prepare(KakaoPayStartVO startVO) throws URISyntaxException {
+			String approval_url = ServletUriComponentsBuilder
+																				.fromCurrentContextPath()
+																				.port(8080)
+																				.path("/member/pay/success")
+																				.toUriString();
+			String cancel_url = ServletUriComponentsBuilder
+																				.fromCurrentContextPath()
+																				.port(8080)
+																				.path("/member/pay/cancel")
+																				.toUriString();
+			String fail_url = ServletUriComponentsBuilder
+																				.fromCurrentContextPath()
+																				.port(8080)
+																				.path("/member/pay/fail")
+																				.toUriString();
 			// 1. 도구 생성
 			RestTemplate template = new RestTemplate();
 
@@ -185,9 +214,9 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 			body.add("total_amount", String.valueOf(startVO.getTotal_amount()));
 			body.add("tax_free_amount", "0");
 			// 주의 : 주소는 반드시 API 에서 승인된 URL을 사용해야 한다.
-			body.add("approval_url", "http://localhost:8080/finalproject/member/pay/success");
-			body.add("cancel_url", "http://localhost:8080/finalproject/member/pay/cancel");
-			body.add("fail_url", "http://localhost:8080/finalproject/member/pay/fail");
+			body.add("approval_url",approval_url);
+			body.add("cancel_url", cancel_url);
+			body.add("fail_url", fail_url);
 
 			// 4. Header 와 Body를 합성
 			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
