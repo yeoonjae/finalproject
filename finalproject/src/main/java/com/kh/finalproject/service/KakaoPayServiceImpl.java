@@ -49,9 +49,9 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 		body.add("total_amount", String.valueOf(startVO.getTotal_amount()));
 		body.add("tax_free_amount", "0");
 		// 주의 : 주소는 반드시 API 에서 승인된 URL을 사용해야 한다.
-		body.add("approval_url", "http://localhost:8080/finalproject/member/pay/success");
-		body.add("cancel_url", "http://localhost:8080/finalproject/member/pay/cancel");
-		body.add("fail_url", "http://localhost:8080/finalproject/member/pay/fail");
+		body.add("approval_url", "${pageContext.request.contextPath}/member/pay/success");
+		body.add("cancel_url", "${pageContext.request.contextPath}/member/pay/cancel");
+		body.add("fail_url", "${pageContext.request.contextPath}/member/pay/fail");
 
 		// 4. Header 와 Body를 합성
 		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(body, headers);
