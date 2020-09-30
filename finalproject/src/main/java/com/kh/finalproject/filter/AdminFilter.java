@@ -1,0 +1,32 @@
+package com.kh.finalproject.filter;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.kh.finalproject.entity.AdminDto;
+
+public class AdminFilter implements Filter{
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse resp = (HttpServletResponse) response;
+
+		AdminDto adminDto = (AdminDto) req.getSession().getAttribute("admininfo");
+
+		if (adminDto != null) {
+			chain.doFilter(request, response);
+		} else {
+			resp.sendRedirect(req.getContextPath()+"admin/");
+		}
+
+	}
+}
