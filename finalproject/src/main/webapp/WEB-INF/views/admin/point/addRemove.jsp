@@ -44,13 +44,37 @@
             $(".btn-regist").click(function(e){
             	var name = $(".membr_name").val();
             	var email = $(".member_email").val();
+           		var member_no = $(".member_no").val();
+           		var point_score = $(".point_his_score").val(); 
             	
             	if(!name || !email){ // 비어있는 input창이 있을 경우
-            		return;
+            		e.preventDefault();
             	}
             	
+            	// 적립인지 차감인지 확인
+            	var point_no = $(".point_no").val();
+            	
             	if(confirm("수정 하시겠습니까?")){
-            		document.querySelector(".form").submit();
+            		
+            		if(point_no != 1){ // 차감일 경우
+	            		// 회원 보유 마일리지 확인
+	            		axios({
+	            			url:"${pageContext.request.contextPath}/test/point/checkMax?member_no="+member_no,
+	            			method:"get"
+	            		}).then(function(response){
+	            			var maxPoint = response.data;
+	            			
+	            			if(maxPoint < point_score) {
+	            				alert("회원이 보유한 포인트 "+maxPoint+"점 이상으로 차감할 수 없습니다.");
+			            		e.preventDefault();
+	            			} else {
+	            				$(".form").submit();
+	            			}
+	            		});
+            			
+            		} else {
+            			$(".form").submit();
+            		}
             	} else {
             		e.preventDefault();
             	}
@@ -89,19 +113,19 @@
                 	<label>이메일</label>
                     <input type="text" name="member_email" class="form-control member_email" disabled>
                 </div>
-                <form action="addRemove" method="post" class=".form">
+                <form action="addRemove" method="post" class="form">
                 	<input type="hidden" name="member_no" class="member_no">
                     <div class="form-group">
 	                	<label>유형 및 마일리지</label>
 	                    <div class="row">
 	                    	<div class="col-3">
-	                        	<select name="point_no" class="form-control">
+	                        	<select name="point_no" class="form-control point_no">
 	                            	<option value="1">적립</option>
 	                                <option value="2">차감</option>
 	                            </select>
 	                        </div>
 	                        <div class="col-9">
-	                           <input type="text" name="point_his_score" placeholder="마일리지를 입력하세요" class="form-control" required>
+	                           <input type="text" name="point_his_score" placeholder="마일리지를 입력하세요" class="form-control point_his_score" required>
 	                        </div>
 	                    </div>
 	                </div>
@@ -109,7 +133,7 @@
 	                	<label>상세내용</label>
 	                	<input type="text" name="point_his_detail" placeholder="적립 및 차감 사유를 입력하세요" class="form-control" required>
 	                </div>
-	                <button class="btn btn-primary btn-block btn-regist" disabled>등록</button>
+	                <button type="submit" class="btn btn-primary btn-block btn-regist" disabled>등록</button>
                	</form>
             </div>
         </div>

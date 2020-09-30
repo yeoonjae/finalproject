@@ -26,12 +26,12 @@ public class ScheduleServiceImpl implements ScheduleService{
 	private MemberCouponDao memberCouponDao;
 	
 	// 매일 자정마다 시작일이 오늘인 쿠폰을 회원쿠폰함에 등록
-	@Scheduled(cron="0 0 0 * * *") // 매일 자정마다
+//	@Scheduled(cron="0 0 0 * * *") // 매일 자정마다
 	@Override
 	public void regist() {
 		// 시작일이 오늘인 쿠폰 조회
 		List<CouponDto> couponList = couponDao.todayStart();
-		
+		System.out.println(couponList.size());
 		// 회원 쿠폰 내역 테이블에 등록
 		MemberCouponDto memberCouponDto;
 		for(int i=0; i<couponList.size(); i++) {
@@ -40,27 +40,30 @@ public class ScheduleServiceImpl implements ScheduleService{
 								.branch_no(couponList.get(i).getBranch_no())
 								.member_no(couponList.get(i).getMember_no())
 								.build();
+			System.out.println(memberCouponDto.getMember_no());
 			memberCouponDao.regist(memberCouponDto);
 		}
 		
 	}
 
 	// 매일 23시 59분마다 종료일이 오늘인 쿠폰을 회원쿠폰함에서 삭제
-	@Scheduled(cron="0 59 23 * * *") // 매일 23:59 마다
+//	@Scheduled(cron="0 59 23 * * *") // 매일 23:59 마다
 	@Override
 	public void delete() {
 		// 종료일이 오늘인 쿠폰 조회
 		List<CouponDto> couponList = couponDao.todayFinish();
+		System.out.println(couponList.size());
 		
 		// 쿠폰 내역에서 삭제
 		for(int i=0; i<couponList.size(); i++) {
 			int coupon_no = couponList.get(i).getCoupon_no();
+			System.out.println(coupon_no);
 			memberCouponDao.delete(coupon_no);
 		}
 		
 	}
 
-	@Scheduled(cron="0 58 23 * * *") // 매일 23:58 마다
+//	@Scheduled(cron="0 58 23 * * *") // 매일 23:58 마다
 	@Override
 	public void changeState() {
 		// 시작일이 내일인 대기중인 쿠폰요청 조회

@@ -139,4 +139,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getNoName" parameterType="String" resultType="int">
 		SELECT * FROM member WHERE member_name=#{member_name}
 	</select>
+	
+	<!-- 회원 보유 포인트 확인 -->
+	<select id="checkPoint" parameterType="int" resultType="int">
+		SELECT member_point FROM member WHERE member_no = #{member_no}
+	</select>
 </mapper>

@@ -171,11 +171,21 @@ public class TestController {
 	}
 	
 	@GetMapping("/coupon/delete")
-	public void delete(@RequestParam int branch_no, @RequestParam int group_no) {
+	public boolean delete(@RequestParam int branch_no, @RequestParam int group_no) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("branch_no", branch_no);
 		param.put("group_no", group_no);
-		sqlSession.delete("coupon.branchDelete", param);
+		
+		CouponDto couponDto = sqlSession.selectOne("coupon.checkIssue", param);
+		String issue = couponDto.getCoupon_issue();
+		
+		if(issue.equals("유효")) {
+			return false;
+		} else {
+			sqlSession.delete("coupon.branchDelete", param);
+			return true;
+		}
+		
 	}
 	
 	// 쿠폰 요청 승인
@@ -217,6 +227,12 @@ public class TestController {
 	@GetMapping("/coupon/req/delete")
 	public void delete(@RequestParam int coupon_req_no) {
 		sqlSession.delete("couponReq.delete", coupon_req_no);
+	}
+	
+	// 회원 보유 마일리지 확인
+	@GetMapping("/point/checkMax")
+	public int checkMax(@RequestParam int member_no) {
+		return sqlSession.selectOne("member.checkPoint", member_no);
 	}
 	
 	// 등록 전 좌석 등록여부 검사

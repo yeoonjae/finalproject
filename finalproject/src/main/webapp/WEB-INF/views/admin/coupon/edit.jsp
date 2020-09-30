@@ -73,17 +73,21 @@
                     $(".branch-delete").click(function(){
                  	   if(confirm("해당 지점의 쿠폰을 정말 삭제하시겠습니까?")){
 	                  	   var branch_no = $(this).data("branch");
-	                  	   $(this).parents("tr").hide();
-	                  	   $(".branch-count").text($(".list-wrap").find("tr").length-1);
 	                  	   axios({
 	                  		   url: "${pageContext.request.contextPath}/test/coupon/delete?branch_no="+branch_no+"&group_no="+group_no,
 	                  		   method: "get"
 	                  	   }).then(function(response){
-	                  		   alert("삭제가 완료되었습니다");
-	                  		   if($.urlParam("order")){
-	                  			   location.href = "${pageContext.request.contextPath}/admin/coupon/edit?order="+$.urlParam("order");	
+	                  		   if(response.data) {
+			                  	   $(this).parents("tr").hide();
+			                  	   $(".branch-count").text($(".list-wrap").find("tr").length-1);
+		                  		   alert("삭제가 완료되었습니다");
+		                  		   if($.urlParam("order")){
+		                  			   location.href = "${pageContext.request.contextPath}/admin/coupon/edit?order="+$.urlParam("order");	
+		                  		   } else {
+		                  			   location.href = "${pageContext.request.contextPath}/admin/coupon/edit";							
+		                  		   }	                  			   
 	                  		   } else {
-	                  			   location.href = "${pageContext.request.contextPath}/admin/coupon/edit";							
+	                  			   alert("이미 발급된 쿠폰은 삭제할 수 없습니다");
 	                  		   }
 	                  	   });
                  	   }
@@ -303,7 +307,7 @@
 		                         		<p>
 		                         			${couponDto.coupon_category}
 		                         		</p>
-		                         		<button class="btn btn-sm btn-outline-secondary btn-modal" data-group="${couponDto.group_no}">지점확인</button>
+			                         	<button class="btn btn-sm btn-outline-secondary btn-modal" data-group="${couponDto.group_no}">지점확인</button>
 		                         	</td>                        		
 	                        	</c:otherwise>                        	
                         	</c:choose>

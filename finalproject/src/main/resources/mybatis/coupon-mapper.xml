@@ -161,18 +161,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY coupon_req_date DESC
 	</select>
 	
+	<!-- 쿠폰 삭제전에 유효인지 확인 -->
+	<select id="checkIssue" parameterType="map" resultType="couponDto">
+		SELECT * FROM coupon WHERE branch_no = #{branch_no} and group_no = #{group_no}
+	</select>
+	
 	
 	<!-- 스케줄러 -->	
 	<!-- 시작일이 오늘인 쿠폰 조회 -->
 	<select id="todayStart" resultType="couponDto">
 		SELECT c.coupon_no, c.branch_no, m.member_no FROM coupon c 
-			LEFT OUTER JOIN member m ON c.branch_no = m.branch_no 
+			INNER JOIN member m ON c.branch_no = m.branch_no 
 		WHERE to_char(c.COUPON_START, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
 	</select>
 	
 	<!-- 종료일이 오늘인 쿠폰 조회 -->
 	<select id="todayFinish" resultType="couponDto">
-		SELECT coupon_no FROM coupon WHERE to_char(COUPON_FINISH, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
+		SELECT coupon_no FROM coupon 
+		WHERE to_char(COUPON_FINISH, 'yyyy-mm-dd') = to_char(sysdate, 'yyyy-mm-dd')
 	</select>
 	
 </mapper>
