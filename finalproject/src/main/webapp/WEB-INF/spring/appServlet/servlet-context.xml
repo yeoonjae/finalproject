@@ -24,7 +24,7 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
 	</context:component-scan>
 	
-		<!-- 
+	<!-- 
 		주소 자동 완성 도구 등록
 		 - 매번 /WEB-INF/views/ooo.jsp 적기 귀찮으니 자동완성
 		 - view resolver라는 도구를 등록(스프링에서 제공)
@@ -69,6 +69,32 @@
 			</interceptor>
 		</interceptors>
 	-->
+	<interceptors>
+		<!-- 회원 인터셉터 -->
+		<interceptor>
+			<mapping path="/member/coupon/**"/>
+			<mapping path="/member/review/**"/>
+			<mapping path="/member/message/**"/>
+			<mapping path="/member/pay/**"/>
+			<mapping path="/member/point/**"/>
+			<mapping path="/member/seat/**"/>
+			<beans:bean class= "com.kh.finalproject.interceptor.MemberInterceptor"></beans:bean>
+		</interceptor>
+		
+		<!-- 본사관리자 인터셉터 -->
+		<interceptor>
+			<mapping path="/admin/**"/>
+			<exclude-mapping path="/admin/"/>
+			<exclude-mapping path="/admin/account/login"/>
+			<exclude-mapping path="/admin/account/info"/>
+			<exclude-mapping path="/admin/seat/branch/**"/>
+			<exclude-mapping path="/admin/coupon/req/list"/>
+			<exclude-mapping path="/admin/branch/branch_detail"/>
+			<exclude-mapping path="/admin/branch/branch_edit"/>
+			<exclude-mapping path="/admin/branch/member_list"/>
+			<beans:bean class= "com.kh.finalproject.interceptor.TotalAdminInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
 	
 	<!-- 
 		웹소켓 작업을 처리하는 서버를 등록
