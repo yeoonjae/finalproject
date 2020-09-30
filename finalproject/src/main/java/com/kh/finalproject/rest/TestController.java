@@ -66,6 +66,10 @@ public class TestController {
 	@Autowired
 	private HttpSession session;
 	
+	@RequestMapping("/")//첫 주소
+	public String root() {
+		return "member/home_index";
+	}
 	
 	// 마일리지 유형 중복검사
 	@GetMapping("/point/regist")

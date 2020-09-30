@@ -85,7 +85,6 @@
                     <div class="collapse navbar-collapse" id="navbar-menu">
                         <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
               
-                            <li><a href="#about">소개글</a></li>            
                             <li><a href="${pageContext.request.contextPath}/member/notice/list">공지사항</a></li>                    
                             <li><a href="${pageContext.request.contextPath}/member/franchisee/list">지점 스토리</a></li>                
                             <li><a href="${pageContext.request.contextPath}/member/franchisee/question">가맹 문의</a></li>
