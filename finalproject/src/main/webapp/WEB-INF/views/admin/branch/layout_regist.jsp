@@ -108,6 +108,9 @@
             	});
             canvas.add(text);
             canvas.moveTo(text, 20);
+            const priority = getMaxAttr(objects, "priority", 0);
+            text.setAttribute("priority", priority);
+            text.style["z-index"] = priority;
         });
         
         $("#remove").on("click", function(e) {
