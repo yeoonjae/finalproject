@@ -13,7 +13,13 @@
 	margin-top: 10px;
 	display:block;
 }
+nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.navbar-transparent.white .attr-nav>ul>li>a,
+	nav.navbar.bootsnav.navbar-transparent.white ul.nav>li>a, nav.navbar.bootsnav.no-background.white ul.nav>li>a
+	{
+	color: black !important;
+}
 </style>
+
 <div class="container-fluid row-wrap">
 	<br>
 	<br>

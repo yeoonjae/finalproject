@@ -143,7 +143,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			END AS read_count 
 			FROM MESSAGE_MEMBER mm 
 			left OUTER JOIN message m ON mm.MESSAGE_NO = m.MESSAGE_NO 
-			WHERE MEMBER_NO = #{member_no}
+			WHERE MEMBER_NO = #{member_no} AND mm.MESSAGE_MEMBER_TYPE = '수신'
 			ORDER BY read_count ASC,mm.MESSAGE_MEMBER_DATE DESC)T)
 			WHERE RN BETWEEN #{start} AND #{end}
 	</select>

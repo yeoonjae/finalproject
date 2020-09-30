@@ -53,7 +53,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	<!-- 회원 정보 편집 -->
 	<update id="edit" parameterType="memberDto">
-		update member set member_name=#{member_name}, member_pw=#{member_pw} where member_no=#{member_no}
+		update member set member_name=#{member_name}, member_pw=#{member_pw}, branch_no=#{branch_no} where member_no=#{member_no}
 	</update>
 	<!-- 회원 로그인 -->
 	<select id="login" parameterType="string" resultType="memberDto">
