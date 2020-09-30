@@ -84,7 +84,7 @@
 		<!-- 본사관리자 인터셉터 -->
 		<interceptor>
 			<mapping path="/admin/**"/>
-			<exclude-mapping path="/admin/S"/>
+			<exclude-mapping path="/admin/"/>
 			<exclude-mapping path="/admin/account/login"/>
 			<exclude-mapping path="/admin/account/info"/>
 			<exclude-mapping path="/admin/seat/branch/**"/>
