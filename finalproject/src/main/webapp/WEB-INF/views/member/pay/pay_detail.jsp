@@ -25,7 +25,7 @@
 	crossorigin="anonymous"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/js/moment.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/assets/js/lightpick.js"></script>
-	
+	 
 <style>
 @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
 
@@ -178,7 +178,6 @@
 		                        <input type="text" class="picker-start form-control start" name="start" placeholder="시작일을 선택해주세요" value="${start}">
 		                        <input type="text" class="picker-end form-control finish" name="finish" placeholder="종료일을 선택해주세요" value="${finish}">
 		                    </div>
-		                   	<button class="btn btn-sm btn-primary btn-block btn-list">검색</button>
 		            	</form>
 		            	</div>
 						<br><hr><br> 
