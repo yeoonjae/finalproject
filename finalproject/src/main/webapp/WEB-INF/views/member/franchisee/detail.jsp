@@ -28,7 +28,6 @@
 	}
 	.swiper-container {
             width: 1100px;
-
             justify-content: center;
      }
 </style>
