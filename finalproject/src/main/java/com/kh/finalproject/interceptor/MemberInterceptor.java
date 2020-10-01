@@ -21,8 +21,9 @@ public class MemberInterceptor extends HandlerInterceptorAdapter{
 		MemberDto memberDto = (MemberDto)session.getAttribute("memberinfo");
 		if(memberDto != null) {
 			return true;
-		}else {
-			return false;
 		}
+		
+		response.sendRedirect(request.getContextPath()+"/member/");
+		return false;
 	}
 }

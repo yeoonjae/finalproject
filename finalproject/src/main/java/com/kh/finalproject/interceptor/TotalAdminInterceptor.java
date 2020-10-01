@@ -22,8 +22,9 @@ public class TotalAdminInterceptor extends HandlerInterceptorAdapter{
 		AdminDto adminDto = (AdminDto) session.getAttribute("admininfo");
 		if(adminDto.getAdmin_auth().equals("본사")) {
 			return true;
-		}else {
-			return false;
 		}
+		
+		response.sendRedirect(request.getContextPath()+"/admin/");
+		return false;
 	}
 }

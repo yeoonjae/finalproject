@@ -1,7 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="/WEB-INF/views/member/template/home_header.jsp"></jsp:include>
+<c:choose>
+	<c:when test="${not empty memberinfo}">
+		<jsp:include page="/WEB-INF/views/member/template/user_header.jsp"></jsp:include>
+	</c:when>
+	<c:otherwise>
+		<jsp:include page="/WEB-INF/views/member/template/home_header.jsp"></jsp:include>
+	</c:otherwise>
+</c:choose>
+
 <style>
 	.box{
 		overflow: hidden;
