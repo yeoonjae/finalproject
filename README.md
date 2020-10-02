@@ -52,8 +52,24 @@
 
 > 우측 상단의 <리뷰>를 누르면 해당지점의 리뷰목록으로 이동합니다.
 
+<img src="https://github.com/duswo5310/finalproject/blob/master/images/user_pay.png" width="1000px">&nbsp;
+
+- 회원 상품 결제창
+
+> <상품구매>을 누르거나 <충전하기>를 누를 시 넘어가는 창입니다.
+
+> 상품을 선택할 시 비동기로 바로 오른쪽 결제창에 가격이 표시됩니다.
+
+> 마일리지를 선택<br>
+> - 보유 마일리지 보다 많이 입력할 경우 alert으로 사용가능 마일리지를 알려줍니다.
+> - 마일리지 사용금액이 결제금액을 초과할 경우 alert으로 결제금액 초과했다는 메세지를 띄웁니다.
+> - 정상적으로 마일리지 입력 시 비동기로 마일리지 적용된 할인 금액이 표시됩니다.
+
+> 쿠폰 선택 - 쿠폰 선택 시 비동기로 금액에서 할인율을 계산해 할인이 적용된 금액이 표시됩니다.
+
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/user_review.png" width="490px">&nbsp;
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/review_regist.png" width="500px" height="400px">
+
 - 회원 리뷰 창
 
 > 회원이 리뷰 창으로 들어갈 경우 해당 지점에 등록되어 있는 리뷰제목들을 볼 수 있습니다.
