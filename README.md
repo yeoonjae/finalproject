@@ -4,6 +4,8 @@
 
 > 개발 기간 : 2020-08-22 ~ 2020-09-21
 
+<a href="http://www.sysout.co.kr/spatium/member/">🎈SPATIUM 바로가기</a>
+
 ### 🗂 목차
  - 프로젝트 소개
  - 프로젝트 설계 및 계획
@@ -29,5 +31,5 @@
  -----
  ### ✌🏻 프로젝트 설계 및 계획
  
-- 처음 화면 설계는 이런식으로 진행하였다.
-- <a href="https://ovenapp.io/view/sayLAzWlIwaEqqxweHVtoHEYTm0mh45G/nqQLc">초기 화면 설계서</a>
+ - <a href="https://ovenapp.io/view/sayLAzWlIwaEqqxweHVtoHEYTm0mh45G/nqQLc">초기 화면 설계서</a>
+ - 
