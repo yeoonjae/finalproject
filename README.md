@@ -53,7 +53,7 @@
 
 > 우측 상단의 <리뷰>를 누르면 해당지점의 리뷰목록으로 이동합니다.
 
-<img src="https://github.com/duswo5310/finalproject/blob/master/images/user_review.png" width="500px">&nbsp;
+<img src="https://github.com/duswo5310/finalproject/blob/master/images/user_review.png" width="490px">&nbsp;
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/review_regist.png" width="500px" height="400px">
 - 회원 리뷰 창
 
