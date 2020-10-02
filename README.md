@@ -67,7 +67,7 @@
 
 > 쿠폰 선택 - 쿠폰 선택 시 비동기로 금액에서 할인율을 계산해 할인이 적용된 금액이 표시됩니다.
 
-<img src="https://github.com/duswo5310/finalproject/blob/master/images/user_review.png" width="490px">&nbsp;
+
 
 - 회원 리뷰 창
 
