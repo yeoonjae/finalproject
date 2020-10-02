@@ -47,7 +47,7 @@
 
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/user_chat.png" width="1000px">&nbsp;
 
-- 메인페이지
+- #### 메인페이지
 
 > 로그인을 한 사용자는 해당 지점의 남은 좌석 개수와 충전된 남은 시간을 확인할 수 있습니다. 
 
@@ -61,7 +61,7 @@
 
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/user_pay.png" width="1000px">&nbsp;
 
-- 회원 상품 결제창
+- ### 회원 상품 결제창
 
 > <상품구매>을 누르거나 <충전하기>를 누를 시 넘어가는 창입니다.
 
@@ -76,7 +76,7 @@
 
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/member_review.png" width="1000px">&nbsp;
 
-- 회원 리뷰 창
+- ### 회원 리뷰 창
 
 > 회원이 리뷰 창으로 들어갈 경우 해당 지점에 등록되어 있는 리뷰제목들을 볼 수 있습니다.
 
@@ -94,7 +94,7 @@
 
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/inout.png" width="1000px">&nbsp;
 
-- 회원 좌석 입실 및 퇴실
+- ### 회원 좌석 입실 및 퇴실
 
 > 이용권을 보유한 회원에 한해서 좌석입실이 가능합니다.
 
@@ -109,7 +109,7 @@
 
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/user_message.png" width="1000px">&nbsp;
 
-- 회원 쿠폰함과 메세지 수신함
+- ### 회원 쿠폰함과 메세지 수신함
 
 > 쿠폰함으로 들어가면 회원이 보유하고 있는 쿠폰들이 나옵니다. 실제 결제에서도 사용 가능합니다.
 
@@ -125,7 +125,8 @@
 
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/story.png" width="1000px">
 
-- 모두가 볼 수 있느 지점 목록 및 회원의 마일리지/결제 내역 창
+- ### 모두가 볼 수 있느 지점 목록 및 회원의 마일리지/결제 내역 창
+
 >#### 지점 스토리<br>
 > 지점스토리를 누를 시 볼 수 있는 전국 지점이고 지점상세보기를 눌렀을 때 볼 수 있는 페이지 입니다. <br>
 > 사진은 swiper로 등록된 사진이 한장씩 넘어갑니다.<br>
