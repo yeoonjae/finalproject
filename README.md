@@ -47,7 +47,7 @@
 
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/user_chat.png" width="1000px">&nbsp;
 
-- #### 메인페이지
+- ### 메인페이지
 
 > 로그인을 한 사용자는 해당 지점의 남은 좌석 개수와 충전된 남은 시간을 확인할 수 있습니다. 
 
