@@ -40,3 +40,8 @@
 
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/user_main.png" width="500px">&nbsp;
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/chat.png" width="200px">
+
+- 메인페이지
+
+> 로그인을 한 사용자는 해당 지점의 남은 좌석 개수와 충전된 남은 시간을 확인할 수 있습니다. 
+> 메인페이지의 우측 하단 곰돌이 모양을 누르면 오른쪽 사진과 같이 챗봇기능을 볼 수 있습니다.
