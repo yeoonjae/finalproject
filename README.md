@@ -140,6 +140,8 @@
 
 
 ## 🌗 마치며 
+<a href="https://github.com/duswo5310/finalproject/blob/master/finalPPT.pdf">portfolio 바로가기 </a>
+
 <p>
 Java라는 프로그래밍 언어를 배우면서 습득한 지식들을 활용하여 만든 프로젝트입니다. 
 분명 아쉬운 부분들이 많이 존재하지만 가지고 있는 지식을 최대한 담아내기 위해서 팀원들과 많이 노력했습니다.
