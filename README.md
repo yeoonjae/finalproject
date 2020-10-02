@@ -39,7 +39,7 @@
 ## 🌕 주요기능 설명
 
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/user_main.png" width="500px">&nbsp;
-<img src="https://github.com/duswo5310/finalproject/blob/master/images/user_chat.png" width="500px">&nbsp;
+<img src="https://github.com/duswo5310/finalproject/blob/master/images/chat.png" width="500px">&nbsp;
 
 - 메인페이지
 
