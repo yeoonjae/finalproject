@@ -9,7 +9,6 @@
 ### 🗂 목차
  - 프로젝트 소개
  - 프로젝트 설계 및 계획
- https://ovenapp.io/view/sayLAzWlIwaEqqxweHVtoHEYTm0mh45G/nqQLc
  - 주요 기능 설명
  - 외부 라이브러리
  - 버전 변경 사항
@@ -31,5 +30,5 @@
  -----
  ### ✌🏻 프로젝트 설계 및 계획
  
- - <a href="https://ovenapp.io/view/sayLAzWlIwaEqqxweHVtoHEYTm0mh45G/nqQLc">초기 화면 설계서</a>
+ - <a href="https://ovenapp.io/view/sayLAzWlIwaEqqxweHVtoHEYTm0mh45G/nqQLc">초기 설계 화면</a>
  - 
