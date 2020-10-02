@@ -38,4 +38,5 @@
 
 ## 🌕 주요기능 설명
 
-<img src="https://github.com/duswo5310/finalproject/blob/master/images/user_main.png" width="800px">&nbsp;
+<img src="https://github.com/duswo5310/finalproject/blob/master/images/user_main.png" width="400px">&nbsp;
+<img src="https://github.com/duswo5310/finalproject/blob/master/images/chat.png" width="200px">
