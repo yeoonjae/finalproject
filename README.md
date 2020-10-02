@@ -38,4 +38,4 @@
 
 ## 🌕 주요기능 설명
 
-<img src="https://github.com/duswo5310/finalproject/tree/master/images/user_main.png" width="200px">&nbsp;
+<img src="https://github.com/duswo5310/finalproject/images/user_main.png" width="400px">&nbsp;
