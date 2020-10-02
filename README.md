@@ -55,7 +55,6 @@
 
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/user_review.png" width="400px">&nbsp;
 <img src="https://github.com/duswo5310/finalproject/blob/master/images/review_regist.png" width="300px">
-<img src="https://github.com/duswo5310/finalproject/blob/master/images/review_fail.png" width="300px">&nbsp;
 
 - 회원 리뷰 창
 
