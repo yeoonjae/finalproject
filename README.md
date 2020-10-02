@@ -53,8 +53,8 @@
 
 > 우측 상단의 <리뷰>를 누르면 해당지점의 리뷰목록으로 이동합니다.
 
-<img src="https://github.com/duswo5310/finalproject/blob/master/images/user_review.png" width="400px">&nbsp;
-
+<img src="https://github.com/duswo5310/finalproject/blob/master/images/user_review.png" width="500px">&nbsp;
+<img src="https://github.com/duswo5310/finalproject/blob/master/images/review_regist.png" width="500px">
 - 회원 리뷰 창
 
 > 회원이 리뷰 창으로 들어갈 경우 해당 지점에 등록되어 있는 리뷰제목들을 볼 수 있습니다.
@@ -63,4 +63,4 @@
 
 > 내가 작성한 글이 아닐 경우에 😊/😡(공감/비공감)으로 참여가 가능합니다. (중복은 불가 / 공감 또는 비공감 중에 하나만 선택 가능)
 
-> 리뷰작성이 가능하며 리뷰 작성은 이용권을 구매한 회원의 한해서만 작성이 가능합니다.
+> 리뷰작성이 가능하며 리뷰 작성은 이용권을 구매한 회원의 한해서만 작성이 가능합니다. --> 이용권 구매이력이 없는 회원이 리뷰등록하려하면 alert으로 두번째 사진의 창이 뜹니다.
