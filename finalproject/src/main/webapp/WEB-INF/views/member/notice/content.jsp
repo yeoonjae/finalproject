@@ -88,6 +88,9 @@ label, p {
 .textarea {
 	text-align: left;
 }
+.review-wrap {
+	height: 700px;
+}
 </style>
 <script>
 	function selChange() {

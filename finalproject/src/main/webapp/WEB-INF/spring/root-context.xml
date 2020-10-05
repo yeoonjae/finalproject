@@ -49,6 +49,9 @@
 		<!-- DI(Dependency Injection) : 필요한 도구를 주입시키는 것 -->
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	<!-- Filter -->
+	<bean id="loginFilter" class="com.kh.finalproject.filter.LoginFilter"></bean>
+	<bean id="adminFilter" class="com.kh.finalproject.filter.AdminFilter"></bean>
 	
 	<!--
 	 myBatis를 이용하기 위한 도구 등록

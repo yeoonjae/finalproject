@@ -60,8 +60,15 @@
 
 
 	<!-- 필터 대행 등록(Proxy Filter) - 어떤 필터든지 등록되는 형태는 다음과 같다 - org.springframework.web.filter.DelegatingFilterProxy 
-		예시 : <filter> <filter-name>test</filter-name> <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> 
-		</filter> <filter-mapping> <filter-name>test</filter-name> <url-pattern>/*</url-pattern> 
-		</filter-mapping> -->
+		예시 : 
+		<filter> 
+			<filter-name>test</filter-name> 
+			<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> 
+		</filter> 
+		<filter-mapping> 
+			<filter-name>test</filter-name> 
+			<url-pattern>/*</url-pattern> 
+		</filter-mapping> 
+	-->
 
 </web-app>

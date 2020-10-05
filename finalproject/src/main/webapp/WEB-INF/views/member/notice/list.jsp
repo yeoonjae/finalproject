@@ -135,6 +135,9 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
 .brown {
 	color: #b59e79;
 }
+.container-notice{
+ 	height: 700px;
+}
 </style>
 <script>
 	function selChange() {
@@ -147,7 +150,7 @@ nav.navbar.bootsnav.no-background.white .attr-nav>ul>li>a, nav.navbar.bootsnav.n
 	<section>
 		<div class="container">
 			<div class="row">
-				<div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
+				<div class="container-notice col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1">
 					<br>
 					<br>
 					<br>
