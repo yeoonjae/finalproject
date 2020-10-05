@@ -22,7 +22,6 @@ public class MemberInterceptor extends HandlerInterceptorAdapter{
 		if(memberDto != null) {
 			return true;
 		}
-		
 		response.sendRedirect(request.getContextPath()+"/member/");
 		return false;
 	}

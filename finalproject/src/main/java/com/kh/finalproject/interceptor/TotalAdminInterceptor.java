@@ -23,7 +23,6 @@ public class TotalAdminInterceptor extends HandlerInterceptorAdapter{
 		if(adminDto.getAdmin_auth().equals("본사")) {
 			return true;
 		}
-		
 		response.sendRedirect(request.getContextPath()+"/admin/");
 		return false;
 	}

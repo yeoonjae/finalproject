@@ -92,7 +92,7 @@
 			<exclude-mapping path="/admin/branch/branch_detail"/>
 			<exclude-mapping path="/admin/branch/branch_edit"/>
 			<exclude-mapping path="/admin/branch/member_list"/>
-			<beans:bean class= "com.kh.finalproject.interceptor.TotalAdminInterceptor"></beans:bean>
+			<beans:bean class= "com.kh.finalproject.interceptor.AdminInterceptor"></beans:bean>
 		</interceptor>
 	</interceptors>
 	

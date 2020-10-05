@@ -18,7 +18,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		//로그인된 사용자가 본사관리자면
+		//관리자가 로그인 되어있다면
 		AdminDto adminDto = (AdminDto) session.getAttribute("admininfo");
 		if(adminDto != null) {
 			return true;
