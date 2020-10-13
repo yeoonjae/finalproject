@@ -95,7 +95,7 @@
             }
         }
         </script>
-        <!-- 관리자 로그인 부분  -->
+        <!-- 회원 로그인 부분  -->
           <form name="fform" action="${pageContext.request.contextPath}/member/account/login" method="post">
             <div class="form-group">
               <div class="form-label-group">
@@ -128,6 +128,13 @@
             <input type="submit" class="btn btn-primary btn-block" id="loginbtn"value="Login">
             </div>
           </form>
+          <div>
+		      <form action="${pageContext.request.contextPath}/member/account/login" method="post">
+	          	<input type="hidden" value="jeeelung2@gmail.com" name = "member_email">
+	          	<input type="hidden" value="wlsdud1231" name = "member_pw">
+	          	<input type="submit" class="btn btn-primary btn-block" value="회원 로그인하기">
+	          </form><br>
+          </div>
           <div class="text-center">
           	<br>
             <a class="d-block small" href="${pageContext.request.contextPath}/member/account/find_email">이메일 찾기</a>
