@@ -25,8 +25,7 @@ public class LoginFilter implements Filter{
 		if (memberDto != null ) {
 			chain.doFilter(request, response);
 		} else {
-			resp.sendRedirect(req.getContextPath()+"member/");
+			resp.sendRedirect(req.getContextPath()+"/member/account/login");
 		}
-
 	}
 }

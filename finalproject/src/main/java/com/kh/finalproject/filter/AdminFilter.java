@@ -25,7 +25,7 @@ public class AdminFilter implements Filter{
 		if (adminDto != null) {
 			chain.doFilter(request, response);
 		} else {
-			resp.sendRedirect(req.getContextPath()+"admin/");
+			resp.sendRedirect(req.getContextPath()+"/admin/account/login");
 		}
 
 	}
