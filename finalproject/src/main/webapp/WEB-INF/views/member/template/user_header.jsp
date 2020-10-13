@@ -97,10 +97,8 @@
                             <i class="fa fa-bars"></i>
                         </button>
                         <a class="navbar-brand" href="${pageContext.request.contextPath}/member/user/">
-
                             <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-display m-top-10" alt="">
                             <img src="${pageContext.request.contextPath}/resources/m/images/logo2.png" class="logo logo-scrolled" alt="">
-
                         </a>
                     </div>
                     <!-- End Header Navigation -->
