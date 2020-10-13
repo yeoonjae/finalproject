@@ -39,13 +39,13 @@
           <form action="${pageContext.request.contextPath}/admin/account/login" method="post">
             <div class="form-group">
               <div class="form-label-group">
-                <input type="text" id="inputEmail" class="form-control" placeholder="아이디" required="required" autofocus="autofocus" name="admin_id">
+                <input type="text" id="inputEmail" class="form-control" value="아이디" required="required" autofocus="autofocus" name="admin_id">
                 <label for="inputEmail">아이디</label>
               </div>
             </div>
             <div class="form-group">
               <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required" name="admin_pw">
+                <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" required="required" name="admin_pw">
                 <label for="inputPassword">비밀번호</label>
               </div>
             </div>
@@ -58,6 +58,18 @@
             <input type="submit" class="btn btn-primary btn-block" value="Login">
             </div>
           </form>
+	      <div>
+		      <form action="${pageContext.request.contextPath}/admin/account/login" method="post">
+	          	<input type="hidden" value="study2" name = "admin_id">
+	          	<input type="hidden" value="study2" name = "admin_pw">
+	          	<input type="submit" class="btn btn-primary btn-block" value="본사관리자 로그인">
+	          </form><br>
+	          <form action="${pageContext.request.contextPath}/admin/account/login" method="post">
+	          	<input type="hidden" value="study23" name = "admin_id">
+	          	<input type="hidden" value="study23" name = "admin_pw">
+	          	<input type="submit" class="btn btn-primary btn-block" value="지점관리자 로그인">
+	          </form>
+          </div>
           <div class="text-center">
           </div>
         </div>

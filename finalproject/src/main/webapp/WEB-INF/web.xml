@@ -59,16 +59,34 @@
 
 
 
-	<!-- 필터 대행 등록(Proxy Filter) - 어떤 필터든지 등록되는 형태는 다음과 같다 - org.springframework.web.filter.DelegatingFilterProxy 
-		예시 : 
+	<!-- 필터 대행 등록(Proxy Filter) - 어떤 필터든지 등록되는 형태는 다음과 같다 - org.springframework.web.filter.DelegatingFilterProxy -->
 		<filter> 
-			<filter-name>test</filter-name> 
+			<filter-name>loginFilter</filter-name> 
 			<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> 
 		</filter> 
 		<filter-mapping> 
-			<filter-name>test</filter-name> 
-			<url-pattern>/*</url-pattern> 
+			<filter-name>loginFilter</filter-name> 
+			<url-pattern>/member/user/*</url-pattern> 
+		</filter-mapping> <filter> 
+		
+		<filter-name>adminFilter</filter-name> 
+			<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> 
+		</filter> 
+		<filter-mapping> 
+			<filter-name>adminFilter</filter-name> 
+			<url-pattern>/admin/branch/*</url-pattern> 
+			<url-pattern>/admin/chat/*</url-pattern> 
+			<url-pattern>/admin/coupon/*</url-pattern> 
+			<url-pattern>/admin/license/*</url-pattern> 
+			<url-pattern>/admin/message/*</url-pattern> 
+			<url-pattern>/admin/point/*</url-pattern> 
+			<url-pattern>/admin/seat/*</url-pattern> 
+			<url-pattern>/admin/account/info</url-pattern> 
+			<url-pattern>/admin/account/list</url-pattern> 
+			<url-pattern>/admin/account/regist</url-pattern> 
+			<url-pattern>/admin/account/regist_result</url-pattern> 
+			<url-pattern>/admin/account/edit</url-pattern> 
+			<url-pattern>/admin/</url-pattern> 
 		</filter-mapping> 
-	-->
 
 </web-app>
