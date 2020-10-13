@@ -39,7 +39,7 @@
           <form action="${pageContext.request.contextPath}/admin/account/login" method="post">
             <div class="form-group">
               <div class="form-label-group">
-                <input type="text" id="inputEmail" class="form-control" value="아이디" required="required" autofocus="autofocus" name="admin_id">
+                <input type="text" id="inputEmail" class="form-control" placeholder="아이디" required="required" autofocus="autofocus" name="admin_id">
                 <label for="inputEmail">아이디</label>
               </div>
             </div>

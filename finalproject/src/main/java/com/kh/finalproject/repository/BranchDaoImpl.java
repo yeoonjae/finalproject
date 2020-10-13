@@ -50,7 +50,7 @@ public class BranchDaoImpl implements BranchDao{
 				sqlSession.insert("branchImg.regist", branchImgDto);
 				
 				//하드디스크에 저장
-				File target = new File("D:/upload",Integer.toString(img_no));
+				File target = new File("D:/upload/kh3e",Integer.toString(img_no));
 				f.transferTo(target);
 			}
 		}
@@ -100,7 +100,7 @@ public class BranchDaoImpl implements BranchDao{
 				sqlSession.insert("branchImg.regist", branchImgDto);
 				
 				//하드디스크에 저장
-				File target = new File("D:/upload",Integer.toString(img_no));
+				File target = new File("D:/upload/kh3e",Integer.toString(img_no));
 				f.transferTo(target);
 			}
 		}

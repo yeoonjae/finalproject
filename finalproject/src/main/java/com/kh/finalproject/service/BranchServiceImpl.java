@@ -31,7 +31,7 @@ public class BranchServiceImpl implements BranchService {
 		if (branchImgDto == null) {
 			return ResponseEntity.notFound().build();
 		} else {
-			File target = new File("D:/upload", String.valueOf(branch_img_no));
+			File target = new File("D:/upload/kh3e", String.valueOf(branch_img_no));
 			// 여기다가 ㅏ이제 저 다운로드 코드 넣은담에 responseEntity 반환하구 컨트롤러 한번 가주라
 			byte[] data = FileUtils.readFileToByteArray(target);
 			ByteArrayResource res = new ByteArrayResource(data);
@@ -54,7 +54,7 @@ public class BranchServiceImpl implements BranchService {
 			if (branchImgDto == null) {
 				return ResponseEntity.notFound().build();
 			} else {
-				File target = new File("D:/upload", String.valueOf(branch_img_no));
+				File target = new File("D:/upload/kh3e", String.valueOf(branch_img_no));
 				// 여기다가 ㅏ이제 저 다운로드 코드 넣은담에 responseEntity 반환하구 컨트롤러 한번 가주라
 				byte[] data = FileUtils.readFileToByteArray(target);
 				ByteArrayResource res = new ByteArrayResource(data);
